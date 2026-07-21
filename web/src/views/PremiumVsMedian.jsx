@@ -9,6 +9,7 @@ import { useTheme } from '../lib/theme.js'
 export default function PremiumVsMedian({ meta }) {
   const [data, setData] = useState(null)
   const [state, setState] = useState({ eras: [], seriesType: 'All', hype: 'all' })
+  const [showImages, setShowImages] = useState(true)
   const { palette, themeTick } = useTheme()
 
   useEffect(() => { loadView('premium_vs_median').then(setData) }, [])
@@ -25,28 +26,43 @@ export default function PremiumVsMedian({ meta }) {
   }, [data, state])
 
   const build = (width) => {
-    const pts = rows.filter((r) => r.deviation != null)
+    // Exclude unreliable points from the scatter: low-confidence intrinsic
+    // (broken pack decomposition -> absurd premiums) and any |deviation|
+    // over 300%, which is almost always an intrinsic error, not a real
+    // market premium. They'd otherwise blow out the y-axis.
+    const pts = rows.filter((r) => r.deviation != null && r.conf !== 'low' && Math.abs(r.deviation) <= 3)
     if (!pts.length) return null
+    // Size (image height / bubble radius) scales with the product's $ value:
+    // area ∝ price, so bigger = more expensive.
+    const maxP = Math.max(...pts.map((d) => d.price || 0), 1)
+    const imgH = (d) => 14 + 46 * Math.sqrt((d.price || 0) / maxP)
+    const dotR = (d) => 3 + 16 * Math.sqrt((d.price || 0) / maxP)
+    const title = (d) =>
+      `${d.name}\n${d.setName} · ${d.productType} · ${fmtUsd(d.price)}\n` +
+      `premium ${fmtPct(d.premiumPct)} vs clean median ${fmtPct(d.cleanMedianPremium)}\n` +
+      `deviation ${fmtPct(d.deviation)}${d.conf === 'low' ? '\n⚠ low-confidence intrinsic' : ''}`
     return Plot.plot({
-      width, height: 420,
+      width, height: 460,
       style: { background: 'transparent', color: palette.textSecondary, fontSize: '12px' },
       x: { label: 'age (days since release)', grid: false },
       y: { label: 'premium deviation vs clean median', grid: true, tickFormat: (d) => `${(d * 100).toFixed(0)}%` },
       marks: [
         Plot.ruleY([0], { stroke: palette.grid }),
-        Plot.dot(pts, {
-          x: 'ageDays', y: 'deviation', r: 4.5,
-          fill: (d) => (d.conf === 'low' ? palette.context : d.isHype ? palette.series[1] : palette.series[0]),
-          fillOpacity: (d) => (d.conf === 'low' ? 0.45 : 0.8),
-          stroke: palette.surface, strokeWidth: 1,
-        }),
-        Plot.tip(pts, Plot.pointer({
-          x: 'ageDays', y: 'deviation',
-          title: (d) =>
-            `${d.name}\n${d.setName} · ${d.productType}\n` +
-            `premium ${fmtPct(d.premiumPct)} vs clean median ${fmtPct(d.cleanMedianPremium)}\n` +
-            `deviation ${fmtPct(d.deviation)}${d.conf === 'low' ? '\n⚠ low-confidence intrinsic' : ''}`,
-        })),
+        showImages
+          ? Plot.image(pts, {
+              x: 'ageDays', y: 'deviation', src: 'imageUrl',
+              width: (d) => imgH(d) * 0.72, height: imgH, r: (d) => imgH(d), // r clips to rounded
+              preserveAspectRatio: 'xMidYMid slice', imageRendering: 'auto',
+              opacity: (d) => (d.conf === 'low' ? 0.5 : 1),
+              title,
+            })
+          : Plot.dot(pts, {
+              x: 'ageDays', y: 'deviation', r: dotR,
+              fill: (d) => (d.conf === 'low' ? palette.context : d.isHype ? palette.series[1] : palette.series[0]),
+              fillOpacity: (d) => (d.conf === 'low' ? 0.4 : 0.72),
+              stroke: palette.surface, strokeWidth: 1, title,
+            }),
+        Plot.tip(pts, Plot.pointer({ x: 'ageDays', y: 'deviation', title })),
       ],
     })
   }
@@ -59,14 +75,20 @@ export default function PremiumVsMedian({ meta }) {
       <p className="subtle text-sm">
         Each sealed product's current premium against the historical clean-median premium
         for its product type + age band. Above zero = pricier than the honest baseline.
-        <span style={{ color: palette.series[0] }}> ●</span> clean set
-        <span style={{ color: palette.series[1] }}> ●</span> hype set
-        <span className="muted"> ●</span> low-confidence (dimmed).
+        Marker <strong>size = product $ value</strong> (bigger = more expensive). The scatter hides
+        low-confidence intrinsic values and &gt;300% deviations (usually pack-count errors); they remain
+        in the table below, dimmed.
       </p>
-      <FilterBar meta={metaForFilter} state={state} setState={setState}
-        show={{ completeness: false }} />
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 py-1">
+        <FilterBar meta={metaForFilter} state={state} setState={setState} show={{ completeness: false }} />
+        <div className="seg">
+          <span className="seg-label">Markers</span>
+          <button className="chip" data-on={String(showImages)} onClick={() => setShowImages(true)}>Card images</button>
+          <button className="chip" data-on={String(!showImages)} onClick={() => setShowImages(false)}>Bubbles</button>
+        </div>
+      </div>
       <div className="card p-3">
-        <PlotFigure build={build} deps={[rows, themeTick]} />
+        <PlotFigure build={build} deps={[rows, showImages, themeTick]} />
       </div>
       <div className="card p-3 mt-4 overflow-x-auto">
         <table className="tbl text-sm w-full">

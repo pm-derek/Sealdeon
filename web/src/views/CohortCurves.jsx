@@ -8,20 +8,23 @@ import { cohortBand, filterSeries, fmtPct, fmtUsd } from '../lib/slice.js'
 import { useTheme } from '../lib/theme.js'
 
 const X_DIV = { days: 1, weeks: 7, months: 30.44 }
-const MAX_COLORED = 8
+const MAX_EMPH = 8
+const EPOCH_DAY = 86400000
 
 const METRICS = {
   raw: { label: 'Raw $', axis: 'market price', isPct: false, isUsd: true },
   prem: { label: 'Premium %', axis: 'sealed premium', isPct: true, baseline: 0 },
 }
 
-// A short, readable line label from a set name: drop the "SWSH07:" / "SM -"
-// style prefix and trim. e.g. "SWSH07: Evolving Skies" -> "Evolving Skies".
 function shortLabel(set) {
   const raw = (set?.name || String(set?.groupId || '')).replace(/^[A-Za-z0-9]+\s*[:\-–]\s*/, '')
   return raw.length > 18 ? raw.slice(0, 17) + '…' : raw
 }
-
+// Evenly-spaced light hues for the "color all lines" mode.
+function hueColor(i, n) {
+  const hue = Math.round((i * 360) / Math.max(n, 1) + 25) % 360
+  return `oklch(0.74 0.15 ${hue})`
+}
 function priceAtDate(sparkline, targetIso) {
   if (!sparkline || !sparkline.length) return null
   let best = sparkline[0], bestGap = Infinity
@@ -31,6 +34,7 @@ function priceAtDate(sparkline, targetIso) {
   }
   return best[1]
 }
+const fmtDate = (epochDay) => new Date(epochDay * EPOCH_DAY).toISOString().slice(0, 7)
 
 export default function CohortCurves({ meta }) {
   const [curves, setCurves] = useState(null)
@@ -41,12 +45,15 @@ export default function CohortCurves({ meta }) {
   const [picked, setPicked] = useState(new Set())
   const [focus, setFocus] = useState(null)
   const [labels, setLabels] = useState('all')
+  const [colorMode, setColorMode] = useState('mono')
+  const [xMode, setXMode] = useState('cohort') // cohort (age) | calendar (date)
   const [yLog, setYLog] = useState(true)
   const [focusChase, setFocusChase] = useState(null)
-  const [view, setView] = useState(null) // { x?:[min,max], y?:[min,max] } | null
+  const [view, setView] = useState(null)
   const { palette, themeTick } = useTheme()
-  // Merge x/y zoom patches; null resets both.
-  const applyView = (patch) => setView((v) => (patch === null ? null : { ...(v || {}), ...patch }))
+
+  const latestEpoch = useMemo(
+    () => Math.floor(new Date(meta.latestDate || Date.now()).getTime() / EPOCH_DAY), [meta.latestDate])
 
   useEffect(() => { loadView('cohort_curves').then(setCurves) }, [])
   useEffect(() => {
@@ -56,37 +63,66 @@ export default function CohortCurves({ meta }) {
     return () => { live = false }
   }, [focus, state.seriesType])
   useEffect(() => { setView(null) }, [state.metric, state.seriesType, state.xUnit])
+  // Calendar mode opens on the last ~15 months of real dates.
+  useEffect(() => {
+    setView(xMode === 'calendar' ? { x: [latestEpoch - 460, latestEpoch + 8] } : null)
+  }, [xMode, latestEpoch])
 
   const bySet = useMemo(() => new Map(meta.sets.map((s) => [s.groupId, s])), [meta])
   const metricDef = METRICS[state.metric]
   const isPct = metricDef.isPct
   const useLog = state.metric === 'raw' && yLog
+  const isCal = xMode === 'calendar'
+  const div = X_DIV[state.xUnit]
   const valueAt = state.metric === 'prem' ? (pt) => pt[2] : (pt) => pt[3]
 
   const model = useMemo(() => {
     if (!curves) return null
     const opts = { ...state, picked: picked.size ? picked : null }
     const series = filterSeries(curves, meta, opts)
-    const band = cohortBand(series, valueAt)
+    const rel = (gid) => {
+      const d = bySet.get(gid)?.releaseDate
+      return d ? Math.floor(new Date(d).getTime() / EPOCH_DAY) : null
+    }
     const lines = series.map((s) => {
       const set = bySet.get(s.groupId)
       return {
         groupId: s.groupId, name: set?.name ?? String(s.groupId), abbr: shortLabel(set),
-        partial: !set?.archiveComplete, lowConfidence: s.lowConfidence && state.metric === 'prem',
+        partial: !set?.archiveComplete, releaseEpoch: rel(s.groupId),
+        lowConfidence: s.lowConfidence && state.metric === 'prem',
         points: s.points.filter((pt) => valueAt(pt) != null && (!useLog || valueAt(pt) > 0))
           .map((pt) => ({ age: pt[0], value: valueAt(pt), price: pt[3] })),
       }
-    }).filter((l) => l.points.length > 1)
-    const colored = new Map()
-    const ids = picked.size ? [...picked].slice(0, MAX_COLORED) : focus != null ? [focus] : []
-    ids.forEach((gid, i) => colored.set(gid, palette.series[i % palette.series.length]))
-    return { lines, band, colored }
-  }, [curves, meta, state, picked, focus, valueAt, useLog, themeTick])
+    }).filter((l) => l.points.length > 1 && (!isCal || l.releaseEpoch != null))
+
+    // emphasized = picked (or focus) -> strong series colors
+    const emph = new Map()
+    const ids = picked.size ? [...picked].slice(0, MAX_EMPH) : focus != null ? [focus] : []
+    ids.forEach((gid, i) => emph.set(gid, palette.series[i % palette.series.length]))
+    const colorOf = (gid, i) =>
+      emph.get(gid) || (colorMode === 'multi' ? hueColor(i, lines.length) : palette.context)
+    const band = isCal ? [] : cohortBand(series, valueAt)
+    return { lines, band, emph, colorOf }
+  }, [curves, meta, state, picked, focus, valueAt, useLog, colorMode, isCal, themeTick])
+
+  const xOf = (line, age) => (isCal ? line.releaseEpoch + age : age / div)
+
+  const labelData = useMemo(() => {
+    if (!model || labels === 'off') return null
+    const chosen = labels === 'focus'
+      ? model.lines.filter((l) => model.emph.has(l.groupId))
+      : model.lines
+    return chosen.map((l, i) => ({
+      groupId: l.groupId, text: l.abbr,
+      color: model.emph.get(l.groupId) || model.colorOf(l.groupId, model.lines.indexOf(l)),
+      points: l.points.map((p) => ({ x: xOf(l, p.age), value: p.value })),
+    }))
+  }, [model, labels, isCal, div])
 
   const chaseTitle = (gid, ageDays) => {
     if (!focusChase || gid !== focus || state.seriesType !== 'Chase Singles') return null
     const set = bySet.get(gid); if (!set?.releaseDate) return null
-    const date = new Date(new Date(set.releaseDate).getTime() + ageDays * 86400000).toISOString().slice(0, 10)
+    const date = new Date(new Date(set.releaseDate).getTime() + ageDays * EPOCH_DAY).toISOString().slice(0, 10)
     const rows = (focusChase.chase || []).map((c) => {
       const p = priceAtDate(c.sparkline, date) ?? c.price
       return `  ${(c.name.replace(set.name, '').trim()) || c.name} — ${fmtUsd(p)}`
@@ -96,22 +132,16 @@ export default function CohortCurves({ meta }) {
 
   const build = (width) => {
     if (!model) return null
-    const div = X_DIV[state.xUnit]
+    const idxOf = new Map(model.lines.map((l, i) => [l.groupId, i]))
     const flat = model.lines.flatMap((l) =>
-      l.points.map((p) => ({ x: p.age / div, ageDays: p.age, value: p.value, name: l.name, abbr: l.abbr, groupId: l.groupId, partial: l.partial, price: p.price })))
-    const context = flat.filter((d) => !model.colored.has(d.groupId))
-    const highlighted = flat.filter((d) => model.colored.has(d.groupId))
-    const lastVisible = (rows) => {
-      const xv = view?.x || null
-      const hi = xv ? xv[1] : Infinity, lo = xv ? xv[0] : -Infinity
-      const inv = rows.filter((d) => d.x >= lo && d.x <= hi)
-      return inv.filter((d) => d === inv.filter((x) => x.groupId === d.groupId).at(-1))
-    }
+      l.points.map((p) => ({
+        x: xOf(l, p.age), age: p.age, value: p.value, name: l.name,
+        groupId: l.groupId, partial: l.partial, price: p.price,
+      })))
 
-    const xView = view?.x || null
-    const lo = xView ? xView[0] : -Infinity, hi = xView ? xView[1] : Infinity
+    const lo = view?.x ? view.x[0] : -Infinity, hi = view?.x ? view.x[1] : Infinity
     const vis = flat.filter((d) => d.x >= lo && d.x <= hi).map((d) => d.value)
-    let yDomain = view?.y || undefined // manual y-zoom overrides auto-fit
+    let yDomain = view?.y || undefined
     if (!yDomain && vis.length) {
       let loY = Math.min(...vis), hiY = Math.max(...vis)
       if (useLog) { loY = Math.max(loY, 0.01); yDomain = [loY / 1.15, hiY * 1.15] }
@@ -119,43 +149,35 @@ export default function CohortCurves({ meta }) {
     }
 
     const title = (d) => {
-      const head = `${d.name}${d.partial ? ' (partial)' : ''}\nage ${Math.round(d.x)} ${state.xUnit}`
+      const when = isCal ? new Date(d.x * EPOCH_DAY).toISOString().slice(0, 10) : `age ${Math.round(d.x)} ${state.xUnit}`
       const line = isPct ? `premium ${fmtPct(d.value)}` : fmtUsd(d.value)
-      return head + '\n' + line + (chaseTitle(d.groupId, d.ageDays) || '')
-    }
-
-    const labelMarks = []
-    if (labels === 'all') {
-      labelMarks.push(Plot.text(lastVisible(flat), {
-        x: 'x', y: 'value', text: 'abbr', dx: 5, textAnchor: 'start', fontSize: 9.5,
-        fill: (d) => model.colored.get(d.groupId) || palette.textSecondary,
-        stroke: palette.surface, strokeWidth: 2, paintOrder: 'stroke',
-      }))
-    } else if (labels === 'focus') {
-      labelMarks.push(Plot.text(lastVisible(highlighted), {
-        x: 'x', y: 'value', text: 'name', dx: 6, textAnchor: 'start', fontSize: 11, fill: palette.text,
-        stroke: palette.surface, strokeWidth: 3, paintOrder: 'stroke',
-      }))
+      return `${d.name}${d.partial ? ' (partial)' : ''}\n${when}\n${line}` + (chaseTitle(d.groupId, d.age) || '')
     }
 
     return Plot.plot({
       width, height: 540,
-      marginRight: labels === 'all' ? 74 : labels === 'focus' ? 150 : 24,
+      marginRight: labels !== 'off' ? 70 : 24,
       marginLeft: 56,
       style: { background: 'transparent', color: palette.textSecondary, fontSize: '12px' },
-      x: { label: `${state.xUnit} since release →`, grid: false, domain: view?.x || undefined },
+      x: {
+        label: isCal ? 'date →' : `${state.xUnit} since release →`, grid: false, domain: view?.x || undefined,
+        tickFormat: isCal ? fmtDate : undefined,
+      },
       y: {
         label: `↑ ${metricDef.axis}${useLog ? ' (log)' : ''}`, grid: true, domain: yDomain,
         type: useLog ? 'log' : 'linear',
         tickFormat: isPct ? ((d) => `${(d * 100).toFixed(0)}%`) : ((d) => `$${d >= 1000 ? (d / 1000) + 'k' : d}`),
       },
       marks: [
-        // clip:true keeps marks inside the frame when zoomed (no bleed past the axes).
-        Plot.areaY(model.band, { x: (d) => d.age / div, y1: 'p25', y2: 'p75', fill: palette.band, fillOpacity: 0.5, clip: true }),
-        Plot.line(model.band, { x: (d) => d.age / div, y: 'p50', stroke: palette.textSecondary, strokeWidth: 1.5, strokeDasharray: '3,3', clip: true }),
-        Plot.line(context, { x: 'x', y: 'value', z: 'groupId', stroke: palette.context, strokeWidth: 1, strokeOpacity: 0.8, strokeDasharray: (d) => (d.partial ? '2,3' : null), clip: true }),
-        Plot.line(highlighted, { x: 'x', y: 'value', z: 'groupId', stroke: (d) => model.colored.get(d.groupId), strokeWidth: 2.5, strokeDasharray: (d) => (d.partial ? '4,3' : null), clip: true }),
-        ...labelMarks,
+        model.band.length ? Plot.areaY(model.band, { x: (d) => d.age / div, y1: 'p25', y2: 'p75', fill: palette.band, fillOpacity: 0.5, clip: true }) : null,
+        model.band.length ? Plot.line(model.band, { x: (d) => d.age / div, y: 'p50', stroke: palette.textSecondary, strokeWidth: 1.5, strokeDasharray: '3,3', clip: true }) : null,
+        Plot.line(flat, {
+          x: 'x', y: 'value', z: 'groupId',
+          stroke: (d) => model.colorOf(d.groupId, idxOf.get(d.groupId)),
+          strokeWidth: (d) => (model.emph.has(d.groupId) ? 2.6 : colorMode === 'multi' ? 1.5 : 1),
+          strokeOpacity: (d) => (model.emph.has(d.groupId) ? 1 : colorMode === 'multi' ? 0.95 : 0.8),
+          strokeDasharray: (d) => (d.partial ? '3,3' : null), clip: true,
+        }),
         Plot.tip(flat, Plot.pointer({ x: 'x', y: 'value', title })),
         metricDef.baseline != null ? Plot.ruleY([metricDef.baseline], { stroke: palette.grid }) : null,
       ].filter(Boolean),
@@ -165,30 +187,36 @@ export default function CohortCurves({ meta }) {
   if (!curves || !model) return <p className="muted p-6">Loading cohort curves…</p>
 
   const onPick = (d) => { if (d?.groupId != null) setFocus(d.groupId) }
+  const applyView = (patch) => setView((v) => (patch === null ? (isCal ? { x: [latestEpoch - 460, latestEpoch + 8] } : null) : { ...(v || {}), ...patch }))
   const setK = (k) => (v) => setState((s) => ({ ...s, [k]: v }))
 
   return (
     <section>
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h2 className="text-lg font-semibold">Cohort curves</h2>
-        <p className="muted text-xs">scroll = zoom X · shift-scroll / over-axis = zoom Y · drag = pan · double-click = reset · click a line = focus</p>
+        <p className="muted text-xs">scroll = zoom · shift-scroll = zoom Y · drag = pan (X+Y) · double-click = reset · click line or label = focus</p>
       </div>
 
-      {/* Compact control toolbar (single-selects as dropdowns; era multi-chips) */}
       <FilterBar meta={meta} state={state} setState={setState} />
       <div className="flex flex-wrap items-center gap-x-5 gap-y-2 py-2">
+        <Dropdown label="X" value={xMode} onChange={setXMode}
+          options={[['cohort', 'Cohort (age)'], ['calendar', 'Daily (date)']]} />
         <Dropdown label="Metric" value={state.metric} onChange={setK('metric')}
           options={Object.entries(METRICS).map(([k, m]) => [k, m.label])} />
-        <Dropdown label="X axis" value={state.xUnit} onChange={setK('xUnit')}
-          options={[['days', 'Days'], ['weeks', 'Weeks'], ['months', 'Months']]} />
+        {!isCal && (
+          <Dropdown label="Unit" value={state.xUnit} onChange={setK('xUnit')}
+            options={[['days', 'Days'], ['weeks', 'Weeks'], ['months', 'Months']]} />
+        )}
         {state.metric === 'raw' && (
-          <Dropdown label="Y scale" value={yLog ? 'log' : 'lin'} onChange={(v) => setYLog(v === 'log')}
+          <Dropdown label="Y" value={yLog ? 'log' : 'lin'} onChange={(v) => setYLog(v === 'log')}
             options={[['log', 'Log'], ['lin', 'Linear']]} />
         )}
+        <Dropdown label="Color" value={colorMode} onChange={setColorMode}
+          options={[['mono', 'Mono'], ['multi', 'Multi-color']]} />
         <Dropdown label="Labels" value={labels} onChange={setLabels}
-          options={[['all', 'All lines'], ['focus', 'Focus only'], ['off', 'Off']]} />
+          options={[['all', 'All'], ['focus', 'Focus'], ['off', 'Off']]} />
         <SetPicker meta={meta} picked={picked} setPicked={setPicked} focus={focus} setFocus={setFocus} eras={state.eras} />
-        {view && <button className="chip" data-on="true" onClick={() => setView(null)}>✕ Reset view</button>}
+        {view && !isCal && <button className="chip" data-on="true" onClick={() => setView(null)}>✕ Reset</button>}
       </div>
       {model.lines.some((l) => l.lowConfidence) && state.metric === 'prem' && (
         <p className="text-xs pb-1" style={{ color: 'var(--warn)' }}>
@@ -197,7 +225,8 @@ export default function CohortCurves({ meta }) {
       )}
       <div className="card p-3">
         <PlotFigure build={build} onPick={onPick} onView={applyView}
-          deps={[model, state.xUnit, state.metric, labels, useLog, focusChase, view, themeTick]} />
+          labelData={labelData} onLabelClick={(gid) => setFocus(gid)}
+          deps={[model, state.xUnit, state.metric, labels, colorMode, useLog, isCal, focusChase, view, themeTick]} />
       </div>
       {state.seriesType === 'Chase Singles' && focus != null && focusChase?.chase?.length > 0 && (
         <div className="card p-3 mt-3">

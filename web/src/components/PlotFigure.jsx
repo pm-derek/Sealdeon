@@ -7,8 +7,11 @@ function invertScale(s, px) {
   const [d0, d1] = s.domain, [r0, r1] = s.range
   return r1 === r0 ? d0 : d0 + ((px - r0) / (r1 - r0)) * (d1 - d0)
 }
-
-// Zoom a [d0,d1] domain around center c by factor, in log space for log axes.
+function applyScale(s, v) {
+  if (typeof s.apply === 'function') return s.apply(v)
+  const [d0, d1] = s.domain, [r0, r1] = s.range
+  return r0 + ((v - d0) / (d1 - d0)) * (r1 - r0)
+}
 function zoomDomain(scale, c, factor) {
   const [d0, d1] = scale.domain
   if (scale.type === 'log' && d0 > 0 && d1 > 0 && c > 0) {
@@ -18,32 +21,61 @@ function zoomDomain(scale, c, factor) {
   return [c - (c - d0) * factor, c + (d1 - c) * factor]
 }
 
-// Observable Plot figure with TradingView-style navigation:
-//   wheel over plot -> zoom X · wheel over Y-axis or Shift+wheel -> zoom Y
-//   drag -> pan X · double-click -> reset · click -> onPick
-// Event listeners are attached ONCE and read the current figure via a ref,
-// so an in-progress drag survives the re-renders that zoom/pan trigger.
-// onView reports patches: {x:[..]} / {y:[..]} / null (reset).
-export default function PlotFigure({ build, deps = [], onPick, onView }) {
+// Observable Plot figure with TradingView navigation:
+//   wheel -> zoom X (Shift or over Y-axis -> zoom Y) · drag -> pan X+Y
+//   double-click -> reset · click -> onPick
+// `labelData` (optional): [{groupId, text, color, points:[{x,value}]}].
+// Rendered as clickable HTML overlays at each line's last in-view point,
+// so a label is an exact click target (no snapping) -- onLabelClick(id).
+export default function PlotFigure({ build, deps = [], onPick, onView, labelData, onLabelClick }) {
   const elRef = useRef(null)
   const figRef = useRef(null)
   const buildRef = useRef(build); buildRef.current = build
   const onPickRef = useRef(onPick); onPickRef.current = onPick
   const onViewRef = useRef(onView); onViewRef.current = onView
+  const labelRef = useRef(labelData); labelRef.current = labelData
+  const onLabelClickRef = useRef(onLabelClick); onLabelClickRef.current = onLabelClick
+
+  const placeLabels = useCallback(() => {
+    const el = elRef.current, fig = figRef.current
+    if (!el) return
+    el.querySelectorAll('.linelabel').forEach((n) => n.remove())
+    if (!fig || !labelRef.current) return
+    const sx = fig.scale('x'), sy = fig.scale('y')
+    if (!sx?.domain || !sy?.domain) return
+    const [xlo, xhi] = sx.domain
+    const ylo = Math.min(sy.domain[0], sy.domain[1]), yhi = Math.max(sy.domain[0], sy.domain[1])
+    for (const L of labelRef.current) {
+      // last point within the visible x-window
+      let pt = null
+      for (const p of L.points) if (p.x >= xlo && p.x <= xhi) pt = p
+      if (!pt || pt.value < ylo || pt.value > yhi) continue
+      const px = applyScale(sx, pt.x), py = applyScale(sy, pt.value)
+      const btn = document.createElement('button')
+      btn.className = 'linelabel'
+      btn.textContent = L.text
+      btn.style.left = `${px + 4}px`
+      btn.style.top = `${py}px`
+      btn.style.color = L.color
+      btn.onclick = (e) => { e.stopPropagation(); onLabelClickRef.current?.(L.groupId) }
+      el.appendChild(btn)
+    }
+  }, [])
 
   const doRender = useCallback(() => {
     const el = elRef.current
     if (!el) return
-    el.replaceChildren()
+    el.querySelectorAll('.linelabel').forEach((n) => n.remove())
+    const svg = figRef.current
+    if (svg) svg.remove()
     figRef.current = buildRef.current(el.clientWidth || 640)
-    if (figRef.current) el.appendChild(figRef.current)
-  }, [])
+    if (figRef.current) el.insertBefore(figRef.current, el.firstChild)
+    placeLabels()
+  }, [placeLabels])
 
-  // Re-render whenever the parent's data/view deps change.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { doRender() }, deps)
 
-  // Attach interaction listeners once; they read figRef.current each time.
   useEffect(() => {
     const el = elRef.current
     if (!el) return
@@ -71,19 +103,34 @@ export default function PlotFigure({ build, deps = [], onPick, onView }) {
     const onDown = (e) => {
       const fig = figRef.current
       if (!onViewRef.current || e.button !== 0 || !fig) return
-      const sx = fig.scale('x'); if (!sx?.domain || !sx?.range) return
-      const [d0, d1] = sx.domain, [r0, r1] = sx.range
-      pan = { startPx: e.clientX, dom0: d0, dom1: d1, dataPerPx: (d1 - d0) / (r1 - r0) }
+      const sx = fig.scale('x'), sy = fig.scale('y')
+      if (!sx?.domain || !sx?.range) return
+      pan = {
+        startX: e.clientX, startY: e.clientY,
+        xd: [...sx.domain], xPerPx: (sx.domain[1] - sx.domain[0]) / (sx.range[1] - sx.range[0]),
+        yd: sy?.domain ? [...sy.domain] : null, yLog: sy?.type === 'log',
+        yr: sy?.range || null,
+      }
       dragged = false
     }
     const onMove = (e) => {
       if (!pan) return
-      const totalPx = e.clientX - pan.startPx
-      if (Math.abs(totalPx) > 3) dragged = true
+      const dx = e.clientX - pan.startX, dy = e.clientY - pan.startY
+      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) dragged = true
       if (!dragged) return
-      const shift = -totalPx * pan.dataPerPx
+      const patch = { x: [pan.xd[0] - dx * pan.xPerPx, pan.xd[1] - dx * pan.xPerPx] }
+      if (pan.yd && pan.yr) {
+        if (pan.yLog && pan.yd[0] > 0 && pan.yd[1] > 0) {
+          const l0 = Math.log(pan.yd[0]), l1 = Math.log(pan.yd[1])
+          const lPerPx = (l1 - l0) / (pan.yr[1] - pan.yr[0])
+          patch.y = [Math.exp(l0 - dy * lPerPx), Math.exp(l1 - dy * lPerPx)]
+        } else {
+          const yPerPx = (pan.yd[1] - pan.yd[0]) / (pan.yr[1] - pan.yr[0])
+          patch.y = [pan.yd[0] - dy * yPerPx, pan.yd[1] - dy * yPerPx]
+        }
+      }
       cancelAnimationFrame(raf)
-      raf = requestAnimationFrame(() => onViewRef.current({ x: [pan.dom0 + shift, pan.dom1 + shift] }))
+      raf = requestAnimationFrame(() => onViewRef.current(patch))
     }
     const onUp = () => { pan = null }
     const onClick = () => {
@@ -109,12 +156,12 @@ export default function PlotFigure({ build, deps = [], onPick, onView }) {
       window.removeEventListener('mouseup', onUp)
       el.removeEventListener('click', onClick)
       el.removeEventListener('dblclick', onDbl)
-      el.replaceChildren()
+      el.querySelectorAll('.linelabel').forEach((n) => n.remove())
     }
   }, [doRender])
 
   return (
     <div ref={elRef} className="w-full overflow-hidden select-none"
-      style={{ cursor: onView ? 'grab' : onPick ? 'pointer' : 'default' }} />
+      style={{ position: 'relative', cursor: onView ? 'grab' : onPick ? 'pointer' : 'default' }} />
   )
 }

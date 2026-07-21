@@ -146,12 +146,17 @@ body {
 
 a { color: inherit; }
 
-/* Drag-to-zoom selection rectangle */
-.zoombox {
+/* Clickable line-end labels overlaid on the chart */
+.linelabel {
   position: absolute;
-  background: color-mix(in oklab, var(--accent) 16%, transparent);
-  border: 1px solid var(--accent);
+  transform: translateY(-50%);
+  font-size: 9.5px;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  padding: 1px 2px;
   border-radius: 3px;
-  pointer-events: none;
-  z-index: 5;
+  background: color-mix(in oklab, var(--surface-1) 62%, transparent);
+  z-index: 4;
 }
+.linelabel:hover { background: var(--surface-2); text-decoration: underline; z-index: 6; }
