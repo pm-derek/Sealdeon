@@ -3,12 +3,12 @@ import { useEffect, useMemo, useState } from 'react'
 import FilterBar from '../components/FilterBar.jsx'
 import PlotFigure from '../components/PlotFigure.jsx'
 import { loadView } from '../lib/loadView.js'
-import { fmtPct, fmtUsd } from '../lib/slice.js'
+import { fmtPct, fmtUsd, eraMatch } from '../lib/slice.js'
 import { useTheme } from '../lib/theme.js'
 
 export default function PremiumVsMedian({ meta }) {
   const [data, setData] = useState(null)
-  const [state, setState] = useState({ era: 'All', seriesType: 'All', hype: 'all' })
+  const [state, setState] = useState({ eras: [], seriesType: 'All', hype: 'all' })
   const { palette, themeTick } = useTheme()
 
   useEffect(() => { loadView('premium_vs_median').then(setData) }, [])
@@ -16,7 +16,7 @@ export default function PremiumVsMedian({ meta }) {
   const rows = useMemo(() => {
     if (!data) return []
     return data.rows.filter((r) => {
-      if (state.era !== 'All' && r.era !== state.era) return false
+      if (!eraMatch(r.era, state.eras)) return false
       if (state.seriesType !== 'All' && r.productType !== state.seriesType) return false
       if (state.hype === 'hype' && !r.isHype) return false
       if (state.hype === 'clean' && r.isHype) return false

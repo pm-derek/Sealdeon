@@ -67,7 +67,22 @@ def match_product_type(name: str) -> str | None:
     return None
 
 
+# Digital / non-product items that superficially match sealed keywords
+# (e.g. "Code Card - Surging Sparks 3 Pack Blister") but are redemption
+# codes, not sealed product. Excluded from sealed classification entirely.
+_EXCLUDE_KEYWORDS = [
+    "code card", "online code", "ptcgo code", "ptcgl code", "digital code",
+]
+
+
+def is_excluded_name(name: str) -> bool:
+    n = name.lower()
+    return any(kw in n for kw in _EXCLUDE_KEYWORDS)
+
+
 def is_sealed_name(name: str) -> bool:
+    if is_excluded_name(name):
+        return False
     n = name.lower()
     if match_product_type(name) is not None:
         return True
@@ -93,6 +108,12 @@ def classify_product(product: dict) -> dict:
     rarity = ext.get("Rarity")
     card_text = ext.get("CardText") or ext.get("Description")
     name = product.get("name", "")
+
+    # Digital redemption codes are neither sealed product nor a real
+    # single -- exclude them from every product-type view.
+    if is_excluded_name(name):
+        return {"isSealed": False, "productType": None, "cardNumber": None,
+                "rarity": rarity, "cardText": card_text, "excluded": True}
 
     if card_number:
         return {

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import { loadMeta } from './lib/loadView.js'
+import { useThemeMode } from './lib/theme.js'
 import CohortCurves from './views/CohortCurves.jsx'
 import AgeBandMedians from './views/AgeBandMedians.jsx'
 import SetDetail from './views/SetDetail.jsx'
 import Screener from './views/Screener.jsx'
 import PremiumVsMedian from './views/PremiumVsMedian.jsx'
 
-// Tiny hash router: #/cohort, #/bands, #/screener, #/premium, #/sets, #/set/{groupId}
 function useRoute() {
   const [hash, setHash] = useState(window.location.hash || '#/cohort')
   useEffect(() => {
@@ -26,17 +26,27 @@ const NAV = [
   ['sets', 'Sets'],
 ]
 
+function ThemeToggle() {
+  const { mode, toggle } = useThemeMode()
+  return (
+    <button className="nav-link" onClick={toggle} title="Toggle light / dark"
+      style={{ border: '1px solid var(--border-strong)' }}>
+      {mode === 'dark' ? '☾ Dark' : '☀ Light'}
+    </button>
+  )
+}
+
 function SetList({ meta }) {
   const [query, setQuery] = useState('')
   const q = query.toLowerCase()
-  const rows = meta.sets.filter(
-    (s) => !q || s.name?.toLowerCase().includes(q) || s.abbreviation?.toLowerCase().includes(q),
-  )
+  const rows = [...meta.sets]
+    .sort((a, b) => (b.releaseDate || '').localeCompare(a.releaseDate || ''))
+    .filter((s) => !q || s.name?.toLowerCase().includes(q) || s.abbreviation?.toLowerCase().includes(q))
   return (
     <section>
       <h2 className="text-lg font-semibold pb-2">Sets</h2>
       <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="filter sets…"
-        className="card px-2 py-1 text-sm w-64 mb-3" />
+        className="field w-64 mb-3" />
       <div className="card p-3 overflow-x-auto">
         <table className="tbl text-sm w-full">
           <thead>
@@ -45,12 +55,12 @@ function SetList({ meta }) {
           <tbody>
             {rows.map((s) => (
               <tr key={s.groupId}>
-                <td><a href={`#/set/${s.groupId}`} className="hover:underline">{s.name}</a></td>
+                <td><a href={`#/set/${s.groupId}`} className="hover:underline" style={{ color: 'var(--accent)' }}>{s.name}</a></td>
                 <td className="muted">{s.abbreviation}</td>
                 <td className="muted">{s.releaseDate ?? '—'}</td>
                 <td className="muted">{s.era}</td>
                 <td className="muted">{s.archiveComplete ? 'complete' : 'partial'}</td>
-                <td>{s.isHype ? `🔥 (${s.hypeSource})` : ''}</td>
+                <td>{s.isHype ? `🔥 ${s.hypeSource}` : ''}</td>
               </tr>
             ))}
           </tbody>
@@ -81,25 +91,35 @@ export default function App() {
   if (!meta) return <p className="muted p-8">Loading…</p>
 
   return (
-    <div className="max-w-7xl mx-auto px-4 pb-16">
-      <header className="flex flex-wrap items-baseline gap-x-4 gap-y-1 py-4">
-        <h1 className="text-2xl font-bold tracking-tight">Sealdeon</h1>
-        <span className="subtle text-sm">Pokemon sealed-market intelligence</span>
-        <span className="muted text-xs ml-auto">data through {meta.latestDate}</span>
+    <div className="min-h-screen">
+      <header className="sticky top-0 z-10 backdrop-blur"
+        style={{ background: 'color-mix(in oklab, var(--surface-0) 88%, transparent)', borderBottom: '1px solid var(--border)' }}>
+        <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center gap-x-4 gap-y-2">
+          <div className="flex items-baseline gap-2">
+            <span className="text-xl">📦</span>
+            <h1 className="text-xl font-bold tracking-tight">Sealdeon</h1>
+            <span className="subtle text-sm hidden sm:inline">Pokémon sealed-market intelligence</span>
+          </div>
+          <nav className="flex flex-wrap gap-1 ml-auto items-center">
+            {NAV.map(([key, label]) => (
+              <a key={key} href={`#/${key}`} className="nav-link"
+                data-on={String(page === key || (page === 'set' && key === 'sets'))}>{label}</a>
+            ))}
+            <ThemeToggle />
+          </nav>
+        </div>
       </header>
-      <nav className="flex flex-wrap gap-1.5 pb-4">
-        {NAV.map(([key, label]) => (
-          <a key={key} href={`#/${key}`} className="chip" data-on={String(page === key || (page === 'set' && key === 'sets'))}>
-            {label}
-          </a>
-        ))}
-      </nav>
-      {page === 'cohort' && <CohortCurves meta={meta} />}
-      {page === 'bands' && <AgeBandMedians meta={meta} />}
-      {page === 'screener' && <Screener meta={meta} />}
-      {page === 'premium' && <PremiumVsMedian meta={meta} />}
-      {page === 'sets' && <SetList meta={meta} />}
-      {page === 'set' && param && <SetDetail meta={meta} groupId={param} />}
+      <main className="max-w-7xl mx-auto px-4 py-5 pb-20">
+        <div className="flex justify-end pb-2">
+          <span className="muted text-xs">data through {meta.latestDate}</span>
+        </div>
+        {page === 'cohort' && <CohortCurves meta={meta} />}
+        {page === 'bands' && <AgeBandMedians meta={meta} />}
+        {page === 'screener' && <Screener meta={meta} />}
+        {page === 'premium' && <PremiumVsMedian meta={meta} />}
+        {page === 'sets' && <SetList meta={meta} />}
+        {page === 'set' && param && <SetDetail meta={meta} groupId={param} />}
+      </main>
     </div>
   )
 }

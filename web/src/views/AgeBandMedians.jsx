@@ -11,18 +11,23 @@ const BAND_ORDER = ['0-1mo', '1-3mo', '3-6mo', '6-12mo', '12mo+']
 export default function AgeBandMedians({ meta }) {
   const [data, setData] = useState(null)
   const [state, setState] = useState({
-    era: 'All', seriesType: 'Booster Box', hype: 'all', metric: 'price',
+    eras: [], seriesType: 'Booster Box', hype: 'all', metric: 'price',
   })
   const { palette, themeTick } = useTheme()
 
   useEffect(() => { loadView('age_band_medians').then(setData) }, [])
 
+  // Medians are pre-aggregated per era plus a cross-era "All" rollup;
+  // arbitrary era subsets can't be re-combined client-side, so a single
+  // era selection shows that era and 0-or-many falls back to "All".
+  const eraKey = (state.eras || []).length === 1 ? state.eras[0] : 'All'
+
   const rows = useMemo(() => {
     if (!data) return []
     return data.rows
-      .filter((r) => r.era === state.era && r.seriesType === state.seriesType)
+      .filter((r) => r.era === eraKey && r.seriesType === state.seriesType)
       .sort((a, b) => BAND_ORDER.indexOf(a.ageBand) - BAND_ORDER.indexOf(b.ageBand))
-  }, [data, state])
+  }, [data, eraKey, state.seriesType])
 
   const buckets = state.hype === 'all' ? ['clean', 'hype'] : [state.hype]
   const bucketColor = { clean: palette.series[0], hype: palette.series[1], all: palette.series[0] }
@@ -75,7 +80,8 @@ export default function AgeBandMedians({ meta }) {
       <p className="subtle text-sm">
         Median price / sealed premium by age band. <strong>Clean median</strong> (hype sets
         excluded) is the honest baseline; the hype split enables hype-vs-hype and
-        clean-vs-clean directly. Low-confidence premium rows are excluded from premium medians.
+        clean-vs-clean directly.
+        {(state.eras || []).length > 1 && <em> Showing cross-era “All” — pick a single era for its own medians.</em>}
       </p>
       <FilterBar meta={meta} state={state} setState={setState}
         show={{ completeness: false }} />

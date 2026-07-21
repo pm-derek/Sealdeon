@@ -1,7 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
 import FilterBar from '../components/FilterBar.jsx'
 import { loadView } from '../lib/loadView.js'
-import { fmtPct, fmtUsd } from '../lib/slice.js'
+import { fmtPct, fmtUsd, eraMatch } from '../lib/slice.js'
+
+// Default to the modern eras: legacy/vintage sets carry price-manipulation
+// artifacts (e.g. a "-99%" print) that aren't real market moves.
+const MODERN_ERAS = ['Sword & Shield', 'Scarlet & Violet', 'Mega Evolution']
 
 const HORIZONS = [['chg1', '1d'], ['chg7', '7d'], ['chg30', '30d'], ['chg90', '90d']]
 
@@ -31,7 +35,7 @@ const HEAT_MAX = { chg1: 0.08, chg7: 0.18, chg30: 0.35, chg90: 0.7, premChg30: 0
 
 export default function Screener({ meta }) {
   const [data, setData] = useState(null)
-  const [state, setState] = useState({ era: 'All', seriesType: 'Booster Box', hype: 'all', completeness: 'all' })
+  const [state, setState] = useState({ eras: MODERN_ERAS, seriesType: 'Booster Box', hype: 'all', completeness: 'all' })
   const [horizon, setHorizon] = useState('chg7')
   const [mode, setMode] = useState('movers') // movers | premium | shelf
   const [kind, setKind] = useState('sealed') // sealed | chase
@@ -42,7 +46,7 @@ export default function Screener({ meta }) {
     if (!data) return []
     let rows = data.rows.filter((r) => {
       if (kind === 'sealed' ? r.isChase : !r.isChase) return false
-      if (state.era !== 'All' && r.era !== state.era) return false
+      if (!eraMatch(r.era, state.eras)) return false
       if (state.hype === 'hype' && !r.isHype) return false
       if (state.hype === 'clean' && r.isHype) return false
       if (state.completeness === 'complete' && !r.archiveComplete) return false

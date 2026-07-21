@@ -38,7 +38,7 @@ export default function SetPicker({ meta, picked, setPicked, focus, setFocus }) 
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="search sets… (or use '151', 'Prismatic')"
-          className="card px-2 py-1 text-sm w-64"
+          className="field w-64"
         />
         {[...picked].map((gid) => {
           const s = meta.sets.find((x) => x.groupId === gid)
@@ -67,7 +67,7 @@ export default function SetPicker({ meta, picked, setPicked, focus, setFocus }) 
         <div className="flex items-center gap-2 mt-2">
           <span className="muted text-xs uppercase tracking-wide">Focus set</span>
           <select
-            className="card px-2 py-1 text-sm"
+            className="field"
             value={focus ?? ''}
             onChange={(e) => setFocus(e.target.value ? Number(e.target.value) : null)}
           >

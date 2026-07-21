@@ -1,89 +1,157 @@
 @import "tailwindcss";
 
-/* Data-viz role tokens (reference palette; light + dark selected, not flipped) */
-:root {
-  color-scheme: light dark;
-  --surface-1: #fcfcfb;
-  --surface-2: #f0efec;
-  --text-primary: #0b0b0b;
+/* ---- Theme tokens ------------------------------------------------------
+   Light and dark are both first-class. The app defaults to dark (set via
+   data-theme on <html> in main.jsx); the toggle flips data-theme and
+   persists. Media query is only a fallback before JS runs. */
+:root, :root[data-theme="light"] {
+  color-scheme: light;
+  --surface-0: #f6f5f2;   /* page */
+  --surface-1: #ffffff;   /* cards */
+  --surface-2: #f0efec;   /* insets, hover */
+  --text-primary: #14130f;
   --text-secondary: #52514e;
   --text-muted: #8a8880;
-  --grid: #e4e2dc;
-  --series-1: #2a78d6;
-  --series-2: #eb6834;
-  --series-3: #1baf7a;
-  --series-4: #eda100;
-  --series-5: #e87ba4;
-  --series-6: #008300;
-  --series-7: #4a3aa7;
-  --series-8: #e34948;
-  --context-line: #c9c7c0;
+  --border: #e4e2dc;
+  --border-strong: #d4d2ca;
+  --grid: #e8e6e0;
+  --accent: #2a78d6;
+  --accent-fg: #ffffff;
+  --series-1: #2a78d6; --series-2: #eb6834; --series-3: #1baf7a; --series-4: #eda100;
+  --series-5: #e87ba4; --series-6: #008300; --series-7: #4a3aa7; --series-8: #e34948;
+  --context-line: #cbc9c2;
   --band-fill: #e4e2dc;
-  --pos: #008300;
-  --neg: #e34948;
-  --warn: #eda100;
+  --pos: #0ca30c; --neg: #d03b3b; --warn: #eda100;
+  --shadow: 0 1px 2px rgba(20,19,15,.06), 0 2px 8px rgba(20,19,15,.04);
 }
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface-0: #141413;   /* page */
+  --surface-1: #1e1e1c;   /* cards */
+  --surface-2: #262624;   /* insets, hover */
+  --text-primary: #f5f4ef;
+  --text-secondary: #b9b8ae;
+  --text-muted: #83817a;
+  --border: #302f2c;
+  --border-strong: #3c3b37;
+  --grid: #2b2a27;
+  --accent: #3987e5;
+  --accent-fg: #ffffff;
+  --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70; --series-4: #c98500;
+  --series-5: #d55181; --series-6: #21a121; --series-7: #9085e9; --series-8: #e66767;
+  --context-line: #6a695f;
+  --band-fill: #34332e;
+  --pos: #21a121; --neg: #e66767; --warn: #d99a1a;
+  --shadow: 0 1px 2px rgba(0,0,0,.35), 0 4px 16px rgba(0,0,0,.28);
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
-    --surface-1: #1a1a19;
-    --surface-2: #262624;
-    --text-primary: #ffffff;
-    --text-secondary: #c3c2b7;
-    --text-muted: #8a8880;
-    --grid: #33332f;
-    --series-1: #3987e5;
-    --series-2: #d95926;
-    --series-3: #199e70;
-    --series-4: #c98500;
-    --series-5: #d55181;
-    --series-6: #008300;
-    --series-7: #9085e9;
-    --series-8: #e66767;
-    --context-line: #4a4a45;
-    --band-fill: #33332f;
-    --pos: #21a121;
-    --neg: #e66767;
-    --warn: #c98500;
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --surface-0: #141413; --surface-1: #1e1e1c; --surface-2: #262624;
+    --text-primary: #f5f4ef; --text-secondary: #b9b8ae; --text-muted: #83817a;
+    --border: #302f2c; --border-strong: #3c3b37; --grid: #2b2a27;
+    --accent: #3987e5; --context-line: #6a695f; --band-fill: #34332e;
+    --pos: #21a121; --neg: #e66767; --warn: #d99a1a;
   }
 }
 
+* { border-color: var(--border); }
+
 body {
-  background: var(--surface-1);
+  background: var(--surface-0);
   color: var(--text-primary);
+  font-feature-settings: "tnum" 1, "cv05" 1;
+  -webkit-font-smoothing: antialiased;
 }
 
 .card {
   background: var(--surface-1);
-  border: 1px solid var(--grid);
-  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.85rem;
+  box-shadow: var(--shadow);
 }
 .subtle { color: var(--text-secondary); }
 .muted { color: var(--text-muted); }
 
+/* ---- Chips (filters / toggles) ---------------------------------------- */
 .chip {
-  border: 1px solid var(--grid);
+  border: 1px solid var(--border-strong);
   border-radius: 9999px;
-  padding: 0.15rem 0.65rem;
-  font-size: 0.78rem;
+  padding: 0.2rem 0.72rem;
+  font-size: 0.8rem;
+  line-height: 1.1rem;
   cursor: pointer;
   color: var(--text-secondary);
-  background: transparent;
+  background: var(--surface-1);
+  transition: background .12s, color .12s, border-color .12s, transform .05s;
+  user-select: none;
 }
+.chip:hover { background: var(--surface-2); color: var(--text-primary); }
+.chip:active { transform: translateY(0.5px); }
 .chip[data-on="true"] {
-  background: var(--series-1);
-  border-color: var(--series-1);
-  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-fg);
 }
+.chip[data-on="true"]:hover { color: var(--accent-fg); filter: brightness(1.05); }
+
+/* Grouped segmented control look for a row of related chips */
+.seg { display: inline-flex; gap: 0.3rem; align-items: center; flex-wrap: wrap; }
+.seg-label { color: var(--text-muted); font-size: .68rem; letter-spacing: .04em;
+  text-transform: uppercase; margin-right: .15rem; }
+
+/* ---- Nav -------------------------------------------------------------- */
+.nav-link {
+  padding: 0.4rem 0.85rem;
+  border-radius: 0.6rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: background .12s, color .12s;
+}
+.nav-link:hover { background: var(--surface-2); color: var(--text-primary); }
+.nav-link[data-on="true"] { background: var(--accent); color: var(--accent-fg); }
+
+/* ---- Inputs / selects ------------------------------------------------- */
+.field {
+  background: var(--surface-1);
+  border: 1px solid var(--border-strong);
+  border-radius: 0.5rem;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+.field:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+
+/* ---- Tables ----------------------------------------------------------- */
+.tbl { border-collapse: collapse; }
 .tbl th {
   text-align: left;
   font-weight: 600;
   color: var(--text-secondary);
-  padding: 0.35rem 0.6rem;
-  border-bottom: 1px solid var(--grid);
+  padding: 0.4rem 0.65rem;
+  border-bottom: 1px solid var(--border-strong);
   white-space: nowrap;
+  position: sticky; top: 0;
+  background: var(--surface-1);
 }
 .tbl td {
-  padding: 0.32rem 0.6rem;
-  border-bottom: 1px solid var(--grid);
+  padding: 0.36rem 0.65rem;
+  border-bottom: 1px solid var(--border);
   white-space: nowrap;
+}
+.tbl tbody tr:hover td { background: var(--surface-2); }
+
+a { color: inherit; }
+
+/* Drag-to-zoom selection rectangle */
+.zoombox {
+  position: absolute;
+  background: color-mix(in oklab, var(--accent) 16%, transparent);
+  border: 1px solid var(--accent);
+  border-radius: 3px;
+  pointer-events: none;
+  z-index: 5;
 }
