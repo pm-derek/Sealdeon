@@ -158,22 +158,26 @@ export default function CohortCurves({ meta }) {
     }
 
     // Buy-signal markers for the focused set (raw $ mode only; markers sit
-    // on the price line). value_rebound = the signal with real backtest edge.
+    // on the price line). Conviction = the rare high-edge combo; value_rebound
+    // = its looser, more frequent cousin.
+    const SIG_LABEL = { conviction: 'conviction 🎯', value_rebound: 'value + turning up', below_peers: 'below peers' }
     const buyMarks = []
     if (!isPct && focus != null && sigEvents) {
       const set = bySet.get(focus)
       const relE = set?.releaseDate ? Math.floor(new Date(set.releaseDate).getTime() / EPOCH_DAY) : null
       const pts = (sigEvents[focus] || [])
-        .filter((e) => e.productType === state.seriesType && (e.signal === 'value_rebound' || e.signal === 'below_peers'))
+        .filter((e) => e.productType === state.seriesType && SIG_LABEL[e.signal])
         .map((e) => {
           const ed = Math.floor(new Date(e.date).getTime() / EPOCH_DAY)
           return { x: isCal ? ed : relE != null ? (ed - relE) / div : null, value: e.price, signal: e.signal, date: e.date, ret30: e.ret30 }
         }).filter((p) => p.x != null && p.value > 0 && (isCal || p.x >= 0))
       if (pts.length) {
         buyMarks.push(Plot.dot(pts, {
-          x: 'x', y: 'value', symbol: 'triangle', r: 6,
-          fill: 'var(--pos)', stroke: palette.surface, strokeWidth: 1.2, clip: true,
-          title: (d) => `▲ BUY signal — ${d.signal === 'value_rebound' ? 'value + turning up' : 'below peers'}\n${d.date} · ${fmtUsd(d.value)}` +
+          x: 'x', y: 'value', symbol: 'triangle',
+          r: (d) => (d.signal === 'conviction' ? 9 : 6),
+          fill: (d) => (d.signal === 'conviction' ? 'var(--accent)' : 'var(--pos)'),
+          stroke: palette.surface, strokeWidth: 1.2, clip: true,
+          title: (d) => `▲ BUY signal — ${SIG_LABEL[d.signal]}\n${d.date} · ${fmtUsd(d.value)}` +
             (d.ret30 != null ? `\n30d after: ${fmtPct(d.ret30)}` : ''),
         }))
       }

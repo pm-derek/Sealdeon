@@ -184,10 +184,10 @@ for f in ["signals_backtest.json", "signals_recent.json", "signals_events.json"]
     check(f"{f} exists", os.path.exists(os.path.join(views, f)))
 with open(os.path.join(views, "signals_backtest.json")) as f:
     sbt = json.load(f)
-check("backtest has signal definitions", len(sbt["signals"]) == 7, str(len(sbt["signals"])))
+check("backtest has signal definitions", len(sbt["signals"]) == 8, str(len(sbt["signals"])))
 _sigkeys = {s["key"] for s in sbt["signals"]}
-check("reprint + momentum signals present",
-      {"reprint_window", "deep_oop", "momentum_high"} <= _sigkeys, str(sorted(_sigkeys)))
+check("conviction + reprint + momentum signals present",
+      {"conviction", "reprint_window", "deep_oop", "momentum_high"} <= _sigkeys, str(sorted(_sigkeys)))
 # fixture data trends up, so signals should fire and produce forward returns
 with open(os.path.join(views, "signals_events.json")) as f:
     sev = json.load(f)["byGroup"]
