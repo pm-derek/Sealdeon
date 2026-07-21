@@ -134,6 +134,16 @@ export default function CohortCurves({ meta }) {
     }))
   }, [model, labels, isCal, div])
 
+  // All lines in data coords, for touch tap-to-select hit-testing (works
+  // regardless of the label setting).
+  const hitData = useMemo(() => {
+    if (!model) return null
+    return model.lines.map((l) => ({
+      groupId: l.groupId,
+      points: l.points.map((p) => ({ x: xOf(l, p.age), value: p.value })),
+    }))
+  }, [model, isCal, div])
+
   const chaseTitle = (gid, ageDays) => {
     if (!focusChase || gid !== focus || state.seriesType !== 'Chase Singles') return null
     const set = bySet.get(gid); if (!set?.releaseDate) return null
@@ -260,7 +270,7 @@ export default function CohortCurves({ meta }) {
           {showFilters ? '✕ Hide filters' : '⚙ Filters'}
         </button>
       </div>
-      <p className="muted text-xs sm:hidden pb-1">drag = pan · pinch = zoom · double-tap = reset · tap label = focus</p>
+      <p className="muted text-xs sm:hidden pb-1">drag = pan · pinch = zoom · drag an axis = stretch it · tap = select line · double-tap = reset</p>
 
       <div className={`${showFilters ? 'block' : 'hidden'} sm:block`}>
         <FilterBar meta={meta} state={state} setState={setState} />
@@ -289,7 +299,7 @@ export default function CohortCurves({ meta }) {
           {view && !isCal && <button className="chip ml-auto" data-on="true" onClick={() => setView(null)}>✕ Reset zoom</button>}
         </div>
         <PlotFigure build={build} onPick={onPick} onView={applyView}
-          labelData={labelData} onLabelClick={(gid) => setFocus(gid)}
+          labelData={labelData} onLabelClick={(gid) => setFocus(gid)} hitData={hitData}
           deps={[model, state.xUnit, state.metric, labels, colorMode, useLog, isCal, focus, focusChase, sigEvents, view, themeTick]} />
         {/* On-chart toolbar (bottom / near X axis): X mode + unit */}
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2 pt-2">
