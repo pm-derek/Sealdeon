@@ -50,6 +50,7 @@ export default function CohortCurves({ meta }) {
   const [yLog, setYLog] = useState(true)
   const [showFilters, setShowFilters] = useState(false) // mobile: collapsed by default
   const [focusChase, setFocusChase] = useState(null)
+  const [sigEvents, setSigEvents] = useState(null)
   const [view, setView] = useState(null)
   const { palette, themeTick } = useTheme()
 
@@ -57,6 +58,7 @@ export default function CohortCurves({ meta }) {
     () => Math.floor(new Date(meta.latestDate || Date.now()).getTime() / EPOCH_DAY), [meta.latestDate])
 
   useEffect(() => { loadView('cohort_curves').then(setCurves) }, [])
+  useEffect(() => { loadView('signals_events').then((d) => setSigEvents(d.byGroup || {})).catch(() => setSigEvents({})) }, [])
   useEffect(() => {
     if (focus == null || state.seriesType !== 'Chase Singles') { setFocusChase(null); return }
     let live = true
@@ -155,6 +157,28 @@ export default function CohortCurves({ meta }) {
       return `${d.name}${d.partial ? ' (partial)' : ''}\n${when}\n${line}` + (chaseTitle(d.groupId, d.age) || '')
     }
 
+    // Buy-signal markers for the focused set (raw $ mode only; markers sit
+    // on the price line). value_rebound = the signal with real backtest edge.
+    const buyMarks = []
+    if (!isPct && focus != null && sigEvents) {
+      const set = bySet.get(focus)
+      const relE = set?.releaseDate ? Math.floor(new Date(set.releaseDate).getTime() / EPOCH_DAY) : null
+      const pts = (sigEvents[focus] || [])
+        .filter((e) => e.productType === state.seriesType && (e.signal === 'value_rebound' || e.signal === 'below_peers'))
+        .map((e) => {
+          const ed = Math.floor(new Date(e.date).getTime() / EPOCH_DAY)
+          return { x: isCal ? ed : relE != null ? (ed - relE) / div : null, value: e.price, signal: e.signal, date: e.date, ret30: e.ret30 }
+        }).filter((p) => p.x != null && p.value > 0 && (isCal || p.x >= 0))
+      if (pts.length) {
+        buyMarks.push(Plot.dot(pts, {
+          x: 'x', y: 'value', symbol: 'triangle', r: 6,
+          fill: 'var(--pos)', stroke: palette.surface, strokeWidth: 1.2, clip: true,
+          title: (d) => `▲ BUY signal — ${d.signal === 'value_rebound' ? 'value + turning up' : 'below peers'}\n${d.date} · ${fmtUsd(d.value)}` +
+            (d.ret30 != null ? `\n30d after: ${fmtPct(d.ret30)}` : ''),
+        }))
+      }
+    }
+
     return Plot.plot({
       width, height: width < 640 ? 430 : 540,
       marginRight: labels !== 'off' ? 70 : 24,
@@ -179,6 +203,7 @@ export default function CohortCurves({ meta }) {
           strokeOpacity: (d) => (model.emph.has(d.groupId) ? 1 : colorMode === 'multi' ? 0.95 : 0.8),
           strokeDasharray: (d) => (d.partial ? '3,3' : null), clip: true,
         }),
+        ...buyMarks,
         Plot.tip(flat, Plot.pointer({ x: 'x', y: 'value', title })),
         metricDef.baseline != null ? Plot.ruleY([metricDef.baseline], { stroke: palette.grid }) : null,
       ].filter(Boolean),
@@ -233,7 +258,7 @@ export default function CohortCurves({ meta }) {
       <div className="card p-3">
         <PlotFigure build={build} onPick={onPick} onView={applyView}
           labelData={labelData} onLabelClick={(gid) => setFocus(gid)}
-          deps={[model, state.xUnit, state.metric, labels, colorMode, useLog, isCal, focusChase, view, themeTick]} />
+          deps={[model, state.xUnit, state.metric, labels, colorMode, useLog, isCal, focusChase, sigEvents, view, themeTick]} />
       </div>
       {state.seriesType === 'Chase Singles' && focus != null && focusChase?.chase?.length > 0 && (
         <div className="card p-3 mt-3">

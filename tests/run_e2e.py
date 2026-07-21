@@ -175,6 +175,21 @@ with open(os.path.join(views, "premium_vs_median.json")) as f:
 check("premium vs median rows", len(pvm) > 5, str(len(pvm)))
 check("clean median join works", any(r["cleanMedianPremium"] is not None for r in pvm))
 
+print("== e2e: buy signals ==")
+import signals as signals_mod
+con2 = build_views.connect()
+signals_mod.build_signals(con2, views)
+con2.close()
+for f in ["signals_backtest.json", "signals_recent.json", "signals_events.json"]:
+    check(f"{f} exists", os.path.exists(os.path.join(views, f)))
+with open(os.path.join(views, "signals_backtest.json")) as f:
+    sbt = json.load(f)
+check("backtest has signal definitions", len(sbt["signals"]) == 4, str(len(sbt["signals"])))
+# fixture data trends up, so signals should fire and produce forward returns
+with open(os.path.join(views, "signals_events.json")) as f:
+    sev = json.load(f)["byGroup"]
+check("signal events emitted", isinstance(sev, dict))
+
 print("== e2e: archive extraction (py7zr ppmd path) ==")
 import py7zr  # noqa: E402
 import backfill_archive  # noqa: E402

@@ -217,6 +217,7 @@ def build_set_details(con, meta: dict) -> None:
 
 
 def build_all() -> None:
+    import signals
     con = connect()
     try:
         meta = build_meta(con)
@@ -225,6 +226,7 @@ def build_all() -> None:
         build_movers(con)
         build_premium_vs_median(con)
         build_set_details(con, meta)
+        signals.build_signals(con, VIEWS_DIR)
     finally:
         con.close()
     print(f"views written to {VIEWS_DIR}")

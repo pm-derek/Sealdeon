@@ -6,6 +6,7 @@ import AgeBandMedians from './views/AgeBandMedians.jsx'
 import SetDetail from './views/SetDetail.jsx'
 import Screener from './views/Screener.jsx'
 import PremiumVsMedian from './views/PremiumVsMedian.jsx'
+import Signals from './views/Signals.jsx'
 
 function useRoute() {
   const [hash, setHash] = useState(window.location.hash || '#/cohort')
@@ -20,9 +21,10 @@ function useRoute() {
 
 const NAV = [
   ['cohort', 'Cohort Curves'],
-  ['bands', 'Age-Band Medians'],
+  ['signals', 'Signals'],
   ['screener', 'Screener'],
   ['premium', 'Premium vs Median'],
+  ['bands', 'Age-Band Medians'],
   ['sets', 'Sets'],
 ]
 
@@ -116,6 +118,7 @@ export default function App() {
           <span className="muted text-xs">data through {meta.latestDate}</span>
         </div>
         {page === 'cohort' && <CohortCurves meta={meta} />}
+        {page === 'signals' && <Signals meta={meta} />}
         {page === 'bands' && <AgeBandMedians meta={meta} />}
         {page === 'screener' && <Screener meta={meta} />}
         {page === 'premium' && <PremiumVsMedian meta={meta} />}
