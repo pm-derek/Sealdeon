@@ -1,0 +1,4 @@
+{
+  "_comment": "'groupId:productType' -> {productId, cardName, cardNumber} for the promo card. Wins over the auto search (promoSource becomes 'override'). Successor to PROMO_MAP, but strictly for edge cases: multi-promo sets, PKC-vs-standard number differences, renamed promos. Populate from data/data_quality_report.json.",
+  "_example": {"23237:ETB": {"productId": 0, "cardName": "Example Promo", "cardNumber": "SVP 000"}}
+}

@@ -1,0 +1,12 @@
+# python
+__pycache__/
+*.pyc
+.venv/
+
+# node / vite
+web/node_modules/
+web/dist/
+
+# local scratch
+*.7z
+.DS_Store

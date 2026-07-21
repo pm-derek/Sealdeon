@@ -1,0 +1,3 @@
+{
+  "_comment": "productId -> pack count. Wins over parsed and static values (packCountSource becomes 'override'). Populate from data/data_quality_report.json after the first backfill -- only genuine edge cases (specialty UPCs, odd collections), not the whole catalog."
+}

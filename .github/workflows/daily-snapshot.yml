@@ -1,0 +1,39 @@
+name: daily-snapshot
+
+on:
+  schedule:
+    # TCGCSV refreshes ~daily around 20:00 UTC; run after that.
+    - cron: "30 21 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pipeline
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r pipeline/requirements.txt
+
+      - name: Fetch snapshot, update lake, rebuild views
+        run: python pipeline/fetch_current.py
+
+      - name: Commit lake + views
+        run: |
+          git config user.name "sealdeon-pipeline"
+          git config user.email "actions@users.noreply.github.com"
+          git add data web/public/views
+          git diff --cached --quiet && echo "no changes" && exit 0
+          git commit -m "daily snapshot $(date -u +%F)"
+          git push

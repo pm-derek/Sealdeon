@@ -1,0 +1,4 @@
+{
+  "_comment": "Manual hype overrides: groupId -> true/false. Always wins over the algorithmic flag (hypeSource becomes 'manual'). Seeded with Derek's known hype sets; extend after reviewing the auto flags. Keys starting with _ are ignored.",
+  "_seed_note": "Fill in real groupIds after first live run: Prismatic Evolutions, Destined Rivals, Phantasmal Flames, Ascended Heroes."
+}

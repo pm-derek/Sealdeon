@@ -1,0 +1,57 @@
+name: backfill
+
+on:
+  workflow_dispatch:
+    inputs:
+      start:
+        description: "Start date (YYYY-MM-DD); archive floor is 2024-02-08"
+        default: "2024-02-08"
+      end:
+        description: "End date (YYYY-MM-DD); empty = today"
+        default: ""
+      validate_only:
+        description: "Only validate ONE archive date (no writes)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pipeline
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r pipeline/requirements.txt
+
+      - name: Validate one archive date
+        if: ${{ inputs.validate_only }}
+        run: python pipeline/backfill_archive.py --validate
+
+      - name: Run backfill
+        if: ${{ !inputs.validate_only }}
+        run: |
+          END="${{ inputs.end }}"
+          if [ -z "$END" ]; then END=$(date -u +%F); fi
+          python pipeline/backfill_archive.py --start "${{ inputs.start }}" --end "$END"
+
+      - name: Commit lake + views + data quality report
+        if: ${{ !inputs.validate_only }}
+        run: |
+          git config user.name "sealdeon-pipeline"
+          git config user.email "actions@users.noreply.github.com"
+          git add data web/public/views
+          git diff --cached --quiet && echo "no changes" && exit 0
+          git commit -m "backfill ${{ inputs.start }} -> ${{ inputs.end || 'today' }}"
+          git push
