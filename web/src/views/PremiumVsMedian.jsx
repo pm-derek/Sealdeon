@@ -42,7 +42,7 @@ export default function PremiumVsMedian({ meta }) {
       `premium ${fmtPct(d.premiumPct)} vs clean median ${fmtPct(d.cleanMedianPremium)}\n` +
       `deviation ${fmtPct(d.deviation)}${d.conf === 'low' ? '\n⚠ low-confidence intrinsic' : ''}`
     return Plot.plot({
-      width, height: 460,
+      width, height: width < 640 ? 380 : 460,
       style: { background: 'transparent', color: palette.textSecondary, fontSize: '12px' },
       x: { label: 'age (days since release)', grid: false },
       y: { label: 'premium deviation vs clean median', grid: true, tickFormat: (d) => `${(d * 100).toFixed(0)}%` },

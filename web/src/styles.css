@@ -146,6 +146,32 @@ body {
 
 a { color: inherit; }
 
+/* Mobile bottom tab bar */
+.mobile-tab {
+  flex: 1;
+  text-align: center;
+  padding: 0.6rem 0.2rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+.mobile-tab[data-on="true"] { color: var(--accent); }
+
+/* Touch / small-screen ergonomics: bigger tap targets, comfy tables. */
+@media (max-width: 640px) {
+  .chip { padding: 0.34rem 0.7rem; font-size: 0.82rem; }
+  .field { padding: 0.42rem 0.6rem; font-size: 0.9rem; }
+  .nav-link { padding: 0.5rem 0.7rem; }
+  .tbl th, .tbl td { padding: 0.5rem 0.55rem; }
+  .seg-label { font-size: 0.64rem; }
+  .linelabel { font-size: 10.5px; padding: 2px 3px; }
+  h2 { font-size: 1.05rem; }
+}
+/* Fine (mouse) pointers get a slightly denser chip; coarse (touch) keeps big targets. */
+@media (pointer: coarse) {
+  .chip, .nav-link, select.field, .mobile-tab { min-height: 38px; display: inline-flex; align-items: center; }
+}
+
 /* Clickable line-end labels overlaid on the chart */
 .linelabel {
   position: absolute;

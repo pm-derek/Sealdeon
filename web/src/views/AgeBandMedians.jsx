@@ -44,7 +44,7 @@ export default function AgeBandMedians({ meta }) {
       .filter((r) => r.value != null)
     if (!plotRows.length) return null
     return Plot.plot({
-      width, height: 360,
+      width, height: width < 640 ? 300 : 360,
       style: { background: 'transparent', color: palette.textSecondary, fontSize: '12px' },
       x: { domain: BAND_ORDER, label: 'age band' },
       y: {

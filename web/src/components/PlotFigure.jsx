@@ -12,14 +12,18 @@ function applyScale(s, v) {
   const [d0, d1] = s.domain, [r0, r1] = s.range
   return r0 + ((v - d0) / (d1 - d0)) * (r1 - r0)
 }
-function zoomDomain(scale, c, factor) {
-  const [d0, d1] = scale.domain
-  if (scale.type === 'log' && d0 > 0 && d1 > 0 && c > 0) {
+function zoomFrom(domain, isLog, c, factor) {
+  const [d0, d1] = domain
+  if (isLog && d0 > 0 && d1 > 0 && c > 0) {
     const l0 = Math.log(d0), l1 = Math.log(d1), lc = Math.log(c)
     return [Math.exp(lc - (lc - l0) * factor), Math.exp(lc + (l1 - lc) * factor)]
   }
   return [c - (c - d0) * factor, c + (d1 - c) * factor]
 }
+function zoomDomain(scale, c, factor) {
+  return zoomFrom(scale.domain, scale.type === 'log', c, factor)
+}
+const touchDist = (a, b) => Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY)
 
 // Observable Plot figure with TradingView navigation:
 //   wheel -> zoom X (Shift or over Y-axis -> zoom Y) · drag -> pan X+Y
@@ -140,12 +144,92 @@ export default function PlotFigure({ build, deps = [], onPick, onView, labelData
     }
     const onDbl = () => { if (onViewRef.current) onViewRef.current(null) }
 
+    // ---- Touch: 1 finger = pan (X+Y), 2 fingers = pinch-zoom, ----
+    // ---- double-tap = reset, tap = pick ----
+    let tpan = null, tpinch = null, tmoved = false, lastTap = 0
+    const relXY = (t) => {
+      const r = el.getBoundingClientRect()
+      return { x: t.clientX - r.left, y: t.clientY - r.top }
+    }
+    const startPan = (t) => {
+      const fig = figRef.current; if (!fig) return
+      const sx = fig.scale('x'), sy = fig.scale('y')
+      if (!sx?.domain || !sx?.range) return
+      tpan = {
+        startX: t.clientX, startY: t.clientY,
+        xd: [...sx.domain], xPerPx: (sx.domain[1] - sx.domain[0]) / (sx.range[1] - sx.range[0]),
+        yd: sy?.domain ? [...sy.domain] : null, yLog: sy?.type === 'log', yr: sy?.range || null,
+      }
+    }
+    const onTouchStart = (e) => {
+      if (!onViewRef.current || !figRef.current) return
+      tmoved = false
+      if (e.touches.length === 1) { startPan(e.touches[0]); tpinch = null }
+      else if (e.touches.length === 2) {
+        tpan = null
+        const fig = figRef.current, sx = fig.scale('x'), sy = fig.scale('y')
+        const a = relXY(e.touches[0]), b = relXY(e.touches[1])
+        tpinch = {
+          d0: touchDist(e.touches[0], e.touches[1]),
+          cx: invertScale(sx, (a.x + b.x) / 2), cy: sy ? invertScale(sy, (a.y + b.y) / 2) : null,
+          xd: [...sx.domain], yd: sy?.domain ? [...sy.domain] : null, yLog: sy?.type === 'log',
+        }
+      }
+      e.preventDefault()
+    }
+    const onTouchMove = (e) => {
+      if (!onViewRef.current) return
+      e.preventDefault()
+      if (e.touches.length === 2 && tpinch) {
+        const d = touchDist(e.touches[0], e.touches[1]); if (!d) return
+        const factor = Math.max(0.1, Math.min(6, tpinch.d0 / d))
+        const patch = { x: zoomFrom(tpinch.xd, false, tpinch.cx, factor) }
+        if (tpinch.yd && tpinch.cy != null) patch.y = zoomFrom(tpinch.yd, tpinch.yLog, tpinch.cy, factor)
+        tmoved = true
+        cancelAnimationFrame(raf); raf = requestAnimationFrame(() => onViewRef.current(patch))
+      } else if (e.touches.length === 1 && tpan) {
+        const t = e.touches[0]
+        const dx = t.clientX - tpan.startX, dy = t.clientY - tpan.startY
+        if (Math.abs(dx) > 4 || Math.abs(dy) > 4) tmoved = true
+        if (!tmoved) return
+        const patch = { x: [tpan.xd[0] - dx * tpan.xPerPx, tpan.xd[1] - dx * tpan.xPerPx] }
+        if (tpan.yd && tpan.yr) {
+          if (tpan.yLog && tpan.yd[0] > 0 && tpan.yd[1] > 0) {
+            const l0 = Math.log(tpan.yd[0]), l1 = Math.log(tpan.yd[1]), lPerPx = (l1 - l0) / (tpan.yr[1] - tpan.yr[0])
+            patch.y = [Math.exp(l0 - dy * lPerPx), Math.exp(l1 - dy * lPerPx)]
+          } else {
+            const yPerPx = (tpan.yd[1] - tpan.yd[0]) / (tpan.yr[1] - tpan.yr[0])
+            patch.y = [tpan.yd[0] - dy * yPerPx, tpan.yd[1] - dy * yPerPx]
+          }
+        }
+        cancelAnimationFrame(raf); raf = requestAnimationFrame(() => onViewRef.current(patch))
+      }
+    }
+    const onTouchEnd = (e) => {
+      if (e.touches.length < 2) tpinch = null
+      if (e.touches.length === 0) {
+        if (tpan && !tmoved) {
+          const now = Date.now()
+          if (now - lastTap < 320) { onViewRef.current?.(null); lastTap = 0 }
+          else {
+            lastTap = now
+            const fig = figRef.current
+            if (onPickRef.current && fig && fig.value != null) onPickRef.current(fig.value)
+          }
+        }
+        tpan = null
+      }
+    }
+
     el.addEventListener('wheel', onWheel, { passive: false })
     el.addEventListener('mousedown', onDown)
     window.addEventListener('mousemove', onMove)
     window.addEventListener('mouseup', onUp)
     el.addEventListener('click', onClick)
     el.addEventListener('dblclick', onDbl)
+    el.addEventListener('touchstart', onTouchStart, { passive: false })
+    el.addEventListener('touchmove', onTouchMove, { passive: false })
+    el.addEventListener('touchend', onTouchEnd)
     const ro = new ResizeObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(doRender) })
     ro.observe(el)
     return () => {
@@ -156,12 +240,16 @@ export default function PlotFigure({ build, deps = [], onPick, onView, labelData
       window.removeEventListener('mouseup', onUp)
       el.removeEventListener('click', onClick)
       el.removeEventListener('dblclick', onDbl)
+      el.removeEventListener('touchstart', onTouchStart)
+      el.removeEventListener('touchmove', onTouchMove)
+      el.removeEventListener('touchend', onTouchEnd)
       el.querySelectorAll('.linelabel').forEach((n) => n.remove())
     }
   }, [doRender])
 
   return (
     <div ref={elRef} className="w-full overflow-hidden select-none"
-      style={{ position: 'relative', cursor: onView ? 'grab' : onPick ? 'pointer' : 'default' }} />
+      style={{ position: 'relative', touchAction: onView ? 'none' : 'auto',
+               cursor: onView ? 'grab' : onPick ? 'pointer' : 'default' }} />
   )
 }

@@ -90,26 +90,28 @@ export default function App() {
   }
   if (!meta) return <p className="muted p-8">Loading…</p>
 
+  const navActive = (key) => page === key || (page === 'set' && key === 'sets')
   return (
     <div className="min-h-screen">
-      <header className="sticky top-0 z-10 backdrop-blur"
+      <header className="sticky top-0 z-20 backdrop-blur"
         style={{ background: 'color-mix(in oklab, var(--surface-0) 88%, transparent)', borderBottom: '1px solid var(--border)' }}>
-        <div className="max-w-[1600px] mx-auto px-4 py-3 flex flex-wrap items-center gap-x-4 gap-y-2">
-          <div className="flex items-baseline gap-2">
+        <div className="max-w-[1600px] mx-auto px-3 sm:px-4 py-2.5 flex items-center gap-x-4 gap-y-2">
+          <div className="flex items-baseline gap-2 shrink-0">
             <span className="text-xl">📦</span>
-            <h1 className="text-xl font-bold tracking-tight">Sealdeon</h1>
-            <span className="subtle text-sm hidden sm:inline">Pokémon sealed-market intelligence</span>
+            <h1 className="text-lg sm:text-xl font-bold tracking-tight">Sealdeon</h1>
+            <span className="subtle text-sm hidden md:inline">Pokémon sealed-market intelligence</span>
           </div>
-          <nav className="flex flex-wrap gap-1 ml-auto items-center">
+          {/* Desktop nav */}
+          <nav className="hidden sm:flex flex-wrap gap-1 ml-auto items-center">
             {NAV.map(([key, label]) => (
-              <a key={key} href={`#/${key}`} className="nav-link"
-                data-on={String(page === key || (page === 'set' && key === 'sets'))}>{label}</a>
+              <a key={key} href={`#/${key}`} className="nav-link" data-on={String(navActive(key))}>{label}</a>
             ))}
             <ThemeToggle />
           </nav>
+          <div className="ml-auto sm:hidden"><ThemeToggle /></div>
         </div>
       </header>
-      <main className="max-w-[1600px] mx-auto px-4 py-5 pb-20">
+      <main className="max-w-[1600px] mx-auto px-3 sm:px-4 py-4 pb-24 sm:pb-20">
         <div className="flex justify-end pb-2">
           <span className="muted text-xs">data through {meta.latestDate}</span>
         </div>
@@ -120,6 +122,15 @@ export default function App() {
         {page === 'sets' && <SetList meta={meta} />}
         {page === 'set' && param && <SetDetail meta={meta} groupId={param} />}
       </main>
+      {/* Mobile bottom tab bar */}
+      <nav className="sm:hidden fixed bottom-0 inset-x-0 z-20 flex justify-around backdrop-blur"
+        style={{ background: 'color-mix(in oklab, var(--surface-0) 94%, transparent)', borderTop: '1px solid var(--border)' }}>
+        {NAV.map(([key, label]) => (
+          <a key={key} href={`#/${key}`} className="mobile-tab" data-on={String(navActive(key))}>
+            {label.replace(' Curves', '').replace(' Medians', '').replace('Premium vs Median', 'Premium')}
+          </a>
+        ))}
+      </nav>
     </div>
   )
 }

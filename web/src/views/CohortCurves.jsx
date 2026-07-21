@@ -48,6 +48,7 @@ export default function CohortCurves({ meta }) {
   const [colorMode, setColorMode] = useState('mono')
   const [xMode, setXMode] = useState('cohort') // cohort (age) | calendar (date)
   const [yLog, setYLog] = useState(true)
+  const [showFilters, setShowFilters] = useState(false) // mobile: collapsed by default
   const [focusChase, setFocusChase] = useState(null)
   const [view, setView] = useState(null)
   const { palette, themeTick } = useTheme()
@@ -155,7 +156,7 @@ export default function CohortCurves({ meta }) {
     }
 
     return Plot.plot({
-      width, height: 540,
+      width, height: width < 640 ? 430 : 540,
       marginRight: labels !== 'off' ? 70 : 24,
       marginLeft: 56,
       style: { background: 'transparent', color: palette.textSecondary, fontSize: '12px' },
@@ -192,31 +193,37 @@ export default function CohortCurves({ meta }) {
 
   return (
     <section>
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-lg font-semibold">Cohort curves</h2>
-        <p className="muted text-xs">scroll = zoom · shift-scroll = zoom Y · drag = pan (X+Y) · double-click = reset · click line or label = focus</p>
+        <p className="muted text-xs hidden sm:block">scroll = zoom · shift-scroll = zoom Y · drag = pan · double-click = reset · click line/label = focus</p>
+        <button className="chip sm:hidden" onClick={() => setShowFilters((v) => !v)}>
+          {showFilters ? '✕ Hide filters' : '⚙ Filters'}
+        </button>
       </div>
+      <p className="muted text-xs sm:hidden pb-1">drag = pan · pinch = zoom · double-tap = reset · tap label = focus</p>
 
-      <FilterBar meta={meta} state={state} setState={setState} />
-      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 py-2">
-        <Dropdown label="X" value={xMode} onChange={setXMode}
-          options={[['cohort', 'Cohort (age)'], ['calendar', 'Daily (date)']]} />
-        <Dropdown label="Metric" value={state.metric} onChange={setK('metric')}
-          options={Object.entries(METRICS).map(([k, m]) => [k, m.label])} />
-        {!isCal && (
-          <Dropdown label="Unit" value={state.xUnit} onChange={setK('xUnit')}
-            options={[['days', 'Days'], ['weeks', 'Weeks'], ['months', 'Months']]} />
-        )}
-        {state.metric === 'raw' && (
-          <Dropdown label="Y" value={yLog ? 'log' : 'lin'} onChange={(v) => setYLog(v === 'log')}
-            options={[['log', 'Log'], ['lin', 'Linear']]} />
-        )}
-        <Dropdown label="Color" value={colorMode} onChange={setColorMode}
-          options={[['mono', 'Mono'], ['multi', 'Multi-color']]} />
-        <Dropdown label="Labels" value={labels} onChange={setLabels}
-          options={[['all', 'All'], ['focus', 'Focus'], ['off', 'Off']]} />
-        <SetPicker meta={meta} picked={picked} setPicked={setPicked} focus={focus} setFocus={setFocus} eras={state.eras} />
-        {view && !isCal && <button className="chip" data-on="true" onClick={() => setView(null)}>✕ Reset</button>}
+      <div className={`${showFilters ? 'block' : 'hidden'} sm:block`}>
+        <FilterBar meta={meta} state={state} setState={setState} />
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2 py-2">
+          <Dropdown label="X" value={xMode} onChange={setXMode}
+            options={[['cohort', 'Cohort (age)'], ['calendar', 'Daily (date)']]} />
+          <Dropdown label="Metric" value={state.metric} onChange={setK('metric')}
+            options={Object.entries(METRICS).map(([k, m]) => [k, m.label])} />
+          {!isCal && (
+            <Dropdown label="Unit" value={state.xUnit} onChange={setK('xUnit')}
+              options={[['days', 'Days'], ['weeks', 'Weeks'], ['months', 'Months']]} />
+          )}
+          {state.metric === 'raw' && (
+            <Dropdown label="Y" value={yLog ? 'log' : 'lin'} onChange={(v) => setYLog(v === 'log')}
+              options={[['log', 'Log'], ['lin', 'Linear']]} />
+          )}
+          <Dropdown label="Color" value={colorMode} onChange={setColorMode}
+            options={[['mono', 'Mono'], ['multi', 'Multi-color']]} />
+          <Dropdown label="Labels" value={labels} onChange={setLabels}
+            options={[['all', 'All'], ['focus', 'Focus'], ['off', 'Off']]} />
+          <SetPicker meta={meta} picked={picked} setPicked={setPicked} focus={focus} setFocus={setFocus} eras={state.eras} />
+          {view && !isCal && <button className="chip" data-on="true" onClick={() => setView(null)}>✕ Reset</button>}
+        </div>
       </div>
       {model.lines.some((l) => l.lowConfidence) && state.metric === 'prem' && (
         <p className="text-xs pb-1" style={{ color: 'var(--warn)' }}>
