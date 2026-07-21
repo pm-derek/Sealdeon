@@ -1,86 +1,79 @@
 import { useEffect, useRef } from 'react'
 
-// Convert a pixel position back to a data value using a Plot scale
-// descriptor. Uses scale.invert when available, else linear interpolation
-// from domain/range (works for the inverted y range too).
 function invertScale(s, px) {
   if (!s) return null
   if (typeof s.invert === 'function') return s.invert(px)
   if (!s.domain || !s.range) return null
-  const [d0, d1] = s.domain
-  const [r0, r1] = s.range
-  if (r1 === r0) return d0
-  return d0 + ((px - r0) / (r1 - r0)) * (d1 - d0)
+  const [d0, d1] = s.domain, [r0, r1] = s.range
+  return r1 === r0 ? d0 : d0 + ((px - r0) / (r1 - r0)) * (d1 - d0)
 }
 
-// Mount an Observable Plot figure built by `build(width)`; rebuilds on
-// resize / dependency change.
-//  - onPick: click a mark to select (reads the plot's pointer value).
-//  - onZoom: click-drag a box to zoom (reports {x:[a,b], y:[a,b]} in data
-//    coords); double-click clears (reports null). TradingView-style.
-export default function PlotFigure({ build, deps = [], onPick, onZoom }) {
+// Mount an Observable Plot figure with TradingView-style navigation:
+//   - mouse wheel  -> zoom the x-axis around the cursor
+//   - click-drag   -> pan the x-axis (grab and move the time window)
+//   - double-click -> reset to the full range
+//   - plain click  -> onPick (select the mark under the cursor)
+// The parent owns the x-domain (view) and re-renders through build(); this
+// component only computes the new domain and reports it via onView.
+export default function PlotFigure({ build, deps = [], onPick, onView }) {
   const ref = useRef(null)
   const onPickRef = useRef(onPick); onPickRef.current = onPick
-  const onZoomRef = useRef(onZoom); onZoomRef.current = onZoom
+  const onViewRef = useRef(onView); onViewRef.current = onView
 
   useEffect(() => {
     const el = ref.current
     if (!el) return
     let raf = 0
     let fig = null
-    let drag = null
-    let boxEl = null
+    let pan = null      // {startPx, dom0, dom1, dataPerPx}
     let dragged = false
 
-    const clearBox = () => { if (boxEl) { boxEl.remove(); boxEl = null } }
+    const xScale = () => (fig ? fig.scale('x') : null)
 
-    const onDown = (e) => {
-      if (!onZoomRef.current || e.button !== 0) return
+    const onWheel = (e) => {
+      if (!onViewRef.current || !fig) return
+      e.preventDefault()
+      const sx = xScale(); if (!sx?.domain) return
+      const [d0, d1] = sx.domain
       const rect = el.getBoundingClientRect()
-      drag = { x0: e.clientX - rect.left, y0: e.clientY - rect.top }
+      const cx = invertScale(sx, e.clientX - rect.left)
+      if (cx == null) return
+      const factor = e.deltaY < 0 ? 0.82 : 1.22 // in / out
+      const n0 = cx - (cx - d0) * factor
+      const n1 = cx + (d1 - cx) * factor
+      if (n1 - n0 < 1) return // don't over-zoom past ~1 day
+      onViewRef.current([n0, n1])
+    }
+    const onDown = (e) => {
+      if (!onViewRef.current || e.button !== 0 || !fig) return
+      const sx = xScale(); if (!sx?.domain || !sx?.range) return
+      const [d0, d1] = sx.domain, [r0, r1] = sx.range
+      pan = { startPx: e.clientX, dom0: d0, dom1: d1, dataPerPx: (d1 - d0) / (r1 - r0) }
       dragged = false
     }
     const onMove = (e) => {
-      if (!drag) return
-      const rect = el.getBoundingClientRect()
-      const x1 = e.clientX - rect.left, y1 = e.clientY - rect.top
-      if (Math.abs(x1 - drag.x0) > 4 || Math.abs(y1 - drag.y0) > 4) dragged = true
+      if (!pan) return
+      const totalPx = e.clientX - pan.startPx
+      if (Math.abs(totalPx) > 3) dragged = true
       if (!dragged) return
-      if (!boxEl) { boxEl = document.createElement('div'); boxEl.className = 'zoombox'; el.appendChild(boxEl) }
-      Object.assign(boxEl.style, {
-        left: Math.min(drag.x0, x1) + 'px', top: Math.min(drag.y0, y1) + 'px',
-        width: Math.abs(x1 - drag.x0) + 'px', height: Math.abs(y1 - drag.y0) + 'px',
-      })
+      const shift = -totalPx * pan.dataPerPx
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => onViewRef.current([pan.dom0 + shift, pan.dom1 + shift]))
     }
-    const onUp = (e) => {
-      if (!drag) return
-      const rect = el.getBoundingClientRect()
-      const x1 = e.clientX - rect.left, y1 = e.clientY - rect.top
-      const wasDrag = dragged
-      clearBox()
-      const d = drag; drag = null
-      if (!wasDrag || !fig || !onZoomRef.current) return
-      try {
-        const sx = fig.scale('x'), sy = fig.scale('y')
-        const xs = [invertScale(sx, d.x0), invertScale(sx, x1)].sort((a, b) => a - b)
-        const ys = [invertScale(sy, d.y0), invertScale(sy, y1)].sort((a, b) => a - b)
-        if (xs.every((n) => n != null) && ys.every((n) => n != null)) {
-          onZoomRef.current({ x: xs, y: ys })
-        }
-      } catch { /* ignore */ }
-    }
+    const onUp = () => { pan = null }
     const onClick = () => {
-      if (dragged) { dragged = false; return } // a zoom drag, not a pick
+      if (dragged) { dragged = false; return }
       if (onPickRef.current && fig && fig.value != null) onPickRef.current(fig.value)
     }
-    const onDbl = () => { if (onZoomRef.current) onZoomRef.current(null) }
+    const onDbl = () => { if (onViewRef.current) onViewRef.current(null) }
 
     const render = () => {
-      el.replaceChildren(); clearBox()
+      el.replaceChildren()
       fig = build(el.clientWidth || 640)
       if (fig) el.appendChild(fig)
     }
     render()
+    el.addEventListener('wheel', onWheel, { passive: false })
     el.addEventListener('mousedown', onDown)
     window.addEventListener('mousemove', onMove)
     window.addEventListener('mouseup', onUp)
@@ -90,6 +83,7 @@ export default function PlotFigure({ build, deps = [], onPick, onZoom }) {
     ro.observe(el)
     return () => {
       ro.disconnect(); cancelAnimationFrame(raf)
+      el.removeEventListener('wheel', onWheel)
       el.removeEventListener('mousedown', onDown)
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mouseup', onUp)
@@ -101,7 +95,7 @@ export default function PlotFigure({ build, deps = [], onPick, onZoom }) {
   }, deps)
 
   return (
-    <div ref={ref} className="w-full overflow-x-auto"
-      style={{ position: 'relative', cursor: onZoom ? 'crosshair' : onPick ? 'pointer' : 'default' }} />
+    <div ref={ref} className="w-full overflow-x-auto select-none"
+      style={{ cursor: onView ? 'grab' : onPick ? 'pointer' : 'default' }} />
   )
 }

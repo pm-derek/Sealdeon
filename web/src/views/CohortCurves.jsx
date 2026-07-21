@@ -4,18 +4,22 @@ import FilterBar from '../components/FilterBar.jsx'
 import SetPicker from '../components/SetPicker.jsx'
 import PlotFigure from '../components/PlotFigure.jsx'
 import { loadView, loadSetDetail } from '../lib/loadView.js'
-import { cohortBand, filterSeries, fmtPct, fmtUsd, MSRP } from '../lib/slice.js'
+import { cohortBand, filterSeries, fmtPct, fmtUsd } from '../lib/slice.js'
 import { useTheme } from '../lib/theme.js'
 
 const X_DIV = { days: 1, weeks: 7, months: 30.44 }
 const MAX_COLORED = 8
 
-// metric -> how to read a value from a [ageDays, idx, prem, price] point
 const METRICS = {
-  raw: { label: 'Raw $', axis: 'market price', baseline: null, isPct: false, isUsd: true },
-  idx: { label: 'Index (release)', axis: 'indexed · release day = 100', baseline: 100, isPct: false },
-  msrp: { label: 'Index (MSRP)', axis: 'indexed · MSRP = 100', baseline: 100, isPct: false },
-  prem: { label: 'Premium %', axis: 'sealed premium', baseline: 0, isPct: true },
+  raw: { label: 'Raw $', axis: 'market price', isPct: false, isUsd: true },
+  prem: { label: 'Premium %', axis: 'sealed premium', isPct: true, baseline: 0 },
+}
+
+// A short, readable line label from a set name: drop the "SWSH07:" / "SM -"
+// style prefix and trim. e.g. "SWSH07: Evolving Skies" -> "Evolving Skies".
+function shortLabel(set) {
+  const raw = (set?.name || String(set?.groupId || '')).replace(/^[A-Za-z0-9]+\s*[:\-–]\s*/, '')
+  return raw.length > 18 ? raw.slice(0, 17) + '…' : raw
 }
 
 function priceAtDate(sparkline, targetIso) {
@@ -31,15 +35,15 @@ function priceAtDate(sparkline, targetIso) {
 export default function CohortCurves({ meta }) {
   const [curves, setCurves] = useState(null)
   const [state, setState] = useState({
-    eras: [], seriesType: 'Booster Box', hype: 'all',
-    completeness: 'complete', metric: 'idx', xUnit: 'days',
+    eras: [], seriesType: 'Booster Box', hype: 'all', completeness: 'complete',
+    metric: 'raw', xUnit: 'days',
   })
   const [picked, setPicked] = useState(new Set())
   const [focus, setFocus] = useState(null)
-  const [maxAge, setMaxAge] = useState(365)
-  const [labels, setLabels] = useState('focus')
+  const [labels, setLabels] = useState('all')
+  const [yLog, setYLog] = useState(true)
   const [focusChase, setFocusChase] = useState(null)
-  const [zoom, setZoom] = useState(null) // {x:[a,b], y:[a,b]} in data coords
+  const [view, setView] = useState(null) // x-domain [min,max] in xUnit units, or null = full
   const { palette, themeTick } = useTheme()
 
   useEffect(() => { loadView('cohort_curves').then(setCurves) }, [])
@@ -49,53 +53,37 @@ export default function CohortCurves({ meta }) {
     loadSetDetail(focus).then((d) => { if (live) setFocusChase(d) }).catch(() => setFocusChase(null))
     return () => { live = false }
   }, [focus, state.seriesType])
-  // Reset any zoom when the underlying data selection changes.
-  useEffect(() => { setZoom(null) }, [state.metric, state.seriesType, state.xUnit, maxAge])
+  useEffect(() => { setView(null) }, [state.metric, state.seriesType, state.xUnit])
 
   const bySet = useMemo(() => new Map(meta.sets.map((s) => [s.groupId, s])), [meta])
   const metricDef = METRICS[state.metric]
-  const msrpUnavailable = state.metric === 'msrp' && !MSRP[state.seriesType]
-
-  const valueAt = useMemo(() => {
-    switch (state.metric) {
-      case 'raw': return (pt) => pt[3]
-      case 'prem': return (pt) => pt[2]
-      case 'msrp': {
-        const m = MSRP[state.seriesType]
-        return m ? (pt) => (pt[3] != null ? (100 * pt[3]) / m : null) : () => null
-      }
-      default: return (pt) => pt[1]
-    }
-  }, [state.metric, state.seriesType])
+  const isPct = metricDef.isPct
+  const useLog = state.metric === 'raw' && yLog
+  const valueAt = state.metric === 'prem' ? (pt) => pt[2] : (pt) => pt[3]
 
   const model = useMemo(() => {
     if (!curves) return null
     const opts = { ...state, picked: picked.size ? picked : null }
     const series = filterSeries(curves, meta, opts)
-    const band = cohortBand(series, valueAt, maxAge)
+    const band = cohortBand(series, valueAt)
     const lines = series.map((s) => {
       const set = bySet.get(s.groupId)
       return {
-        groupId: s.groupId,
-        name: set?.name ?? String(s.groupId),
-        abbr: set?.abbreviation ?? String(s.groupId),
-        partial: !set?.archiveComplete,
-        lowConfidence: s.lowConfidence && state.metric === 'prem',
-        points: s.points
-          .filter((pt) => pt[0] <= maxAge && valueAt(pt) != null)
+        groupId: s.groupId, name: set?.name ?? String(s.groupId), abbr: shortLabel(set),
+        partial: !set?.archiveComplete, lowConfidence: s.lowConfidence && state.metric === 'prem',
+        points: s.points.filter((pt) => valueAt(pt) != null && (!useLog || valueAt(pt) > 0))
           .map((pt) => ({ age: pt[0], value: valueAt(pt), price: pt[3] })),
       }
     }).filter((l) => l.points.length > 1)
     const colored = new Map()
-    const coloredIds = picked.size ? [...picked].slice(0, MAX_COLORED) : focus != null ? [focus] : []
-    coloredIds.forEach((gid, i) => colored.set(gid, palette.series[i % palette.series.length]))
+    const ids = picked.size ? [...picked].slice(0, MAX_COLORED) : focus != null ? [focus] : []
+    ids.forEach((gid, i) => colored.set(gid, palette.series[i % palette.series.length]))
     return { lines, band, colored }
-  }, [curves, meta, state, picked, focus, maxAge, valueAt, themeTick])
+  }, [curves, meta, state, picked, focus, valueAt, useLog, themeTick])
 
   const chaseTitle = (gid, ageDays) => {
     if (!focusChase || gid !== focus || state.seriesType !== 'Chase Singles') return null
-    const set = bySet.get(gid)
-    if (!set?.releaseDate) return null
+    const set = bySet.get(gid); if (!set?.releaseDate) return null
     const date = new Date(new Date(set.releaseDate).getTime() + ageDays * 86400000).toISOString().slice(0, 10)
     const rows = (focusChase.chase || []).map((c) => {
       const p = priceAtDate(c.sparkline, date) ?? c.price
@@ -105,62 +93,63 @@ export default function CohortCurves({ meta }) {
   }
 
   const build = (width) => {
-    if (!model || msrpUnavailable) return null
+    if (!model) return null
     const div = X_DIV[state.xUnit]
     const flat = model.lines.flatMap((l) =>
-      l.points.map((p) => ({
-        x: p.age / div, ageDays: p.age, value: p.value, name: l.name, abbr: l.abbr,
-        groupId: l.groupId, partial: l.partial, price: p.price,
-      })),
-    )
+      l.points.map((p) => ({ x: p.age / div, ageDays: p.age, value: p.value, name: l.name, abbr: l.abbr, groupId: l.groupId, partial: l.partial, price: p.price })))
     const context = flat.filter((d) => !model.colored.has(d.groupId))
     const highlighted = flat.filter((d) => model.colored.has(d.groupId))
-    const lastPoints = (rows) => rows.filter((d, i, arr) => d === arr.filter((x) => x.groupId === d.groupId).at(-1))
+    const lastVisible = (rows) => {
+      const hi = view ? view[1] : Infinity, lo = view ? view[0] : -Infinity
+      const inv = rows.filter((d) => d.x >= lo && d.x <= hi)
+      return inv.filter((d) => d === inv.filter((x) => x.groupId === d.groupId).at(-1))
+    }
+
+    const lo = view ? view[0] : -Infinity, hi = view ? view[1] : Infinity
+    const vis = flat.filter((d) => d.x >= lo && d.x <= hi).map((d) => d.value)
+    let yDomain
+    if (vis.length) {
+      let loY = Math.min(...vis), hiY = Math.max(...vis)
+      if (useLog) { loY = Math.max(loY, 0.01); yDomain = [loY / 1.15, hiY * 1.15] }
+      else { const pad = (hiY - loY) * 0.06 || 1; yDomain = [isPct ? Math.min(loY - pad, 0) : loY - pad, hiY + pad] }
+    }
 
     const title = (d) => {
       const head = `${d.name}${d.partial ? ' (partial)' : ''}\nage ${Math.round(d.x)} ${state.xUnit}`
-      let line
-      if (metricDef.isPct) line = `premium ${fmtPct(d.value)}`
-      else if (metricDef.isUsd) line = fmtUsd(d.value)
-      else line = `${d.value?.toFixed(1)}  ·  ${fmtUsd(d.price)}`
+      const line = isPct ? `premium ${fmtPct(d.value)}` : fmtUsd(d.value)
       return head + '\n' + line + (chaseTitle(d.groupId, d.ageDays) || '')
     }
 
     const labelMarks = []
     if (labels === 'all') {
-      labelMarks.push(Plot.text(lastPoints(flat), {
-        x: 'x', y: 'value', text: 'abbr', dx: 5, textAnchor: 'start', fontSize: 9,
+      labelMarks.push(Plot.text(lastVisible(flat), {
+        x: 'x', y: 'value', text: 'abbr', dx: 5, textAnchor: 'start', fontSize: 9.5,
         fill: (d) => model.colored.get(d.groupId) || palette.textSecondary,
+        stroke: palette.surface, strokeWidth: 2, paintOrder: 'stroke',
       }))
     } else if (labels === 'focus') {
-      labelMarks.push(Plot.text(lastPoints(highlighted), {
+      labelMarks.push(Plot.text(lastVisible(highlighted), {
         x: 'x', y: 'value', text: 'name', dx: 6, textAnchor: 'start', fontSize: 11, fill: palette.text,
+        stroke: palette.surface, strokeWidth: 3, paintOrder: 'stroke',
       }))
     }
 
-    const xDomain = zoom ? zoom.x : undefined
-    const yDomain = zoom ? zoom.y : undefined
-    const tickFmt = metricDef.isPct ? (d) => `${(d * 100).toFixed(0)}%`
-      : metricDef.isUsd ? (d) => `$${d}` : undefined
-
     return Plot.plot({
-      width, height: 470,
-      marginRight: labels === 'all' ? 62 : labels === 'focus' ? 158 : 24,
-      marginLeft: 52,
+      width, height: 480,
+      marginRight: labels === 'all' ? 74 : labels === 'focus' ? 150 : 24,
+      marginLeft: 56,
       style: { background: 'transparent', color: palette.textSecondary, fontSize: '12px' },
-      x: { label: `${state.xUnit} since release →`, grid: false, domain: xDomain },
-      y: { label: `↑ ${metricDef.axis}`, grid: true, tickFormat: tickFmt, domain: yDomain },
+      x: { label: `${state.xUnit} since release →`, grid: false, domain: view || undefined },
+      y: {
+        label: `↑ ${metricDef.axis}${useLog ? ' (log)' : ''}`, grid: true, domain: yDomain,
+        type: useLog ? 'log' : 'linear',
+        tickFormat: isPct ? ((d) => `${(d * 100).toFixed(0)}%`) : ((d) => `$${d >= 1000 ? (d / 1000) + 'k' : d}`),
+      },
       marks: [
         Plot.areaY(model.band, { x: (d) => d.age / div, y1: 'p25', y2: 'p75', fill: palette.band, fillOpacity: 0.5 }),
         Plot.line(model.band, { x: (d) => d.age / div, y: 'p50', stroke: palette.textSecondary, strokeWidth: 1.5, strokeDasharray: '3,3' }),
-        Plot.line(context, {
-          x: 'x', y: 'value', z: 'groupId', stroke: palette.context, strokeWidth: 1, strokeOpacity: 0.75,
-          strokeDasharray: (d) => (d.partial ? '2,3' : null),
-        }),
-        Plot.line(highlighted, {
-          x: 'x', y: 'value', z: 'groupId', stroke: (d) => model.colored.get(d.groupId), strokeWidth: 2.5,
-          strokeDasharray: (d) => (d.partial ? '4,3' : null),
-        }),
+        Plot.line(context, { x: 'x', y: 'value', z: 'groupId', stroke: palette.context, strokeWidth: 1, strokeOpacity: 0.8, strokeDasharray: (d) => (d.partial ? '2,3' : null) }),
+        Plot.line(highlighted, { x: 'x', y: 'value', z: 'groupId', stroke: (d) => model.colored.get(d.groupId), strokeWidth: 2.5, strokeDasharray: (d) => (d.partial ? '4,3' : null) }),
         ...labelMarks,
         Plot.tip(flat, Plot.pointer({ x: 'x', y: 'value', title })),
         metricDef.baseline != null ? Plot.ruleY([metricDef.baseline], { stroke: palette.grid }) : null,
@@ -172,10 +161,8 @@ export default function CohortCurves({ meta }) {
 
   const onPick = (d) => { if (d?.groupId != null) setFocus(d.groupId) }
   const bandN = model.band.length ? model.band[Math.floor(model.band.length / 2)].n : 0
-
   const Seg = ({ label, options, value, onChange }) => (
-    <div className="seg">
-      <span className="seg-label">{label}</span>
+    <div className="seg"><span className="seg-label">{label}</span>
       {options.map(([v, t]) => (
         <button key={v} className="chip" data-on={String(value === v)} onClick={() => onChange(v)}>{t}</button>
       ))}
@@ -186,10 +173,9 @@ export default function CohortCurves({ meta }) {
     <section>
       <h2 className="text-lg font-semibold">Cohort curves</h2>
       <p className="subtle text-sm max-w-4xl">
-        Compare sets by <em>age</em>, not calendar date. <strong>Index</strong> normalizes each set to 100 at a
-        baseline (release-day market price, or retail MSRP — release day is hype-inflated, MSRP shows gain over
-        retail); <strong>Raw $</strong> shows absolute price. Shaded band = p25–p75 of the shown cohort
-        ({bandN} sets). <em>Click a line to focus · drag a box to zoom · double-click to reset.</em>
+        Compare sets by <em>age</em>, not calendar date. <strong>Raw $</strong> = market price of each set's
+        Booster Box / ETB / etc.; <strong>Premium %</strong> = value over pack contents. Band = p25–p75 of the
+        shown cohort ({bandN} sets). <em>Scroll to zoom · drag to pan · double-click to reset · click a line to focus.</em>
       </p>
       <FilterBar meta={meta} state={state} setState={setState} />
       <div className="flex flex-wrap items-center gap-x-6 gap-y-2.5 pb-1">
@@ -197,14 +183,16 @@ export default function CohortCurves({ meta }) {
           options={Object.entries(METRICS).map(([k, m]) => [k, m.label])} />
         <Seg label="X axis" value={state.xUnit} onChange={(v) => setState((s) => ({ ...s, xUnit: v }))}
           options={[['days', 'Days'], ['weeks', 'Weeks'], ['months', 'Months']]} />
+        {state.metric === 'raw' && (
+          <Seg label="Y scale" value={yLog ? 'log' : 'lin'} onChange={(v) => setYLog(v === 'log')}
+            options={[['log', 'Log'], ['lin', 'Linear']]} />
+        )}
       </div>
-      <SetPicker meta={meta} picked={picked} setPicked={setPicked} focus={focus} setFocus={setFocus} />
+      <SetPicker meta={meta} picked={picked} setPicked={setPicked} focus={focus} setFocus={setFocus} eras={state.eras} />
       <div className="flex flex-wrap items-center gap-x-6 gap-y-2.5 pb-2">
-        <Seg label="Window" value={maxAge} onChange={setMaxAge}
-          options={[[90, '90d'], [180, '180d'], [365, '1y'], [730, '2y'], [10000, 'All']]} />
         <Seg label="Labels" value={labels} onChange={setLabels}
-          options={[['focus', 'Focus only'], ['all', 'All lines'], ['off', 'Off']]} />
-        {zoom && <button className="chip" data-on="true" onClick={() => setZoom(null)}>✕ Reset zoom</button>}
+          options={[['all', 'All lines'], ['focus', 'Focus only'], ['off', 'Off']]} />
+        {view && <button className="chip" data-on="true" onClick={() => setView(null)}>✕ Reset view</button>}
       </div>
       {model.lines.some((l) => l.lowConfidence) && state.metric === 'prem' && (
         <p className="text-xs" style={{ color: 'var(--warn)' }}>
@@ -212,39 +200,31 @@ export default function CohortCurves({ meta }) {
         </p>
       )}
       <div className="card p-3">
-        {msrpUnavailable ? (
-          <p className="muted text-sm py-10 text-center">
-            No MSRP baseline for {state.seriesType} — pick a sealed product type, or switch metric.
-          </p>
-        ) : (
-          <PlotFigure build={build} onPick={onPick} onZoom={setZoom}
-            deps={[model, state.xUnit, state.metric, labels, focusChase, zoom, themeTick]} />
-        )}
+        <PlotFigure build={build} onPick={onPick} onView={setView}
+          deps={[model, state.xUnit, state.metric, labels, useLog, focusChase, view, themeTick]} />
       </div>
       {state.seriesType === 'Chase Singles' && focus != null && focusChase?.chase?.length > 0 && (
         <div className="card p-3 mt-3">
-          <div className="flex items-baseline justify-between pb-1">
+          <div className="flex items-baseline justify-between pb-2">
             <h3 className="font-semibold text-sm">{bySet.get(focus)?.name} — chase basket (drives the focused line)</h3>
             <span className="muted text-xs">hover the focused line for prices at a given age</span>
           </div>
-          <table className="tbl text-sm w-full">
-            <thead><tr><th>Card</th><th>#</th><th>Current</th><th>Peak</th><th>Off peak</th></tr></thead>
-            <tbody>
-              {focusChase.chase.map((c) => (
-                <tr key={c.productId}>
-                  <td className="max-w-96 truncate" title={c.name}>
-                    <a href={c.url} target="_blank" rel="noreferrer" className="hover:underline">{c.name}</a>
-                  </td>
-                  <td className="muted">{c.cardNumber}</td>
-                  <td>{fmtUsd(c.price)}</td>
-                  <td className="muted">{fmtUsd(c.peakPrice)}</td>
-                  <td>{c.pctOffPeak != null
-                    ? <span style={{ color: c.pctOffPeak < -0.001 ? 'var(--neg)' : 'var(--pos)' }}>{fmtPct(c.pctOffPeak)}</span>
-                    : '—'}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+            {focusChase.chase.map((c) => (
+              <a key={c.productId} href={c.url} target="_blank" rel="noreferrer"
+                className="card p-2 flex gap-2 items-center hover:brightness-110" style={{ boxShadow: 'none' }}>
+                {c.imageUrl && <img src={c.imageUrl} alt="" loading="lazy"
+                  className="rounded" style={{ width: 44, height: 61, objectFit: 'cover', flex: '0 0 auto' }} />}
+                <div className="min-w-0">
+                  <div className="text-xs truncate" title={c.name}>{(c.name.replace(bySet.get(focus)?.name || '', '').trim()) || c.name}</div>
+                  <div className="text-sm font-semibold">{fmtUsd(c.price)}</div>
+                  <div className="text-xs muted">peak {fmtUsd(c.peakPrice)}
+                    {c.pctOffPeak != null && <span style={{ color: c.pctOffPeak < -0.001 ? 'var(--neg)' : 'var(--pos)' }}> · {fmtPct(c.pctOffPeak)}</span>}
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
         </div>
       )}
     </section>

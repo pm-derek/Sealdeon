@@ -22,7 +22,16 @@ ERA_ME = "Mega Evolution"
 ERA_LEGACY = "Legacy"
 ERA_SPECIAL = "Special/Promo"
 
-_SPECIAL_RE = re.compile(r"promo|mcdonald|miscellaneous", re.IGNORECASE)
+# Supplemental / promo / vintage-reissue groups. TCGCSV often stamps these
+# with a recent publishedOn (re-catalogued), which would otherwise push them
+# into a modern era by the date fallback. Name-match them to Special/Promo.
+_SPECIAL_RE = re.compile(
+    r"promo|mcdonald|miscellaneous|pop series|trainer kit|first partner|"
+    r"blister exclusive|prize pack|battle academy|trick or trade|burger king|"
+    r"nintendo|prerelease|pre-release|jumbo|world championship|"
+    r"theme deck|starter deck|battle deck",
+    re.IGNORECASE,
+)
 
 _SWSH_START = dt.date(2020, 2, 1)
 _SV_START = dt.date(2023, 3, 1)

@@ -2,13 +2,15 @@ import { useMemo, useState } from 'react'
 
 // Ad-hoc multi-select set picker: pick an explicit list (hype-set
 // comparisons etc.) that overrides the era/hype filters while active.
-export default function SetPicker({ meta, picked, setPicked, focus, setFocus }) {
+export default function SetPicker({ meta, picked, setPicked, focus, setFocus, eras = [] }) {
   const [query, setQuery] = useState('')
   const aliases = meta.aliases || {}
-  // Newest first, undated sets last.
+  // Newest first, undated sets last, restricted to the selected era(s).
   const byReleaseDesc = useMemo(
-    () => [...meta.sets].sort((a, b) => (b.releaseDate || '').localeCompare(a.releaseDate || '')),
-    [meta],
+    () => [...meta.sets]
+      .filter((s) => eras.length === 0 || eras.includes(s.era))
+      .sort((a, b) => (b.releaseDate || '').localeCompare(a.releaseDate || '')),
+    [meta, eras],
   )
   const matches = useMemo(() => {
     const q = query.toLowerCase().trim()
