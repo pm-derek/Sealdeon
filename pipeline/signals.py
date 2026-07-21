@@ -10,12 +10,25 @@ available on its own date), then measures the forward price return at
     signals_events.json     -- firings per product, for chart markers
 
 Signals (all "buy" signals on sealed product):
-  below_peers  : sealed premium >= 15pp BELOW the same-day clean-set
-                 median premium for its product type (Derek's Stellar
-                 Crown instinct -- cheaper than its peers).
-  cheap_premium: absolute sealed premium <= 10% (the analyst's ~12.5%
-                 threshold; negative = box under pack value).
-  off_peak     : price <= 60% of its trailing-180d peak (deep dip).
+  value_rebound  : still cheaper than peers AND premium already turning up
+                   (Derek's Stellar Crown pattern).
+  below_peers    : sealed premium >= 15pp BELOW the same-day clean-set
+                   median premium for its product type (cheaper than peers).
+  cheap_premium  : absolute sealed premium <= 10% (the analyst's ~12.5%
+                   threshold; negative = box under pack value).
+  off_peak       : price <= 60% of its trailing-180d peak (deep dip).
+  reprint_window : product age >= ~18 months. Main-set ("standard
+                   expansion") print runs typically end 12-18 months after
+                   launch; once no new supply is printed, scarcity should
+                   push sealed up. (Special/collector sets run shorter,
+                   ~6-9 months -- see deep_oop for the older cohort.)
+  deep_oop       : product age >= ~24 months -- long out of print across
+                   both main and special sets. Tests whether "older = more
+                   scarce = better" holds, and how much of the reprint edge
+                   is age.
+  momentum_high  : price at >= 98% of its trailing-180d peak (making new
+                   highs). The mirror image of off_peak -- does momentum
+                   continue, or does buying strength lose like buying dips?
 
 Only modern-era (SWSH/SV/ME), decomposable, non-low-confidence sealed
 products priced > $20 are considered, to keep the intrinsic-value noise
@@ -34,11 +47,17 @@ GAP_DAYS = 21           # min days between two events of the same signal/product
 MODERN = ('Sword & Shield', 'Scarlet & Violet', 'Mega Evolution')
 PEAK_WINDOW = 180
 
+REPRINT_AGE = 540       # ≈18 months: main-set print run typically ended
+DEEP_OOP_AGE = 730      # ≈24 months: long out of print
+
 SIGNALS = {
     'value_rebound': {'label': 'Value + turning up (below peers AND premium rising)', 'kind': 'premium'},
     'below_peers':  {'label': 'Below peers (premium ≥15pp under clean median)', 'kind': 'premium'},
     'cheap_premium': {'label': 'Cheap premium (≤10% over pack value)', 'kind': 'premium'},
     'off_peak':     {'label': 'Deep dip (≤60% of trailing peak)', 'kind': 'price'},
+    'reprint_window': {'label': 'Reprint window closing (age ≥ ~18mo, main-set print run ending)', 'kind': 'age'},
+    'deep_oop':     {'label': 'Long out of print (age ≥ ~24mo)', 'kind': 'age'},
+    'momentum_high': {'label': 'Momentum / new high (≥98% of trailing peak)', 'kind': 'price'},
 }
 
 
@@ -60,7 +79,8 @@ def _base_frame(con) -> pd.DataFrame:
         )
         SELECT sd.date, sd.productId, sd.groupId, sd.productType,
                sd.sealedPrice AS price, sd.sealedPremiumPct AS prem,
-               cm.cleanMed, s.era, s.isHype, s.name AS setName
+               cm.cleanMed, s.era, s.isHype, s.name AS setName,
+               date_diff('day', s.releaseDate, sd.date) AS ageDays
         FROM sd_mat sd
         JOIN sets s ON s.groupId = sd.groupId
         LEFT JOIN clean_med cm ON cm.date = sd.date AND cm.productType = sd.productType
@@ -84,6 +104,12 @@ def _fire_flags(df: pd.DataFrame) -> pd.DataFrame:
     df['below_peers'] = df['dev'] <= -0.15
     df['cheap_premium'] = df['prem'] <= 0.10
     df['off_peak'] = df['offpeak'] <= 0.60
+    df['momentum_high'] = df['offpeak'] >= 0.98
+    # Lifecycle / reprint-cycle signals: monotonic in age, so each product
+    # fires exactly once (the day it first crosses the threshold, or its
+    # first observation if already older).
+    df['reprint_window'] = df['ageDays'] >= REPRINT_AGE
+    df['deep_oop'] = df['ageDays'] >= DEEP_OOP_AGE
     # "value + turning up": still cheaper than peers, but the premium has
     # started recovering vs ~14 obs ago (Derek's Stellar Crown pattern).
     df['prem_lag'] = df.groupby('productId')['prem'].shift(14)

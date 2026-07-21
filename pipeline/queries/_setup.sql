@@ -102,8 +102,11 @@ WHERE b.basePrice > 0;
 
 -- Age banding used by benchmarks and premium-vs-median.
 CREATE OR REPLACE MACRO age_band(age) AS
-CASE WHEN age <= 30 THEN '0-1mo'
-     WHEN age <= 91 THEN '1-3mo'
+CASE WHEN age <= 30  THEN '0-1mo'
+     WHEN age <= 91  THEN '1-3mo'
      WHEN age <= 182 THEN '3-6mo'
      WHEN age <= 365 THEN '6-12mo'
-     ELSE '12mo+' END;
+     WHEN age <= 547 THEN '12-18mo'
+     WHEN age <= 730 THEN '18-24mo'
+     WHEN age <= 1095 THEN '24-36mo'
+     ELSE '36mo+' END;

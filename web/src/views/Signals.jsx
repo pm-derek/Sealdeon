@@ -16,7 +16,8 @@ function Leaderboard({ bt }) {
   const bySig = {}
   for (const r of bt.rows) (bySig[r.signal] ||= {})[r.horizon] = r
   const labelOf = Object.fromEntries(bt.signals.map((s) => [s.key, s.label]))
-  const order = ['value_rebound', 'below_peers', 'cheap_premium', 'off_peak']
+  const order = ['value_rebound', 'below_peers', 'cheap_premium', 'off_peak',
+                 'reprint_window', 'deep_oop', 'momentum_high']
   return (
     <div className="card p-3 overflow-x-auto">
       <table className="tbl text-sm w-full">
@@ -112,18 +113,34 @@ export default function Signals({ meta }) {
 
       <h3 className="font-semibold text-sm pt-3 pb-1">How the hypotheses held up</h3>
       <Leaderboard bt={bt} />
-      <p className="text-xs muted max-w-4xl pt-2">
-        ⚠ <strong>Read this honestly:</strong> 2024–2026 was a strong bull market for sealed, so the baseline itself
-        won ~77% at 90 days — nearly everything went up. <strong>Cheap-vs-peers alone barely beat the market</strong>;
-        <strong> buying price dips (“deep dip”) actively lost</strong> ~9pp — those corrections kept correcting.
-        Only <strong>“value + turning up”</strong> (cheap <em>and</em> premium already recovering — your Stellar Crown
-        pattern) showed a real edge (+5pp win rate). The true test is a flat/down market, which this data doesn't yet contain.
-      </p>
+      <div className="text-xs muted max-w-4xl pt-2 space-y-1.5">
+        <p>
+          ⚠ <strong>Read this honestly:</strong> 2024–2026 was a strong bull market for sealed, so the baseline itself
+          won ~77% at 90 days — nearly everything went up. What matters is the <em>edge over that baseline</em> (“vs mkt”).
+        </p>
+        <p>
+          • <strong>“Value + turning up”</strong> (cheap-vs-peers <em>and</em> premium already recovering — your Stellar
+          Crown pattern) is the only rule with a consistent edge (74→82% win, +1–2pp over market at every horizon).
+        </p>
+        <p>
+          • <strong>Cheap-vs-peers / cheap-premium</strong> roughly matched the market (≈0 edge); <strong>buying deep price
+          dips actively lost</strong> ~9pp at 90d — those corrections kept correcting. <strong>Buying new highs (momentum)</strong>
+          didn’t beat the market but, unlike dips, didn’t lose — strength ≥ weakness.
+        </p>
+        <p>
+          • <strong>The reprint-window hypothesis didn’t pay here.</strong> Buying a set purely because it crossed
+          ~18 months (<em>reprint window</em>) slightly <em>underperformed</em> buy-anything (−1 to −2pp); ~24-month
+          “long out of print” only matched it. Two honest reasons: the scarcity premium looks largely priced in already,
+          and this lake starts Feb 2024 — sets already old by then had their out-of-print re-rating <em>before</em> we can
+          observe it, so we may be catching them late. The reprint edge, if it exists, needs the run-up captured live.
+        </p>
+        <p className="pt-0.5">The true test of all of these is a flat/down market, which this data doesn’t yet contain.</p>
+      </div>
 
       <h3 className="font-semibold text-sm pt-5 pb-1">Recent firings (last 180 days)</h3>
       <div className="flex flex-wrap items-center gap-2 pb-2">
         <span className="seg-label">Signal</span>
-        {[['value_rebound', 'Value + turning'], ['below_peers', 'Below peers'], ['cheap_premium', 'Cheap premium'], ['off_peak', 'Deep dip'], ['all', 'All']].map(([v, t]) => (
+        {[['value_rebound', 'Value + turning'], ['below_peers', 'Below peers'], ['cheap_premium', 'Cheap premium'], ['off_peak', 'Deep dip'], ['reprint_window', 'Reprint window'], ['deep_oop', 'Long OOP'], ['momentum_high', 'New high'], ['all', 'All']].map(([v, t]) => (
           <button key={v} className="chip" data-on={String(sig === v)} onClick={() => setSig(v)}>{t}</button>
         ))}
       </div>

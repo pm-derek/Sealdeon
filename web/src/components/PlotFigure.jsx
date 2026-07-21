@@ -25,12 +25,24 @@ function zoomDomain(scale, c, factor) {
 }
 const touchDist = (a, b) => Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY)
 
-// Observable Plot figure with TradingView navigation:
-//   wheel -> zoom X (Shift or over Y-axis -> zoom Y) · drag -> pan X+Y
-//   double-click -> reset · click -> onPick
-// `labelData` (optional): [{groupId, text, color, points:[{x,value}]}].
-// Rendered as clickable HTML overlays at each line's last in-view point,
-// so a label is an exact click target (no snapping) -- onLabelClick(id).
+// Which region of the chart a pointer is over, from the scale pixel ranges.
+// Y-axis = the strip left of the plot area; X-axis = the strip below it.
+function regionAt(px, py, sx, sy) {
+  if (sx?.range && px < Math.min(sx.range[0], sx.range[1])) return 'yaxis'
+  if (sy?.range && py > Math.max(sy.range[0], sy.range[1])) return 'xaxis'
+  return 'plot'
+}
+
+// Observable Plot figure with TradingView / Robinhood navigation.
+//   Desktop: wheel -> zoom X (Shift or over Y-axis -> zoom Y) · drag plot -> pan ·
+//            drag Y-axis -> stretch Y · drag X-axis -> stretch X · dbl-click -> reset
+//   Touch:   1-finger drag on plot -> pan · drag on an axis -> stretch that axis ·
+//            2-finger pinch -> zoom both · double-tap -> reset · tap -> select line
+// The hover tooltip is force-hidden while two fingers are down or any drag/pinch
+// is in flight, so a zoom gesture never gets misread as a data hover.
+// `labelData` (optional): [{groupId, text, color, points:[{x,value}]}] rendered as
+// clickable HTML overlays at each line's last in-view point -- an exact click
+// target (no snapping) that calls onLabelClick(id).
 export default function PlotFigure({ build, deps = [], onPick, onView, labelData, onLabelClick }) {
   const elRef = useRef(null)
   const figRef = useRef(null)
@@ -85,15 +97,82 @@ export default function PlotFigure({ build, deps = [], onPick, onView, labelData
     if (!el) return
     let raf = 0, pan = null, dragged = false
 
+    // --- Tooltip suppression: hide Plot's tip mark + stop it receiving
+    // pointer events while a multitouch / drag gesture is active, so a
+    // zoom is never misinterpreted as a hover. ---
+    const setTipSuppressed = (on) => {
+      const svg = figRef.current
+      if (!svg) return
+      svg.style.pointerEvents = on ? 'none' : ''
+      svg.querySelectorAll('[aria-label="tip"]').forEach((g) => { g.style.display = on ? 'none' : '' })
+    }
+
+    const rel = (clientX, clientY) => {
+      const r = el.getBoundingClientRect()
+      return { x: clientX - r.left, y: clientY - r.top }
+    }
+
+    // Begin a gesture from a single pointer: pan on the plot body, or a
+    // one-axis stretch when it starts on that axis' strip.
+    const startGesture = (clientX, clientY) => {
+      const fig = figRef.current
+      if (!fig) return null
+      const sx = fig.scale('x'), sy = fig.scale('y')
+      if (!sx?.domain || !sx?.range) return null
+      const { x: px, y: py } = rel(clientX, clientY)
+      const region = regionAt(px, py, sx, sy)
+      return {
+        region, startX: clientX, startY: clientY,
+        xd: [...sx.domain], xLog: sx.type === 'log', xr: [...sx.range],
+        xPerPx: (sx.domain[1] - sx.domain[0]) / (sx.range[1] - sx.range[0]),
+        yd: sy?.domain ? [...sy.domain] : null, yLog: sy?.type === 'log', yr: sy?.range || null,
+        cx: invertScale(sx, px), cy: sy ? invertScale(sy, py) : null,
+      }
+    }
+
+    // Turn an in-flight gesture + current pointer into a view patch.
+    const gesturePatch = (g, clientX, clientY) => {
+      const dx = clientX - g.startX, dy = clientY - g.startY
+      if (g.region === 'yaxis' && g.yd && g.cy != null) {
+        // vertical drag on Y-axis stretches Y: down = zoom out, up = zoom in
+        const factor = Math.exp(dy / 170)
+        return { y: zoomFrom(g.yd, g.yLog, g.cy, factor) }
+      }
+      if (g.region === 'xaxis' && g.cx != null) {
+        // horizontal drag on X-axis stretches X: right = zoom out, left = zoom in
+        const factor = Math.exp(dx / 170)
+        const [n0, n1] = zoomFrom(g.xd, g.xLog, g.cx, factor)
+        return n1 - n0 < 1 ? null : { x: [n0, n1] }
+      }
+      // plot body: pan on both axes
+      const patch = { x: [g.xd[0] - dx * g.xPerPx, g.xd[1] - dx * g.xPerPx] }
+      if (g.yd && g.yr) {
+        if (g.yLog && g.yd[0] > 0 && g.yd[1] > 0) {
+          const l0 = Math.log(g.yd[0]), l1 = Math.log(g.yd[1]), lPerPx = (l1 - l0) / (g.yr[1] - g.yr[0])
+          patch.y = [Math.exp(l0 - dy * lPerPx), Math.exp(l1 - dy * lPerPx)]
+        } else {
+          const yPerPx = (g.yd[1] - g.yd[0]) / (g.yr[1] - g.yr[0])
+          patch.y = [g.yd[0] - dy * yPerPx, g.yd[1] - dy * yPerPx]
+        }
+      }
+      return patch
+    }
+
+    const pushPatch = (patch) => {
+      if (!patch) return
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => onViewRef.current(patch))
+    }
+
+    // ---------------- Mouse ----------------
     const onWheel = (e) => {
       const fig = figRef.current
       if (!onViewRef.current || !fig) return
       e.preventDefault()
-      const rect = el.getBoundingClientRect()
-      const px = e.clientX - rect.left, py = e.clientY - rect.top
+      const { x: px, y: py } = rel(e.clientX, e.clientY)
       const factor = e.deltaY < 0 ? 0.82 : 1.22
       const sx = fig.scale('x'), sy = fig.scale('y')
-      const overYAxis = sx?.range && px < sx.range[0]
+      const overYAxis = sx?.range && px < Math.min(sx.range[0], sx.range[1])
       if ((e.shiftKey || overYAxis) && sy?.domain) {
         const cy = invertScale(sy, py); if (cy == null) return
         onViewRef.current({ y: zoomDomain(sy, cy, factor) })
@@ -105,38 +184,20 @@ export default function PlotFigure({ build, deps = [], onPick, onView, labelData
       }
     }
     const onDown = (e) => {
-      const fig = figRef.current
-      if (!onViewRef.current || e.button !== 0 || !fig) return
-      const sx = fig.scale('x'), sy = fig.scale('y')
-      if (!sx?.domain || !sx?.range) return
-      pan = {
-        startX: e.clientX, startY: e.clientY,
-        xd: [...sx.domain], xPerPx: (sx.domain[1] - sx.domain[0]) / (sx.range[1] - sx.range[0]),
-        yd: sy?.domain ? [...sy.domain] : null, yLog: sy?.type === 'log',
-        yr: sy?.range || null,
-      }
+      if (!onViewRef.current || e.button !== 0) return
+      pan = startGesture(e.clientX, e.clientY)
       dragged = false
     }
     const onMove = (e) => {
       if (!pan) return
-      const dx = e.clientX - pan.startX, dy = e.clientY - pan.startY
-      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) dragged = true
-      if (!dragged) return
-      const patch = { x: [pan.xd[0] - dx * pan.xPerPx, pan.xd[1] - dx * pan.xPerPx] }
-      if (pan.yd && pan.yr) {
-        if (pan.yLog && pan.yd[0] > 0 && pan.yd[1] > 0) {
-          const l0 = Math.log(pan.yd[0]), l1 = Math.log(pan.yd[1])
-          const lPerPx = (l1 - l0) / (pan.yr[1] - pan.yr[0])
-          patch.y = [Math.exp(l0 - dy * lPerPx), Math.exp(l1 - dy * lPerPx)]
-        } else {
-          const yPerPx = (pan.yd[1] - pan.yd[0]) / (pan.yr[1] - pan.yr[0])
-          patch.y = [pan.yd[0] - dy * yPerPx, pan.yd[1] - dy * yPerPx]
-        }
+      if (Math.abs(e.clientX - pan.startX) > 3 || Math.abs(e.clientY - pan.startY) > 3) {
+        if (!dragged) setTipSuppressed(true)
+        dragged = true
       }
-      cancelAnimationFrame(raf)
-      raf = requestAnimationFrame(() => onViewRef.current(patch))
+      if (!dragged) return
+      pushPatch(gesturePatch(pan, e.clientX, e.clientY))
     }
-    const onUp = () => { pan = null }
+    const onUp = () => { pan = null; if (dragged) setTipSuppressed(false) }
     const onClick = () => {
       if (dragged) { dragged = false; return }
       const fig = figRef.current
@@ -144,35 +205,26 @@ export default function PlotFigure({ build, deps = [], onPick, onView, labelData
     }
     const onDbl = () => { if (onViewRef.current) onViewRef.current(null) }
 
-    // ---- Touch: 1 finger = pan (X+Y), 2 fingers = pinch-zoom, ----
-    // ---- double-tap = reset, tap = pick ----
-    let tpan = null, tpinch = null, tmoved = false, lastTap = 0
-    const relXY = (t) => {
-      const r = el.getBoundingClientRect()
-      return { x: t.clientX - r.left, y: t.clientY - r.top }
-    }
-    const startPan = (t) => {
-      const fig = figRef.current; if (!fig) return
-      const sx = fig.scale('x'), sy = fig.scale('y')
-      if (!sx?.domain || !sx?.range) return
-      tpan = {
-        startX: t.clientX, startY: t.clientY,
-        xd: [...sx.domain], xPerPx: (sx.domain[1] - sx.domain[0]) / (sx.range[1] - sx.range[0]),
-        yd: sy?.domain ? [...sy.domain] : null, yLog: sy?.type === 'log', yr: sy?.range || null,
-      }
-    }
+    // ---------------- Touch ----------------
+    let tgest = null, tpinch = null, tmoved = false, lastTap = 0
     const onTouchStart = (e) => {
       if (!onViewRef.current || !figRef.current) return
       tmoved = false
-      if (e.touches.length === 1) { startPan(e.touches[0]); tpinch = null }
-      else if (e.touches.length === 2) {
-        tpan = null
+      if (e.touches.length === 1) {
+        tgest = startGesture(e.touches[0].clientX, e.touches[0].clientY)
+        tpinch = null
+      } else if (e.touches.length === 2) {
+        // two fingers down: pinch-zoom, and hard-suppress the tooltip
+        tgest = null
+        setTipSuppressed(true)
         const fig = figRef.current, sx = fig.scale('x'), sy = fig.scale('y')
-        const a = relXY(e.touches[0]), b = relXY(e.touches[1])
+        const a = rel(e.touches[0].clientX, e.touches[0].clientY)
+        const b = rel(e.touches[1].clientX, e.touches[1].clientY)
         tpinch = {
           d0: touchDist(e.touches[0], e.touches[1]),
           cx: invertScale(sx, (a.x + b.x) / 2), cy: sy ? invertScale(sy, (a.y + b.y) / 2) : null,
-          xd: [...sx.domain], yd: sy?.domain ? [...sy.domain] : null, yLog: sy?.type === 'log',
+          xd: [...sx.domain], xLog: sx.type === 'log',
+          yd: sy?.domain ? [...sy.domain] : null, yLog: sy?.type === 'log',
         }
       }
       e.preventDefault()
@@ -180,35 +232,27 @@ export default function PlotFigure({ build, deps = [], onPick, onView, labelData
     const onTouchMove = (e) => {
       if (!onViewRef.current) return
       e.preventDefault()
-      if (e.touches.length === 2 && tpinch) {
+      if (e.touches.length >= 2 && tpinch) {
         const d = touchDist(e.touches[0], e.touches[1]); if (!d) return
         const factor = Math.max(0.1, Math.min(6, tpinch.d0 / d))
-        const patch = { x: zoomFrom(tpinch.xd, false, tpinch.cx, factor) }
+        const patch = { x: zoomFrom(tpinch.xd, tpinch.xLog, tpinch.cx, factor) }
         if (tpinch.yd && tpinch.cy != null) patch.y = zoomFrom(tpinch.yd, tpinch.yLog, tpinch.cy, factor)
         tmoved = true
-        cancelAnimationFrame(raf); raf = requestAnimationFrame(() => onViewRef.current(patch))
-      } else if (e.touches.length === 1 && tpan) {
+        pushPatch(patch)
+      } else if (e.touches.length === 1 && tgest) {
         const t = e.touches[0]
-        const dx = t.clientX - tpan.startX, dy = t.clientY - tpan.startY
-        if (Math.abs(dx) > 4 || Math.abs(dy) > 4) tmoved = true
-        if (!tmoved) return
-        const patch = { x: [tpan.xd[0] - dx * tpan.xPerPx, tpan.xd[1] - dx * tpan.xPerPx] }
-        if (tpan.yd && tpan.yr) {
-          if (tpan.yLog && tpan.yd[0] > 0 && tpan.yd[1] > 0) {
-            const l0 = Math.log(tpan.yd[0]), l1 = Math.log(tpan.yd[1]), lPerPx = (l1 - l0) / (tpan.yr[1] - tpan.yr[0])
-            patch.y = [Math.exp(l0 - dy * lPerPx), Math.exp(l1 - dy * lPerPx)]
-          } else {
-            const yPerPx = (tpan.yd[1] - tpan.yd[0]) / (tpan.yr[1] - tpan.yr[0])
-            patch.y = [tpan.yd[0] - dy * yPerPx, tpan.yd[1] - dy * yPerPx]
-          }
+        if (Math.abs(t.clientX - tgest.startX) > 4 || Math.abs(t.clientY - tgest.startY) > 4) {
+          if (!tmoved) setTipSuppressed(true)
+          tmoved = true
         }
-        cancelAnimationFrame(raf); raf = requestAnimationFrame(() => onViewRef.current(patch))
+        if (!tmoved) return
+        pushPatch(gesturePatch(tgest, t.clientX, t.clientY))
       }
     }
     const onTouchEnd = (e) => {
       if (e.touches.length < 2) tpinch = null
       if (e.touches.length === 0) {
-        if (tpan && !tmoved) {
+        if (tgest && !tmoved && tgest.region === 'plot') {
           const now = Date.now()
           if (now - lastTap < 320) { onViewRef.current?.(null); lastTap = 0 }
           else {
@@ -217,7 +261,8 @@ export default function PlotFigure({ build, deps = [], onPick, onView, labelData
             if (onPickRef.current && fig && fig.value != null) onPickRef.current(fig.value)
           }
         }
-        tpan = null
+        tgest = null
+        setTipSuppressed(false)
       }
     }
 

@@ -30,13 +30,17 @@ export default function PremiumVsMedian({ meta }) {
     // (broken pack decomposition -> absurd premiums) and any |deviation|
     // over 300%, which is almost always an intrinsic error, not a real
     // market premium. They'd otherwise blow out the y-axis.
-    const pts = rows.filter((r) => r.deviation != null && r.conf !== 'low' && Math.abs(r.deviation) <= 3)
+    const pts = rows
+      .filter((r) => r.deviation != null && r.conf !== 'low' && Math.abs(r.deviation) <= 3)
+      // draw most-expensive (largest) first so smaller markers land on top
+      // and don't get buried under the big booster-box images.
+      .sort((a, b) => (b.price || 0) - (a.price || 0))
     if (!pts.length) return null
     // Size (image height / bubble radius) scales with the product's $ value:
     // area ∝ price, so bigger = more expensive.
     const maxP = Math.max(...pts.map((d) => d.price || 0), 1)
-    const imgH = (d) => 14 + 46 * Math.sqrt((d.price || 0) / maxP)
-    const dotR = (d) => 3 + 16 * Math.sqrt((d.price || 0) / maxP)
+    const imgH = (d) => 26 + 74 * Math.sqrt((d.price || 0) / maxP)
+    const dotR = (d) => 7 + 28 * Math.sqrt((d.price || 0) / maxP)
     const title = (d) =>
       `${d.name}\n${d.setName} · ${d.productType} · ${fmtUsd(d.price)}\n` +
       `premium ${fmtPct(d.premiumPct)} vs clean median ${fmtPct(d.cleanMedianPremium)}\n` +

@@ -6,7 +6,7 @@ import { loadView } from '../lib/loadView.js'
 import { fmtPct, fmtUsd } from '../lib/slice.js'
 import { useTheme } from '../lib/theme.js'
 
-const BAND_ORDER = ['0-1mo', '1-3mo', '3-6mo', '6-12mo', '12mo+']
+const BAND_ORDER = ['0-1mo', '1-3mo', '3-6mo', '6-12mo', '12-18mo', '18-24mo', '24-36mo', '36mo+']
 
 export default function AgeBandMedians({ meta }) {
   const [data, setData] = useState(null)
@@ -46,7 +46,11 @@ export default function AgeBandMedians({ meta }) {
     return Plot.plot({
       width, height: width < 640 ? 300 : 360,
       style: { background: 'transparent', color: palette.textSecondary, fontSize: '12px' },
-      x: { domain: BAND_ORDER, label: 'age band' },
+      x: {
+        domain: BAND_ORDER, label: 'age band (months)',
+        tickFormat: (d) => d.replace('mo', ''),
+        tickRotate: width < 640 ? -45 : 0,
+      },
       y: {
         grid: true,
         label: isPrice ? 'median price' : 'median sealed premium',

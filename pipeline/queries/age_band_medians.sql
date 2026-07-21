@@ -43,4 +43,5 @@ GROUP BY era, seriesType, hypeBucket, ageBand
 HAVING count(*) > 0
 ORDER BY era, seriesType, hypeBucket,
          CASE ageBand WHEN '0-1mo' THEN 0 WHEN '1-3mo' THEN 1 WHEN '3-6mo' THEN 2
-                      WHEN '6-12mo' THEN 3 ELSE 4 END;
+                      WHEN '6-12mo' THEN 3 WHEN '12-18mo' THEN 4 WHEN '18-24mo' THEN 5
+                      WHEN '24-36mo' THEN 6 ELSE 7 END;
