@@ -81,9 +81,11 @@ def _base_frame(con) -> pd.DataFrame:
         SELECT sd.date, sd.productId, sd.groupId, sd.productType,
                sd.sealedPrice AS price, sd.sealedPremiumPct AS prem,
                cm.cleanMed, s.era, s.isHype, s.name AS setName,
-               date_diff('day', s.releaseDate, sd.date) AS ageDays
+               date_diff('day', s.releaseDate, sd.date) AS ageDays,
+               pr.cleanName AS productName, pr.url AS url
         FROM sd_mat sd
         JOIN sets s ON s.groupId = sd.groupId
+        JOIN products pr ON pr.productId = sd.productId
         LEFT JOIN clean_med cm ON cm.date = sd.date AND cm.productType = sd.productType
         WHERE sd.intrinsicConfidence <> 'low' AND sd.sealedPrice > 20
           AND s.era IN {MODERN}
@@ -164,8 +166,12 @@ def _forward_returns(events: pd.DataFrame, price_lookup: dict, latest_ord: int) 
     for e in events.itertuples():
         dates, prices = price_lookup[e.productId]
         d0 = e.date.toordinal()
+        pt = getattr(e, 'productType', None)
         row = {'productId': e.productId, 'groupId': e.groupId, 'setName': e.setName,
-               'productType': e.productType, 'date': e.date.date().isoformat(),
+               'productType': pt if isinstance(pt, str) else None,
+               'productName': getattr(e, 'productName', None) if isinstance(getattr(e, 'productName', None), str) else None,
+               'url': getattr(e, 'url', None) if isinstance(getattr(e, 'url', None), str) else None,
+               'date': e.date.date().isoformat(),
                'price': round(float(e.price), 2), 'prem': round(float(e.prem), 4),
                'dev': round(float(e.dev), 4) if pd.notna(e.dev) else None,
                'mom30': round(float(e.mom30), 4) if pd.notna(getattr(e, 'mom30', None)) else None}
@@ -226,6 +232,12 @@ def build_signals(con, views_dir: str) -> dict:
         fr['signal'] = sig
         enriched.append(fr)
     ev = pd.concat(enriched, ignore_index=True)
+
+    # ---- Current (latest observation) price + premium per product, so the
+    # table can show "@ signal" vs "now" and the change since. ----
+    latest = flagged.sort_values('date').groupby('productId').tail(1).set_index('productId')
+    ev['priceNow'] = ev['productId'].map(latest['price']).round(2)
+    ev['premNow'] = ev['productId'].map(latest['prem']).round(4)
 
     # ---- Backtest leaderboard: matured events only ----
     backtest = []

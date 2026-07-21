@@ -60,13 +60,18 @@ export default function PlotFigure({ build, deps = [], onPick, onView, labelData
     const sx = fig.scale('x'), sy = fig.scale('y')
     if (!sx?.domain || !sy?.domain) return
     const [xlo, xhi] = sx.domain
-    const ylo = Math.min(sy.domain[0], sy.domain[1]), yhi = Math.max(sy.domain[0], sy.domain[1])
+    // plot-area pixel bounds for Y, so a label whose point is off the top/
+    // bottom of the current zoom stays pinned to the edge (always visible)
+    // rather than disappearing -- matching how the X side already behaves.
+    const yr = sy.range || [0, 0]
+    const pTop = Math.min(yr[0], yr[1]), pBot = Math.max(yr[0], yr[1])
     for (const L of labelRef.current) {
       // last point within the visible x-window
       let pt = null
       for (const p of L.points) if (p.x >= xlo && p.x <= xhi) pt = p
-      if (!pt || pt.value < ylo || pt.value > yhi) continue
-      const px = applyScale(sx, pt.x), py = applyScale(sy, pt.value)
+      if (!pt) continue
+      const px = applyScale(sx, pt.x)
+      const py = Math.max(pTop, Math.min(pBot, applyScale(sy, pt.value)))
       const btn = document.createElement('button')
       btn.className = 'linelabel'
       btn.textContent = L.text

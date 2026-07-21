@@ -4,6 +4,33 @@ import { fmtPct, fmtUsd } from '../lib/slice.js'
 
 const H = [30, 60, 90]
 
+// [sortKey, header, hover-definition]
+const COLS = [
+  ['date', 'Date', 'Date the signal first fired (uses only data available up to that day)'],
+  ['setName', 'Set', 'Pokémon set — opens the set detail page'],
+  ['productName', 'Item', 'The specific sealed product — click to open its TCGplayer page'],
+  ['price', 'Price @ signal', 'Market price on the day the signal fired'],
+  ['priceNow', 'Price now', 'Latest market price, with % change since the signal fired'],
+  ['prem', 'Premium @ signal', 'Sealed premium when it fired = box price ÷ value of the packs inside − 1. Negative = box is cheaper than its own contents.'],
+  ['premNow', 'Premium now', 'Latest sealed premium, with its change in percentage points since the signal'],
+  ['dev', 'vs peers', 'Premium minus the same-day median premium of non-hype sets of the same product type. More negative = cheaper than its peers.'],
+  ['mom30', '30d trend', 'Price momentum over the 30 days before the signal — the “turning up” part of the conviction rule'],
+  ['ret30', '30d', 'Forward price return 30 days after the signal (* = outcome window not fully elapsed yet)'],
+  ['ret60', '60d', 'Forward price return 60 days after the signal (* = window not fully elapsed)'],
+  ['ret90', '90d', 'Forward price return 90 days after the signal (* = window not fully elapsed)'],
+]
+
+function LinkIcon() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, opacity: 0.75 }}
+      aria-hidden="true">
+      <path d="M14 3h7v7" /><path d="M10 14 21 3" />
+      <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" />
+    </svg>
+  )
+}
+
 function retColor(v) {
   if (v == null) return 'var(--text-muted)'
   return v > 0.001 ? 'var(--pos)' : v < -0.001 ? 'var(--neg)' : 'var(--text-muted)'
@@ -91,7 +118,7 @@ export default function Signals({ meta }) {
       // not every re-fire), so the list stays short and actionable.
       const latest = new Map()
       for (const x of r) {
-        const k = `${x.signal}|${x.groupId}|${x.productType}`
+        const k = `${x.signal}|${x.productId}`
         const cur = latest.get(k)
         if (!cur || x.date > cur.date) latest.set(k, x)
       }
@@ -179,23 +206,41 @@ export default function Signals({ meta }) {
         <table className="tbl text-sm w-full">
           <thead>
             <tr>
-              {[['date', 'Date'], ['setName', 'Set'], ['productType', 'Type'], ['price', 'Price @ signal'],
-                ['prem', 'Premium'], ['dev', 'vs peers'], ['mom30', '30d trend'], ['ret30', '30d'], ['ret60', '60d'], ['ret90', '90d']].map(([k, l]) => (
-                <th key={k} onClick={() => clickSort(k)} style={{ cursor: 'pointer' }}>{l}{arrow(k)}</th>
+              {COLS.map(([k, l, t]) => (
+                <th key={k} onClick={() => clickSort(k)} style={{ cursor: 'pointer' }} title={t}>{l}{arrow(k)}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {rows.slice(0, 200).map((r, i) => (
+            {rows.slice(0, 200).map((r, i) => {
+              const priceChg = r.priceNow != null && r.price ? r.priceNow / r.price - 1 : null
+              const premChg = r.premNow != null && r.prem != null ? r.premNow - r.prem : null // percentage points
+              const itemText = r.productName || r.productType || 'item'
+              return (
               <tr key={i}>
-                <td className="muted">{r.date}</td>
-                <td className="max-w-52 truncate">
+                <td className="muted whitespace-nowrap">{r.date}</td>
+                <td className="max-w-44 truncate">
                   <a href={`#/set/${r.groupId}`} className="hover:underline" style={{ color: 'var(--accent)' }}>{r.setName}</a>
                   {sig === 'all' && <span className="muted text-xs"> · {labelOf[r.signal]?.split(' (')[0]}</span>}
                 </td>
-                <td className="muted">{r.productType}</td>
-                <td>{fmtUsd(r.price)}</td>
-                <td>{r.prem != null ? fmtPct(r.prem) : '—'}</td>
+                <td className="max-w-52 truncate" title={itemText}>
+                  {r.url
+                    ? <a href={r.url} target="_blank" rel="noopener noreferrer"
+                         className="inline-flex items-center gap-1 hover:underline" style={{ color: 'var(--accent)' }}>
+                        {itemText}<LinkIcon />
+                      </a>
+                    : <span>{itemText}</span>}
+                </td>
+                <td className="whitespace-nowrap">{fmtUsd(r.price)}</td>
+                <td className="whitespace-nowrap">
+                  {r.priceNow != null ? fmtUsd(r.priceNow) : '—'}
+                  {priceChg != null && <span className="text-xs" style={{ color: retColor(priceChg) }}> {fmtPct(priceChg)}</span>}
+                </td>
+                <td className="whitespace-nowrap">{r.prem != null ? fmtPct(r.prem) : '—'}</td>
+                <td className="whitespace-nowrap">
+                  {r.premNow != null ? fmtPct(r.premNow) : '—'}
+                  {premChg != null && <span className="text-xs muted"> {premChg >= 0 ? '+' : ''}{(premChg * 100).toFixed(1)}pp</span>}
+                </td>
                 <td style={{ color: retColor(r.dev) }}>{r.dev != null ? fmtPct(r.dev) : '—'}</td>
                 <td style={{ color: retColor(r.mom30) }}>{r.mom30 != null ? fmtPct(r.mom30) : '—'}</td>
                 {H.map((h) => (
@@ -205,7 +250,8 @@ export default function Signals({ meta }) {
                   </td>
                 ))}
               </tr>
-            ))}
+              )
+            })}
           </tbody>
         </table>
         <p className="muted text-xs pt-2">
