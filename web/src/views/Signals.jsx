@@ -1,6 +1,8 @@
-import { useEffect, useMemo, useState } from 'react'
+import * as Plot from '@observablehq/plot'
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { loadView } from '../lib/loadView.js'
 import { fmtPct, fmtUsd } from '../lib/slice.js'
+import { useTheme } from '../lib/theme.js'
 
 const H = [30, 60, 90]
 
@@ -37,6 +39,52 @@ function retColor(v) {
   if (v == null) return 'var(--text-muted)'
   return v > 0.001 ? 'var(--pos)' : v < -0.001 ? 'var(--neg)' : 'var(--text-muted)'
 }
+
+// The -30 .. +90 day price window around a signal, with the buy pip at day 0
+// and the +30/+60/+90 outcome boundaries annotated.
+function SignalWindow({ path, priceAtSignal }) {
+  const ref = useRef(null)
+  const { palette, themeTick } = useTheme()
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    el.innerHTML = ''
+    if (!path || path.length < 2) { el.textContent = 'no price window available'; return }
+    const pts = path.map(([rel, price]) => ({ rel, price }))
+    const before = pts.filter((p) => p.rel <= 0)
+    const after = pts.filter((p) => p.rel >= 0)
+    const buy = pts.reduce((a, b) => (Math.abs(b.rel) < Math.abs(a.rel) ? b : a), pts[0])
+    const maxRel = Math.max(90, ...pts.map((p) => p.rel))
+    const marks = [-30, 0, 30, 60, 90].filter((m) => m <= maxRel)
+    const fig = Plot.plot({
+      width: Math.min(el.clientWidth || 620, 680), height: 168,
+      marginLeft: 48, marginRight: 14, marginTop: 18, marginBottom: 26,
+      style: { background: 'transparent', color: palette.textSecondary, fontSize: '11px' },
+      x: {
+        domain: [-30, maxRel], label: 'days from signal →',
+        ticks: marks, tickFormat: (d) => (d > 0 ? `+${d}` : `${d}`),
+      },
+      y: { label: null, grid: true, tickFormat: (d) => `$${d >= 1000 ? (d / 1000) + 'k' : d}` },
+      marks: [
+        Plot.ruleX(marks.filter((m) => m > 0), { stroke: palette.grid, strokeDasharray: '2,3' }),
+        Plot.ruleX([0], { stroke: 'var(--accent)', strokeWidth: 1.6 }),
+        // before-signal path is muted; after-signal path is the outcome
+        Plot.line(before, { x: 'rel', y: 'price', stroke: palette.textSecondary, strokeWidth: 1.4, strokeOpacity: 0.6 }),
+        Plot.line(after, { x: 'rel', y: 'price', stroke: 'var(--accent)', strokeWidth: 1.8 }),
+        Plot.dot([buy], { x: 'rel', y: 'price', r: 5, symbol: 'triangle', fill: 'var(--pos)', stroke: palette.surface, strokeWidth: 1.2 }),
+        Plot.text(marks.map((m) => ({ rel: m, t: m === 0 ? '▲ buy' : m < 0 ? 'before' : `+${m}d` })),
+          { x: 'rel', text: 't', frameAnchor: 'top', dy: -6, fill: palette.textSecondary, fontSize: 10 }),
+        Plot.tip(pts, Plot.pointer({ x: 'rel', y: 'price', title: (d) => `${d.rel > 0 ? '+' : ''}${d.rel}d\n${fmtUsd(d.price)}` })),
+      ],
+    })
+    el.append(fig)
+    return () => fig.remove()
+  }, [path, priceAtSignal, palette, themeTick])
+  return <div ref={ref} className="w-full overflow-hidden" />
+}
+
+// Common sealed types first, then whatever else the data contains.
+const TYPE_ORDER = ['Booster Box', 'Elite Trainer Box', 'ETB', 'PKC ETB', 'Booster Bundle', 'UPC', 'Booster Case', 'ETB Case']
 
 // Backtest leaderboard: each signal's win rate + median forward return vs
 // the unconditional baseline (the market drift to beat).
@@ -105,6 +153,8 @@ export default function Signals({ meta }) {
   const [recent, setRecent] = useState(null)
   const [sig, setSig] = useState('conviction')
   const [collapse, setCollapse] = useState(true)
+  const [types, setTypes] = useState(new Set()) // empty = all types
+  const [openKey, setOpenKey] = useState(null)  // expanded row
   const [sort, setSort] = useState({ key: 'date', dir: 'desc' })
 
   useEffect(() => {
@@ -112,9 +162,19 @@ export default function Signals({ meta }) {
     loadView('signals_recent').then(setRecent).catch(() => setRecent({ rows: [], signals: [] }))
   }, [])
 
+  // product types present in the data, common ones first
+  const typeOptions = useMemo(() => {
+    if (!recent) return []
+    const present = new Set(recent.rows.map((x) => x.productType || 'Other'))
+    const ordered = TYPE_ORDER.filter((t) => present.has(t))
+    const extra = [...present].filter((t) => !TYPE_ORDER.includes(t)).sort()
+    return [...ordered, ...extra]
+  }, [recent])
+
   const rows = useMemo(() => {
     if (!recent) return []
     let r = recent.rows.filter((x) => sig === 'all' || x.signal === sig)
+    if (types.size) r = r.filter((x) => types.has(x.productType || 'Other'))
     if (collapse) {
       // one row per set+product: the latest firing (a current watchlist,
       // not every re-fire), so the list stays short and actionable.
@@ -142,12 +202,13 @@ export default function Signals({ meta }) {
       return 0
     })
     return r
-  }, [recent, sig, sort, collapse])
+  }, [recent, sig, sort, collapse, types])
 
   if (!bt || !recent) return <p className="muted p-4">Loading signals…</p>
   const labelOf = Object.fromEntries((bt.signals || []).map((s) => [s.key, s.label]))
   const clickSort = (k) => setSort((s) => s.key === k ? { key: k, dir: s.dir === 'desc' ? 'asc' : 'desc' } : { key: k, dir: 'desc' })
   const arrow = (k) => (sort.key === k ? (sort.dir === 'desc' ? ' ↓' : ' ↑') : '')
+  const toggleType = (t) => setTypes((s) => { const n = new Set(s); if (n.has(t)) n.delete(t); else n.add(t); return n })
 
   return (
     <section>
@@ -210,6 +271,15 @@ export default function Signals({ meta }) {
         <button className="chip" data-on={String(collapse)} onClick={() => setCollapse(true)}>Latest per set</button>
         <button className="chip" data-on={String(!collapse)} onClick={() => setCollapse(false)}>All firings</button>
       </div>
+      {typeOptions.length > 1 && (
+        <div className="flex flex-wrap items-center gap-2 pb-2">
+          <span className="seg-label">Item type</span>
+          <button className="chip" data-on={String(types.size === 0)} onClick={() => setTypes(new Set())}>All</button>
+          {typeOptions.map((t) => (
+            <button key={t} className="chip" data-on={String(types.has(t))} onClick={() => toggleType(t)}>{t}</button>
+          ))}
+        </div>
+      )}
       <p className="muted text-xs max-w-4xl pb-2">
         <strong>Before 30d</strong> = how the price had already moved in the 30 days <em>before</em> the signal (the
         “turning up” check). <strong>After 30/60/90d</strong> = the outcome — how the price moved in the 30/60/90 days
@@ -226,18 +296,25 @@ export default function Signals({ meta }) {
             </tr>
           </thead>
           <tbody>
-            {rows.slice(0, 200).map((r, i) => {
+            {rows.slice(0, 200).map((r) => {
               const itemText = r.productName || r.productType || 'item'
+              const rowKey = `${r.signal}|${r.productId}|${r.date}`
+              const isOpen = openKey === rowKey
+              const stop = (e) => e.stopPropagation()
               return (
-              <tr key={i}>
-                <td className="muted whitespace-nowrap">{r.date}</td>
+              <Fragment key={rowKey}>
+              <tr onClick={() => setOpenKey(isOpen ? null : rowKey)} style={{ cursor: 'pointer' }}
+                  title="click to see the price window around this signal">
+                <td className="muted whitespace-nowrap">
+                  <span className="inline-block w-3" style={{ color: 'var(--accent)' }}>{isOpen ? '▾' : '▸'}</span>{r.date}
+                </td>
                 <td className="max-w-44 truncate">
-                  <a href={`#/set/${r.groupId}`} className="hover:underline" style={{ color: 'var(--accent)' }}>{r.setName}</a>
+                  <a href={`#/set/${r.groupId}`} onClick={stop} className="hover:underline" style={{ color: 'var(--accent)' }}>{r.setName}</a>
                   {sig === 'all' && <span className="muted text-xs"> · {labelOf[r.signal]?.split(' (')[0]}</span>}
                 </td>
                 <td className="max-w-52 truncate" title={itemText}>
                   {r.url
-                    ? <a href={r.url} target="_blank" rel="noopener noreferrer"
+                    ? <a href={r.url} target="_blank" rel="noopener noreferrer" onClick={stop}
                          className="inline-flex items-center gap-1 hover:underline" style={{ color: 'var(--accent)' }}>
                         {itemText}<LinkIcon />
                       </a>
@@ -262,6 +339,21 @@ export default function Signals({ meta }) {
                   </td>
                 ))}
               </tr>
+              {isOpen && (
+                <tr>
+                  <td colSpan={COLS.length} className="p-0">
+                    <div className="p-3" style={{ background: 'var(--surface-1)' }}>
+                      <div className="text-xs muted pb-1">
+                        {itemText} · price window around the {labelOf[r.signal]?.split(' (')[0]} signal —
+                        {' '}<span style={{ color: 'var(--pos)' }}>▲</span> buy day, dashed lines = +30 / +60 / +90 outcome marks
+                        (before the pip is muted, after is the outcome).
+                      </div>
+                      <SignalWindow path={r.path} priceAtSignal={r.price} />
+                    </div>
+                  </td>
+                </tr>
+              )}
+              </Fragment>
               )
             })}
           </tbody>

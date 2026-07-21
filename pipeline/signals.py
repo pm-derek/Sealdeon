@@ -161,7 +161,8 @@ def _events(df: pd.DataFrame, signal: str) -> pd.DataFrame:
     return fires[fires['is_event']].copy()
 
 
-def _forward_returns(events: pd.DataFrame, price_lookup: dict, latest_ord: int) -> pd.DataFrame:
+def _forward_returns(events: pd.DataFrame, price_lookup: dict, latest_ord: int,
+                     with_path: bool = False) -> pd.DataFrame:
     rows = []
     for e in events.itertuples():
         dates, prices = price_lookup[e.productId]
@@ -187,6 +188,12 @@ def _forward_returns(events: pd.DataFrame, price_lookup: dict, latest_ord: int) 
                 # partial: return so far to the latest observation
                 row[f'ret{h}'] = round(float(prices[-1] / e.price - 1), 4)
                 row[f'mat{h}'] = False
+        if with_path:
+            # compact price path from -30 to +90 days around the signal, as
+            # [dayRelativeToSignal, price], for the expandable mini-chart.
+            mask = (dates >= d0 - 30) & (dates <= d0 + 90)
+            row['path'] = [[int(o - d0), round(float(p), 2)]
+                           for o, p in zip(dates[mask], prices[mask])]
         rows.append(row)
     return pd.DataFrame(rows)
 
@@ -228,7 +235,7 @@ def build_signals(con, views_dir: str) -> dict:
 
     enriched = []
     for sig, grp in events.groupby('signal'):
-        fr = _forward_returns(grp, pl, latest_ord)
+        fr = _forward_returns(grp, pl, latest_ord, with_path=True)
         fr['signal'] = sig
         enriched.append(fr)
     ev = pd.concat(enriched, ignore_index=True)
