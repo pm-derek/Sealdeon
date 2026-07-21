@@ -51,7 +51,7 @@ export default function PremiumVsMedian({ meta }) {
       x: { label: 'age (days since release)', grid: false },
       y: { label: 'premium deviation vs clean median', grid: true, tickFormat: (d) => `${(d * 100).toFixed(0)}%` },
       marks: [
-        Plot.ruleY([0], { stroke: palette.grid }),
+        Plot.ruleY([0], { stroke: palette.textSecondary, strokeWidth: 1.5, strokeOpacity: 0.7 }),
         showImages
           ? Plot.image(pts, {
               x: 'ageDays', y: 'deviation', src: 'imageUrl',

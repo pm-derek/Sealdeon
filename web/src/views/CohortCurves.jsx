@@ -177,19 +177,31 @@ export default function CohortCurves({ meta }) {
     if (!isPct && focus != null && sigEvents) {
       const set = bySet.get(focus)
       const relE = set?.releaseDate ? Math.floor(new Date(set.releaseDate).getTime() / EPOCH_DAY) : null
+      // Snap each marker onto the focused line (nearest point by age) so the
+      // triangle sits ON the curve rather than floating at the raw signal
+      // price of a possibly-different SKU of the same product type.
+      const fLine = model.lines.find((l) => l.groupId === focus)
+      const snapY = (ageDays) => {
+        if (!fLine || !fLine.points.length) return null
+        let best = fLine.points[0], gap = Infinity
+        for (const p of fLine.points) { const g = Math.abs(p.age - ageDays); if (g < gap) { gap = g; best = p } }
+        return gap <= 14 ? best.value : null   // only mark if the line has data near that date
+      }
       const pts = (sigEvents[focus] || [])
         .filter((e) => e.productType === state.seriesType && SIG_LABEL[e.signal])
         .map((e) => {
           const ed = Math.floor(new Date(e.date).getTime() / EPOCH_DAY)
-          return { x: isCal ? ed : relE != null ? (ed - relE) / div : null, value: e.price, signal: e.signal, date: e.date, ret30: e.ret30 }
-        }).filter((p) => p.x != null && p.value > 0 && (isCal || p.x >= 0))
+          if (relE == null) return null
+          const ageDays = ed - relE
+          return { x: isCal ? ed : ageDays / div, value: snapY(ageDays), signalPrice: e.price, signal: e.signal, date: e.date, ret30: e.ret30 }
+        }).filter((p) => p && p.value != null && p.value > 0 && (isCal || p.x >= 0))
       if (pts.length) {
         buyMarks.push(Plot.dot(pts, {
           x: 'x', y: 'value', symbol: 'triangle',
           r: (d) => (d.signal === 'conviction' ? 9 : 6),
           fill: (d) => (d.signal === 'conviction' ? 'var(--accent)' : 'var(--pos)'),
           stroke: palette.surface, strokeWidth: 1.2, clip: true,
-          title: (d) => `▲ BUY signal — ${SIG_LABEL[d.signal]}\n${d.date} · ${fmtUsd(d.value)}` +
+          title: (d) => `▲ BUY signal — ${SIG_LABEL[d.signal]}\n${d.date} · ${fmtUsd(d.signalPrice)}` +
             (d.ret30 != null ? `\n30d after: ${fmtPct(d.ret30)}` : ''),
         }))
       }
@@ -228,7 +240,7 @@ export default function CohortCurves({ meta }) {
         }),
         ...buyMarks,
         Plot.tip(flat, Plot.pointer({ x: 'x', y: 'value', title })),
-        metricDef.baseline != null ? Plot.ruleY([metricDef.baseline], { stroke: palette.grid }) : null,
+        metricDef.baseline != null ? Plot.ruleY([metricDef.baseline], { stroke: palette.textSecondary, strokeWidth: 1.5, strokeOpacity: 0.7 }) : null,
       ].filter(Boolean),
     })
   }

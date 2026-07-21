@@ -72,7 +72,7 @@ export default function AgeBandMedians({ meta }) {
                      : `median premium ${fmtPct(d.medianPremiumPct)}`) +
             `\n${d.nSets} sets, ${d.n} obs`,
         })),
-        Plot.ruleY([0], { stroke: palette.grid }),
+        Plot.ruleY([0], { stroke: palette.textSecondary, strokeWidth: 1.5, strokeOpacity: 0.7 }),
       ],
     })
   }

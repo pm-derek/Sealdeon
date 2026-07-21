@@ -73,7 +73,13 @@ chase AS (
         x.groupId,
         'Chase Singles' AS seriesType,
         x.date,
-        median(x.price) AS price,
+        -- MEAN, not median: the basket is the top-5 peak-ranked singles, and
+        -- a set often has only 1-2 genuinely expensive chases padded by
+        -- cheaper ones. The median then sits near the cheap padding (e.g.
+        -- Phantasmal Flames: $829/$340/$28/$24/$17 -> median $28) and reads
+        -- as broken. The mean ($248) reflects the chase value that's actually
+        -- there and isn't collapsed by a couple of crashed cards.
+        avg(x.price) AS price,
         NULL::DOUBLE AS premiumPct,
         NULL::VARCHAR AS intrinsicConfidence,
         date_diff('day', s.releaseDate, x.date) AS ageDays
