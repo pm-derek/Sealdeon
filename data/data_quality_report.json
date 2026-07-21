@@ -4487,8 +4487,8 @@
    "groupId": 24448,
    "setName": "ME02: Phantasmal Flames",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "parsed",
+   "attemptedPackCount": 90,
+   "packCountSource": "static",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -4695,8 +4695,8 @@
    "groupId": 24587,
    "setName": "ME03: Perfect Order",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "parsed",
+   "attemptedPackCount": 90,
+   "packCountSource": "static",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -4727,8 +4727,8 @@
    "groupId": 24587,
    "setName": "ME03: Perfect Order",
    "confidence": "low",
-   "attemptedPackCount": 11,
-   "packCountSource": "parsed",
+   "attemptedPackCount": 90,
+   "packCountSource": "static",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -5063,8 +5063,8 @@
    "groupId": 24688,
    "setName": "ME05: Pitch Black",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "parsed",
+   "attemptedPackCount": 90,
+   "packCountSource": "static",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -5095,8 +5095,8 @@
    "groupId": 24688,
    "setName": "ME05: Pitch Black",
    "confidence": "low",
-   "attemptedPackCount": 11,
-   "packCountSource": "parsed",
+   "attemptedPackCount": 90,
+   "packCountSource": "static",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -5383,8 +5383,8 @@
    "groupId": 24541,
    "setName": "ME: Ascended Heroes",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "parsed",
+   "attemptedPackCount": 90,
+   "packCountSource": "static",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -14487,8 +14487,8 @@
    "groupId": 3064,
    "setName": "Pokemon GO",
    "confidence": "low",
-   "attemptedPackCount": 10,
-   "packCountSource": "parsed",
+   "attemptedPackCount": 90,
+   "packCountSource": "static",
    "attemptedPromo": "Mewtwo V",
    "promoSource": "unresolved",
    "howToFix": {
@@ -29223,8 +29223,8 @@
    "groupId": 2906,
    "setName": "SWSH08: Fusion Strike",
    "confidence": "low",
-   "attemptedPackCount": 10,
-   "packCountSource": "parsed",
+   "attemptedPackCount": 90,
+   "packCountSource": "static",
    "attemptedPromo": "Genesect",
    "promoSource": "unresolved",
    "howToFix": {
@@ -29607,8 +29607,8 @@
    "groupId": 2948,
    "setName": "SWSH09: Brilliant Stars",
    "confidence": "low",
-   "attemptedPackCount": 11,
-   "packCountSource": "parsed",
+   "attemptedPackCount": 90,
+   "packCountSource": "static",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -30711,8 +30711,8 @@
    "groupId": 3118,
    "setName": "SWSH11: Lost Origin",
    "confidence": "low",
-   "attemptedPackCount": 10,
-   "packCountSource": "parsed",
+   "attemptedPackCount": 90,
+   "packCountSource": "static",
    "attemptedPromo": "Giratina",
    "promoSource": "unresolved",
    "howToFix": {
@@ -40311,8 +40311,8 @@
    "groupId": 2480,
    "setName": "Hidden Fates",
    "confidence": "medium",
-   "attemptedPackCount": 10,
-   "packCountSource": "parsed",
+   "attemptedPackCount": 90,
+   "packCountSource": "static",
    "attemptedPromo": "Moltres",
    "promoSource": "auto",
    "howToFix": {
@@ -40513,14 +40513,46 @@
    }
   },
   {
+   "productId": 644731,
+   "productName": "Mega Evolution Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 24380,
+   "setName": "ME01: Mega Evolution",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"644731\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24380:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 644730,
+   "productName": "Mega Evolution Booster Bundle Case",
+   "productType": "Booster Bundle Case",
+   "groupId": 24380,
+   "setName": "ME01: Mega Evolution",
+   "confidence": "medium",
+   "attemptedPackCount": 60,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"644730\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24380:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 644727,
    "productName": "Mega Evolution Elite Trainer Box Case",
    "productType": "ETB Case",
    "groupId": 24380,
    "setName": "ME01: Mega Evolution",
    "confidence": "medium",
-   "attemptedPackCount": 9,
-   "packCountSource": "parsed",
+   "attemptedPackCount": 90,
+   "packCountSource": "static",
    "attemptedPromo": "Riolu - 010",
    "promoSource": "auto",
    "howToFix": {
@@ -40654,6 +40686,38 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"664059\": <count>",
     "promo": "add to config/promo_overrides.json as \"24448:Build & Battle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 655281,
+   "productName": "Phantasmal Flames Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 24448,
+   "setName": "ME02: Phantasmal Flames",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"655281\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24448:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 654162,
+   "productName": "Phantasmal Flames Booster Bundle Case",
+   "productType": "Booster Bundle Case",
+   "groupId": 24448,
+   "setName": "ME02: Phantasmal Flames",
+   "confidence": "medium",
+   "attemptedPackCount": 60,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"654162\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24448:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -40817,6 +40881,38 @@
    }
   },
   {
+   "productId": 672395,
+   "productName": "Perfect Order Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 24587,
+   "setName": "ME03: Perfect Order",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"672395\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24587:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 672397,
+   "productName": "Perfect Order Booster Bundle Case",
+   "productType": "Booster Bundle Case",
+   "groupId": 24587,
+   "setName": "ME03: Perfect Order",
+   "confidence": "medium",
+   "attemptedPackCount": 60,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"672397\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24587:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 672412,
    "productName": "Perfect Order Sleeved Booster Pack",
    "productType": "Sleeved Booster Pack",
@@ -40846,6 +40942,38 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"672413\": <count>",
     "promo": "add to config/promo_overrides.json as \"24587:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 684445,
+   "productName": "Chaos Rising Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 24655,
+   "setName": "ME04: Chaos Rising",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "parsed",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"684445\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24655:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 688949,
+   "productName": "Chaos Rising Booster Bundle Case",
+   "productType": "Booster Bundle Case",
+   "groupId": 24655,
+   "setName": "ME04: Chaos Rising",
+   "confidence": "medium",
+   "attemptedPackCount": 60,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"688949\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24655:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -41009,6 +41137,38 @@
    }
   },
   {
+   "productId": 692941,
+   "productName": "Pitch Black Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 24688,
+   "setName": "ME05: Pitch Black",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"692941\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24688:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 692943,
+   "productName": "Pitch Black Booster Bundle Case",
+   "productType": "Booster Bundle Case",
+   "groupId": 24688,
+   "setName": "ME05: Pitch Black",
+   "confidence": "medium",
+   "attemptedPackCount": 60,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"692943\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24688:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 692957,
    "productName": "Pitch Black Sleeved Booster Pack",
    "productType": "Sleeved Booster Pack",
@@ -41038,6 +41198,22 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"692958\": <count>",
     "promo": "add to config/promo_overrides.json as \"24688:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 681339,
+   "productName": "Ascended Heroes Booster Bundle Case",
+   "productType": "Booster Bundle Case",
+   "groupId": 24541,
+   "setName": "ME: Ascended Heroes",
+   "confidence": "medium",
+   "attemptedPackCount": 60,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"681339\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24541:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -43473,6 +43649,22 @@
    }
   },
   {
+   "productId": 475436,
+   "productName": "Burning Shadows Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 1957,
+   "setName": "SM - Burning Shadows",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"475436\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1957:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 550677,
    "productName": "Burning Shadows Sleeved Booster Pack",
    "productType": "Sleeved Booster Pack",
@@ -44350,6 +44542,22 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"266553\": <count>",
     "promo": "add to config/promo_overrides.json as \"1919:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 618840,
+   "productName": "Guardians Rising Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 1919,
+   "setName": "SM - Guardians Rising",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"618840\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1919:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -45367,8 +45575,8 @@
    "groupId": 22873,
    "setName": "SV01: Scarlet & Violet Base Set",
    "confidence": "medium",
-   "attemptedPackCount": 9,
-   "packCountSource": "parsed",
+   "attemptedPackCount": 90,
+   "packCountSource": "static",
    "attemptedPromo": "Koraidon - 014",
    "promoSource": "auto",
    "howToFix": {
@@ -45553,6 +45761,38 @@
    }
   },
   {
+   "productId": 496905,
+   "productName": "Paldea Evolved Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 23120,
+   "setName": "SV02: Paldea Evolved",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"496905\": <count>",
+    "promo": "add to config/promo_overrides.json as \"23120:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 656928,
+   "productName": "Paldea Evolved Booster Bundle Case",
+   "productType": "Booster Bundle Case",
+   "groupId": 23120,
+   "setName": "SV02: Paldea Evolved",
+   "confidence": "medium",
+   "attemptedPackCount": 60,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"656928\": <count>",
+    "promo": "add to config/promo_overrides.json as \"23120:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 493974,
    "productName": "Paldea Evolved Elite Trainer Box",
    "productType": "ETB",
@@ -45575,8 +45815,8 @@
    "groupId": 23120,
    "setName": "SV02: Paldea Evolved",
    "confidence": "medium",
-   "attemptedPackCount": 9,
-   "packCountSource": "parsed",
+   "attemptedPackCount": 90,
+   "packCountSource": "static",
    "attemptedPromo": "Pikachu - 027",
    "promoSource": "auto",
    "howToFix": {
@@ -45607,8 +45847,8 @@
    "groupId": 23120,
    "setName": "SV02: Paldea Evolved",
    "confidence": "medium",
-   "attemptedPackCount": 9,
-   "packCountSource": "parsed",
+   "attemptedPackCount": 90,
+   "packCountSource": "static",
    "attemptedPromo": "Pikachu - 027 (Pokemon Center Exclusive)",
    "promoSource": "auto",
    "howToFix": {
@@ -45710,6 +45950,22 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"542335\": <count>",
     "promo": "add to config/promo_overrides.json as \"23228:Build & Battle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 501258,
+   "productName": "Obsidian Flames Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 23228,
+   "setName": "SV03: Obsidian Flames",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"501258\": <count>",
+    "promo": "add to config/promo_overrides.json as \"23228:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -45854,6 +46110,22 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"531250\": <count>",
     "promo": "add to config/promo_overrides.json as \"23286:Build & Battle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 512828,
+   "productName": "Paradox Rift Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 23286,
+   "setName": "SV04: Paradox Rift",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"512828\": <count>",
+    "promo": "add to config/promo_overrides.json as \"23286:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -46113,6 +46385,22 @@
    }
   },
   {
+   "productId": 537417,
+   "productName": "Temporal Forces Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 23381,
+   "setName": "SV05: Temporal Forces",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"537417\": <count>",
+    "promo": "add to config/promo_overrides.json as \"23381:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 541017,
    "productName": "Temporal Forces Booster Bundle",
    "productType": "Booster Bundle",
@@ -46353,6 +46641,22 @@
    }
   },
   {
+   "productId": 544384,
+   "productName": "Twilight Masquerade Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 23473,
+   "setName": "SV06: Twilight Masquerade",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"544384\": <count>",
+    "promo": "add to config/promo_overrides.json as \"23473:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 543852,
    "productName": "Twilight Masquerade Booster Bundle",
    "productType": "Booster Bundle",
@@ -46529,6 +46833,22 @@
    }
   },
   {
+   "productId": 557365,
+   "productName": "Stellar Crown Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 23537,
+   "setName": "SV07: Stellar Crown",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"557365\": <count>",
+    "promo": "add to config/promo_overrides.json as \"23537:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 557345,
    "productName": "Stellar Crown Booster Bundle",
    "productType": "Booster Bundle",
@@ -46547,17 +46867,17 @@
   {
    "productId": 609235,
    "productName": "Stellar Crown Booster Bundle Case",
-   "productType": "Booster Bundle",
+   "productType": "Booster Bundle Case",
    "groupId": 23537,
    "setName": "SV07: Stellar Crown",
    "confidence": "medium",
-   "attemptedPackCount": 6,
+   "attemptedPackCount": 60,
    "packCountSource": "static",
    "attemptedPromo": null,
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"609235\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23537:Booster Bundle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"23537:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -46705,6 +47025,22 @@
    }
   },
   {
+   "productId": 580708,
+   "productName": "Surging Sparks Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 23651,
+   "setName": "SV08: Surging Sparks",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"580708\": <count>",
+    "promo": "add to config/promo_overrides.json as \"23651:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 565629,
    "productName": "Surging Sparks Booster Bundle (LGS)",
    "productType": "Booster Bundle",
@@ -46739,17 +47075,17 @@
   {
    "productId": 594269,
    "productName": "Surging Sparks Booster Bundle Case (LGS)",
-   "productType": "Booster Bundle",
+   "productType": "Booster Bundle Case",
    "groupId": 23651,
    "setName": "SV08: Surging Sparks",
    "confidence": "medium",
-   "attemptedPackCount": 6,
+   "attemptedPackCount": 60,
    "packCountSource": "static",
    "attemptedPromo": null,
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"594269\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23651:Booster Bundle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"23651:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -46913,6 +47249,38 @@
    }
   },
   {
+   "productId": 614449,
+   "productName": "Journey Together Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 24073,
+   "setName": "SV09: Journey Together",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"614449\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24073:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 625584,
+   "productName": "Journey Together Booster Bundle Case",
+   "productType": "Booster Bundle Case",
+   "groupId": 24073,
+   "setName": "SV09: Journey Together",
+   "confidence": "medium",
+   "attemptedPackCount": 60,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"625584\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24073:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 629568,
    "productName": "Journey Together Build & Battle Box Display",
    "productType": "Build & Battle",
@@ -46958,6 +47326,22 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"623628\": <count>",
     "promo": "add to config/promo_overrides.json as \"24073:Enhanced Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 625583,
+   "productName": "Journey Together Enhanced Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 24073,
+   "setName": "SV09: Journey Together",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"625583\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24073:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -47169,6 +47553,38 @@
    }
   },
   {
+   "productId": 624678,
+   "productName": "Destined Rivals Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 24269,
+   "setName": "SV10: Destined Rivals",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"624678\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24269:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 628428,
+   "productName": "Destined Rivals Booster Bundle Case",
+   "productType": "Booster Bundle Case",
+   "groupId": 24269,
+   "setName": "SV10: Destined Rivals",
+   "confidence": "medium",
+   "attemptedPackCount": 60,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"628428\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24269:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 649711,
    "productName": "Destined Rivals Booster Pack Art Bundle [Set of 4]",
    "productType": "Tin",
@@ -47246,6 +47662,22 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"630431\": <count>",
     "promo": "add to config/promo_overrides.json as \"24325:Booster Bundle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 630432,
+   "productName": "Black Bolt Booster Bundle Case",
+   "productType": "Booster Bundle Case",
+   "groupId": 24325,
+   "setName": "SV: Black Bolt",
+   "confidence": "medium",
+   "attemptedPackCount": 60,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"630432\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24325:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -47393,14 +47825,30 @@
    }
   },
   {
+   "productId": 635609,
+   "productName": "Paldean Fates Booster Bundle Display Case",
+   "productType": "Booster Bundle Case",
+   "groupId": 23353,
+   "setName": "SV: Paldean Fates",
+   "confidence": "medium",
+   "attemptedPackCount": 60,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"635609\": <count>",
+    "promo": "add to config/promo_overrides.json as \"23353:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 536266,
    "productName": "Paldean Fates Pokemon Center Elite Trainer Box (Exclusive) Case",
    "productType": "PKC ETB Case",
    "groupId": 23353,
    "setName": "SV: Paldean Fates",
    "confidence": "medium",
-   "attemptedPackCount": 11,
-   "packCountSource": "parsed",
+   "attemptedPackCount": 90,
+   "packCountSource": "static",
    "attemptedPromo": "Mimikyu - 075 (Pokemon Center Exclusive)",
    "promoSource": "auto",
    "howToFix": {
@@ -47425,6 +47873,22 @@
    }
   },
   {
+   "productId": 635011,
+   "productName": "Prismatic Evolution Booster Bundle Display Case",
+   "productType": "Booster Bundle Case",
+   "groupId": 23821,
+   "setName": "SV: Prismatic Evolutions",
+   "confidence": "medium",
+   "attemptedPackCount": 60,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"635011\": <count>",
+    "promo": "add to config/promo_overrides.json as \"23821:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 678555,
    "productName": "Prismatic Evolutions Booster Bundle + Surprise Box Bundle (Sam's Club)",
    "productType": "Booster Bundle",
@@ -47438,6 +47902,22 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"678555\": <count>",
     "promo": "add to config/promo_overrides.json as \"23821:Booster Bundle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 615027,
+   "productName": "Prismatic Evolutions Booster Bundle Case",
+   "productType": "Booster Bundle Case",
+   "groupId": 23821,
+   "setName": "SV: Prismatic Evolutions",
+   "confidence": "medium",
+   "attemptedPackCount": 60,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"615027\": <count>",
+    "promo": "add to config/promo_overrides.json as \"23821:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -47582,6 +48062,38 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"598470\": <count>",
     "promo": "add to config/promo_overrides.json as \"23821:Surprise Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 530105,
+   "productName": "151 Booster Bundle Bulk Case",
+   "productType": "Booster Bundle Case",
+   "groupId": 23237,
+   "setName": "SV: Scarlet & Violet 151",
+   "confidence": "medium",
+   "attemptedPackCount": 60,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"530105\": <count>",
+    "promo": "add to config/promo_overrides.json as \"23237:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 513409,
+   "productName": "151 Booster Bundle Display Case",
+   "productType": "Booster Bundle Case",
+   "groupId": 23237,
+   "setName": "SV: Scarlet & Violet 151",
+   "confidence": "medium",
+   "attemptedPackCount": 60,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"513409\": <count>",
+    "promo": "add to config/promo_overrides.json as \"23237:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -47761,6 +48273,38 @@
    }
   },
   {
+   "productId": 635736,
+   "productName": "Shrouded Fable Booster Bundle Case",
+   "productType": "Booster Bundle Case",
+   "groupId": 23529,
+   "setName": "SV: Shrouded Fable",
+   "confidence": "medium",
+   "attemptedPackCount": 60,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"635736\": <count>",
+    "promo": "add to config/promo_overrides.json as \"23529:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 635485,
+   "productName": "Shrouded Fable Booster Bundle Display Case",
+   "productType": "Booster Bundle Case",
+   "groupId": 23529,
+   "setName": "SV: Shrouded Fable",
+   "confidence": "medium",
+   "attemptedPackCount": 60,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"635485\": <count>",
+    "promo": "add to config/promo_overrides.json as \"23529:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 552999,
    "productName": "Shrouded Fable Elite Trainer Box",
    "productType": "ETB",
@@ -47859,17 +48403,17 @@
   {
    "productId": 630697,
    "productName": "White Flare Booster Bundle Case",
-   "productType": "Booster Bundle",
+   "productType": "Booster Bundle Case",
    "groupId": 24326,
    "setName": "SV: White Flare",
    "confidence": "medium",
-   "attemptedPackCount": 6,
+   "attemptedPackCount": 60,
    "packCountSource": "static",
    "attemptedPromo": null,
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"630697\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24326:Booster Bundle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"24326:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -48033,6 +48577,22 @@
    }
   },
   {
+   "productId": 530142,
+   "productName": "Sword & Shield Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 2585,
+   "setName": "SWSH01: Sword & Shield Base Set",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"530142\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2585:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 206033,
    "productName": "Sword & Shield Build & Battle Display",
    "productType": "Build & Battle",
@@ -48193,6 +48753,22 @@
    }
   },
   {
+   "productId": 240182,
+   "productName": "Rebel Clash Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 2626,
+   "setName": "SWSH02: Rebel Clash",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"240182\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2626:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 212820,
    "productName": "Rebel Clash Build & Battle Display",
    "productType": "Build & Battle",
@@ -48302,6 +48878,22 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"251515\": <count>",
     "promo": "add to config/promo_overrides.json as \"2675:Build & Battle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 256971,
+   "productName": "Darkness Ablaze Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 2675,
+   "setName": "SWSH03: Darkness Ablaze",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"256971\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2675:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -48417,6 +49009,22 @@
    }
   },
   {
+   "productId": 243051,
+   "productName": "Vivid Voltage Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 2701,
+   "setName": "SWSH04: Vivid Voltage",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"243051\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2701:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 245143,
    "productName": "Vivid Voltage Sleeved Booster Pack",
    "productType": "Sleeved Booster Pack",
@@ -48446,6 +49054,22 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"487798\": <count>",
     "promo": "add to config/promo_overrides.json as \"2701:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 233335,
+   "productName": "Battle Styles Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 2765,
+   "setName": "SWSH05: Battle Styles",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"233335\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2765:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -48622,6 +49246,22 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"257189\": <count>",
     "promo": "add to config/promo_overrides.json as \"2765:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 236259,
+   "productName": "Chilling Reign Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 2807,
+   "setName": "SWSH06: Chilling Reign",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"236259\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2807:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -48817,6 +49457,22 @@
    }
   },
   {
+   "productId": 248124,
+   "productName": "Evolving Skies Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 2848,
+   "setName": "SWSH07: Evolving Skies",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"248124\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2848:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 242450,
    "productName": "Evolving Skies Build & Battle Box Display",
    "productType": "Build & Battle",
@@ -48929,6 +49585,22 @@
    }
   },
   {
+   "productId": 247655,
+   "productName": "Fusion Strike Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 2906,
+   "setName": "SWSH08: Fusion Strike",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"247655\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2906:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 247660,
    "productName": "Fusion Strike Build & Battle Box Display",
    "productType": "Build & Battle",
@@ -48974,6 +49646,22 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"247657\": <count>",
     "promo": "add to config/promo_overrides.json as \"2906:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 256145,
+   "productName": "Brilliant Stars Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 2948,
+   "setName": "SWSH09: Brilliant Stars",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"256145\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2948:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -49102,6 +49790,22 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"264252\": <count>",
     "promo": "add to config/promo_overrides.json as \"2948:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 265520,
+   "productName": "Astral Radiance Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 3040,
+   "setName": "SWSH10: Astral Radiance",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"265520\": <count>",
+    "promo": "add to config/promo_overrides.json as \"3040:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -49265,6 +49969,38 @@
    }
   },
   {
+   "productId": 278793,
+   "productName": "Lost Origin Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 3118,
+   "setName": "SWSH11: Lost Origin",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"278793\": <count>",
+    "promo": "add to config/promo_overrides.json as \"3118:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 479361,
+   "productName": "Lost Origin Booster Bundle Case",
+   "productType": "Booster Bundle Case",
+   "groupId": 3118,
+   "setName": "SWSH11: Lost Origin",
+   "confidence": "medium",
+   "attemptedPackCount": 60,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"479361\": <count>",
+    "promo": "add to config/promo_overrides.json as \"3118:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 277326,
    "productName": "Lost Origin Sleeved Booster Pack",
    "productType": "Sleeved Booster Pack",
@@ -49358,6 +50094,38 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"477033\": <count>",
     "promo": "add to config/promo_overrides.json as \"3170:Build & Battle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 283391,
+   "productName": "Silver Tempest Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 3170,
+   "setName": "SWSH12: Silver Tempest",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"283391\": <count>",
+    "promo": "add to config/promo_overrides.json as \"3170:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 562366,
+   "productName": "Silver Tempest Booster Bundle Case",
+   "productType": "Booster Bundle Case",
+   "groupId": 3170,
+   "setName": "SWSH12: Silver Tempest",
+   "confidence": "medium",
+   "attemptedPackCount": 60,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"562366\": <count>",
+    "promo": "add to config/promo_overrides.json as \"3170:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -49518,6 +50286,22 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"475641\": <count>",
     "promo": "add to config/promo_overrides.json as \"17688:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 609238,
+   "productName": "Crown Zenith Booster Bundle Case",
+   "productType": "Booster Bundle Case",
+   "groupId": 17688,
+   "setName": "SWSH: Crown Zenith",
+   "confidence": "medium",
+   "attemptedPackCount": 60,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"609238\": <count>",
+    "promo": "add to config/promo_overrides.json as \"17688:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -50622,6 +51406,22 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"123446\": <count>",
     "promo": "add to config/promo_overrides.json as \"1842:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 226363,
+   "productName": "XY Evolutions Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 1842,
+   "setName": "XY - Evolutions",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"226363\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1842:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -52401,5 +53201,5 @@
    }
   }
  ],
- "count": 3275
+ "count": 3325
 }
