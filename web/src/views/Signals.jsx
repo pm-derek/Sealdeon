@@ -10,14 +10,16 @@ const COLS = [
   ['setName', 'Set', 'Pokémon set — opens the set detail page'],
   ['productName', 'Item', 'The specific sealed product — click to open its TCGplayer page'],
   ['price', 'Price @ signal', 'Market price on the day the signal fired'],
-  ['priceNow', 'Price now', 'Latest market price, with % change since the signal fired'],
-  ['prem', 'Premium @ signal', 'Sealed premium when it fired = box price ÷ value of the packs inside − 1. Negative = box is cheaper than its own contents.'],
-  ['premNow', 'Premium now', 'Latest sealed premium, with its change in percentage points since the signal'],
+  ['priceNow', 'Price now', 'Latest market price'],
+  ['priceChgPct', 'Δ price', 'Price change from @-signal to now (sortable)'],
+  ['prem', 'Prem @ signal', 'Sealed premium when it fired = box price ÷ value of the packs inside − 1. Negative = box is cheaper than its own contents.'],
+  ['premNow', 'Prem now', 'Latest sealed premium'],
+  ['premChgPp', 'Δ prem', 'Premium change in percentage points from @-signal to now (sortable)'],
   ['dev', 'vs peers', 'Premium minus the same-day median premium of non-hype sets of the same product type. More negative = cheaper than its peers.'],
-  ['mom30', '30d trend', 'Price momentum over the 30 days before the signal — the “turning up” part of the conviction rule'],
-  ['ret30', '30d', 'Forward price return 30 days after the signal (* = outcome window not fully elapsed yet)'],
-  ['ret60', '60d', 'Forward price return 60 days after the signal (* = window not fully elapsed)'],
-  ['ret90', '90d', 'Forward price return 90 days after the signal (* = window not fully elapsed)'],
+  ['mom30', 'Before 30d', 'How the price moved in the 30 days BEFORE the signal fired (the “turning up” check that the price was already rising).'],
+  ['ret30', 'After 30d', 'Outcome: how the price moved in the 30 days AFTER the signal fired (* = window not fully elapsed yet).'],
+  ['ret60', 'After 60d', 'Outcome: price move in the 60 days AFTER the signal (* = window not fully elapsed).'],
+  ['ret90', 'After 90d', 'Outcome: price move in the 90 days AFTER the signal (* = window not fully elapsed).'],
 ]
 
 function LinkIcon() {
@@ -124,6 +126,12 @@ export default function Signals({ meta }) {
       }
       r = [...latest.values()]
     }
+    // derived, sortable change columns
+    r = r.map((x) => ({
+      ...x,
+      priceChgPct: x.priceNow != null && x.price ? x.priceNow / x.price - 1 : null,
+      premChgPp: x.premNow != null && x.prem != null ? x.premNow - x.prem : null,
+    }))
     const { key, dir } = sort
     r = [...r].sort((a, b) => {
       const va = a[key], vb = b[key]
@@ -202,6 +210,12 @@ export default function Signals({ meta }) {
         <button className="chip" data-on={String(collapse)} onClick={() => setCollapse(true)}>Latest per set</button>
         <button className="chip" data-on={String(!collapse)} onClick={() => setCollapse(false)}>All firings</button>
       </div>
+      <p className="muted text-xs max-w-4xl pb-2">
+        <strong>Before 30d</strong> = how the price had already moved in the 30 days <em>before</em> the signal (the
+        “turning up” check). <strong>After 30/60/90d</strong> = the outcome — how the price moved in the 30/60/90 days
+        <em> after</em> the signal fired (<span className="muted">*</span> = that window hasn’t fully elapsed yet, so it’s
+        the return “so far”). Hover any header for its definition.
+      </p>
       <div className="card p-3 overflow-x-auto">
         <table className="tbl text-sm w-full">
           <thead>
@@ -213,8 +227,6 @@ export default function Signals({ meta }) {
           </thead>
           <tbody>
             {rows.slice(0, 200).map((r, i) => {
-              const priceChg = r.priceNow != null && r.price ? r.priceNow / r.price - 1 : null
-              const premChg = r.premNow != null && r.prem != null ? r.premNow - r.prem : null // percentage points
               const itemText = r.productName || r.productType || 'item'
               return (
               <tr key={i}>
@@ -232,14 +244,14 @@ export default function Signals({ meta }) {
                     : <span>{itemText}</span>}
                 </td>
                 <td className="whitespace-nowrap">{fmtUsd(r.price)}</td>
-                <td className="whitespace-nowrap">
-                  {r.priceNow != null ? fmtUsd(r.priceNow) : '—'}
-                  {priceChg != null && <span className="text-xs" style={{ color: retColor(priceChg) }}> {fmtPct(priceChg)}</span>}
+                <td className="whitespace-nowrap">{r.priceNow != null ? fmtUsd(r.priceNow) : '—'}</td>
+                <td className="whitespace-nowrap" style={{ color: retColor(r.priceChgPct) }}>
+                  {r.priceChgPct != null ? fmtPct(r.priceChgPct) : '—'}
                 </td>
                 <td className="whitespace-nowrap">{r.prem != null ? fmtPct(r.prem) : '—'}</td>
-                <td className="whitespace-nowrap">
-                  {r.premNow != null ? fmtPct(r.premNow) : '—'}
-                  {premChg != null && <span className="text-xs muted"> {premChg >= 0 ? '+' : ''}{(premChg * 100).toFixed(1)}pp</span>}
+                <td className="whitespace-nowrap">{r.premNow != null ? fmtPct(r.premNow) : '—'}</td>
+                <td className="whitespace-nowrap muted">
+                  {r.premChgPp != null ? `${r.premChgPp >= 0 ? '+' : ''}${(r.premChgPp * 100).toFixed(1)}pp` : '—'}
                 </td>
                 <td style={{ color: retColor(r.dev) }}>{r.dev != null ? fmtPct(r.dev) : '—'}</td>
                 <td style={{ color: retColor(r.mom30) }}>{r.mom30 != null ? fmtPct(r.mom30) : '—'}</td>

@@ -16,6 +16,18 @@ const METRICS = {
   prem: { label: 'Premium %', axis: 'sealed premium', isPct: true, baseline: 0 },
 }
 
+// Compact on-chart segmented toggle.
+function Seg({ label, value, onChange, options }) {
+  return (
+    <div className="seg">
+      {label && <span className="seg-label">{label}</span>}
+      {options.map(([v, t]) => (
+        <button key={v} className="chip" data-on={String(value === v)} onClick={() => onChange(v)}>{t}</button>
+      ))}
+    </div>
+  )
+}
+
 function shortLabel(set) {
   const raw = (set?.name || String(set?.groupId || '')).replace(/^[A-Za-z0-9]+\s*[:\-–]\s*/, '')
   return raw.length > 18 ? raw.slice(0, 17) + '…' : raw
@@ -47,7 +59,7 @@ export default function CohortCurves({ meta }) {
   const [labels, setLabels] = useState('all')
   const [colorMode, setColorMode] = useState('mono')
   const [xMode, setXMode] = useState('cohort') // cohort (age) | calendar (date)
-  const [yLog, setYLog] = useState(true)
+  const [yLog, setYLog] = useState(false)
   const [showFilters, setShowFilters] = useState(false) // mobile: collapsed by default
   const [focusChase, setFocusChase] = useState(null)
   const [sigEvents, setSigEvents] = useState(null)
@@ -200,11 +212,18 @@ export default function CohortCurves({ meta }) {
       marks: [
         model.band.length ? Plot.areaY(model.band, { x: (d) => d.age / div, y1: 'p25', y2: 'p75', fill: palette.band, fillOpacity: 0.5, clip: true }) : null,
         model.band.length ? Plot.line(model.band, { x: (d) => d.age / div, y: 'p50', stroke: palette.textSecondary, strokeWidth: 1.5, strokeDasharray: '3,3', clip: true }) : null,
+        // halo: a thick background-colored underlay beneath focused lines so
+        // they cut a clear channel out of the multi-color crowd.
+        model.emph.size ? Plot.line(flat.filter((d) => model.emph.has(d.groupId)), {
+          x: 'x', y: 'value', z: 'groupId', stroke: palette.surface,
+          strokeWidth: 6.5, strokeOpacity: 0.9, strokeLinejoin: 'round', strokeLinecap: 'round', clip: true,
+        }) : null,
         Plot.line(flat, {
           x: 'x', y: 'value', z: 'groupId',
           stroke: (d) => model.colorOf(d.groupId, idxOf.get(d.groupId)),
-          strokeWidth: (d) => (model.emph.has(d.groupId) ? 2.6 : colorMode === 'multi' ? 1.5 : 1),
-          strokeOpacity: (d) => (model.emph.has(d.groupId) ? 1 : colorMode === 'multi' ? 0.95 : 0.8),
+          strokeWidth: (d) => (model.emph.has(d.groupId) ? 3.6 : colorMode === 'multi' ? 1.5 : 1),
+          // when something is focused, fade the rest hard so the focus pops
+          strokeOpacity: (d) => (model.emph.has(d.groupId) ? 1 : model.emph.size ? 0.22 : colorMode === 'multi' ? 0.9 : 0.8),
           strokeDasharray: (d) => (d.partial ? '3,3' : null), clip: true,
         }),
         ...buyMarks,
@@ -234,24 +253,9 @@ export default function CohortCurves({ meta }) {
       <div className={`${showFilters ? 'block' : 'hidden'} sm:block`}>
         <FilterBar meta={meta} state={state} setState={setState} />
         <div className="flex flex-wrap items-center gap-x-5 gap-y-2 py-2">
-          <Dropdown label="X" value={xMode} onChange={setXMode}
-            options={[['cohort', 'Cohort (age)'], ['calendar', 'Daily (date)']]} />
-          <Dropdown label="Metric" value={state.metric} onChange={setK('metric')}
-            options={Object.entries(METRICS).map(([k, m]) => [k, m.label])} />
-          {!isCal && (
-            <Dropdown label="Unit" value={state.xUnit} onChange={setK('xUnit')}
-              options={[['days', 'Days'], ['weeks', 'Weeks'], ['months', 'Months']]} />
-          )}
-          {state.metric === 'raw' && (
-            <Dropdown label="Y" value={yLog ? 'log' : 'lin'} onChange={(v) => setYLog(v === 'log')}
-              options={[['log', 'Log'], ['lin', 'Linear']]} />
-          )}
-          <Dropdown label="Color" value={colorMode} onChange={setColorMode}
-            options={[['mono', 'Mono'], ['multi', 'Multi-color']]} />
           <Dropdown label="Labels" value={labels} onChange={setLabels}
             options={[['all', 'All'], ['focus', 'Focus'], ['off', 'Off']]} />
           <SetPicker meta={meta} picked={picked} setPicked={setPicked} focus={focus} setFocus={setFocus} eras={state.eras} />
-          {view && !isCal && <button className="chip" data-on="true" onClick={() => setView(null)}>✕ Reset</button>}
         </div>
       </div>
       {model.lines.some((l) => l.lowConfidence) && state.metric === 'prem' && (
@@ -260,9 +264,30 @@ export default function CohortCurves({ meta }) {
         </p>
       )}
       <div className="card p-3">
+        {/* On-chart toolbar (top / near Y axis): metric, Y scale, color */}
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 pb-2">
+          <Seg value={state.metric} onChange={setK('metric')}
+            options={Object.entries(METRICS).map(([k, m]) => [k, m.label])} />
+          {state.metric === 'raw' && (
+            <Seg value={yLog ? 'log' : 'lin'} onChange={(v) => setYLog(v === 'log')}
+              options={[['lin', 'Linear'], ['log', 'Log']]} />
+          )}
+          <Seg value={colorMode} onChange={setColorMode}
+            options={[['mono', 'Mono'], ['multi', 'Multi-color']]} />
+          {view && !isCal && <button className="chip ml-auto" data-on="true" onClick={() => setView(null)}>✕ Reset zoom</button>}
+        </div>
         <PlotFigure build={build} onPick={onPick} onView={applyView}
           labelData={labelData} onLabelClick={(gid) => setFocus(gid)}
-          deps={[model, state.xUnit, state.metric, labels, colorMode, useLog, isCal, focusChase, sigEvents, view, themeTick]} />
+          deps={[model, state.xUnit, state.metric, labels, colorMode, useLog, isCal, focus, focusChase, sigEvents, view, themeTick]} />
+        {/* On-chart toolbar (bottom / near X axis): X mode + unit */}
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 pt-2">
+          <Seg value={xMode} onChange={setXMode}
+            options={[['cohort', 'Cohort (age)'], ['calendar', 'Daily (date)']]} />
+          {!isCal && (
+            <Seg value={state.xUnit} onChange={setK('xUnit')}
+              options={[['days', 'Days'], ['weeks', 'Weeks'], ['months', 'Months']]} />
+          )}
+        </div>
       </div>
       {state.seriesType === 'Chase Singles' && focus != null && focusChase?.chase?.length > 0 && (
         <div className="card p-3 mt-3">
