@@ -13,10 +13,11 @@ on:
     types: [completed]
   workflow_dispatch:
 
+# Publishes the built site to a `gh-pages` branch, which GitHub Pages
+# serves via "Deploy from a branch". This avoids the github-pages
+# deployment-environment gate that the Actions-artifact method requires.
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
@@ -25,9 +26,6 @@ concurrency:
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -43,9 +41,18 @@ jobs:
       - run: npm run build
         working-directory: web
 
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: web/dist
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      # .nojekyll so GitHub serves the built SPA verbatim (no Jekyll
+      # processing of the Vite output).
+      - run: touch web/dist/.nojekyll
+
+      - name: Publish to gh-pages
+        run: |
+          cd web/dist
+          git init -q
+          git config user.name "sealdeon-pipeline"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -q -m "deploy $(date -u +%FT%TZ)"
+          git push -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
