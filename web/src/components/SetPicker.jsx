@@ -5,11 +5,16 @@ import { useMemo, useState } from 'react'
 export default function SetPicker({ meta, picked, setPicked, focus, setFocus }) {
   const [query, setQuery] = useState('')
   const aliases = meta.aliases || {}
+  // Newest first, undated sets last.
+  const byReleaseDesc = useMemo(
+    () => [...meta.sets].sort((a, b) => (b.releaseDate || '').localeCompare(a.releaseDate || '')),
+    [meta],
+  )
   const matches = useMemo(() => {
     const q = query.toLowerCase().trim()
     if (!q) return []
     const aliasHit = Object.entries(aliases).find(([k]) => k.toLowerCase() === q)
-    return meta.sets
+    return byReleaseDesc
       .filter(
         (s) =>
           s.name?.toLowerCase().includes(q) ||
@@ -67,8 +72,10 @@ export default function SetPicker({ meta, picked, setPicked, focus, setFocus }) 
             onChange={(e) => setFocus(e.target.value ? Number(e.target.value) : null)}
           >
             <option value="">(median band only)</option>
-            {meta.sets.map((s) => (
-              <option key={s.groupId} value={s.groupId}>{s.name}</option>
+            {byReleaseDesc.map((s) => (
+              <option key={s.groupId} value={s.groupId}>
+                {s.releaseDate ? `${s.releaseDate.slice(0, 7)} · ` : ''}{s.name}{s.isHype ? ' 🔥' : ''}
+              </option>
             ))}
           </select>
         </div>

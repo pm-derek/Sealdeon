@@ -5,11 +5,29 @@ import { fmtPct, fmtUsd } from '../lib/slice.js'
 
 const HORIZONS = [['chg1', '1d'], ['chg7', '7d'], ['chg30', '30d'], ['chg90', '90d']]
 
-function Chg({ v }) {
-  if (v == null) return <span className="muted">—</span>
-  const color = v > 0.001 ? 'var(--pos)' : v < -0.001 ? 'var(--neg)' : 'var(--text-muted)'
-  return <span style={{ color }}>{fmtPct(v)}</span>
+// Cell background tinted by magnitude + direction (green up / red down),
+// saturating at `max`. Longer horizons swing more, so each column scales
+// to its own range. Diverging = two hues + transparent (neutral) midpoint.
+function heatBg(v, max) {
+  if (v == null || Math.abs(v) < 0.002) return 'transparent'
+  const base = v > 0 ? 'var(--pos)' : 'var(--neg)'
+  const pct = Math.min(Math.abs(v) / max, 1) * 58
+  return `color-mix(in oklab, ${base} ${pct.toFixed(0)}%, transparent)`
 }
+
+function HeatCell({ v, max }) {
+  if (v == null) return <td className="muted">—</td>
+  return (
+    <td style={{ background: heatBg(v, max), color: 'var(--text-primary)',
+                 fontWeight: Math.abs(v) > max * 0.5 ? 600 : 400 }}>
+      {fmtPct(v)}
+    </td>
+  )
+}
+
+// Per-column saturation ceilings (a 1d move of 10% is huge; a 90d move of
+// 10% is routine).
+const HEAT_MAX = { chg1: 0.08, chg7: 0.18, chg30: 0.35, chg90: 0.7, premChg30: 0.3 }
 
 export default function Screener({ meta }) {
   const [data, setData] = useState(null)
@@ -97,10 +115,12 @@ export default function Screener({ meta }) {
                 <td className="muted">{r.isChase ? 'Chase' : r.productType}</td>
                 <td className="muted">{r.ageDays != null ? `${r.ageDays}d` : '—'}</td>
                 <td>{fmtUsd(r.price)}</td>
-                <td><Chg v={r.chg1} /></td><td><Chg v={r.chg7} /></td>
-                <td><Chg v={r.chg30} /></td><td><Chg v={r.chg90} /></td>
+                <HeatCell v={r.chg1} max={HEAT_MAX.chg1} />
+                <HeatCell v={r.chg7} max={HEAT_MAX.chg7} />
+                <HeatCell v={r.chg30} max={HEAT_MAX.chg30} />
+                <HeatCell v={r.chg90} max={HEAT_MAX.chg90} />
                 <td>{r.premiumPct != null ? fmtPct(r.premiumPct) : <span className="muted">—</span>}</td>
-                <td><Chg v={r.premChg30} /></td>
+                <HeatCell v={r.premChg30} max={HEAT_MAX.premChg30} />
                 <td className="muted">—</td><td className="muted">—</td>
               </tr>
             ))}
