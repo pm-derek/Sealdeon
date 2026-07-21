@@ -22,6 +22,7 @@ from __future__ import annotations
 # keywordGroup = list of alternative substrings (lowercase), any one matches.
 PRODUCT_TYPE_PATTERNS: list[tuple[str, list[list[str]], list[str]]] = [
     ("Booster Box Case",     [["booster box"], ["case"]], []),
+    ("Booster Bundle Case",  [["booster bundle"], ["case"]], []),
     ("PKC ETB Case",         [["pokemon center"], ["elite trainer box"], ["case"]], []),
     ("ETB Case",             [["elite trainer box"], ["case"]], []),
     ("UPC",                  [["ultra-premium collection", "ultra premium collection"]], []),

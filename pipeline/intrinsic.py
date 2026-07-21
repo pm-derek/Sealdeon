@@ -60,6 +60,12 @@ PROMO_TYPES = {
 # stay low-confidence until confirmed by parse or override.
 SPECIALTY_TYPES = {"UPC", "SPC", "Special Collection", "Premium Collection"}
 
+# "Case" types hold multiple sub-units, so their pack count is the most
+# error-prone to parse ("6 booster boxes" vs "6 packs"). They reach high
+# confidence only via an explicit override; a parsed count below the
+# static floor is treated as a mis-parse (see resolve_pack_count).
+CASE_TYPES = {"Booster Box Case", "Booster Bundle Case", "ETB Case", "PKC ETB Case"}
+
 # Static fallback table (used only when description parsing fails).
 # Values are the modern-era conventions; anything reached through this
 # table is at most medium confidence and lands in the quality report.
@@ -73,6 +79,7 @@ PACK_COUNTS: dict[str, int] = {
     "ETB Case": 90,            # 10 x 9-pack ETBs
     "PKC ETB Case": 90,
     "Booster Bundle": 6,
+    "Booster Bundle Case": 60,  # ~10 bundles x 6 packs
     "Build & Battle": 4,
     "3-Pack Blister": 3,
     "Tin": 4,
@@ -174,6 +181,12 @@ def resolve_pack_count(product: dict, overrides: dict[int, int]) -> tuple[int | 
         return overrides[pid], "override"
     parsed = parse_pack_count(product.get("cardText"))
     if parsed is not None:
+        # Plausibility guard for Case types: a case must hold at least as
+        # many packs as its static floor. A lower parsed value means the
+        # parser grabbed a sub-unit count ("6 booster boxes" -> 6). Trust
+        # the static floor instead and let confidence flag it.
+        if ptype in CASE_TYPES and ptype in PACK_COUNTS and parsed < PACK_COUNTS[ptype]:
+            return PACK_COUNTS[ptype], "static"
         return parsed, "parsed"
     if ptype in PACK_COUNTS:
         return PACK_COUNTS[ptype], "static"
@@ -267,6 +280,10 @@ def confidence(pack_source: str | None, promo: dict, ptype: str | None) -> str:
     pack_ok = pack_source in ("parsed", "override")
     promo_ok = promo["promoSource"] in ("auto", "override", "none") and not promo["promoFuzzy"]
 
+    # Case types are multi-unit and the most error-prone to decompose;
+    # they reach high confidence only when the pack count is overridden.
+    if ptype in CASE_TYPES and pack_source != "override":
+        return "low" if promo["promoSource"] == "unresolved" else "medium"
     if ptype in SPECIALTY_TYPES and not pack_ok:
         return "low"
     if pack_source is None or promo["promoSource"] == "unresolved":

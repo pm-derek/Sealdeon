@@ -1,7 +1,7 @@
 import * as Plot from '@observablehq/plot'
 import { useEffect, useMemo, useState } from 'react'
 import PlotFigure from '../components/PlotFigure.jsx'
-import { loadSetDetail } from '../lib/loadView.js'
+import { loadSetDetail, loadView } from '../lib/loadView.js'
 import { fmtPct, fmtUsd } from '../lib/slice.js'
 import { useTheme } from '../lib/theme.js'
 
@@ -35,6 +35,7 @@ function ConfBadge({ conf }) {
 
 export default function SetDetail({ meta, groupId }) {
   const [detail, setDetail] = useState(null)
+  const [eraBands, setEraBands] = useState(null)
   const [error, setError] = useState(null)
   const [metric, setMetric] = useState('idx')
   const { palette, themeTick } = useTheme()
@@ -44,13 +45,17 @@ export default function SetDetail({ meta, groupId }) {
     loadSetDetail(groupId).then(setDetail).catch((e) => setError(e.message))
   }, [groupId])
 
+  // Shared per-era median bands (loaded once, cached across sets).
+  useEffect(() => { loadView('era_bands').then((d) => setEraBands(d.bands)).catch(() => setEraBands({})) }, [])
+
   const curveModel = useMemo(() => {
     if (!detail) return null
     const primary = ['Booster Box', 'ETB', 'Chase Singles']
     const curves = detail.curves.filter((c) => primary.includes(c.seriesType))
-    const band = (detail.eraBand || []).filter((b) => primary[0] === 'Booster Box' && b.seriesType === 'Booster Box')
+    const eraBand = (eraBands && eraBands[detail.set?.era]) || []
+    const band = eraBand.filter((b) => b.seriesType === 'Booster Box')
     return { curves, band }
-  }, [detail])
+  }, [detail, eraBands])
 
   const build = (width) => {
     if (!curveModel) return null
@@ -59,7 +64,8 @@ export default function SetDetail({ meta, groupId }) {
     const flat = curveModel.curves.flatMap((c) =>
       c.points.filter((pt) => at(pt) != null).map((pt) => ({ age: pt[0], value: at(pt), type: c.seriesType })),
     )
-    if (!flat.length) return null
+    // A just-released set has no trajectory yet -- don't draw a degenerate axis.
+    if (new Set(flat.map((d) => d.age)).size < 2) return null
     const colors = { 'Booster Box': palette.series[0], ETB: palette.series[2], 'Chase Singles': palette.series[4] }
     const band = isPrem
       ? curveModel.band.filter((b) => b.premP50 != null).map((b) => ({ age: b.ageDays, lo: b.premP25, mid: b.premP50, hi: b.premP75 }))
@@ -117,7 +123,11 @@ export default function SetDetail({ meta, groupId }) {
         </span>
       </div>
       <div className="card p-3">
-        <PlotFigure build={build} deps={[curveModel, metric, themeTick]} />
+        {curveModel && new Set(curveModel.curves.flatMap((c) => c.points.map((p) => p[0]))).size < 2 ? (
+          <p className="muted text-sm py-8 text-center">Not enough history yet — this set is too new to chart a trajectory.</p>
+        ) : (
+          <PlotFigure build={build} deps={[curveModel, metric, themeTick]} />
+        )}
       </div>
 
       <h3 className="font-semibold pt-6 pb-2">Sealed products</h3>

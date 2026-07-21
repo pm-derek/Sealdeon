@@ -65,6 +65,10 @@ def _set_products(gid: int, set_tag: str) -> list[dict]:
                 "Contains 16 booster packs and an etched promo card featuring Charizard (SVP 010)."),
         _sealed(base + 7, gid, f"{set_tag} Binder Collection",
                 "A 9-pocket binder."),
+        # Case type with the classic mis-parse trap: "6 booster boxes" must
+        # NOT resolve to 6 packs. Static floor (216) should win, medium conf.
+        _sealed(base + 8, gid, f"{set_tag} Booster Box Case",
+                "This case contains 6 booster boxes."),
     ]
     chase_prices = [400, 250, 180, 120, 90, 40, 20, 10]
     for i, peak in enumerate(chase_prices):
@@ -139,6 +143,11 @@ def prices_for_date(date: dt.date, products_by_group: dict[int, list[dict]]) -> 
             rows.append({"productId": gid * 100 + 7, "subTypeName": "Normal",
                          "marketPrice": 30.0, "midPrice": 32.0, "lowPrice": 27.0,
                          "directLowPrice": 29.0})
+            # booster box case: ~6x a booster box
+            case_price = round(base * 6 * mult, 2)
+            rows.append({"productId": gid * 100 + 8, "subTypeName": "Normal",
+                         "marketPrice": case_price, "midPrice": round(case_price * 1.03, 2),
+                         "lowPrice": round(case_price * 0.95, 2), "directLowPrice": None})
             # chase singles: spike at day ~14 then decay toward 40% of peak
             peaks = [400, 250, 180, 120, 90, 40, 20, 10]
             for i, peak in enumerate(peaks):

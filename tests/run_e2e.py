@@ -114,6 +114,13 @@ check("UPC high confidence", p.loc[2323706, "intrinsicConfidence"] == "high",
       str(p.loc[2323706, "intrinsicConfidence"]))
 check("binder not decomposable", bool(p.loc[2323707, "decomposable"]) is False)
 check("canonical booster box", bool(p.loc[2323701, "isCanonical"]))
+# Case mis-parse guardrail: "6 booster boxes" must NOT become 6 packs.
+check("case type classified", p.loc[2323708, "productType"] == "Booster Box Case",
+      str(p.loc[2323708, "productType"]))
+check("case pack count uses static floor not 6", p.loc[2323708, "packCount"] == 216,
+      str(p.loc[2323708, "packCount"]))
+check("case not high confidence without override", p.loc[2323708, "intrinsicConfidence"] != "high",
+      str(p.loc[2323708, "intrinsicConfidence"]))
 
 chase_ids = set(products_df[(products_df["groupId"] == 23237) & products_df["isChase"]]["productId"])
 check("top-5 chase by peak", chase_ids == {2323710, 2323711, 2323712, 2323713, 2323714}, str(chase_ids))
@@ -156,8 +163,12 @@ with open(os.path.join(views, "set_detail", "23237.json")) as f:
     detail = json.load(f)
 check("set detail sealed grid", len(detail["sealed"]) >= 5, str(len(detail["sealed"])))
 check("set detail chase list = 5", len(detail["chase"]) == 5)
-check("set detail sparkline", len(detail["sealed"][0]["sparkline"]) > 10)
-check("set detail era band", len(detail["eraBand"]) > 0)
+check("set detail sparkline", len(detail["sealed"][0]["sparkline"]) > 2)
+check("set detail has no inlined eraBand", "eraBand" not in detail)
+with open(os.path.join(views, "era_bands.json")) as f:
+    era_bands = json.load(f)["bands"]
+sv_band = era_bands.get("Scarlet & Violet", [])
+check("shared era band populated", any(b["seriesType"] == "Booster Box" for b in sv_band), str(len(sv_band)))
 
 with open(os.path.join(views, "premium_vs_median.json")) as f:
     pvm = json.load(f)["rows"]

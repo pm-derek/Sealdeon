@@ -142,8 +142,14 @@ def build_set_details(con, meta: dict) -> None:
 
     ids = ",".join(str(int(i)) for i in detail["productId"].unique())
     sparks = con.execute(
-        f"SELECT productId, date, round(price,2) AS price FROM px, (SELECT max(date) AS d FROM px) "
-        f"WHERE productId IN ({ids}) AND date >= d - {SPARKLINE_DAYS} ORDER BY productId, date"
+        f"WITH latest AS (SELECT max(date) AS d FROM px) "
+        f"SELECT productId, date, round(price,2) AS price FROM px, latest "
+        f"WHERE productId IN ({ids}) AND date >= d - {SPARKLINE_DAYS} "
+        # Weekly sampling (+ the latest point): a 90px thumbnail needs
+        # ~18 points, not 121 daily ones. Cuts per-set-file size ~6x and
+        # keeps the daily commit small.
+        f"AND (date_diff('day', date, d) % 7 = 0 OR date = d) "
+        f"ORDER BY productId, date"
     ).df()
     spark_map: dict[int, list] = {}
     for pid, rows in sparks.groupby("productId"):
@@ -159,12 +165,19 @@ def build_set_details(con, meta: dict) -> None:
                round(quantile_cont(si.premiumPct, 0.75), 4) AS premP75
         FROM series_indexed si JOIN sets s USING (groupId)
         WHERE si.ageDays >= 0 AND (si.ageDays <= 120 OR si.ageDays % 7 = 0)
+          -- SetDetail renders only the Booster Box era band; scoping here
+          -- keeps the shared file small.
+          AND si.seriesType = 'Booster Box'
         GROUP BY s.era, si.seriesType, si.ageDays
         ORDER BY s.era, si.seriesType, si.ageDays
     """).df()
     band_map: dict[str, list[dict]] = {}
     for era, rows in bands.groupby("era"):
         band_map[era] = records(rows.drop(columns=["era"]))
+    # Era bands are per-era, not per-set -- write once and let SetDetail
+    # load the shared file, instead of duplicating ~200KB into all 212
+    # set files (which would churn the whole lake on every daily commit).
+    write_json("era_bands.json", {"bands": band_map})
 
     curves = con.execute(_sql("cohort_curves.sql")).df()
     sets_by_id = {int(s["groupId"]): s for s in meta["sets"]}
@@ -198,7 +211,8 @@ def build_set_details(con, meta: dict) -> None:
             "sealed": sealed_rows,
             "chase": chase_rows,
             "curves": set_curves,
-            "eraBand": band_map.get(set_row.get("era"), []),
+            # eraBand lives in the shared era_bands.json (keyed by era);
+            # the frontend joins on set.era. Kept out of per-set files.
         })
 
 
