@@ -5,6 +5,12 @@ on:
     branches: [main]
     paths:
       - "web/**"
+  # Commits made by the pipeline workflows use GITHUB_TOKEN, which by
+  # design does NOT trigger `push` workflows -- so redeploy Pages when a
+  # pipeline run finishes (that's when data/view JSON changes land).
+  workflow_run:
+    workflows: [daily-snapshot, backfill]
+    types: [completed]
   workflow_dispatch:
 
 permissions:
