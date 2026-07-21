@@ -1,24 +1,18 @@
-// Shared one-row filter controls operating on in-memory view JSON.
-function ChipGroup({ label, options, value, onChange }) {
+// Compact filter toolbar. Single-select filters are dropdowns (to save
+// space); era is multi-select chips (overlappable).
+export function Dropdown({ label, value, onChange, options }) {
   return (
-    <div className="seg">
-      {label && <span className="seg-label">{label}</span>}
-      {options.map(([val, text]) => (
-        <button key={val} className="chip" data-on={String(val === value)} onClick={() => onChange(val)}>
-          {text}
-        </button>
-      ))}
-    </div>
+    <label className="inline-flex items-center gap-1.5">
+      <span className="seg-label">{label}</span>
+      <select className="field py-1" value={value} onChange={(e) => onChange(e.target.value)}>
+        {options.map(([v, t]) => <option key={v} value={v}>{t}</option>)}
+      </select>
+    </label>
   )
 }
 
-// Multi-select era: click toggles each era; "All" clears the selection
-// (empty = all eras). Overlappable, e.g. Mega Evolution + Scarlet & Violet.
 function EraMulti({ eras, allEras, onChange }) {
-  const toggle = (e) => {
-    const next = eras.includes(e) ? eras.filter((x) => x !== e) : [...eras, e]
-    onChange(next)
-  }
+  const toggle = (e) => onChange(eras.includes(e) ? eras.filter((x) => x !== e) : [...eras, e])
   return (
     <div className="seg">
       <span className="seg-label">Era</span>
@@ -34,33 +28,19 @@ export default function FilterBar({ meta, state, setState, show = {} }) {
   const allEras = [...new Set(meta.sets.map((s) => s.era).filter(Boolean))]
   const set = (k) => (v) => setState((s) => ({ ...s, [k]: v }))
   return (
-    <div className="flex flex-wrap items-center gap-x-6 gap-y-2.5 py-3">
-      {show.era !== false && (
-        <EraMulti eras={state.eras || []} allEras={allEras} onChange={set('eras')} />
-      )}
+    <div className="flex flex-wrap items-center gap-x-5 gap-y-2 py-2">
+      {show.era !== false && <EraMulti eras={state.eras || []} allEras={allEras} onChange={set('eras')} />}
       {show.seriesType !== false && (
-        <ChipGroup
-          label="Product"
-          options={meta.seriesTypes.map((t) => [t, t])}
-          value={state.seriesType}
-          onChange={set('seriesType')}
-        />
+        <Dropdown label="Product" value={state.seriesType} onChange={set('seriesType')}
+          options={meta.seriesTypes.map((t) => [t, t])} />
       )}
       {show.hype !== false && (
-        <ChipGroup
-          label="Hype"
-          options={[['all', 'All'], ['hype', 'Hype only'], ['clean', 'Clean only']]}
-          value={state.hype}
-          onChange={set('hype')}
-        />
+        <Dropdown label="Hype" value={state.hype} onChange={set('hype')}
+          options={[['all', 'All'], ['hype', 'Hype only'], ['clean', 'Clean only']]} />
       )}
       {show.completeness !== false && (
-        <ChipGroup
-          label="History"
-          options={[['complete', 'Complete only'], ['all', 'Include partial']]}
-          value={state.completeness}
-          onChange={set('completeness')}
-        />
+        <Dropdown label="History" value={state.completeness} onChange={set('completeness')}
+          options={[['complete', 'Complete only'], ['all', 'Include partial']]} />
       )}
     </div>
   )

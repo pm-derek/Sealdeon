@@ -94,7 +94,7 @@ export default function App() {
     <div className="min-h-screen">
       <header className="sticky top-0 z-10 backdrop-blur"
         style={{ background: 'color-mix(in oklab, var(--surface-0) 88%, transparent)', borderBottom: '1px solid var(--border)' }}>
-        <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center gap-x-4 gap-y-2">
+        <div className="max-w-[1600px] mx-auto px-4 py-3 flex flex-wrap items-center gap-x-4 gap-y-2">
           <div className="flex items-baseline gap-2">
             <span className="text-xl">📦</span>
             <h1 className="text-xl font-bold tracking-tight">Sealdeon</h1>
@@ -109,7 +109,7 @@ export default function App() {
           </nav>
         </div>
       </header>
-      <main className="max-w-7xl mx-auto px-4 py-5 pb-20">
+      <main className="max-w-[1600px] mx-auto px-4 py-5 pb-20">
         <div className="flex justify-end pb-2">
           <span className="muted text-xs">data through {meta.latestDate}</span>
         </div>

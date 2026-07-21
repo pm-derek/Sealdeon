@@ -33,53 +33,45 @@ export default function SetPicker({ meta, picked, setPicked, focus, setFocus, er
   }
 
   return (
-    <div className="py-2">
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="muted text-xs uppercase tracking-wide">Compare sets</span>
-        <input
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="search sets… (or use '151', 'Prismatic')"
-          className="field w-64"
-        />
+    <div className="inline-flex flex-col gap-1.5 relative">
+      <div className="inline-flex items-center gap-1.5 flex-wrap">
+        {setFocus && (
+          <label className="inline-flex items-center gap-1.5">
+            <span className="seg-label">Focus</span>
+            <select className="field py-1" value={focus ?? ''}
+              onChange={(e) => setFocus(e.target.value ? Number(e.target.value) : null)}>
+              <option value="">(median band only)</option>
+              {byReleaseDesc.map((s) => (
+                <option key={s.groupId} value={s.groupId}>
+                  {s.releaseDate ? `${s.releaseDate.slice(0, 7)} · ` : ''}{s.name}{s.isHype ? ' 🔥' : ''}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
+        <label className="inline-flex items-center gap-1.5">
+          <span className="seg-label">Compare</span>
+          <input value={query} onChange={(e) => setQuery(e.target.value)}
+            placeholder="search sets…" className="field py-1 w-44" />
+        </label>
         {[...picked].map((gid) => {
           const s = meta.sets.find((x) => x.groupId === gid)
           return (
-            <button key={gid} className="chip" data-on="true" onClick={() => toggle(gid)}
-              title="remove from comparison">
+            <button key={gid} className="chip" data-on="true" onClick={() => toggle(gid)} title="remove">
               {s?.abbreviation || s?.name || gid} ✕
             </button>
           )
         })}
-        {picked.size > 0 && (
-          <button className="chip" onClick={() => setPicked(new Set())}>clear</button>
-        )}
+        {picked.size > 0 && <button className="chip" onClick={() => setPicked(new Set())}>clear</button>}
       </div>
       {matches.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 mt-2">
+        <div className="flex flex-wrap gap-1.5 absolute top-full mt-1 z-20 card p-2 max-w-xl">
           {matches.map((s) => (
             <button key={s.groupId} className="chip" data-on={String(picked.has(s.groupId))}
               onClick={() => { toggle(s.groupId); setQuery('') }}>
               {s.name} {s.isHype ? '🔥' : ''}
             </button>
           ))}
-        </div>
-      )}
-      {setFocus && (
-        <div className="flex items-center gap-2 mt-2">
-          <span className="muted text-xs uppercase tracking-wide">Focus set</span>
-          <select
-            className="field"
-            value={focus ?? ''}
-            onChange={(e) => setFocus(e.target.value ? Number(e.target.value) : null)}
-          >
-            <option value="">(median band only)</option>
-            {byReleaseDesc.map((s) => (
-              <option key={s.groupId} value={s.groupId}>
-                {s.releaseDate ? `${s.releaseDate.slice(0, 7)} · ` : ''}{s.name}{s.isHype ? ' 🔥' : ''}
-              </option>
-            ))}
-          </select>
         </div>
       )}
     </div>

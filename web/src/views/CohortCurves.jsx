@@ -1,6 +1,6 @@
 import * as Plot from '@observablehq/plot'
 import { useEffect, useMemo, useState } from 'react'
-import FilterBar from '../components/FilterBar.jsx'
+import FilterBar, { Dropdown } from '../components/FilterBar.jsx'
 import SetPicker from '../components/SetPicker.jsx'
 import PlotFigure from '../components/PlotFigure.jsx'
 import { loadView, loadSetDetail } from '../lib/loadView.js'
@@ -43,8 +43,10 @@ export default function CohortCurves({ meta }) {
   const [labels, setLabels] = useState('all')
   const [yLog, setYLog] = useState(true)
   const [focusChase, setFocusChase] = useState(null)
-  const [view, setView] = useState(null) // x-domain [min,max] in xUnit units, or null = full
+  const [view, setView] = useState(null) // { x?:[min,max], y?:[min,max] } | null
   const { palette, themeTick } = useTheme()
+  // Merge x/y zoom patches; null resets both.
+  const applyView = (patch) => setView((v) => (patch === null ? null : { ...(v || {}), ...patch }))
 
   useEffect(() => { loadView('cohort_curves').then(setCurves) }, [])
   useEffect(() => {
@@ -100,15 +102,17 @@ export default function CohortCurves({ meta }) {
     const context = flat.filter((d) => !model.colored.has(d.groupId))
     const highlighted = flat.filter((d) => model.colored.has(d.groupId))
     const lastVisible = (rows) => {
-      const hi = view ? view[1] : Infinity, lo = view ? view[0] : -Infinity
+      const xv = view?.x || null
+      const hi = xv ? xv[1] : Infinity, lo = xv ? xv[0] : -Infinity
       const inv = rows.filter((d) => d.x >= lo && d.x <= hi)
       return inv.filter((d) => d === inv.filter((x) => x.groupId === d.groupId).at(-1))
     }
 
-    const lo = view ? view[0] : -Infinity, hi = view ? view[1] : Infinity
+    const xView = view?.x || null
+    const lo = xView ? xView[0] : -Infinity, hi = xView ? xView[1] : Infinity
     const vis = flat.filter((d) => d.x >= lo && d.x <= hi).map((d) => d.value)
-    let yDomain
-    if (vis.length) {
+    let yDomain = view?.y || undefined // manual y-zoom overrides auto-fit
+    if (!yDomain && vis.length) {
       let loY = Math.min(...vis), hiY = Math.max(...vis)
       if (useLog) { loY = Math.max(loY, 0.01); yDomain = [loY / 1.15, hiY * 1.15] }
       else { const pad = (hiY - loY) * 0.06 || 1; yDomain = [isPct ? Math.min(loY - pad, 0) : loY - pad, hiY + pad] }
@@ -135,21 +139,22 @@ export default function CohortCurves({ meta }) {
     }
 
     return Plot.plot({
-      width, height: 480,
+      width, height: 540,
       marginRight: labels === 'all' ? 74 : labels === 'focus' ? 150 : 24,
       marginLeft: 56,
       style: { background: 'transparent', color: palette.textSecondary, fontSize: '12px' },
-      x: { label: `${state.xUnit} since release →`, grid: false, domain: view || undefined },
+      x: { label: `${state.xUnit} since release →`, grid: false, domain: view?.x || undefined },
       y: {
         label: `↑ ${metricDef.axis}${useLog ? ' (log)' : ''}`, grid: true, domain: yDomain,
         type: useLog ? 'log' : 'linear',
         tickFormat: isPct ? ((d) => `${(d * 100).toFixed(0)}%`) : ((d) => `$${d >= 1000 ? (d / 1000) + 'k' : d}`),
       },
       marks: [
-        Plot.areaY(model.band, { x: (d) => d.age / div, y1: 'p25', y2: 'p75', fill: palette.band, fillOpacity: 0.5 }),
-        Plot.line(model.band, { x: (d) => d.age / div, y: 'p50', stroke: palette.textSecondary, strokeWidth: 1.5, strokeDasharray: '3,3' }),
-        Plot.line(context, { x: 'x', y: 'value', z: 'groupId', stroke: palette.context, strokeWidth: 1, strokeOpacity: 0.8, strokeDasharray: (d) => (d.partial ? '2,3' : null) }),
-        Plot.line(highlighted, { x: 'x', y: 'value', z: 'groupId', stroke: (d) => model.colored.get(d.groupId), strokeWidth: 2.5, strokeDasharray: (d) => (d.partial ? '4,3' : null) }),
+        // clip:true keeps marks inside the frame when zoomed (no bleed past the axes).
+        Plot.areaY(model.band, { x: (d) => d.age / div, y1: 'p25', y2: 'p75', fill: palette.band, fillOpacity: 0.5, clip: true }),
+        Plot.line(model.band, { x: (d) => d.age / div, y: 'p50', stroke: palette.textSecondary, strokeWidth: 1.5, strokeDasharray: '3,3', clip: true }),
+        Plot.line(context, { x: 'x', y: 'value', z: 'groupId', stroke: palette.context, strokeWidth: 1, strokeOpacity: 0.8, strokeDasharray: (d) => (d.partial ? '2,3' : null), clip: true }),
+        Plot.line(highlighted, { x: 'x', y: 'value', z: 'groupId', stroke: (d) => model.colored.get(d.groupId), strokeWidth: 2.5, strokeDasharray: (d) => (d.partial ? '4,3' : null), clip: true }),
         ...labelMarks,
         Plot.tip(flat, Plot.pointer({ x: 'x', y: 'value', title })),
         metricDef.baseline != null ? Plot.ruleY([metricDef.baseline], { stroke: palette.grid }) : null,
@@ -160,47 +165,38 @@ export default function CohortCurves({ meta }) {
   if (!curves || !model) return <p className="muted p-6">Loading cohort curves…</p>
 
   const onPick = (d) => { if (d?.groupId != null) setFocus(d.groupId) }
-  const bandN = model.band.length ? model.band[Math.floor(model.band.length / 2)].n : 0
-  const Seg = ({ label, options, value, onChange }) => (
-    <div className="seg"><span className="seg-label">{label}</span>
-      {options.map(([v, t]) => (
-        <button key={v} className="chip" data-on={String(value === v)} onClick={() => onChange(v)}>{t}</button>
-      ))}
-    </div>
-  )
+  const setK = (k) => (v) => setState((s) => ({ ...s, [k]: v }))
 
   return (
     <section>
-      <h2 className="text-lg font-semibold">Cohort curves</h2>
-      <p className="subtle text-sm max-w-4xl">
-        Compare sets by <em>age</em>, not calendar date. <strong>Raw $</strong> = market price of each set's
-        Booster Box / ETB / etc.; <strong>Premium %</strong> = value over pack contents. Band = p25–p75 of the
-        shown cohort ({bandN} sets). <em>Scroll to zoom · drag to pan · double-click to reset · click a line to focus.</em>
-      </p>
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <h2 className="text-lg font-semibold">Cohort curves</h2>
+        <p className="muted text-xs">scroll = zoom X · shift-scroll / over-axis = zoom Y · drag = pan · double-click = reset · click a line = focus</p>
+      </div>
+
+      {/* Compact control toolbar (single-selects as dropdowns; era multi-chips) */}
       <FilterBar meta={meta} state={state} setState={setState} />
-      <div className="flex flex-wrap items-center gap-x-6 gap-y-2.5 pb-1">
-        <Seg label="Metric" value={state.metric} onChange={(v) => setState((s) => ({ ...s, metric: v }))}
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 py-2">
+        <Dropdown label="Metric" value={state.metric} onChange={setK('metric')}
           options={Object.entries(METRICS).map(([k, m]) => [k, m.label])} />
-        <Seg label="X axis" value={state.xUnit} onChange={(v) => setState((s) => ({ ...s, xUnit: v }))}
+        <Dropdown label="X axis" value={state.xUnit} onChange={setK('xUnit')}
           options={[['days', 'Days'], ['weeks', 'Weeks'], ['months', 'Months']]} />
         {state.metric === 'raw' && (
-          <Seg label="Y scale" value={yLog ? 'log' : 'lin'} onChange={(v) => setYLog(v === 'log')}
+          <Dropdown label="Y scale" value={yLog ? 'log' : 'lin'} onChange={(v) => setYLog(v === 'log')}
             options={[['log', 'Log'], ['lin', 'Linear']]} />
         )}
-      </div>
-      <SetPicker meta={meta} picked={picked} setPicked={setPicked} focus={focus} setFocus={setFocus} eras={state.eras} />
-      <div className="flex flex-wrap items-center gap-x-6 gap-y-2.5 pb-2">
-        <Seg label="Labels" value={labels} onChange={setLabels}
+        <Dropdown label="Labels" value={labels} onChange={setLabels}
           options={[['all', 'All lines'], ['focus', 'Focus only'], ['off', 'Off']]} />
+        <SetPicker meta={meta} picked={picked} setPicked={setPicked} focus={focus} setFocus={setFocus} eras={state.eras} />
         {view && <button className="chip" data-on="true" onClick={() => setView(null)}>✕ Reset view</button>}
       </div>
       {model.lines.some((l) => l.lowConfidence) && state.metric === 'prem' && (
-        <p className="text-xs" style={{ color: 'var(--warn)' }}>
+        <p className="text-xs pb-1" style={{ color: 'var(--warn)' }}>
           ⚠ some premium series include low-confidence intrinsic values (see data quality report)
         </p>
       )}
       <div className="card p-3">
-        <PlotFigure build={build} onPick={onPick} onView={setView}
+        <PlotFigure build={build} onPick={onPick} onView={applyView}
           deps={[model, state.xUnit, state.metric, labels, useLog, focusChase, view, themeTick]} />
       </div>
       {state.seriesType === 'Chase Singles' && focus != null && focusChase?.chase?.length > 0 && (
