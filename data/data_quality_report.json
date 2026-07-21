@@ -4417,86 +4417,6 @@
    }
   },
   {
-   "productId": 616291,
-   "productName": "Azure Legends Tin [Dialga ex]",
-   "productType": "Tin",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "low",
-   "attemptedPackCount": 5,
-   "packCountSource": "parsed",
-   "attemptedPromo": "Kyogre",
-   "promoSource": "unresolved",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"616291\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 628094,
-   "productName": "Azure Legends Tin [Dialga ex] (International Version)",
-   "productType": "Tin",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "low",
-   "attemptedPackCount": 4,
-   "packCountSource": "parsed",
-   "attemptedPromo": "Kyogre",
-   "promoSource": "unresolved",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"628094\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 616292,
-   "productName": "Azure Legends Tin [Kyogre ex]",
-   "productType": "Tin",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "low",
-   "attemptedPackCount": 5,
-   "packCountSource": "parsed",
-   "attemptedPromo": "Kyogre",
-   "promoSource": "unresolved",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"616292\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 633082,
-   "productName": "Azure Legends Tin [Kyogre ex] (International Version)",
-   "productType": "Tin",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "low",
-   "attemptedPackCount": 4,
-   "packCountSource": "parsed",
-   "attemptedPromo": "Kyogre",
-   "promoSource": "unresolved",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"633082\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 616293,
-   "productName": "Azure Legends Tin [Xerneas ex]",
-   "productType": "Tin",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "low",
-   "attemptedPackCount": 5,
-   "packCountSource": "parsed",
-   "attemptedPromo": "Kyogre",
-   "promoSource": "unresolved",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"616293\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 633083,
    "productName": "Azure Legends Tin [Xerneas ex] (International Version)",
    "productType": "Tin",
@@ -4509,38 +4429,6 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"633083\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 619075,
-   "productName": "Azure Legends Tins [Set of 3]",
-   "productType": "Tin",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "low",
-   "attemptedPackCount": 5,
-   "packCountSource": "parsed",
-   "attemptedPromo": "Kyogre",
-   "promoSource": "unresolved",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"619075\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 633084,
-   "productName": "Azure Legends Tins [Set of 3] (International Version)",
-   "productType": "Tin",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "low",
-   "attemptedPackCount": 4,
-   "packCountSource": "parsed",
-   "attemptedPromo": "Kyogre",
-   "promoSource": "unresolved",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"633084\": <count>",
     "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -5825,22 +5713,6 @@
    }
   },
   {
-   "productId": 690199,
-   "productName": "Fusion Strike Elite Trainer Box & 6 Bonus Cards (Sam's Club)",
-   "productType": "ETB",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
-   "attemptedPromo": "Mew",
-   "promoSource": "unresolved",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690199\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:ETB\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 220290,
    "productName": "Galar Challengers Tin [Copperajah V]",
    "productType": "Tin",
@@ -5982,22 +5854,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"594491\": <count>",
     "promo": "add to config/promo_overrides.json as \"2374:UPC\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 526914,
-   "productName": "Gyarados ex Premium Collection",
-   "productType": "Premium Collection",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "low",
-   "attemptedPackCount": 6,
-   "packCountSource": "parsed",
-   "attemptedPromo": "Gyarados",
-   "promoSource": "unresolved",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"526914\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Premium Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -6429,22 +6285,6 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"532560\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Special Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 657884,
-   "productName": "Latias ex Special Collection",
-   "productType": "Special Collection",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "low",
-   "attemptedPackCount": 6,
-   "packCountSource": "parsed",
-   "attemptedPromo": "Latias",
-   "promoSource": "unresolved",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"657884\": <count>",
     "promo": "add to config/promo_overrides.json as \"2374:Special Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -8161,22 +8001,6 @@
    }
   },
   {
-   "productId": 648365,
-   "productName": "Prismatic Evolutions Lucario ex & Tyranitar ex Premium Collection (Sam's Club)",
-   "productType": "Premium Collection",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "low",
-   "attemptedPackCount": 14,
-   "packCountSource": "parsed",
-   "attemptedPromo": "Lucario",
-   "promoSource": "unresolved",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"648365\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Premium Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 245731,
    "productName": "Rayquaza V / Noivern V Battle Decks [Set of 2]",
    "productType": null,
@@ -8273,22 +8097,6 @@
    }
   },
   {
-   "productId": 653899,
-   "productName": "Salamence ex & Reshiram ex Premium Collection",
-   "productType": "Premium Collection",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "low",
-   "attemptedPackCount": 10,
-   "packCountSource": "parsed",
-   "attemptedPromo": "Salamence",
-   "promoSource": "unresolved",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"653899\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Premium Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 286619,
    "productName": "Shaymin VSTAR Premium Collection",
    "productType": "Premium Collection",
@@ -8334,22 +8142,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"226128\": <count>",
     "promo": "add to config/promo_overrides.json as \"2374:Premium Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 662770,
-   "productName": "Snorlax ex & Blissey ex Special Collection",
-   "productType": "Special Collection",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "low",
-   "attemptedPackCount": 8,
-   "packCountSource": "parsed",
-   "attemptedPromo": "Snorlax",
-   "promoSource": "unresolved",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"662770\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Special Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -27281,6 +27073,118 @@
    }
   },
   {
+   "productId": 616291,
+   "productName": "Azure Legends Tin [Dialga ex]",
+   "productType": "Tin",
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "medium",
+   "attemptedPackCount": 5,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Kyogre ex - 037 (EX Collector's Tins)",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"616291\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 628094,
+   "productName": "Azure Legends Tin [Dialga ex] (International Version)",
+   "productType": "Tin",
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "medium",
+   "attemptedPackCount": 4,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Kyogre ex - 037 (EX Collector's Tins)",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"628094\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 616292,
+   "productName": "Azure Legends Tin [Kyogre ex]",
+   "productType": "Tin",
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "medium",
+   "attemptedPackCount": 5,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Kyogre ex - 037 (EX Collector's Tins)",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"616292\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 633082,
+   "productName": "Azure Legends Tin [Kyogre ex] (International Version)",
+   "productType": "Tin",
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "medium",
+   "attemptedPackCount": 4,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Kyogre ex - 037 (EX Collector's Tins)",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"633082\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 616293,
+   "productName": "Azure Legends Tin [Xerneas ex]",
+   "productType": "Tin",
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "medium",
+   "attemptedPackCount": 5,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Kyogre ex - 037 (EX Collector's Tins)",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"616293\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 619075,
+   "productName": "Azure Legends Tins [Set of 3]",
+   "productType": "Tin",
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "medium",
+   "attemptedPackCount": 5,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Kyogre ex - 037 (EX Collector's Tins)",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"619075\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 633084,
+   "productName": "Azure Legends Tins [Set of 3] (International Version)",
+   "productType": "Tin",
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "medium",
+   "attemptedPackCount": 4,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Kyogre ex - 037 (EX Collector's Tins)",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"633084\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 610741,
    "productName": "Costco Pokemon Evolving Skies Elite Trainer Box and Tin",
    "productType": "ETB",
@@ -27345,6 +27249,22 @@
    }
   },
   {
+   "productId": 690199,
+   "productName": "Fusion Strike Elite Trainer Box & 6 Bonus Cards (Sam's Club)",
+   "productType": "ETB",
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "medium",
+   "attemptedPackCount": 9,
+   "packCountSource": "static",
+   "attemptedPromo": "Mew - 040 (Trainer's Challenge Set)",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"690199\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:ETB\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 239236,
    "productName": "Gardevoir V/Victini V Battle Decks [Set of 2]",
    "productType": "Tin",
@@ -27374,6 +27294,22 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"232770\": <count>",
     "promo": "add to config/promo_overrides.json as \"2374:Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 657884,
+   "productName": "Latias ex Special Collection",
+   "productType": "Special Collection",
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "medium",
+   "attemptedPackCount": 6,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Latias - 014 (Pokemon Heroes: Latios & Latias DVD Release)",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"657884\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:Special Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -27518,6 +27454,38 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"644852\": <count>",
     "promo": "add to config/promo_overrides.json as \"2374:ETB\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 653899,
+   "productName": "Salamence ex & Reshiram ex Premium Collection",
+   "productType": "Premium Collection",
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "medium",
+   "attemptedPackCount": 10,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Salamence - 19/97 (e-League)",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"653899\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:Premium Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 662770,
+   "productName": "Snorlax ex & Blissey ex Special Collection",
+   "productType": "Special Collection",
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "medium",
+   "attemptedPackCount": 8,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Snorlax - 33/95 (Prerelease)",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"662770\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:Special Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -33409,5 +33377,5 @@
    }
   }
  ],
- "count": 2088
+ "count": 2086
 }
