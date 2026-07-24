@@ -1153,70 +1153,6 @@
    }
   },
   {
-   "productId": 232863,
-   "productName": "Delta Species Theme Deck - \"Breakthrough\"",
-   "productType": null,
-   "groupId": 1429,
-   "setName": "Delta Species",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"232863\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1429:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 232864,
-   "productName": "Delta Species Theme Deck - \"Steeplechase\"",
-   "productType": null,
-   "groupId": 1429,
-   "setName": "Delta Species",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"232864\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1429:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 232862,
-   "productName": "Deoxys Theme Deck - \"Jetstream\"",
-   "productType": null,
-   "groupId": 1404,
-   "setName": "Deoxys",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"232862\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1404:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 232861,
-   "productName": "Deoxys Theme Deck - \"Starcharge\"",
-   "productType": null,
-   "groupId": 1404,
-   "setName": "Deoxys",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"232861\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1404:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 264420,
    "productName": "Detective Pikachu Cafe Figure Collection",
    "productType": null,
@@ -1374,38 +1310,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"97764\": <count>",
     "promo": "add to config/promo_overrides.json as \"1525:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 488300,
-   "productName": "Dragon Theme Deck - \"FireFang\" [Salamence]",
-   "productType": null,
-   "groupId": 1376,
-   "setName": "Dragon",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"488300\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1376:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 616216,
-   "productName": "EX Dragon Frontiers Single Blister Pack",
-   "productType": null,
-   "groupId": 1411,
-   "setName": "Dragon Frontiers",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"616216\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1411:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -1601,6 +1505,310 @@
    }
   },
   {
+   "productId": 232863,
+   "productName": "Delta Species Theme Deck - \"Breakthrough\"",
+   "productType": null,
+   "groupId": 1429,
+   "setName": "EX Delta Species",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"232863\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1429:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 232864,
+   "productName": "Delta Species Theme Deck - \"Steeplechase\"",
+   "productType": null,
+   "groupId": 1429,
+   "setName": "EX Delta Species",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"232864\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1429:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 232862,
+   "productName": "Deoxys Theme Deck - \"Jetstream\"",
+   "productType": null,
+   "groupId": 1404,
+   "setName": "EX Deoxys",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"232862\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1404:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 232861,
+   "productName": "Deoxys Theme Deck - \"Starcharge\"",
+   "productType": null,
+   "groupId": 1404,
+   "setName": "EX Deoxys",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"232861\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1404:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 488300,
+   "productName": "Dragon Theme Deck - \"FireFang\" [Salamence]",
+   "productType": null,
+   "groupId": 1376,
+   "setName": "EX Dragon",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"488300\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1376:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 616216,
+   "productName": "EX Dragon Frontiers Single Blister Pack",
+   "productType": null,
+   "groupId": 1411,
+   "setName": "EX Dragon Frontiers",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"616216\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1411:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 232874,
+   "productName": "Emerald Theme Deck - \"Hydrobloom\" [Milotic]",
+   "productType": null,
+   "groupId": 1410,
+   "setName": "EX Emerald",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"232874\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1410:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 232875,
+   "productName": "Emerald Theme Deck - \"Wildfire\" [Manectric]",
+   "productType": null,
+   "groupId": 1410,
+   "setName": "EX Emerald",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"232875\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1410:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 488299,
+   "productName": "FireRed & LeafGreen Theme Deck - \"LeafGreen\" [Ivysaur]",
+   "productType": null,
+   "groupId": 1419,
+   "setName": "EX FireRed & LeafGreen",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"488299\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1419:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 215765,
+   "productName": "Hidden Legends Theme Deck - \"Forest Guardian\" [Dark Celebi]",
+   "productType": null,
+   "groupId": 1416,
+   "setName": "EX Hidden Legends",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"215765\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1416:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 215766,
+   "productName": "Hidden Legends Theme Deck - \"Wish Maker\" [Jirachi]",
+   "productType": null,
+   "groupId": 1416,
+   "setName": "EX Hidden Legends",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"215766\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1416:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 530143,
+   "productName": "Hidden Legends Theme Deck Display",
+   "productType": null,
+   "groupId": 1416,
+   "setName": "EX Hidden Legends",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"530143\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1416:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 232850,
+   "productName": "Holon Phantoms Theme Deck - \"FireMist\"",
+   "productType": null,
+   "groupId": 1379,
+   "setName": "EX Holon Phantoms",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"232850\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1379:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 232851,
+   "productName": "Holon Phantoms Theme Deck - \"FloodRush\"",
+   "productType": null,
+   "groupId": 1379,
+   "setName": "EX Holon Phantoms",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"232851\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1379:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 616213,
+   "productName": "EX Power Keepers Single Blister Pack",
+   "productType": null,
+   "groupId": 1383,
+   "setName": "EX Power Keepers",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"616213\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1383:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 234511,
+   "productName": "Sandstorm Theme Deck - \"Caravan\"",
+   "productType": null,
+   "groupId": 1392,
+   "setName": "EX Sandstorm",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"234511\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1392:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 488309,
+   "productName": "EX Ruby & Sapphire Theme Deck - \"Ruby\" [Blaziken]",
+   "productType": null,
+   "groupId": 1377,
+   "setName": "EX Team Magma vs Team Aqua",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"488309\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1377:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 488310,
+   "productName": "EX Ruby & Sapphire Theme Deck - \"Sapphire\" [Swampert]",
+   "productType": null,
+   "groupId": 1377,
+   "setName": "EX Team Magma vs Team Aqua",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"488310\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1377:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 488301,
+   "productName": "Team Magma Theme Deck - \"EX Team Magma\" [Groudon]",
+   "productType": null,
+   "groupId": 1377,
+   "setName": "EX Team Magma vs Team Aqua",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"488301\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1377:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 98950,
    "productName": "EX Trainer Kit [Latias & Latios]",
    "productType": null,
@@ -1633,35 +1841,35 @@
    }
   },
   {
-   "productId": 232874,
-   "productName": "Emerald Theme Deck - \"Hydrobloom\" [Milotic]",
+   "productId": 232865,
+   "productName": "Unseen Forces Theme Deck - \"Golden Sky\" [Ho-Oh]",
    "productType": null,
-   "groupId": 1410,
-   "setName": "Emerald",
+   "groupId": 1398,
+   "setName": "EX Unseen Forces",
    "confidence": "low",
    "attemptedPackCount": null,
    "packCountSource": null,
    "attemptedPromo": null,
    "promoSource": "none",
    "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"232874\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1410:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "packCount": "add to config/packcount_overrides.json as \"232865\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1398:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
-   "productId": 232875,
-   "productName": "Emerald Theme Deck - \"Wildfire\" [Manectric]",
+   "productId": 232866,
+   "productName": "Unseen Forces Theme Deck - \"Silvery Ocean\" [Lugia]",
    "productType": null,
-   "groupId": 1410,
-   "setName": "Emerald",
+   "groupId": 1398,
+   "setName": "EX Unseen Forces",
    "confidence": "low",
    "attemptedPackCount": null,
    "packCountSource": null,
    "attemptedPromo": null,
    "promoSource": "none",
    "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"232875\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1410:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "packCount": "add to config/packcount_overrides.json as \"232866\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1398:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -1838,22 +2046,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"234504\": <count>",
     "promo": "add to config/promo_overrides.json as \"1375:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 488299,
-   "productName": "FireRed & LeafGreen Theme Deck - \"LeafGreen\" [Ivysaur]",
-   "productType": null,
-   "groupId": 1419,
-   "setName": "FireRed & LeafGreen",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"488299\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1419:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -2702,86 +2894,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"199466\": <count>",
     "promo": "add to config/promo_overrides.json as \"2480:UPC\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 215765,
-   "productName": "Hidden Legends Theme Deck - \"Forest Guardian\" [Dark Celebi]",
-   "productType": null,
-   "groupId": 1416,
-   "setName": "Hidden Legends",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"215765\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1416:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 215766,
-   "productName": "Hidden Legends Theme Deck - \"Wish Maker\" [Jirachi]",
-   "productType": null,
-   "groupId": 1416,
-   "setName": "Hidden Legends",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"215766\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1416:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 530143,
-   "productName": "Hidden Legends Theme Deck Display",
-   "productType": null,
-   "groupId": 1416,
-   "setName": "Hidden Legends",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"530143\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1416:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 232850,
-   "productName": "Holon Phantoms Theme Deck - \"FireMist\"",
-   "productType": null,
-   "groupId": 1379,
-   "setName": "Holon Phantoms",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"232850\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1379:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 232851,
-   "productName": "Holon Phantoms Theme Deck - \"FloodRush\"",
-   "productType": null,
-   "groupId": 1379,
-   "setName": "Holon Phantoms",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"232851\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1379:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -10014,22 +10126,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"270710\": <count>",
     "promo": "add to config/promo_overrides.json as \"3064:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 616213,
-   "productName": "EX Power Keepers Single Blister Pack",
-   "productType": null,
-   "groupId": 1383,
-   "setName": "Power Keepers",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"616213\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1383:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -21249,22 +21345,6 @@
    }
   },
   {
-   "productId": 234511,
-   "productName": "Sandstorm Theme Deck - \"Caravan\"",
-   "productType": null,
-   "groupId": 1392,
-   "setName": "Sandstorm",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"234511\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1392:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 265320,
    "productName": "Shining Fates Booster Pack Art Bundle [Set of 4]",
    "productType": null,
@@ -21745,54 +21825,6 @@
    }
   },
   {
-   "productId": 488309,
-   "productName": "EX Ruby & Sapphire Theme Deck - \"Ruby\" [Blaziken]",
-   "productType": null,
-   "groupId": 1377,
-   "setName": "Team Magma vs Team Aqua",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"488309\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1377:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 488310,
-   "productName": "EX Ruby & Sapphire Theme Deck - \"Sapphire\" [Swampert]",
-   "productType": null,
-   "groupId": 1377,
-   "setName": "Team Magma vs Team Aqua",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"488310\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1377:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 488301,
-   "productName": "Team Magma Theme Deck - \"EX Team Magma\" [Groudon]",
-   "productType": null,
-   "groupId": 1377,
-   "setName": "Team Magma vs Team Aqua",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"488301\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1377:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 176942,
    "productName": "Team Rocket Theme Deck - \"Devastation\"",
    "productType": null,
@@ -21822,38 +21854,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"176943\": <count>",
     "promo": "add to config/promo_overrides.json as \"1373:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 232865,
-   "productName": "Unseen Forces Theme Deck - \"Golden Sky\" [Ho-Oh]",
-   "productType": null,
-   "groupId": 1398,
-   "setName": "Unseen Forces",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"232865\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1398:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 232866,
-   "productName": "Unseen Forces Theme Deck - \"Silvery Ocean\" [Lugia]",
-   "productType": null,
-   "groupId": 1398,
-   "setName": "Unseen Forces",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"232866\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1398:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -25873,22 +25873,6 @@
    }
   },
   {
-   "productId": 98567,
-   "productName": "Crystal Guardians Booster Box",
-   "productType": "Booster Box",
-   "groupId": 1395,
-   "setName": "Crystal Guardians",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"98567\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1395:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 98520,
    "productName": "Dark Explorers Booster Box",
    "productType": "Booster Box",
@@ -25902,38 +25886,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"98520\": <count>",
     "promo": "add to config/promo_overrides.json as \"1386:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 98943,
-   "productName": "Delta Species Booster Box",
-   "productType": "Booster Box",
-   "groupId": 1429,
-   "setName": "Delta Species",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"98943\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1429:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 98563,
-   "productName": "Deoxys Booster Box",
-   "productType": "Booster Box",
-   "groupId": 1404,
-   "setName": "Deoxys",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"98563\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1404:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -26033,38 +25985,6 @@
    }
   },
   {
-   "productId": 98518,
-   "productName": "EX Dragon Booster Box",
-   "productType": "Booster Box",
-   "groupId": 1376,
-   "setName": "Dragon",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"98518\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1376:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 98532,
-   "productName": "Dragon Frontiers Booster Box",
-   "productType": "Booster Box",
-   "groupId": 1411,
-   "setName": "Dragon Frontiers",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"98532\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1411:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 98540,
    "productName": "Dragons Exalted Booster Box",
    "productType": "Booster Box",
@@ -26081,11 +26001,91 @@
    }
   },
   {
+   "productId": 98567,
+   "productName": "Crystal Guardians Booster Box",
+   "productType": "Booster Box",
+   "groupId": 1395,
+   "setName": "EX Crystal Guardians",
+   "confidence": "medium",
+   "attemptedPackCount": 36,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"98567\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1395:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 98943,
+   "productName": "Delta Species Booster Box",
+   "productType": "Booster Box",
+   "groupId": 1429,
+   "setName": "EX Delta Species",
+   "confidence": "medium",
+   "attemptedPackCount": 36,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"98943\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1429:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 98563,
+   "productName": "Deoxys Booster Box",
+   "productType": "Booster Box",
+   "groupId": 1404,
+   "setName": "EX Deoxys",
+   "confidence": "medium",
+   "attemptedPackCount": 36,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"98563\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1404:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 98518,
+   "productName": "EX Dragon Booster Box",
+   "productType": "Booster Box",
+   "groupId": 1376,
+   "setName": "EX Dragon",
+   "confidence": "medium",
+   "attemptedPackCount": 36,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"98518\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1376:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 98532,
+   "productName": "Dragon Frontiers Booster Box",
+   "productType": "Booster Box",
+   "groupId": 1411,
+   "setName": "EX Dragon Frontiers",
+   "confidence": "medium",
+   "attemptedPackCount": 36,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"98532\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1411:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 98547,
    "productName": "Emerald Booster Box",
    "productType": "Booster Box",
    "groupId": 1410,
-   "setName": "Emerald",
+   "setName": "EX Emerald",
    "confidence": "medium",
    "attemptedPackCount": 36,
    "packCountSource": "static",
@@ -26094,6 +26094,166 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"98547\": <count>",
     "promo": "add to config/promo_overrides.json as \"1410:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 98945,
+   "productName": "FireRed & LeafGreen Booster Box",
+   "productType": "Booster Box",
+   "groupId": 1419,
+   "setName": "EX FireRed & LeafGreen",
+   "confidence": "medium",
+   "attemptedPackCount": 36,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"98945\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1419:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 98596,
+   "productName": "Hidden Legends Booster Box",
+   "productType": "Booster Box",
+   "groupId": 1416,
+   "setName": "EX Hidden Legends",
+   "confidence": "medium",
+   "attemptedPackCount": 36,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"98596\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1416:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 98523,
+   "productName": "Holon Phantoms Booster Box",
+   "productType": "Booster Box",
+   "groupId": 1379,
+   "setName": "EX Holon Phantoms",
+   "confidence": "medium",
+   "attemptedPackCount": 36,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"98523\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1379:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 98556,
+   "productName": "Legend Maker Booster Box",
+   "productType": "Booster Box",
+   "groupId": 1378,
+   "setName": "EX Legend Maker",
+   "confidence": "medium",
+   "attemptedPackCount": 36,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"98556\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1378:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 98528,
+   "productName": "Power Keepers Booster Box",
+   "productType": "Booster Box",
+   "groupId": 1383,
+   "setName": "EX Power Keepers",
+   "confidence": "medium",
+   "attemptedPackCount": 36,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"98528\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1383:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 98559,
+   "productName": "Ruby and Sapphire Booster Box",
+   "productType": "Booster Box",
+   "groupId": 1393,
+   "setName": "EX Ruby and Sapphire",
+   "confidence": "medium",
+   "attemptedPackCount": 36,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"98559\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1393:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 98564,
+   "productName": "Sandstorm Booster Box",
+   "productType": "Booster Box",
+   "groupId": 1392,
+   "setName": "EX Sandstorm",
+   "confidence": "medium",
+   "attemptedPackCount": 36,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"98564\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1392:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 98551,
+   "productName": "Team Magma vs Team Aqua Booster Box",
+   "productType": "Booster Box",
+   "groupId": 1377,
+   "setName": "EX Team Magma vs Team Aqua",
+   "confidence": "medium",
+   "attemptedPackCount": 36,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"98551\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1377:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 98579,
+   "productName": "Team Rocket Returns Booster Box",
+   "productType": "Booster Box",
+   "groupId": 1428,
+   "setName": "EX Team Rocket Returns",
+   "confidence": "medium",
+   "attemptedPackCount": 36,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"98579\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1428:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 98576,
+   "productName": "Unseen Forces Booster Box",
+   "productType": "Booster Box",
+   "groupId": 1398,
+   "setName": "EX Unseen Forces",
+   "confidence": "medium",
+   "attemptedPackCount": 36,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"98576\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1398:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -26158,22 +26318,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"98623\": <count>",
     "promo": "add to config/promo_overrides.json as \"1424:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 98945,
-   "productName": "FireRed & LeafGreen Booster Box",
-   "productType": "Booster Box",
-   "groupId": 1419,
-   "setName": "FireRed & LeafGreen",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"98945\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1419:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -26385,38 +26529,6 @@
    }
   },
   {
-   "productId": 98596,
-   "productName": "Hidden Legends Booster Box",
-   "productType": "Booster Box",
-   "groupId": 1416,
-   "setName": "Hidden Legends",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"98596\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1416:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 98523,
-   "productName": "Holon Phantoms Booster Box",
-   "productType": "Booster Box",
-   "groupId": 1379,
-   "setName": "Holon Phantoms",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"98523\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1379:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 107598,
    "productName": "Jungle Booster Box [1st Edition]",
    "productType": "Booster Box",
@@ -26462,22 +26574,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"138129\": <count>",
     "promo": "add to config/promo_overrides.json as \"635:Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 98556,
-   "productName": "Legend Maker Booster Box",
-   "productType": "Booster Box",
-   "groupId": 1378,
-   "setName": "Legend Maker",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"98556\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1378:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -28065,22 +28161,6 @@
    }
   },
   {
-   "productId": 98528,
-   "productName": "Power Keepers Booster Box",
-   "productType": "Booster Box",
-   "groupId": 1383,
-   "setName": "Power Keepers",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"98528\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1383:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 98543,
    "productName": "Rising Rivals Booster Box",
    "productType": "Booster Box",
@@ -28094,22 +28174,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"98543\": <count>",
     "promo": "add to config/promo_overrides.json as \"1367:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 98559,
-   "productName": "Ruby and Sapphire Booster Box",
-   "productType": "Booster Box",
-   "groupId": 1393,
-   "setName": "Ruby and Sapphire",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"98559\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1393:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -31857,22 +31921,6 @@
    }
   },
   {
-   "productId": 98564,
-   "productName": "Sandstorm Booster Box",
-   "productType": "Booster Box",
-   "groupId": 1392,
-   "setName": "Sandstorm",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"98564\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1392:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 98568,
    "productName": "Secret Wonders Booster Box",
    "productType": "Booster Box",
@@ -31953,22 +32001,6 @@
    }
   },
   {
-   "productId": 98551,
-   "productName": "Team Magma vs Team Aqua Booster Box",
-   "productType": "Booster Box",
-   "groupId": 1377,
-   "setName": "Team Magma vs Team Aqua",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"98551\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1377:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 138135,
    "productName": "Team Rocket Booster Pack [Unlimited Edition]",
    "productType": "Booster Pack",
@@ -31982,22 +32014,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"138135\": <count>",
     "promo": "add to config/promo_overrides.json as \"1373:Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 98579,
-   "productName": "Team Rocket Returns Booster Box",
-   "productType": "Booster Box",
-   "groupId": 1428,
-   "setName": "Team Rocket Returns",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"98579\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1428:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -32046,22 +32062,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"98583\": <count>",
     "promo": "add to config/promo_overrides.json as \"1399:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 98576,
-   "productName": "Unseen Forces Booster Box",
-   "productType": "Booster Box",
-   "groupId": 1398,
-   "setName": "Unseen Forces",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"98576\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1398:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
