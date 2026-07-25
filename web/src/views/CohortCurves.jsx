@@ -28,6 +28,16 @@ function Seg({ label, value, onChange, options }) {
   )
 }
 
+function LinkIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, opacity: 0.8 }} aria-hidden="true">
+      <path d="M14 3h7v7" /><path d="M10 14 21 3" />
+      <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" />
+    </svg>
+  )
+}
+
 function shortLabel(set) {
   const raw = (set?.name || String(set?.groupId || '')).replace(/^[A-Za-z0-9]+\s*[:\-–]\s*/, '')
   return raw.length > 18 ? raw.slice(0, 17) + '…' : raw
@@ -61,7 +71,7 @@ export default function CohortCurves({ meta }) {
   const [xMode, setXMode] = useState('cohort') // cohort (age) | calendar (date)
   const [yLog, setYLog] = useState(false)
   const [showFilters, setShowFilters] = useState(false) // mobile: collapsed by default
-  const [focusChase, setFocusChase] = useState(null)
+  const [focusDetail, setFocusDetail] = useState(null)
   const [sigEvents, setSigEvents] = useState(null)
   const [view, setView] = useState(null)
   const { palette, themeTick } = useTheme()
@@ -72,11 +82,11 @@ export default function CohortCurves({ meta }) {
   useEffect(() => { loadView('cohort_curves').then(setCurves) }, [])
   useEffect(() => { loadView('signals_events').then((d) => setSigEvents(d.byGroup || {})).catch(() => setSigEvents({})) }, [])
   useEffect(() => {
-    if (focus == null || state.seriesType !== 'Chase Singles') { setFocusChase(null); return }
+    if (focus == null) { setFocusDetail(null); return }
     let live = true
-    loadSetDetail(focus).then((d) => { if (live) setFocusChase(d) }).catch(() => setFocusChase(null))
+    loadSetDetail(focus).then((d) => { if (live) setFocusDetail(d) }).catch(() => setFocusDetail(null))
     return () => { live = false }
-  }, [focus, state.seriesType])
+  }, [focus])
   useEffect(() => { setView(null) }, [state.metric, state.seriesType, state.xUnit])
   // Calendar mode opens on the last ~15 months of real dates.
   useEffect(() => {
@@ -144,11 +154,22 @@ export default function CohortCurves({ meta }) {
     }))
   }, [model, isCal, div])
 
+  // TCGplayer listing for the focused line: the canonical product of the
+  // current product type in the focused set. (Chase Singles is a basket, no
+  // single listing.)
+  const focusLink = useMemo(() => {
+    if (!focusDetail || focus == null || state.seriesType === 'Chase Singles') return null
+    const sealed = focusDetail.sealed || []
+    const canon = sealed.find((s) => s.productType === state.seriesType && s.isCanonical)
+      || sealed.find((s) => s.productType === state.seriesType)
+    return canon?.url ? { url: canon.url, name: canon.name, price: canon.price } : null
+  }, [focusDetail, focus, state.seriesType])
+
   const chaseTitle = (gid, ageDays) => {
-    if (!focusChase || gid !== focus || state.seriesType !== 'Chase Singles') return null
+    if (!focusDetail || gid !== focus || state.seriesType !== 'Chase Singles') return null
     const set = bySet.get(gid); if (!set?.releaseDate) return null
     const date = new Date(new Date(set.releaseDate).getTime() + ageDays * EPOCH_DAY).toISOString().slice(0, 10)
-    const rows = (focusChase.chase || []).map((c) => {
+    const rows = (focusDetail.chase || []).map((c) => {
       const p = priceAtDate(c.sparkline, date) ?? c.price
       return `  ${(c.name.replace(set.name, '').trim()) || c.name} — ${fmtUsd(p)}`
     })
@@ -257,7 +278,9 @@ export default function CohortCurves({ meta }) {
 
   if (!curves || !model) return <p className="muted p-6">Loading cohort curves…</p>
 
-  const onPick = (d) => { if (d?.groupId != null) setFocus(d.groupId) }
+  // tap/click a line toggles it in and out of focus
+  const toggleFocus = (gid) => setFocus((f) => (f === gid ? null : gid))
+  const onPick = (d) => { if (d?.groupId != null) toggleFocus(d.groupId) }
   const applyView = (patch) => setView((v) => (patch === null ? (isCal ? { x: [latestEpoch - 460, latestEpoch + 8] } : null) : { ...(v || {}), ...patch }))
   const setK = (k) => (v) => setState((s) => ({ ...s, [k]: v }))
 
@@ -265,12 +288,12 @@ export default function CohortCurves({ meta }) {
     <section>
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-lg font-semibold">Cohort curves</h2>
-        <p className="muted text-xs hidden sm:block">scroll = zoom · shift-scroll = zoom Y · drag = pan · double-click = reset · click line/label = focus</p>
+        <p className="muted text-xs hidden sm:block">scroll = zoom · shift-scroll = zoom Y · drag = pan · double-click = reset · click line/label = focus (again to clear)</p>
         <button className="chip sm:hidden" onClick={() => setShowFilters((v) => !v)}>
           {showFilters ? '✕ Hide filters' : '⚙ Filters'}
         </button>
       </div>
-      <p className="muted text-xs sm:hidden pb-1">drag = pan · pinch = zoom · drag an axis = stretch it · tap = select line · double-tap = reset</p>
+      <p className="muted text-xs sm:hidden pb-1">drag = pan · pinch = zoom · drag an axis = stretch it · tap = focus/unfocus line · double-tap = reset</p>
 
       <div className={`${showFilters ? 'block' : 'hidden'} sm:block`}>
         <FilterBar meta={meta} state={state} setState={setState} />
@@ -298,9 +321,26 @@ export default function CohortCurves({ meta }) {
             options={[['mono', 'Mono'], ['multi', 'Multi-color']]} />
           {view && !isCal && <button className="chip ml-auto" data-on="true" onClick={() => setView(null)}>✕ Reset zoom</button>}
         </div>
+        {/* Focus bar: shown when a line is focused — link out + clear */}
+        {focus != null && (
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 pb-2 text-sm">
+            <span className="font-medium truncate max-w-[16rem]" style={{ color: 'var(--accent)' }}>
+              ◉ {bySet.get(focus)?.name}
+            </span>
+            {focusLink
+              ? <a href={focusLink.url} target="_blank" rel="noopener noreferrer"
+                   className="inline-flex items-center gap-1 hover:underline" style={{ color: 'var(--accent)' }}>
+                  View {state.seriesType} on TCGplayer{focusLink.price != null ? ` · ${fmtUsd(focusLink.price)}` : ''}<LinkIcon />
+                </a>
+              : state.seriesType === 'Chase Singles'
+                ? <span className="muted text-xs">chase basket — see cards below</span>
+                : <span className="muted text-xs">no TCGplayer listing for this type</span>}
+            <button className="chip ml-auto" onClick={() => setFocus(null)}>✕ Clear focus</button>
+          </div>
+        )}
         <PlotFigure build={build} onPick={onPick} onView={applyView}
-          labelData={labelData} onLabelClick={(gid) => setFocus(gid)} hitData={hitData}
-          deps={[model, state.xUnit, state.metric, labels, colorMode, useLog, isCal, focus, focusChase, sigEvents, view, themeTick]} />
+          labelData={labelData} onLabelClick={toggleFocus} hitData={hitData}
+          deps={[model, state.xUnit, state.metric, labels, colorMode, useLog, isCal, focus, focusDetail, sigEvents, view, themeTick]} />
         {/* On-chart toolbar (bottom / near X axis): X mode + unit */}
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2 pt-2">
           <Seg value={xMode} onChange={setXMode}
@@ -311,14 +351,14 @@ export default function CohortCurves({ meta }) {
           )}
         </div>
       </div>
-      {state.seriesType === 'Chase Singles' && focus != null && focusChase?.chase?.length > 0 && (
+      {state.seriesType === 'Chase Singles' && focus != null && focusDetail?.chase?.length > 0 && (
         <div className="card p-3 mt-3">
           <div className="flex items-baseline justify-between pb-2">
             <h3 className="font-semibold text-sm">{bySet.get(focus)?.name} — chase basket (drives the focused line)</h3>
             <span className="muted text-xs">hover the focused line for prices at a given age</span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-            {focusChase.chase.map((c) => (
+            {focusDetail.chase.map((c) => (
               <a key={c.productId} href={c.url} target="_blank" rel="noreferrer"
                 className="card p-2 flex gap-2 items-center hover:brightness-110" style={{ boxShadow: 'none' }}>
                 {c.imageUrl && <img src={c.imageUrl} alt="" loading="lazy"
