@@ -103,14 +103,30 @@ def build_product_dim(groups: list[dict], products_by_group: dict[int, list[dict
             products_df[col] = None
     products_df["decomposable"] = products_df["decomposable"].fillna(False).astype(bool)
 
-    # Canonical product per (groupId, productType): shortest name. This is
-    # the product used for cross-set cohort series ("Booster Box" line per set).
+    # Multipacks / partial units ("Elite Trainer Box Set of 2", "Half Booster
+    # Box", "... Lot of 3") share a productType with the single unit but are
+    # priced per bundle, so they must NOT represent the type. Their pack count
+    # is also per-single, so decomposing them yields a wildly inflated premium.
+    is_multi = products_df["name"].fillna("").str.lower().str.contains(
+        r"set of \d|\bhalf\b|lot of \d|pack of \d|\bdouble\b", regex=True)
+    products_df["_multi"] = is_multi
+
+    # Canonical product per (groupId, productType): the single unit with the
+    # shortest name -- prefer non-multipack listings, so the cross-set cohort
+    # series ("Booster Box" / "ETB" line per set) tracks one real box.
     products_df["isCanonical"] = False
-    typed = products_df[products_df["productType"].notna()]
+    typed = products_df[products_df["productType"].notna()].copy()
     if not typed.empty:
-        name_len = typed["name"].fillna("").str.len()
-        idx = name_len.groupby([typed["groupId"], typed["productType"]]).idxmin()
-        products_df.loc[idx.values, "isCanonical"] = True
+        typed["_len"] = typed["name"].fillna("").str.len()
+        order = typed.sort_values(["_multi", "_len"])
+        first = order.groupby([order["groupId"], order["productType"]], sort=False).head(1)
+        products_df.loc[first.index, "isCanonical"] = True
+
+    # Keep multipacks/partials out of the intrinsic-premium views (they're
+    # decomposed against a single unit's pack count -> false premium).
+    if "intrinsicConfidence" in products_df.columns:
+        products_df.loc[is_multi, "intrinsicConfidence"] = "low"
+    products_df.drop(columns=["_multi"], inplace=True, errors="ignore")
 
     products_by_id = {r["productId"]: r for r in product_rows}
     report = intrinsic_mod.quality_report(resolutions, products_by_id, sets_by_id)
