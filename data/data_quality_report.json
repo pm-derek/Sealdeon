@@ -33393,22 +33393,6 @@
    }
   },
   {
-   "productId": 238851,
-   "productName": "Adventures in the Forgotten Realms - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 2823,
-   "setName": "Adventures in the Forgotten Realms",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"238851\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2823:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 238730,
    "productName": "Adventures in the Forgotten Realms - Draft Booster Box",
    "productType": "Draft Booster Box",
@@ -33421,22 +33405,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"238730\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2823:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 238854,
-   "productName": "Adventures in the Forgotten Realms - Draft Booster Box Case",
-   "productType": "Draft Booster Box",
-   "groupId": 2823,
-   "setName": "Adventures in the Forgotten Realms",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"238854\": <count>",
     "promo": "add to config/promo_overrides.json as \"2823:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -33457,22 +33425,6 @@
    }
   },
   {
-   "productId": 238858,
-   "productName": "Adventures in the Forgotten Realms - Set Booster Display Case",
-   "productType": "Set Booster Box",
-   "groupId": 2823,
-   "setName": "Adventures in the Forgotten Realms",
-   "confidence": "medium",
-   "attemptedPackCount": 30,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"238858\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2823:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 604253,
    "productName": "Aetherdrift - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -33485,38 +33437,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"604253\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23874:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 604254,
-   "productName": "Aetherdrift - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23874,
-   "setName": "Aetherdrift",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"604254\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23874:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 604262,
-   "productName": "Aetherdrift - Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23874,
-   "setName": "Aetherdrift",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"604262\": <count>",
     "promo": "add to config/promo_overrides.json as \"23874:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -33537,22 +33457,6 @@
    }
   },
   {
-   "productId": 604251,
-   "productName": "Aetherdrift - Play Booster Display Case",
-   "productType": "Play Booster Box",
-   "groupId": 23874,
-   "setName": "Aetherdrift",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"604251\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23874:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 648650,
    "productName": "Avatar: The Last Airbender - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -33565,22 +33469,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"648650\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24421:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 648659,
-   "productName": "Avatar: The Last Airbender - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 24421,
-   "setName": "Avatar: The Last Airbender",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"648659\": <count>",
     "promo": "add to config/promo_overrides.json as \"24421:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -33601,22 +33489,6 @@
    }
   },
   {
-   "productId": 648644,
-   "productName": "Avatar: The Last Airbender - Play Booster Display Case",
-   "productType": "Play Booster Box",
-   "groupId": 24421,
-   "setName": "Avatar: The Last Airbender",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"648644\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24421:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 541238,
    "productName": "Bloomburrow - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -33629,38 +33501,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"541238\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23447:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 541239,
-   "productName": "Bloomburrow - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23447,
-   "setName": "Bloomburrow",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"541239\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23447:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 541240,
-   "productName": "Bloomburrow - Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23447,
-   "setName": "Bloomburrow",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"541240\": <count>",
     "promo": "add to config/promo_overrides.json as \"23447:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -33681,22 +33521,6 @@
    }
   },
   {
-   "productId": 541236,
-   "productName": "Bloomburrow - Play Booster Display Case",
-   "productType": "Play Booster Box",
-   "groupId": 23447,
-   "setName": "Bloomburrow",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"541236\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23447:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 221323,
    "productName": "Commander Legends - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -33709,22 +33533,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"221323\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2708:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 221394,
-   "productName": "Commander Legends - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 2708,
-   "setName": "Commander Legends",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"221394\": <count>",
     "promo": "add to config/promo_overrides.json as \"2708:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -33745,22 +33553,6 @@
    }
   },
   {
-   "productId": 221395,
-   "productName": "Commander Legends - Draft Booster Box Case",
-   "productType": "Draft Booster Box",
-   "groupId": 2708,
-   "setName": "Commander Legends",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"221395\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2708:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 267023,
    "productName": "Commander Legends: Battle for Baldur's Gate - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -33773,22 +33565,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"267023\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3047:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 268514,
-   "productName": "Commander Legends: Battle for Baldur's Gate - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 3047,
-   "setName": "Commander Legends: Battle for Baldur's Gate",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"268514\": <count>",
     "promo": "add to config/promo_overrides.json as \"3047:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -33809,22 +33585,6 @@
    }
   },
   {
-   "productId": 268512,
-   "productName": "Commander Legends: Battle for Baldur's Gate - Draft Booster Box Case",
-   "productType": "Draft Booster Box",
-   "groupId": 3047,
-   "setName": "Commander Legends: Battle for Baldur's Gate",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"268512\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3047:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 267022,
    "productName": "Commander Legends: Battle for Baldur's Gate - Set Booster Box",
    "productType": "Set Booster Box",
@@ -33837,22 +33597,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"267022\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3047:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 268513,
-   "productName": "Commander Legends: Battle for Baldur's Gate - Set Booster Box Case",
-   "productType": "Set Booster Box",
-   "groupId": 3047,
-   "setName": "Commander Legends: Battle for Baldur's Gate",
-   "confidence": "medium",
-   "attemptedPackCount": 30,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"268513\": <count>",
     "promo": "add to config/promo_overrides.json as \"3047:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -33873,22 +33617,6 @@
    }
   },
   {
-   "productId": 497724,
-   "productName": "Commander Masters - Collector Booster Box Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23020,
-   "setName": "Commander Masters",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"497724\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23020:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 484924,
    "productName": "Commander Masters - Draft Booster Box",
    "productType": "Draft Booster Box",
@@ -33905,22 +33633,6 @@
    }
   },
   {
-   "productId": 484925,
-   "productName": "Commander Masters - Draft Booster Box Case",
-   "productType": "Draft Booster Box",
-   "groupId": 23020,
-   "setName": "Commander Masters",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"484925\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23020:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 484927,
    "productName": "Commander Masters - Set Booster Box",
    "productType": "Set Booster Box",
@@ -33933,22 +33645,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"484927\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23020:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 490553,
-   "productName": "Commander Masters - Set Booster Box Case",
-   "productType": "Set Booster Box",
-   "groupId": 23020,
-   "setName": "Commander Masters",
-   "confidence": "medium",
-   "attemptedPackCount": 30,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"490553\": <count>",
     "promo": "add to config/promo_overrides.json as \"23020:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -33985,22 +33681,6 @@
    }
   },
   {
-   "productId": 455797,
-   "productName": "Dominaria Remastered - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 17670,
-   "setName": "Dominaria Remastered",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"455797\": <count>",
-    "promo": "add to config/promo_overrides.json as \"17670:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 449558,
    "productName": "Dominaria Remastered - Draft Booster Box",
    "productType": "Draft Booster Box",
@@ -34033,22 +33713,6 @@
    }
   },
   {
-   "productId": 275434,
-   "productName": "Dominaria United - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 3102,
-   "setName": "Dominaria United",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"275434\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3102:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 275403,
    "productName": "Dominaria United - Draft Booster Box",
    "productType": "Draft Booster Box",
@@ -34061,22 +33725,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"275403\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3102:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 275433,
-   "productName": "Dominaria United - Draft Booster Box Case",
-   "productType": "Draft Booster Box",
-   "groupId": 3102,
-   "setName": "Dominaria United",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"275433\": <count>",
     "promo": "add to config/promo_overrides.json as \"3102:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -34097,22 +33745,6 @@
    }
   },
   {
-   "productId": 275431,
-   "productName": "Dominaria United - Set Booster Display Case",
-   "productType": "Set Booster Box",
-   "groupId": 3102,
-   "setName": "Dominaria United",
-   "confidence": "medium",
-   "attemptedPackCount": 30,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"275431\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3102:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 271509,
    "productName": "Double Masters 2022 - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -34125,22 +33757,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"271509\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3070:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 271510,
-   "productName": "Double Masters 2022 - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 3070,
-   "setName": "Double Masters 2022",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"271510\": <count>",
     "promo": "add to config/promo_overrides.json as \"3070:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -34161,22 +33777,6 @@
    }
   },
   {
-   "productId": 271505,
-   "productName": "Double Masters 2022 - Draft Booster Box Case",
-   "productType": "Draft Booster Box",
-   "groupId": 3070,
-   "setName": "Double Masters 2022",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"271505\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3070:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 557244,
    "productName": "Duskmourn: House of Horror - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -34189,38 +33789,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"557244\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23550:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 557245,
-   "productName": "Duskmourn: House of Horror - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23550,
-   "setName": "Duskmourn: House of Horror",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"557245\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23550:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 557246,
-   "productName": "Duskmourn: House of Horror - Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23550,
-   "setName": "Duskmourn: House of Horror",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"557246\": <count>",
     "promo": "add to config/promo_overrides.json as \"23550:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -34241,22 +33809,6 @@
    }
   },
   {
-   "productId": 557242,
-   "productName": "Duskmourn: House of Horror - Play Booster Display Case",
-   "productType": "Play Booster Box",
-   "groupId": 23550,
-   "setName": "Duskmourn: House of Horror",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"557242\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23550:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 619672,
    "productName": "Edge of Eternities - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -34273,38 +33825,6 @@
    }
   },
   {
-   "productId": 619694,
-   "productName": "Edge of Eternities - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 24233,
-   "setName": "Edge of Eternities",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"619694\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24233:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 619695,
-   "productName": "Edge of Eternities - Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 24233,
-   "setName": "Edge of Eternities",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"619695\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24233:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 619674,
    "productName": "Edge of Eternities - Play Booster Display",
    "productType": "Play Booster Box",
@@ -34317,22 +33837,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"619674\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24233:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 619699,
-   "productName": "Edge of Eternities - Play Booster Display Case",
-   "productType": "Play Booster Box",
-   "groupId": 24233,
-   "setName": "Edge of Eternities",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"619699\": <count>",
     "promo": "add to config/promo_overrides.json as \"24233:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -34369,54 +33873,6 @@
    }
   },
   {
-   "productId": 618894,
-   "productName": "FINAL FANTASY - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 24219,
-   "setName": "FINAL FANTASY",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"618894\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24219:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 631773,
-   "productName": "FINAL FANTASY - Collector Booster Display Case (Japanese)",
-   "productType": "Collector Booster Box",
-   "groupId": 24219,
-   "setName": "FINAL FANTASY",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"631773\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24219:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 618895,
-   "productName": "FINAL FANTASY - Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 24219,
-   "setName": "FINAL FANTASY",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"618895\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24219:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 618890,
    "productName": "FINAL FANTASY - Play Booster Display",
    "productType": "Play Booster Box",
@@ -34429,22 +33885,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"618890\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24219:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 618891,
-   "productName": "FINAL FANTASY - Play Booster Display Case",
-   "productType": "Play Booster Box",
-   "groupId": 24219,
-   "setName": "FINAL FANTASY",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"618891\": <count>",
     "promo": "add to config/promo_overrides.json as \"24219:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -34465,38 +33905,6 @@
    }
   },
   {
-   "productId": 562123,
-   "productName": "Magic: The Gathering Foundations - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23556,
-   "setName": "Foundations",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"562123\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23556:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 562124,
-   "productName": "Magic: The Gathering Foundations - Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23556,
-   "setName": "Foundations",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"562124\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23556:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 562118,
    "productName": "Magic: The Gathering Foundations - Play Booster Display",
    "productType": "Play Booster Box",
@@ -34509,22 +33917,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"562118\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23556:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 562119,
-   "productName": "Magic: The Gathering Foundations - Play Booster Display Case",
-   "productType": "Play Booster Box",
-   "groupId": 23556,
-   "setName": "Foundations",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"562119\": <count>",
     "promo": "add to config/promo_overrides.json as \"23556:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -34561,38 +33953,6 @@
    }
   },
   {
-   "productId": 596262,
-   "productName": "Innistrad Remastered - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23848,
-   "setName": "Innistrad Remastered",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"596262\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23848:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 646348,
-   "productName": "Innistrad Remastered - Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23848,
-   "setName": "Innistrad Remastered",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"646348\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23848:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 594672,
    "productName": "Innistrad Remastered - Play Booster Display",
    "productType": "Play Booster Box",
@@ -34605,22 +33965,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"594672\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23848:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 594676,
-   "productName": "Innistrad Remastered - Play Booster Display Case",
-   "productType": "Play Booster Box",
-   "groupId": 23848,
-   "setName": "Innistrad Remastered",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"594676\": <count>",
     "promo": "add to config/promo_overrides.json as \"23848:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -34641,22 +33985,6 @@
    }
   },
   {
-   "productId": 246458,
-   "productName": "Innistrad: Crimson Vow - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 2862,
-   "setName": "Innistrad: Crimson Vow",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"246458\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2862:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 246467,
    "productName": "Innistrad: Crimson Vow - Draft Booster Box",
    "productType": "Draft Booster Box",
@@ -34669,22 +33997,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"246467\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2862:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 246468,
-   "productName": "Innistrad: Crimson Vow - Draft Booster Box Case",
-   "productType": "Draft Booster Box",
-   "groupId": 2862,
-   "setName": "Innistrad: Crimson Vow",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"246468\": <count>",
     "promo": "add to config/promo_overrides.json as \"2862:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -34705,22 +34017,6 @@
    }
   },
   {
-   "productId": 246471,
-   "productName": "Innistrad: Crimson Vow - Set Booster Display Case",
-   "productType": "Set Booster Box",
-   "groupId": 2862,
-   "setName": "Innistrad: Crimson Vow",
-   "confidence": "medium",
-   "attemptedPackCount": 30,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"246471\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2862:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 255911,
    "productName": "Innistrad: Double Feature - Draft Booster Box",
    "productType": "Draft Booster Box",
@@ -34733,22 +34029,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"255911\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2942:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 255913,
-   "productName": "Innistrad: Double Feature - Draft Booster Box Case",
-   "productType": "Draft Booster Box",
-   "groupId": 2942,
-   "setName": "Innistrad: Double Feature",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"255913\": <count>",
     "promo": "add to config/promo_overrides.json as \"2942:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -34769,22 +34049,6 @@
    }
   },
   {
-   "productId": 244385,
-   "productName": "Innistrad: Midnight Hunt - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 2864,
-   "setName": "Innistrad: Midnight Hunt",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"244385\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2864:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 244379,
    "productName": "Innistrad: Midnight Hunt - Draft Booster Box",
    "productType": "Draft Booster Box",
@@ -34797,22 +34061,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"244379\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2864:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 244381,
-   "productName": "Innistrad: Midnight Hunt - Draft Booster Box Case",
-   "productType": "Draft Booster Box",
-   "groupId": 2864,
-   "setName": "Innistrad: Midnight Hunt",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"244381\": <count>",
     "promo": "add to config/promo_overrides.json as \"2864:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -34833,22 +34081,6 @@
    }
   },
   {
-   "productId": 244390,
-   "productName": "Innistrad: Midnight Hunt - Set Booster Display Case",
-   "productType": "Set Booster Box",
-   "groupId": 2864,
-   "setName": "Innistrad: Midnight Hunt",
-   "confidence": "medium",
-   "attemptedPackCount": 30,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"244390\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2864:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 228249,
    "productName": "Kaldheim - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -34861,22 +34093,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"228249\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2750:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 230864,
-   "productName": "Kaldheim - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 2750,
-   "setName": "Kaldheim",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"230864\": <count>",
     "promo": "add to config/promo_overrides.json as \"2750:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -34897,22 +34113,6 @@
    }
   },
   {
-   "productId": 228247,
-   "productName": "Kaldheim - Draft Booster Box Case",
-   "productType": "Draft Booster Box",
-   "groupId": 2750,
-   "setName": "Kaldheim",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"228247\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2750:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 228251,
    "productName": "Kaldheim - Set Booster Display",
    "productType": "Set Booster Box",
@@ -34925,22 +34125,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"228251\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2750:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 622979,
-   "productName": "Kaldheim - Set Booster Display Case",
-   "productType": "Set Booster Box",
-   "groupId": 2750,
-   "setName": "Kaldheim",
-   "confidence": "medium",
-   "attemptedPackCount": 30,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"622979\": <count>",
     "promo": "add to config/promo_overrides.json as \"2750:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -34961,22 +34145,6 @@
    }
   },
   {
-   "productId": 257564,
-   "productName": "Kamigawa: Neon Dynasty - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 2965,
-   "setName": "Kamigawa: Neon Dynasty",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"257564\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2965:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 257557,
    "productName": "Kamigawa: Neon Dynasty - Draft Booster Box",
    "productType": "Draft Booster Box",
@@ -34989,22 +34157,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"257557\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2965:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 257558,
-   "productName": "Kamigawa: Neon Dynasty - Draft Booster Box Case",
-   "productType": "Draft Booster Box",
-   "groupId": 2965,
-   "setName": "Kamigawa: Neon Dynasty",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"257558\": <count>",
     "promo": "add to config/promo_overrides.json as \"2965:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -35025,22 +34177,6 @@
    }
   },
   {
-   "productId": 257559,
-   "productName": "Kamigawa: Neon Dynasty - Set Booster Display Case",
-   "productType": "Set Booster Box",
-   "groupId": 2965,
-   "setName": "Kamigawa: Neon Dynasty",
-   "confidence": "medium",
-   "attemptedPackCount": 30,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"257559\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2965:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 656322,
    "productName": "Lorwyn Eclipsed - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -35053,38 +34189,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"656322\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24463:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 656325,
-   "productName": "Lorwyn Eclipsed - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 24463,
-   "setName": "Lorwyn Eclipsed",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"656325\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24463:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 656326,
-   "productName": "Lorwyn Eclipsed - Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 24463,
-   "setName": "Lorwyn Eclipsed",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"656326\": <count>",
     "promo": "add to config/promo_overrides.json as \"24463:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -35105,22 +34209,6 @@
    }
   },
   {
-   "productId": 656315,
-   "productName": "Lorwyn Eclipsed - Play Booster Display Case",
-   "productType": "Play Booster Box",
-   "groupId": 24463,
-   "setName": "Lorwyn Eclipsed",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"656315\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24463:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 475584,
    "productName": "March of the Machine - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -35133,22 +34221,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"475584\": <count>",
-    "promo": "add to config/promo_overrides.json as \"22875:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 475585,
-   "productName": "March of the Machine - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 22875,
-   "setName": "March of the Machine",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"475585\": <count>",
     "promo": "add to config/promo_overrides.json as \"22875:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -35169,22 +34241,6 @@
    }
   },
   {
-   "productId": 475576,
-   "productName": "March of the Machine - Draft Booster Box Case",
-   "productType": "Draft Booster Box",
-   "groupId": 22875,
-   "setName": "March of the Machine",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"475576\": <count>",
-    "promo": "add to config/promo_overrides.json as \"22875:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 475579,
    "productName": "March of the Machine - Set Booster Display",
    "productType": "Set Booster Box",
@@ -35197,22 +34253,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"475579\": <count>",
-    "promo": "add to config/promo_overrides.json as \"22875:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 475580,
-   "productName": "March of the Machine - Set Booster Display Case",
-   "productType": "Set Booster Box",
-   "groupId": 22875,
-   "setName": "March of the Machine",
-   "confidence": "medium",
-   "attemptedPackCount": 30,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"475580\": <count>",
     "promo": "add to config/promo_overrides.json as \"22875:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -35233,22 +34273,6 @@
    }
   },
   {
-   "productId": 489221,
-   "productName": "March of the Machine: The Aftermath - Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 22876,
-   "setName": "March of the Machine: The Aftermath",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"489221\": <count>",
-    "promo": "add to config/promo_overrides.json as \"22876:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 675606,
    "productName": "Marvel Super Heroes - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -35261,38 +34285,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"675606\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24553:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 675607,
-   "productName": "Marvel Super Heroes - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 24553,
-   "setName": "Marvel Super Heroes",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"675607\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24553:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 675608,
-   "productName": "Marvel Super Heroes - Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 24553,
-   "setName": "Marvel Super Heroes",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"675608\": <count>",
     "promo": "add to config/promo_overrides.json as \"24553:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -35313,22 +34305,6 @@
    }
   },
   {
-   "productId": 675604,
-   "productName": "Marvel Super Heroes - Play Booster Display Case",
-   "productType": "Play Booster Box",
-   "groupId": 24553,
-   "setName": "Marvel Super Heroes",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"675604\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24553:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 621110,
    "productName": "Marvel's Spider-Man - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -35341,38 +34317,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"621110\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24245:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 621111,
-   "productName": "Marvel's Spider-Man - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 24245,
-   "setName": "Marvel's Spider-Man",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"621111\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24245:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 654626,
-   "productName": "Marvel's Spider-Man - Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 24245,
-   "setName": "Marvel's Spider-Man",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"654626\": <count>",
     "promo": "add to config/promo_overrides.json as \"24245:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -35393,22 +34337,6 @@
    }
   },
   {
-   "productId": 621108,
-   "productName": "Marvel's Spider-Man - Play Booster Display Case",
-   "productType": "Play Booster Box",
-   "groupId": 24245,
-   "setName": "Marvel's Spider-Man",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"621108\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24245:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 236348,
    "productName": "Modern Horizons 2 - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -35421,22 +34349,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"236348\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2809:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 249163,
-   "productName": "Modern Horizons 2 - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 2809,
-   "setName": "Modern Horizons 2",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"249163\": <count>",
     "promo": "add to config/promo_overrides.json as \"2809:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -35457,22 +34369,6 @@
    }
   },
   {
-   "productId": 236355,
-   "productName": "Modern Horizons 2 - Draft Booster Box Case",
-   "productType": "Draft Booster Box",
-   "groupId": 2809,
-   "setName": "Modern Horizons 2",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"236355\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2809:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 236353,
    "productName": "Modern Horizons 2 - Set Booster Display",
    "productType": "Set Booster Box",
@@ -35485,22 +34381,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"236353\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2809:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 250493,
-   "productName": "Modern Horizons 2 - Set Booster Display Case",
-   "productType": "Set Booster Box",
-   "groupId": 2809,
-   "setName": "Modern Horizons 2",
-   "confidence": "medium",
-   "attemptedPackCount": 30,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"250493\": <count>",
     "promo": "add to config/promo_overrides.json as \"2809:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -35521,38 +34401,6 @@
    }
   },
   {
-   "productId": 541182,
-   "productName": "Modern Horizons 3 - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23444,
-   "setName": "Modern Horizons 3",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"541182\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23444:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 541183,
-   "productName": "Modern Horizons 3 - Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23444,
-   "setName": "Modern Horizons 3",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"541183\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23444:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 541164,
    "productName": "Modern Horizons 3 - Play Booster Display",
    "productType": "Play Booster Box",
@@ -35565,22 +34413,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"541164\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23444:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 541166,
-   "productName": "Modern Horizons 3 - Play Booster Display Case",
-   "productType": "Play Booster Box",
-   "groupId": 23444,
-   "setName": "Modern Horizons 3",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"541166\": <count>",
     "promo": "add to config/promo_overrides.json as \"23444:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -35601,38 +34433,6 @@
    }
   },
   {
-   "productId": 529969,
-   "productName": "Murders at Karlov Manor - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23361,
-   "setName": "Murders at Karlov Manor",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"529969\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23361:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 529970,
-   "productName": "Murders at Karlov Manor - Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23361,
-   "setName": "Murders at Karlov Manor",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"529970\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23361:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 529964,
    "productName": "Murders at Karlov Manor - Play Booster Display",
    "productType": "Play Booster Box",
@@ -35645,22 +34445,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"529964\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23361:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 529965,
-   "productName": "Murders at Karlov Manor - Play Booster Display Case",
-   "productType": "Play Booster Box",
-   "groupId": 23361,
-   "setName": "Murders at Karlov Manor",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"529965\": <count>",
     "promo": "add to config/promo_overrides.json as \"23361:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -35681,38 +34465,6 @@
    }
   },
   {
-   "productId": 541091,
-   "productName": "Outlaws of Thunder Junction - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23439,
-   "setName": "Outlaws of Thunder Junction",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"541091\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23439:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 541092,
-   "productName": "Outlaws of Thunder Junction - Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23439,
-   "setName": "Outlaws of Thunder Junction",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"541092\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23439:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 541084,
    "productName": "Outlaws of Thunder Junction - Play Booster Display",
    "productType": "Play Booster Box",
@@ -35725,22 +34477,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"541084\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23439:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 541085,
-   "productName": "Outlaws of Thunder Junction - Play Booster Display Case",
-   "productType": "Play Booster Box",
-   "groupId": 23439,
-   "setName": "Outlaws of Thunder Junction",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"541085\": <count>",
     "promo": "add to config/promo_overrides.json as \"23439:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -35761,22 +34497,6 @@
    }
   },
   {
-   "productId": 451881,
-   "productName": "Phyrexia: All Will Be One - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 17684,
-   "setName": "Phyrexia: All Will Be One",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"451881\": <count>",
-    "promo": "add to config/promo_overrides.json as \"17684:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 451869,
    "productName": "Phyrexia: All Will Be One - Draft Booster Box",
    "productType": "Draft Booster Box",
@@ -35789,22 +34509,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"451869\": <count>",
-    "promo": "add to config/promo_overrides.json as \"17684:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 451870,
-   "productName": "Phyrexia: All Will Be One - Draft Booster Box Case",
-   "productType": "Draft Booster Box",
-   "groupId": 17684,
-   "setName": "Phyrexia: All Will Be One",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"451870\": <count>",
     "promo": "add to config/promo_overrides.json as \"17684:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -35825,22 +34529,6 @@
    }
   },
   {
-   "productId": 451873,
-   "productName": "Phyrexia: All Will Be One - Set Booster Display Case",
-   "productType": "Set Booster Box",
-   "groupId": 17684,
-   "setName": "Phyrexia: All Will Be One",
-   "confidence": "medium",
-   "attemptedPackCount": 30,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"451873\": <count>",
-    "promo": "add to config/promo_overrides.json as \"17684:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 517708,
    "productName": "Ravnica Remastered - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -35853,38 +34541,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"517708\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23319:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 517710,
-   "productName": "Ravnica Remastered - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23319,
-   "setName": "Ravnica Remastered",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"517710\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23319:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 517711,
-   "productName": "Ravnica Remastered - Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23319,
-   "setName": "Ravnica Remastered",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"517711\": <count>",
     "promo": "add to config/promo_overrides.json as \"23319:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -35905,22 +34561,6 @@
    }
   },
   {
-   "productId": 517706,
-   "productName": "Ravnica Remastered - Draft Booster Display Case",
-   "productType": "Draft Booster Box",
-   "groupId": 23319,
-   "setName": "Ravnica Remastered",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"517706\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23319:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 692983,
    "productName": "Reality Fracture - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -35933,22 +34573,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"692983\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24684:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 692984,
-   "productName": "Reality Fracture - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 24684,
-   "setName": "Reality Fracture",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"692984\": <count>",
     "promo": "add to config/promo_overrides.json as \"24684:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -35969,22 +34593,6 @@
    }
   },
   {
-   "productId": 692981,
-   "productName": "Reality Fracture - Play Booster Display Case",
-   "productType": "Play Booster Box",
-   "groupId": 24684,
-   "setName": "Reality Fracture",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"692981\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24684:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 675558,
    "productName": "Secrets of Strixhaven - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -35997,38 +34605,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"675558\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24601:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 675559,
-   "productName": "Secrets of Strixhaven - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 24601,
-   "setName": "Secrets of Strixhaven",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"675559\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24601:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 675560,
-   "productName": "Secrets of Strixhaven - Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 24601,
-   "setName": "Secrets of Strixhaven",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"675560\": <count>",
     "promo": "add to config/promo_overrides.json as \"24601:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -36049,22 +34625,6 @@
    }
   },
   {
-   "productId": 675556,
-   "productName": "Secrets of Strixhaven - Play Booster Display Case",
-   "productType": "Play Booster Box",
-   "groupId": 24601,
-   "setName": "Secrets of Strixhaven",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"675556\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24601:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 706142,
    "productName": "Star Trek - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -36077,38 +34637,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"706142\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24766:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 706144,
-   "productName": "Star Trek - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 24766,
-   "setName": "Star Trek",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"706144\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24766:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 706146,
-   "productName": "Star Trek - Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 24766,
-   "setName": "Star Trek",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"706146\": <count>",
     "promo": "add to config/promo_overrides.json as \"24766:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -36129,22 +34657,6 @@
    }
   },
   {
-   "productId": 706140,
-   "productName": "Star Trek - Play Booster Display Case",
-   "productType": "Play Booster Box",
-   "groupId": 24766,
-   "setName": "Star Trek",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"706140\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24766:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 264767,
    "productName": "Streets of New Capenna - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -36157,22 +34669,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"264767\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3026:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 264768,
-   "productName": "Streets of New Capenna - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 3026,
-   "setName": "Streets of New Capenna",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"264768\": <count>",
     "promo": "add to config/promo_overrides.json as \"3026:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -36193,22 +34689,6 @@
    }
   },
   {
-   "productId": 264761,
-   "productName": "Streets of New Capenna - Draft Booster Box Case",
-   "productType": "Draft Booster Box",
-   "groupId": 3026,
-   "setName": "Streets of New Capenna",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"264761\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3026:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 264763,
    "productName": "Streets of New Capenna - Set Booster Display",
    "productType": "Set Booster Box",
@@ -36221,22 +34701,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"264763\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3026:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 264762,
-   "productName": "Streets of New Capenna - Set Booster Display Case",
-   "productType": "Set Booster Box",
-   "groupId": 3026,
-   "setName": "Streets of New Capenna",
-   "confidence": "medium",
-   "attemptedPackCount": 30,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"264762\": <count>",
     "promo": "add to config/promo_overrides.json as \"3026:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -36257,22 +34721,6 @@
    }
   },
   {
-   "productId": 644853,
-   "productName": "Strixhaven: School of Mages - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 2773,
-   "setName": "Strixhaven: School of Mages",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"644853\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2773:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 233249,
    "productName": "Strixhaven: School of Mages - Draft Booster Box",
    "productType": "Draft Booster Box",
@@ -36285,22 +34733,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"233249\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2773:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 233254,
-   "productName": "Strixhaven: School of Mages - Draft Booster Box Case",
-   "productType": "Draft Booster Box",
-   "groupId": 2773,
-   "setName": "Strixhaven: School of Mages",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"233254\": <count>",
     "promo": "add to config/promo_overrides.json as \"2773:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -36321,22 +34753,6 @@
    }
   },
   {
-   "productId": 643522,
-   "productName": "Strixhaven: School of Mages - Set Booster Display Case",
-   "productType": "Set Booster Box",
-   "groupId": 2773,
-   "setName": "Strixhaven: School of Mages",
-   "confidence": "medium",
-   "attemptedPackCount": 30,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"643522\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2773:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 619649,
    "productName": "Tarkir: Dragonstorm - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -36349,38 +34765,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"619649\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24232:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 619650,
-   "productName": "Tarkir: Dragonstorm - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 24232,
-   "setName": "Tarkir: Dragonstorm",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"619650\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24232:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 619652,
-   "productName": "Tarkir: Dragonstorm - Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 24232,
-   "setName": "Tarkir: Dragonstorm",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"619652\": <count>",
     "promo": "add to config/promo_overrides.json as \"24232:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -36401,22 +34785,6 @@
    }
   },
   {
-   "productId": 619647,
-   "productName": "Tarkir: Dragonstorm - Play Booster Display Case",
-   "productType": "Play Booster Box",
-   "groupId": 24232,
-   "setName": "Tarkir: Dragonstorm",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"619647\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24232:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 657852,
    "productName": "Teenage Mutant Ninja Turtles - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -36429,38 +34797,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"657852\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24495:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 657853,
-   "productName": "Teenage Mutant Ninja Turtles - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 24495,
-   "setName": "Teenage Mutant Ninja Turtles",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"657853\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24495:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 657854,
-   "productName": "Teenage Mutant Ninja Turtles - Collector Booster Display MasterCase",
-   "productType": "Collector Booster Box",
-   "groupId": 24495,
-   "setName": "Teenage Mutant Ninja Turtles",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"657854\": <count>",
     "promo": "add to config/promo_overrides.json as \"24495:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -36481,22 +34817,6 @@
    }
   },
   {
-   "productId": 657850,
-   "productName": "Teenage Mutant Ninja Turtles - Play Booster Display Case",
-   "productType": "Play Booster Box",
-   "groupId": 24495,
-   "setName": "Teenage Mutant Ninja Turtles",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"657850\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24495:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 282224,
    "productName": "The Brothers' War - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -36509,22 +34829,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"282224\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3157:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 282225,
-   "productName": "The Brothers' War - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 3157,
-   "setName": "The Brothers' War",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"282225\": <count>",
     "promo": "add to config/promo_overrides.json as \"3157:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -36545,22 +34849,6 @@
    }
   },
   {
-   "productId": 282228,
-   "productName": "The Brothers' War - Draft Booster Box Case",
-   "productType": "Draft Booster Box",
-   "groupId": 3157,
-   "setName": "The Brothers' War",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"282228\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3157:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 282230,
    "productName": "The Brothers' War - Set Booster Display",
    "productType": "Set Booster Box",
@@ -36573,22 +34861,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"282230\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3157:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 282229,
-   "productName": "The Brothers' War - Set Booster Display Case",
-   "productType": "Set Booster Box",
-   "groupId": 3157,
-   "setName": "The Brothers' War",
-   "confidence": "medium",
-   "attemptedPackCount": 30,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"282229\": <count>",
     "promo": "add to config/promo_overrides.json as \"3157:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -36609,38 +34881,6 @@
    }
   },
   {
-   "productId": 692964,
-   "productName": "The Hobbit - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 24683,
-   "setName": "The Hobbit",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"692964\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24683:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 692965,
-   "productName": "The Hobbit - Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 24683,
-   "setName": "The Hobbit",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"692965\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24683:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 692960,
    "productName": "The Hobbit - Play Booster Display",
    "productType": "Play Booster Box",
@@ -36653,22 +34893,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"692960\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24683:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 692961,
-   "productName": "The Hobbit - Play Booster Display Case",
-   "productType": "Play Booster Box",
-   "groupId": 24683,
-   "setName": "The Hobbit",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"692961\": <count>",
     "promo": "add to config/promo_overrides.json as \"24683:Play Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -36689,38 +34913,6 @@
    }
   },
   {
-   "productId": 516616,
-   "productName": "The Lost Caverns of Ixalan - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23312,
-   "setName": "The Lost Caverns of Ixalan",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"516616\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23312:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 516617,
-   "productName": "The Lost Caverns of Ixalan - Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23312,
-   "setName": "The Lost Caverns of Ixalan",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"516617\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23312:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 516619,
    "productName": "The Lost Caverns of Ixalan - Draft Booster Display",
    "productType": "Draft Booster Box",
@@ -36733,22 +34925,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"516619\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23312:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 516620,
-   "productName": "The Lost Caverns of Ixalan - Draft Booster Display Case",
-   "productType": "Draft Booster Box",
-   "groupId": 23312,
-   "setName": "The Lost Caverns of Ixalan",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"516620\": <count>",
     "promo": "add to config/promo_overrides.json as \"23312:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -36766,38 +34942,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"516622\": <count>",
     "promo": "add to config/promo_overrides.json as \"23312:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 516623,
-   "productName": "The Lost Caverns of Ixalan - Set Booster Display Case",
-   "productType": "Set Booster Box",
-   "groupId": 23312,
-   "setName": "The Lost Caverns of Ixalan",
-   "confidence": "medium",
-   "attemptedPackCount": 30,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"516623\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23312:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 270477,
-   "productName": "Theros Beyond Death - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 2568,
-   "setName": "Theros Beyond Death",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"270477\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2568:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -36849,22 +34993,6 @@
    }
   },
   {
-   "productId": 230385,
-   "productName": "Time Spiral: Remastered - Draft Booster Box Case",
-   "productType": "Draft Booster Box",
-   "groupId": 2772,
-   "setName": "Time Spiral: Remastered",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"230385\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2772:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 275406,
    "productName": "Unfinity - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -36877,22 +35005,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"275406\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2958:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 275410,
-   "productName": "Unfinity - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 2958,
-   "setName": "Unfinity",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"275410\": <count>",
     "promo": "add to config/promo_overrides.json as \"2958:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -36913,22 +35025,6 @@
    }
   },
   {
-   "productId": 275411,
-   "productName": "Unfinity - Draft Booster Box Case",
-   "productType": "Draft Booster Box",
-   "groupId": 2958,
-   "setName": "Unfinity",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"275411\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2958:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 541225,
    "productName": "Universes Beyond: Assassin's Creed - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -36941,38 +35037,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"541225\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23446:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 541226,
-   "productName": "Universes Beyond: Assassin's Creed - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23446,
-   "setName": "Universes Beyond: Assassin's Creed",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"541226\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23446:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 541227,
-   "productName": "Universes Beyond: Assassin's Creed - Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23446,
-   "setName": "Universes Beyond: Assassin's Creed",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"541227\": <count>",
     "promo": "add to config/promo_overrides.json as \"23446:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -36993,22 +35057,6 @@
    }
   },
   {
-   "productId": 496077,
-   "productName": "Universes Beyond: Doctor Who - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23165,
-   "setName": "Universes Beyond: Doctor Who",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"496077\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23165:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 523185,
    "productName": "Universes Beyond: Fallout - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -37021,38 +35069,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"523185\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23337:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 525081,
-   "productName": "Universes Beyond: Fallout - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23337,
-   "setName": "Universes Beyond: Fallout",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"525081\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23337:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 542985,
-   "productName": "Universes Beyond: Fallout - Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23337,
-   "setName": "Universes Beyond: Fallout",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"542985\": <count>",
     "promo": "add to config/promo_overrides.json as \"23337:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -37073,38 +35089,6 @@
    }
   },
   {
-   "productId": 516254,
-   "productName": "The Lord of the Rings: Tales of Middle-earth - Special Edition Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23019,
-   "setName": "Universes Beyond: The Lord of the Rings: Tales of Middle-earth",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"516254\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23019:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 515915,
-   "productName": "The Lord of the Rings: Tales of Middle-earth - Special Edition Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23019,
-   "setName": "Universes Beyond: The Lord of the Rings: Tales of Middle-earth",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"515915\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23019:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 484912,
    "productName": "Universes Beyond: The Lord of the Rings: Tales of Middle-earth - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -37117,22 +35101,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"484912\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23019:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 484913,
-   "productName": "Universes Beyond: The Lord of the Rings: Tales of Middle-earth - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23019,
-   "setName": "Universes Beyond: The Lord of the Rings: Tales of Middle-earth",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"484913\": <count>",
     "promo": "add to config/promo_overrides.json as \"23019:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -37153,22 +35121,6 @@
    }
   },
   {
-   "productId": 484907,
-   "productName": "Universes Beyond: The Lord of the Rings: Tales of Middle-earth - Draft Booster Box Case",
-   "productType": "Draft Booster Box",
-   "groupId": 23019,
-   "setName": "Universes Beyond: The Lord of the Rings: Tales of Middle-earth",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"484907\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23019:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 484909,
    "productName": "Universes Beyond: The Lord of the Rings: Tales of Middle-earth - Set Booster Box",
    "productType": "Set Booster Box",
@@ -37181,22 +35133,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"484909\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23019:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 484910,
-   "productName": "Universes Beyond: The Lord of the Rings: Tales of Middle-earth - Set Booster Box Case",
-   "productType": "Set Booster Box",
-   "groupId": 23019,
-   "setName": "Universes Beyond: The Lord of the Rings: Tales of Middle-earth",
-   "confidence": "medium",
-   "attemptedPackCount": 30,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"484910\": <count>",
     "promo": "add to config/promo_overrides.json as \"23019:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -37217,38 +35153,6 @@
    }
   },
   {
-   "productId": 504452,
-   "productName": "Wilds of Eldraine - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23163,
-   "setName": "Wilds of Eldraine",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"504452\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23163:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 496042,
-   "productName": "Wilds of Eldraine - Collector Booster Display Master Case",
-   "productType": "Collector Booster Box",
-   "groupId": 23163,
-   "setName": "Wilds of Eldraine",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"496042\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23163:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 496035,
    "productName": "Wilds of Eldraine - Draft Booster Display",
    "productType": "Draft Booster Box",
@@ -37261,22 +35165,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"496035\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23163:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 496036,
-   "productName": "Wilds of Eldraine - Draft Booster Display Case",
-   "productType": "Draft Booster Box",
-   "groupId": 23163,
-   "setName": "Wilds of Eldraine",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"496036\": <count>",
     "promo": "add to config/promo_overrides.json as \"23163:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -37297,22 +35185,6 @@
    }
   },
   {
-   "productId": 496039,
-   "productName": "Wilds of Eldraine - Set Booster Display Case",
-   "productType": "Set Booster Box",
-   "groupId": 23163,
-   "setName": "Wilds of Eldraine",
-   "confidence": "medium",
-   "attemptedPackCount": 30,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"496039\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23163:Set Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 220423,
    "productName": "Zendikar Rising - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -37325,22 +35197,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"220423\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2648:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 230865,
-   "productName": "Zendikar Rising - Collector Booster Display Case",
-   "productType": "Collector Booster Box",
-   "groupId": 2648,
-   "setName": "Zendikar Rising",
-   "confidence": "medium",
-   "attemptedPackCount": 12,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"230865\": <count>",
     "promo": "add to config/promo_overrides.json as \"2648:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -37361,22 +35217,6 @@
    }
   },
   {
-   "productId": 220522,
-   "productName": "Zendikar Rising - Draft Booster Box Case",
-   "productType": "Draft Booster Box",
-   "groupId": 2648,
-   "setName": "Zendikar Rising",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"220522\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2648:Draft Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 220523,
    "productName": "Zendikar Rising - Set Booster Display",
    "productType": "Set Booster Box",
@@ -37393,5 +35233,5 @@
    }
   }
  ],
- "count": 2337
+ "count": 2202
 }
