@@ -193,6 +193,47 @@ with open(os.path.join(views, "signals_events.json")) as f:
     sev = json.load(f)["byGroup"]
 check("signal events emitted", isinstance(sev, dict))
 
+print("== e2e: Magic (MTG) classification + intrinsic ==")
+import classify as _clf  # noqa: E402
+import intrinsic as _intr  # noqa: E402
+
+def _mtg(pid, name, text=None):
+    ext = [{"name": "CardText", "value": text}] if text else []
+    return {"productId": pid, "name": name, "extendedData": ext}
+
+# box/display/pack classification (game=Magic)
+check("MTG collector box classified",
+      _clf.classify_product(_mtg(1, "Bloomburrow Collector Booster Box"), "Magic")["productType"] == "Collector Booster Box")
+check("MTG collector display classified",
+      _clf.classify_product(_mtg(2, "Bloomburrow Collector Booster Display"), "Magic")["productType"] == "Collector Booster Box")
+check("MTG play box classified",
+      _clf.classify_product(_mtg(3, "Bloomburrow Play Booster Box"), "Magic")["productType"] == "Play Booster Box")
+check("MTG collector pack classified",
+      _clf.classify_product(_mtg(4, "Bloomburrow Collector Booster Pack"), "Magic")["productType"] == "Collector Booster Pack")
+# a bundle is NOT tracked for Magic (box/display-only scope)
+check("MTG bundle not sealed",
+      _clf.classify_product(_mtg(5, "Bloomburrow Bundle"), "Magic")["isSealed"] is False)
+# a single (has a card number) is not sealed
+_mtg_single = {"productId": 6, "name": "Bloomburrow Mox", "extendedData": [{"name": "Number", "value": "42"}]}
+check("MTG single not sealed", _clf.classify_product(_mtg_single, "Magic")["isSealed"] is False)
+
+# intrinsic: collector box -> collector pack, no promo
+_mtg_products = [
+    _mtg(10, "Bloomburrow Collector Booster Box"),
+    _mtg(11, "Bloomburrow Collector Booster Pack"),
+    _mtg(12, "Bloomburrow Play Booster Box"),
+    _mtg(13, "Bloomburrow Play Booster Pack"),
+]
+_mtg_sealed = [dict(p, **_clf.classify_product(p, "Magic")) for p in _mtg_products]
+_mtg_res = _intr.resolve_set(_mtg_sealed, {"groupId": 999, "name": "Bloomburrow", "game": "Magic"},
+                             _mtg_products, [], {}, {})
+_byid = {r["productId"]: r for r in _mtg_res}
+check("MTG collector box decomposable to collector pack",
+      _byid[10]["decomposable"] and _byid[10]["packProductId"] == 11 and _byid[10]["packCount"] == 12)
+check("MTG play box decomposable to play pack",
+      _byid[12]["decomposable"] and _byid[12]["packProductId"] == 13 and _byid[12]["packCount"] == 36)
+check("MTG box has no promo", _byid[10]["promoSource"] == "none")
+
 print("== e2e: archive extraction (py7zr ppmd path) ==")
 import py7zr  # noqa: E402
 import backfill_archive  # noqa: E402

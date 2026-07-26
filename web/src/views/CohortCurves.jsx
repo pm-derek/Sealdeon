@@ -60,10 +60,10 @@ const fmtDate = (epochDay) => new Date(epochDay * EPOCH_DAY).toISOString().slice
 
 export default function CohortCurves({ meta }) {
   const [curves, setCurves] = useState(null)
-  const [state, setState] = useState({
-    eras: [], seriesType: 'Booster Box', hype: 'all', completeness: 'complete',
+  const [state, setState] = useState(() => ({
+    eras: [], seriesType: meta.seriesTypes?.[0] || 'Booster Box', hype: 'all', completeness: 'complete',
     metric: 'raw', xUnit: 'days',
-  })
+  }))
   const [picked, setPicked] = useState(new Set())
   const [focus, setFocus] = useState(null)
   const [labels, setLabels] = useState('all')

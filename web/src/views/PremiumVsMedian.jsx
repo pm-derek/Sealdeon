@@ -14,16 +14,20 @@ export default function PremiumVsMedian({ meta }) {
 
   useEffect(() => { loadView('premium_vs_median').then(setData) }, [])
 
+  // groupIds of the active game (meta is already game-scoped by App)
+  const gameIds = useMemo(() => new Set(meta.sets.map((s) => s.groupId)), [meta])
+
   const rows = useMemo(() => {
     if (!data) return []
     return data.rows.filter((r) => {
+      if (!gameIds.has(r.groupId)) return false
       if (!eraMatch(r.era, state.eras)) return false
       if (state.seriesType !== 'All' && r.productType !== state.seriesType) return false
       if (state.hype === 'hype' && !r.isHype) return false
       if (state.hype === 'clean' && r.isHype) return false
       return r.premiumPct != null
     })
-  }, [data, state])
+  }, [data, state, gameIds])
 
   const build = (width) => {
     // Exclude unreliable points from the scatter: low-confidence intrinsic
@@ -72,7 +76,7 @@ export default function PremiumVsMedian({ meta }) {
   }
 
   if (!data) return <p className="muted p-4">Loading premium vs median…</p>
-  const metaForFilter = { ...meta, seriesTypes: ['All', 'Booster Box', 'ETB', 'PKC ETB', 'Booster Bundle', 'UPC'] }
+  const metaForFilter = { ...meta, seriesTypes: ['All', ...(meta.seriesTypes || []).filter((t) => t !== 'Chase Singles')] }
   return (
     <section>
       <h2 className="text-lg font-semibold">Premium vs clean median</h2>

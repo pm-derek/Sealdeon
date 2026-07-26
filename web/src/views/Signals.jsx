@@ -148,7 +148,7 @@ function Leaderboard({ bt }) {
   )
 }
 
-export default function Signals({ meta }) {
+export default function Signals({ meta, game = 'Pokemon' }) {
   const [bt, setBt] = useState(null)
   const [recent, setRecent] = useState(null)
   const [sig, setSig] = useState('conviction')
@@ -213,6 +213,11 @@ export default function Signals({ meta }) {
   return (
     <section>
       <h2 className="text-lg font-semibold">Buy signals — backtested</h2>
+      {game === 'Magic' && (
+        <p className="text-xs mb-2 p-2 rounded" style={{ background: 'var(--surface-1)', color: 'var(--warn)' }}>
+          ⚠ Signals currently cover <strong>Pokémon</strong> only — the backtest below is Pokémon sealed. Magic signals are a fast-follow.
+        </p>
+      )}
       <p className="subtle text-sm max-w-4xl">
         Each rule is fired at every historical date (using only data available then), and the
         forward <strong>price return</strong> at 30/60/90 days is measured. “vs mkt” is the edge over

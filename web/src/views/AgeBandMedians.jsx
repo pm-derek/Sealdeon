@@ -8,11 +8,11 @@ import { useTheme } from '../lib/theme.js'
 
 const BAND_ORDER = ['0-1mo', '1-3mo', '3-6mo', '6-12mo', '12-18mo', '18-24mo', '24-36mo', '36mo+']
 
-export default function AgeBandMedians({ meta }) {
+export default function AgeBandMedians({ meta, game = 'Pokemon' }) {
   const [data, setData] = useState(null)
-  const [state, setState] = useState({
-    eras: [], seriesType: 'Booster Box', hype: 'all', metric: 'price',
-  })
+  const [state, setState] = useState(() => ({
+    eras: [], seriesType: meta.seriesTypes?.[0] || 'Booster Box', hype: 'all', metric: 'price',
+  }))
   const { palette, themeTick } = useTheme()
 
   useEffect(() => { loadView('age_band_medians').then(setData) }, [])
@@ -25,9 +25,9 @@ export default function AgeBandMedians({ meta }) {
   const rows = useMemo(() => {
     if (!data) return []
     return data.rows
-      .filter((r) => r.era === eraKey && r.seriesType === state.seriesType)
+      .filter((r) => (r.game || 'Pokemon') === game && r.era === eraKey && r.seriesType === state.seriesType)
       .sort((a, b) => BAND_ORDER.indexOf(a.ageBand) - BAND_ORDER.indexOf(b.ageBand))
-  }, [data, eraKey, state.seriesType])
+  }, [data, eraKey, state.seriesType, game])
 
   const buckets = state.hype === 'all' ? ['clean', 'hype'] : [state.hype]
   const bucketColor = { clean: palette.series[0], hype: palette.series[1], all: palette.series[0] }

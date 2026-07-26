@@ -39,14 +39,20 @@ const COLS = [
   { key: 'premChg30', label: 'Δ30d prem', num: true, dir: 'desc', abs: true, heat: 'premChg30' },
 ]
 
-export default function Screener({ meta }) {
+export default function Screener({ meta, game = 'Pokemon' }) {
   const [data, setData] = useState(null)
-  const [state, setState] = useState({ eras: MODERN_ERAS, seriesType: 'Booster Box', hype: 'all' })
+  const [state, setState] = useState(() => ({
+    eras: game === 'Pokemon' ? MODERN_ERAS : [],
+    seriesType: meta.seriesTypes?.[0] || 'Booster Box', hype: 'all',
+  }))
   const [mode, setMode] = useState('movers') // movers | shelf
   const [kind, setKind] = useState('sealed') // sealed | chase
   const [sort, setSort] = useState({ key: 'chg7', dir: 'desc', abs: true })
 
   useEffect(() => { loadView('movers').then(setData) }, [])
+
+  // groupIds of the active game (meta is already game-scoped by App)
+  const gameIds = useMemo(() => new Set(meta.sets.map((s) => s.groupId)), [meta])
 
   // Preset the default sort when switching mode.
   useEffect(() => {
@@ -64,6 +70,7 @@ export default function Screener({ meta }) {
   const rows = useMemo(() => {
     if (!data) return []
     let rows = data.rows.filter((r) => {
+      if (!gameIds.has(r.groupId)) return false
       if (kind === 'sealed' ? r.isChase : !r.isChase) return false
       if (!eraMatch(r.era, state.eras)) return false
       if (state.hype === 'hype' && !r.isHype) return false
@@ -90,7 +97,7 @@ export default function Screener({ meta }) {
       return 0
     })
     return rows.slice(0, 150)
-  }, [data, state, mode, kind, sort])
+  }, [data, state, mode, kind, sort, gameIds])
 
   const arrow = (k) => (sort.key === k ? (sort.dir === 'desc' ? ' ↓' : ' ↑') : '')
 
