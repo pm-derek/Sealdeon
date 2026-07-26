@@ -13,8 +13,18 @@ const EPOCH_DAY = 86400000
 
 const METRICS = {
   raw: { label: 'Raw $', axis: 'market price', isPct: false, isUsd: true },
+  index: { label: 'Index', axis: 'index', isPct: false, isIndex: true, baseline: 100 },
   prem: { label: 'Premium %', axis: 'sealed premium', isPct: true, baseline: 0 },
 }
+
+// Index baselines. MSRP = 100 answers "what is it worth vs retail"; release
+// = 100 answers "how has it moved since launch" and always works (MSRP is a
+// curated approximation and is absent for e.g. Chase Singles).
+const BASES = { msrp: 'vs MSRP', release: 'vs release' }
+
+// Range shortcuts. In Daily mode these are the last N calendar days; in
+// Cohort mode they are the first N days of a set's life.
+const RANGES = [['7', '1W'], ['30', '1M'], ['90', '3M'], ['365', '1Y'], ['all', 'All']]
 
 // Compact on-chart segmented toggle.
 function Seg({ label, value, onChange, options }) {
@@ -70,6 +80,8 @@ export default function CohortCurves({ meta }) {
   const [colorMode, setColorMode] = useState('mono')
   const [xMode, setXMode] = useState('cohort') // cohort (age) | calendar (date)
   const [yLog, setYLog] = useState(false)
+  const [basis, setBasis] = useState('msrp')   // index baseline
+  const [range, setRange] = useState('all')
   const [showFilters, setShowFilters] = useState(false) // mobile: collapsed by default
   const [focusDetail, setFocusDetail] = useState(null)
   const [sigEvents, setSigEvents] = useState(null)
@@ -87,19 +99,40 @@ export default function CohortCurves({ meta }) {
     loadSetDetail(focus).then((d) => { if (live) setFocusDetail(d) }).catch(() => setFocusDetail(null))
     return () => { live = false }
   }, [focus])
-  useEffect(() => { setView(null) }, [state.metric, state.seriesType, state.xUnit])
-  // Calendar mode opens on the last ~15 months of real dates.
+  // Switching metric changes the Y units entirely, so drop the Y zoom -- but
+  // keep the X window (and any active range shortcut) the user chose.
   useEffect(() => {
-    setView(xMode === 'calendar' ? { x: [latestEpoch - 460, latestEpoch + 8] } : null)
-  }, [xMode, latestEpoch])
+    setView((v) => (v && v.x ? { x: v.x } : null))
+  }, [state.metric, state.seriesType, basis])
+  // Range shortcut -> x window. Daily mode = last N calendar days; cohort
+  // mode = the first N days of a set's life. 'all' resets to the default view
+  // (calendar opens on the last ~15 months).
+  useEffect(() => {
+    const n = range === 'all' ? null : Number(range)
+    if (xMode === 'calendar') {
+      setView({ x: n ? [latestEpoch - n, latestEpoch + 2] : [latestEpoch - 460, latestEpoch + 8] })
+    } else {
+      setView(n ? { x: [0, n / X_DIV[state.xUnit]] } : null)
+    }
+  }, [xMode, range, latestEpoch, state.xUnit])
 
   const bySet = useMemo(() => new Map(meta.sets.map((s) => [s.groupId, s])), [meta])
   const metricDef = METRICS[state.metric]
   const isPct = metricDef.isPct
-  const useLog = state.metric === 'raw' && yLog
+  const isIndex = !!metricDef.isIndex
+  const useLog = (state.metric === 'raw' || isIndex) && yLog
   const isCal = xMode === 'calendar'
   const div = X_DIV[state.xUnit]
-  const valueAt = state.metric === 'prem' ? (pt) => pt[2] : (pt) => pt[3]
+  // Index is per-series (needs that series' MSRP), so valueAt is built per line.
+  const valueFor = (s) => {
+    if (state.metric === 'prem') return (pt) => pt[2]
+    if (!isIndex) return (pt) => pt[3]
+    // MSRP basis when we have a curated MSRP for this series; otherwise fall
+    // back to the release-day index so the line still renders.
+    if (basis === 'msrp' && s?.msrp) return (pt) => (pt[3] == null ? null : (pt[3] / s.msrp) * 100)
+    return (pt) => pt[1]
+  }
+  const valueAt = valueFor(null)
 
   const model = useMemo(() => {
     if (!curves) return null
@@ -111,12 +144,15 @@ export default function CohortCurves({ meta }) {
     }
     const lines = series.map((s) => {
       const set = bySet.get(s.groupId)
+      const vAt = valueFor(s)
       return {
         groupId: s.groupId, name: set?.name ?? String(s.groupId), abbr: shortLabel(set),
         partial: !set?.archiveComplete, releaseEpoch: rel(s.groupId),
         lowConfidence: s.lowConfidence && state.metric === 'prem',
-        points: s.points.filter((pt) => valueAt(pt) != null && (!useLog || valueAt(pt) > 0))
-          .map((pt) => ({ age: pt[0], value: valueAt(pt), price: pt[3] })),
+        // index falls back to release-basis when this series has no MSRP
+        approxBase: isIndex && basis === 'msrp' && !s.msrp,
+        points: s.points.filter((pt) => vAt(pt) != null && (!useLog || vAt(pt) > 0))
+          .map((pt) => ({ age: pt[0], value: vAt(pt), price: pt[3] })),
       }
     }).filter((l) => l.points.length > 1 && (!isCal || l.releaseEpoch != null))
 
@@ -128,7 +164,7 @@ export default function CohortCurves({ meta }) {
       emph.get(gid) || (colorMode === 'multi' ? hueColor(i, lines.length) : palette.context)
     const band = isCal ? [] : cohortBand(series, valueAt)
     return { lines, band, emph, colorOf }
-  }, [curves, meta, state, picked, focus, valueAt, useLog, colorMode, isCal, themeTick])
+  }, [curves, meta, state, picked, focus, isIndex, basis, useLog, colorMode, isCal, themeTick])
 
   const xOf = (line, age) => (isCal ? line.releaseEpoch + age : age / div)
 
@@ -196,7 +232,9 @@ export default function CohortCurves({ meta }) {
 
     const title = (d) => {
       const when = isCal ? new Date(d.x * EPOCH_DAY).toISOString().slice(0, 10) : `age ${Math.round(d.x)} ${state.xUnit}`
-      const line = isPct ? `premium ${fmtPct(d.value)}` : fmtUsd(d.value)
+      const line = isPct ? `premium ${fmtPct(d.value)}`
+        : isIndex ? `index ${d.value.toFixed(1)} (${fmtUsd(d.price)})`
+        : fmtUsd(d.value)
       return `${d.name}${d.partial ? ' (partial)' : ''}\n${when}\n${line}` + (chaseTitle(d.groupId, d.age) || '')
     }
 
@@ -205,7 +243,7 @@ export default function CohortCurves({ meta }) {
     // = its looser, more frequent cousin.
     const SIG_LABEL = { conviction: 'conviction 🎯', value_rebound: 'value + turning up', below_peers: 'below peers' }
     const buyMarks = []
-    if (!isPct && focus != null && sigEvents) {
+    if (!isPct && !isIndex && focus != null && sigEvents) {
       const set = bySet.get(focus)
       const relE = set?.releaseDate ? Math.floor(new Date(set.releaseDate).getTime() / EPOCH_DAY) : null
       // Snap each marker onto the focused line (nearest point by age) so the
@@ -248,9 +286,12 @@ export default function CohortCurves({ meta }) {
         tickFormat: isCal ? fmtDate : undefined,
       },
       y: {
-        label: `↑ ${metricDef.axis}${useLog ? ' (log)' : ''}`, grid: true, domain: yDomain,
+        label: `↑ ${isIndex ? `index (${basis === 'msrp' ? 'MSRP' : 'release'} = 100)` : metricDef.axis}${useLog ? ' (log)' : ''}`,
+        grid: true, domain: yDomain,
         type: useLog ? 'log' : 'linear',
-        tickFormat: isPct ? ((d) => `${(d * 100).toFixed(0)}%`) : ((d) => `$${d >= 1000 ? (d / 1000) + 'k' : d}`),
+        tickFormat: isPct ? ((d) => `${(d * 100).toFixed(0)}%`)
+          : isIndex ? ((d) => `${d}`)
+          : ((d) => `$${d >= 1000 ? (d / 1000) + 'k' : d}`),
       },
       marks: [
         model.band.length ? Plot.areaY(model.band, { x: (d) => d.age / div, y1: 'p25', y2: 'p75', fill: palette.band, fillOpacity: 0.5, clip: true }) : null,
@@ -281,7 +322,13 @@ export default function CohortCurves({ meta }) {
   // tap/click a line toggles it in and out of focus
   const toggleFocus = (gid) => setFocus((f) => (f === gid ? null : gid))
   const onPick = (d) => { if (d?.groupId != null) toggleFocus(d.groupId) }
-  const applyView = (patch) => setView((v) => (patch === null ? (isCal ? { x: [latestEpoch - 460, latestEpoch + 8] } : null) : { ...(v || {}), ...patch }))
+  // Manual pan/zoom invalidates the range chip, so it can't claim a window
+  // the chart is no longer showing.
+  const applyView = (patch) => {
+    if (patch === null) { setRange('all'); setView(isCal ? { x: [latestEpoch - 460, latestEpoch + 8] } : null); return }
+    if (patch.x && range !== 'all') setRange('all')
+    setView((v) => ({ ...(v || {}), ...patch }))
+  }
   const setK = (k) => (v) => setState((s) => ({ ...s, [k]: v }))
 
   return (
@@ -298,8 +345,6 @@ export default function CohortCurves({ meta }) {
       <div className={`${showFilters ? 'block' : 'hidden'} sm:block`}>
         <FilterBar meta={meta} state={state} setState={setState} />
         <div className="flex flex-wrap items-center gap-x-5 gap-y-2 py-2">
-          <Dropdown label="Labels" value={labels} onChange={setLabels}
-            options={[['all', 'All'], ['focus', 'Focus'], ['off', 'Off']]} />
           <SetPicker meta={meta} picked={picked} setPicked={setPicked} focus={focus} setFocus={setFocus} eras={state.eras} />
         </div>
       </div>
@@ -309,18 +354,35 @@ export default function CohortCurves({ meta }) {
         </p>
       )}
       <div className="card p-3">
-        {/* On-chart toolbar (top / near Y axis): metric, Y scale, color */}
+        {/* Top toolbar (near Y axis): what's plotted. The index-basis toggle
+            only appears while Index is active, so the bar stays quiet. */}
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2 pb-2">
           <Seg value={state.metric} onChange={setK('metric')}
             options={Object.entries(METRICS).map(([k, m]) => [k, m.label])} />
-          {state.metric === 'raw' && (
+          {isIndex && (
+            <Seg value={basis} onChange={setBasis} options={Object.entries(BASES)} />
+          )}
+          {(state.metric === 'raw' || isIndex) && (
             <Seg value={yLog ? 'log' : 'lin'} onChange={(v) => setYLog(v === 'log')}
               options={[['lin', 'Linear'], ['log', 'Log']]} />
           )}
           <Seg value={colorMode} onChange={setColorMode}
-            options={[['mono', 'Mono'], ['multi', 'Multi-color']]} />
-          {view && !isCal && <button className="chip ml-auto" data-on="true" onClick={() => setView(null)}>✕ Reset zoom</button>}
+            options={[['mono', 'Mono'], ['multi', 'Color']]} />
+          <div className="ml-auto flex items-center gap-2">
+            <Dropdown label="Labels" value={labels} onChange={setLabels}
+              options={[['all', 'All'], ['focus', 'Focus'], ['off', 'Off']]} />
+            {view && <button className="chip" data-on="true" onClick={() => applyView(null)}>✕ Reset</button>}
+          </div>
         </div>
+        {isIndex && (
+          <p className="muted text-xs pb-2">
+            {basis === 'msrp'
+              ? <>100 = approximate US retail (MSRP). MSRP isn’t published by the data source — it’s a curated table in
+                  <code className="mx-1">config/msrp.json</code>, editable per type, set, or item.
+                  {model.lines.some((l) => l.approxBase) && <strong> Series without an MSRP fall back to release = 100.</strong>}</>
+              : <>100 = the set’s price on release day (or first observation for partial history).</>}
+          </p>
+        )}
         {/* Focus bar: shown when a line is focused — link out + clear */}
         {focus != null && (
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 pb-2 text-sm">
@@ -341,10 +403,13 @@ export default function CohortCurves({ meta }) {
         <PlotFigure build={build} onPick={onPick} onView={applyView}
           labelData={labelData} onLabelClick={toggleFocus} hitData={hitData}
           deps={[model, state.xUnit, state.metric, labels, colorMode, useLog, isCal, focus, focusDetail, sigEvents, view, themeTick]} />
-        {/* On-chart toolbar (bottom / near X axis): X mode + unit */}
+        {/* Bottom toolbar (near X axis): the time axis. Range shortcuts mean
+            "last N days" on a calendar axis and "first N days of life" on a
+            cohort axis -- both useful, same control. */}
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2 pt-2">
           <Seg value={xMode} onChange={setXMode}
             options={[['cohort', 'Cohort (age)'], ['calendar', 'Daily (date)']]} />
+          <Seg label={isCal ? 'Last' : 'First'} value={range} onChange={setRange} options={RANGES} />
           {!isCal && (
             <Seg value={state.xUnit} onChange={setK('xUnit')}
               options={[['days', 'Days'], ['weeks', 'Weeks'], ['months', 'Months']]} />

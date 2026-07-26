@@ -1,0 +1,30 @@
+{
+  "_comment": "Approximate US retail (MSRP, pre-tax) used as the Index baseline (MSRP = 100). TCGCSV publishes NO MSRP field, so these are curated, not sourced -- treat the MSRP index as an approximation and edit freely. Resolution order: byProduct (productId) > bySet ('groupId:productType') > byType (game -> productType). Anything unresolved falls back to the release-day index. Keys starting with _ are ignored.",
+
+  "byType": {
+    "Pokemon": {
+      "Booster Box": 144,
+      "ETB": 50,
+      "PKC ETB": 60,
+      "Booster Bundle": 27,
+      "UPC": 120
+    },
+    "Magic": {
+      "_comment": "Play/Draft ~ $4/pack x 36; Set ~ $5/pack x 30; Collector ~ $25/pack x 12. Varies by set -- override in bySet where it matters.",
+      "Draft Booster Box": 144,
+      "Play Booster Box": 144,
+      "Set Booster Box": 150,
+      "Collector Booster Box": 300
+    }
+  },
+
+  "bySet": {
+    "_comment": "Per-set override, keyed 'groupId:productType'. Use for sets whose MSRP clearly differs from the type default (premium/licensed sets, Special Editions).",
+    "_example": {"23237:Booster Box": 161.64}
+  },
+
+  "byProduct": {
+    "_comment": "Per-item override, keyed productId. Highest precedence.",
+    "_example": {"536225": 161.64}
+  }
+}

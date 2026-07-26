@@ -77,6 +77,45 @@ def _load_aliases() -> dict:
     return {}
 
 
+def _load_msrp() -> dict:
+    """Curated MSRP config. TCGCSV has no MSRP field, so these are editable
+    approximations used as the Index (MSRP=100) baseline."""
+    path = os.path.join(CONFIG_DIR, "msrp.json")
+    if not os.path.exists(path):
+        return {}
+    with open(path) as f:
+        raw = json.load(f)
+    def clean(d):
+        return {k: v for k, v in (d or {}).items() if not str(k).startswith("_")}
+    return {
+        "byType": {g: clean(t) for g, t in clean(raw.get("byType")).items()},
+        "bySet": clean(raw.get("bySet")),
+        "byProduct": clean(raw.get("byProduct")),
+    }
+
+
+def _msrp_map(con) -> dict:
+    """'groupId:seriesType' -> resolved MSRP.
+    Precedence: byProduct (canonical productId) > bySet > byType[game]."""
+    cfg = _load_msrp()
+    if not cfg:
+        return {}
+    rows = con.execute("""
+        SELECT p.groupId, p.productType, p.productId, s.game
+        FROM products p JOIN sets s USING (groupId)
+        WHERE p.isCanonical AND p.productType IS NOT NULL
+    """).df()
+    out = {}
+    for r in rows.itertuples():
+        key = f"{int(r.groupId)}:{r.productType}"
+        val = (cfg["byProduct"].get(str(int(r.productId)))
+               or cfg["bySet"].get(key)
+               or cfg["byType"].get(r.game or "Pokemon", {}).get(r.productType))
+        if val:
+            out[key] = float(val)
+    return out
+
+
 def build_meta(con) -> dict:
     sets = records(con.execute("SELECT * FROM sets ORDER BY releaseDate DESC NULLS LAST").df())
     latest = con.execute("SELECT max(date) FROM px").fetchone()[0]
@@ -100,6 +139,7 @@ def build_meta(con) -> dict:
 
 def build_cohort_curves(con) -> None:
     df = con.execute(_sql("cohort_curves.sql")).df()
+    msrp = _msrp_map(con)
     series = []
     for (gid, stype), rows in df.groupby(["groupId", "seriesType"], sort=True):
         points = [
@@ -113,6 +153,9 @@ def build_cohort_curves(con) -> None:
             "groupId": int(gid),
             "seriesType": stype,
             "lowConfidence": bool((rows["conf"] == "low").any()),
+            # curated approximate MSRP for the Index (MSRP=100) baseline;
+            # null -> frontend falls back to the release-day index
+            "msrp": msrp.get(f"{int(gid)}:{stype}"),
             "points": points,  # [ageDays, idxPrice, premiumPct, price]
         })
     write_json("cohort_curves.json", {"series": series})
