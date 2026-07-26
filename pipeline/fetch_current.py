@@ -40,7 +40,14 @@ def run_daily(snapshot_date: str | None = None) -> None:
     rows: list[dict] = []
     keep_ids: set[int] = set()
     for game, cat in common.GAMES:
-        groups, products_by_group, prices_by_group = fetch_all(cat)
+        try:
+            groups, products_by_group, prices_by_group = fetch_all(cat)
+        except Exception as e:
+            # A second game failing must not break the primary (Pokemon) run.
+            print(f"  {game}: FETCH FAILED ({e}) -- skipping this game", file=sys.stderr)
+            if game == common.GAMES[0][0]:
+                raise
+            continue
         print(f"  {game}: {len(groups)} groups")
         set_dim = common.build_set_dim(groups, game)
         products_df, report = common.build_product_dim(groups, products_by_group, set_dim, game)
