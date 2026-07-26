@@ -90,21 +90,30 @@ def extract_category(archive_path: str, date: str,
             return out
 
 
-def load_date(date: str, workdir: str, keep_ids: set[int] | None = None) -> pd.DataFrame:
-    """Download + extract one archive date (both games); return snapshot rows,
-    filtered to keep_ids (drops Magic single-card prices)."""
+def load_date(date: str, workdir: str, keep_ids: set[int] | None = None,
+              games: list[tuple[str, int]] | None = None) -> pd.DataFrame:
+    """Download + extract one archive date for `games`; return snapshot rows.
+
+    keep_ids only filters MAGIC rows (to drop the single-card flood). Pokemon
+    rows are never filtered: keep_ids comes from the CURRENT catalog, so
+    filtering them would silently delete stored history for any product that
+    has since been delisted upstream.
+    """
     archive_path = os.path.join(workdir, f"prices-{date}.7z")
     tcgcsv.download_archive(date, archive_path)
-    rows: list[dict] = []
-    for _, cat in common.GAMES:
+    frames: list[pd.DataFrame] = []
+    for game, cat in (games or common.GAMES):
+        rows: list[dict] = []
         by_group = extract_category(archive_path, date, cat)
         for gid, results in by_group.items():
             rows.extend(common.snapshot_rows(date, gid, results))
+        part = pd.DataFrame(rows)
+        if game != "Pokemon" and keep_ids is not None and not part.empty:
+            part = part[part["productId"].astype("int64").isin(keep_ids)]
+        frames.append(part)
     os.remove(archive_path)
-    df = pd.DataFrame(rows)
-    if keep_ids is not None and not df.empty:
-        df = df[df["productId"].astype("int64").isin(keep_ids)].reset_index(drop=True)
-    return df
+    frames = [f for f in frames if not f.empty]
+    return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
 
 
 def validate_one(date: str = tcgcsv.ARCHIVE_FLOOR) -> None:
@@ -124,9 +133,23 @@ def validate_one(date: str = tcgcsv.ARCHIVE_FLOOR) -> None:
             print("   ", {k: r.get(k) for k in ("productId", "subTypeName", "marketPrice", "midPrice", "lowPrice", "directLowPrice")})
 
 
-def run_backfill(start: str, end: str) -> None:
+def run_backfill(start: str, end: str, games_arg: str = "all") -> None:
+    # Partial (single-game) loads MUST be additive, or replacing a date would
+    # delete the other game's stored rows for that date.
+    games = common.GAMES if games_arg == "all" else [
+        (g, c) for g, c in common.GAMES if g.lower() == games_arg.lower()]
+    if not games:
+        raise SystemExit(f"unknown --games {games_arg!r}; use all|pokemon|magic")
+    partial = len(games) < len(common.GAMES)
+    if partial:
+        print(f"PARTIAL backfill ({games[0][0]} only) -- additive mode, "
+              "existing rows for other games are preserved")
+
     state = _load_state()
-    resume = state.get("lastCompleted")
+    # A partial backfill has its own checkpoint so it can't be confused with
+    # (or skipped by) the full-lake checkpoint.
+    state_key = "lastCompleted" if not partial else f"lastCompleted_{games[0][0].lower()}"
+    resume = state.get(state_key)
     d = dt.date.fromisoformat(start)
     if resume and dt.date.fromisoformat(resume) >= d:
         d = dt.date.fromisoformat(resume) + dt.timedelta(days=1)
@@ -148,11 +171,11 @@ def run_backfill(start: str, end: str) -> None:
             date = d.isoformat()
             month = date[:7]
             if current_month and month != current_month:
-                _flush_month(month_rows, current_month, state)
+                _flush_month(month_rows, current_month, state, state_key, partial)
                 month_rows = []
             current_month = month
             try:
-                df = load_date(date, workdir, keep_ids)
+                df = load_date(date, workdir, keep_ids, games)
                 month_rows.append(df)
                 print(f"  {date}: {len(df)} rows")
             except Exception as e:
@@ -160,22 +183,24 @@ def run_backfill(start: str, end: str) -> None:
                 print(f"  {date}: SKIPPED ({e})", file=sys.stderr)
             d += dt.timedelta(days=1)
         if month_rows:
-            _flush_month(month_rows, current_month, state)
+            _flush_month(month_rows, current_month, state, state_key, partial)
     finally:
         shutil.rmtree(workdir, ignore_errors=True)
     print("backfill rows loaded; run with --finalize to build dims + views")
 
 
-def _flush_month(frames: list[pd.DataFrame], month: str, state: dict) -> None:
+def _flush_month(frames: list[pd.DataFrame], month: str, state: dict,
+                 state_key: str = "lastCompleted", partial: bool = False) -> None:
     if frames:
         combined = pd.concat(frames, ignore_index=True)
-        build_parquet.append_prices(combined)
+        # partial (single-game) load -> additive, never replace a whole date
+        build_parquet.append_prices(combined, replace_dates=not partial)
         last = max(str(x) for x in combined["date"].astype(str))
     else:
         last = month + "-28"
-    state["lastCompleted"] = last
+    state[state_key] = last
     _save_state(state)
-    print(f"  checkpoint: {month} written ({last})")
+    print(f"  checkpoint[{state_key}]: {month} written ({last})")
 
 
 def finalize() -> None:
@@ -197,11 +222,14 @@ if __name__ == "__main__":
     ap.add_argument("--start", default=tcgcsv.ARCHIVE_FLOOR)
     ap.add_argument("--end", default=dt.date.today().isoformat())
     ap.add_argument("--finalize", action="store_true", help="build dims + flags + views after loading")
+    ap.add_argument("--games", default="all",
+                    help="all | pokemon | magic. A single game loads ADDITIVELY "
+                         "(never replaces a date), so other games' stored rows are preserved.")
     args = ap.parse_args()
     if args.validate:
         validate_one()
     elif args.finalize:
         finalize()
     else:
-        run_backfill(args.start, args.end)
+        run_backfill(args.start, args.end, args.games)
         finalize()

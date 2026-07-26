@@ -174,6 +174,31 @@ def keep_ids_from_products(products_df: pd.DataFrame) -> set[int]:
     return keep
 
 
+def carry_forward_dims(set_dim: pd.DataFrame, products_df: pd.DataFrame,
+                       games: list[str]) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Re-attach previously stored dimension rows for `games`.
+
+    write_dimensions overwrites sets/products parquet wholesale, so a run that
+    skipped a game would otherwise erase that game's sets and products (leaving
+    its stored prices orphaned and its views blank)."""
+    for path, df, key in ((os.path.join(build_parquet.DATA_DIR, "sets.parquet"), set_dim, "groupId"),
+                          (os.path.join(build_parquet.DATA_DIR, "products.parquet"), products_df, "productId")):
+        if not os.path.exists(path):
+            continue
+        prev = pd.read_parquet(path)
+        if "game" not in prev.columns:
+            continue
+        keep = prev[prev["game"].isin(games)]
+        if keep.empty:
+            continue
+        merged = pd.concat([df, keep], ignore_index=True).drop_duplicates(subset=[key], keep="first")
+        if key == "groupId":
+            set_dim = merged
+        else:
+            products_df = merged
+    return set_dim, products_df
+
+
 def snapshot_rows(date: str, group_id: int, price_results: list[dict]) -> list[dict]:
     """Flatten one group's /prices results into snapshot fact rows.
 

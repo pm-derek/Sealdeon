@@ -234,6 +234,37 @@ check("MTG play box decomposable to play pack",
       _byid[12]["decomposable"] and _byid[12]["packProductId"] == 13 and _byid[12]["packCount"] == 36)
 check("MTG box has no promo", _byid[10]["promoSource"] == "none")
 
+print("== e2e: partial (single-game) load must not delete other games' rows ==")
+# Regression guard: a Magic-only backfill must NEVER wipe stored Pokemon rows
+# for the dates it touches. append_prices(replace_dates=False) is additive.
+_pp_dir = os.path.join(WORK, "partial-lake")
+os.makedirs(_pp_dir, exist_ok=True)
+_prev_data_dir = build_parquet.DATA_DIR
+build_parquet.DATA_DIR = _pp_dir
+try:
+    _day = "2024-03-06"
+    _poke = pd.DataFrame([{"date": _day, "groupId": 1, "productId": 100 + i, "subTypeName": "Normal",
+                           "marketPrice": 10.0 + i, "midPrice": None, "lowPrice": None,
+                           "directLowPrice": None, "qtyListed": None, "qtySold": None}
+                          for i in range(5)])
+    build_parquet.append_prices(_poke)
+    _mtg = pd.DataFrame([{"date": _day, "groupId": 999, "productId": 900, "subTypeName": "Normal",
+                          "marketPrice": 120.0, "midPrice": None, "lowPrice": None,
+                          "directLowPrice": None, "qtyListed": None, "qtySold": None}])
+    build_parquet.append_prices(_mtg, replace_dates=False)      # partial/additive
+    _after = pd.read_parquet(os.path.join(_pp_dir, "prices", "year=2024", "month=03", "part.parquet"))
+    _same_day = _after[_after["date"].astype(str) == _day]
+    _kept = _same_day[_same_day["productId"] < 900]
+    check("additive load keeps other game's rows", len(_kept) == 5, f"{len(_kept)}/5")
+    check("additive load adds the new rows", len(_same_day) == 6, str(len(_same_day)))
+    # and the default (full snapshot) still replaces, so corrections land
+    build_parquet.append_prices(_mtg, replace_dates=True)
+    _after2 = pd.read_parquet(os.path.join(_pp_dir, "prices", "year=2024", "month=03", "part.parquet"))
+    check("full load still replaces the date",
+          len(_after2[_after2["date"].astype(str) == _day]) == 1)
+finally:
+    build_parquet.DATA_DIR = _prev_data_dir
+
 print("== e2e: archive extraction (py7zr ppmd path) ==")
 import py7zr  # noqa: E402
 import backfill_archive  # noqa: E402

@@ -66,8 +66,18 @@ def normalize_price_rows(df: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
-def append_prices(df: pd.DataFrame) -> list[str]:
-    """Merge snapshot rows into year/month partitions. Returns paths written."""
+def append_prices(df: pd.DataFrame, replace_dates: bool = True) -> list[str]:
+    """Merge snapshot rows into year/month partitions. Returns paths written.
+
+    replace_dates=True (default): a re-fetched date REPLACES that date's stored
+    rows -- correct for a full snapshot of every game, and lets corrections
+    land. replace_dates=False: purely additive upsert (existing rows for the
+    date survive; only same (date, productId, subTypeName) keys are updated).
+    Use additive mode for any PARTIAL load -- e.g. a Magic-only backfill --
+    which would otherwise delete the other game's rows for those dates. The
+    lake is the durable store: it accumulates history beyond whatever window
+    the upstream archive still serves, so a partial load must never truncate.
+    """
     df = normalize_price_rows(df)
     if df.empty:
         return []
@@ -82,8 +92,9 @@ def append_prices(df: pd.DataFrame) -> list[str]:
         path = os.path.join(part_dir, "part.parquet")
         if os.path.exists(path):
             existing = pq.read_table(path).to_pandas()
-            new_dates = set(part["date"])
-            existing = existing[~existing["date"].isin(new_dates)]
+            if replace_dates:
+                new_dates = set(part["date"])
+                existing = existing[~existing["date"].isin(new_dates)]
             part = pd.concat([existing, part], ignore_index=True)
         part = part.drop_duplicates(subset=["date", "productId", "subTypeName"], keep="last")
         part = part.sort_values(["date", "groupId", "productId"])

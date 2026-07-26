@@ -9,6 +9,11 @@ on:
       end:
         description: "End date (YYYY-MM-DD); empty = today"
         default: ""
+      games:
+        description: "Which game(s) to load. A single game loads ADDITIVELY and never deletes the other game's stored rows."
+        type: choice
+        options: ["magic", "all", "pokemon"]
+        default: "magic"
       validate_only:
         description: "Only validate ONE archive date (no writes)"
         type: boolean
@@ -44,7 +49,8 @@ jobs:
         run: |
           END="${{ inputs.end }}"
           if [ -z "$END" ]; then END=$(date -u +%F); fi
-          python pipeline/backfill_archive.py --start "${{ inputs.start }}" --end "$END"
+          python pipeline/backfill_archive.py --start "${{ inputs.start }}" --end "$END" \
+            --games "${{ inputs.games }}"
 
       - name: Commit lake + views + data quality report
         if: ${{ !inputs.validate_only }}

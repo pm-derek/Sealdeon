@@ -38,7 +38,7 @@ def run_daily(snapshot_date: str | None = None) -> None:
 
     set_dims, product_dims, reports = [], [], []
     rows: list[dict] = []
-    keep_ids: set[int] = set()
+    skipped: list[str] = []
     for game, cat in common.GAMES:
         try:
             groups, products_by_group, prices_by_group = fetch_all(cat)
@@ -47,6 +47,7 @@ def run_daily(snapshot_date: str | None = None) -> None:
             print(f"  {game}: FETCH FAILED ({e}) -- skipping this game", file=sys.stderr)
             if game == common.GAMES[0][0]:
                 raise
+            skipped.append(game)
             continue
         print(f"  {game}: {len(groups)} groups")
         set_dim = common.build_set_dim(groups, game)
@@ -54,17 +55,26 @@ def run_daily(snapshot_date: str | None = None) -> None:
         set_dims.append(set_dim)
         product_dims.append(products_df)
         reports.extend(report)
-        keep_ids |= common.relevant_ids(products_df, game)
+        # Filter only the non-primary game (Magic sealed only); Pokemon rows
+        # are kept unconditionally so nothing is ever silently dropped.
+        keep = common.relevant_ids(products_df, game)
         for gid, results in prices_by_group.items():
-            rows.extend(common.snapshot_rows(date, gid, results))
+            for r in common.snapshot_rows(date, gid, results):
+                if game == "Pokemon" or int(r["productId"]) in keep:
+                    rows.append(r)
 
     set_dim = pd.concat(set_dims, ignore_index=True)
     products_df = pd.concat(product_dims, ignore_index=True)
     report = reports
-    # keep all Pokemon prices (singles feed chase) but only Magic sealed prices
-    rows = [r for r in rows if int(r["productId"]) in keep_ids]
-    written = build_parquet.append_prices(pd.DataFrame(rows))
+    # A skipped game means this is a PARTIAL snapshot: load additively so a
+    # same-day re-run can't delete the skipped game's already-stored rows,
+    # and carry that game's existing dimension rows forward (write_dimensions
+    # overwrites the parquet wholesale).
+    written = build_parquet.append_prices(pd.DataFrame(rows), replace_dates=not skipped)
     print(f"  {len(rows)} price rows -> {len(written)} partition(s)")
+    if skipped:
+        set_dim, products_df = common.carry_forward_dims(set_dim, products_df, skipped)
+        print(f"  preserved existing dimension rows for skipped: {', '.join(skipped)}")
 
     products_df, set_dim = common.enrich_from_history(products_df, set_dim)
     common.write_dimensions(set_dim, products_df, report)
