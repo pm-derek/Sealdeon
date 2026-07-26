@@ -20,11 +20,26 @@ from era import enrich_set, detect_era, ERA_SPECIAL
 
 CONFIG_DIR = os.environ.get("SEALDEON_CONFIG_DIR", "config")
 
+# Games ingested, in (name, TCGCSV categoryId) form.
+import tcgcsv  # noqa: E402
+GAMES = [("Pokemon", tcgcsv.POKEMON_CATEGORY_ID), ("Magic", tcgcsv.MAGIC_CATEGORY_ID)]
+
+
+def relevant_ids(products_df: pd.DataFrame, game: str) -> set[int]:
+    """Product ids whose daily prices we store. All Pokemon products (singles
+    feed the chase series); Magic keeps only the sealed box/pack products so
+    the lake isn't flooded with hundreds of thousands of single-card prices."""
+    if products_df.empty:
+        return set()
+    if game == "Pokemon":
+        return set(products_df["productId"].astype(int))
+    return set(products_df.loc[products_df["isSealed"] == True, "productId"].astype(int))  # noqa: E712
+
 _PROMO_GROUP_RE = re.compile(r"promo", re.IGNORECASE)
 
 
-def build_set_dim(groups: list[dict]) -> pd.DataFrame:
-    rows = [enrich_set(g) for g in groups]
+def build_set_dim(groups: list[dict], game: str = "Pokemon") -> pd.DataFrame:
+    rows = [enrich_set(g, game) for g in groups]
     return pd.DataFrame(rows)
 
 
@@ -53,13 +68,13 @@ def promo_pools(groups: list[dict], products_by_group: dict[int, list[dict]]) ->
 
 
 def build_product_dim(groups: list[dict], products_by_group: dict[int, list[dict]],
-                      set_dim: pd.DataFrame) -> tuple[pd.DataFrame, list[dict]]:
+                      set_dim: pd.DataFrame, game: str = "Pokemon") -> tuple[pd.DataFrame, list[dict]]:
     """Classify all products, resolve intrinsic inputs, flag canonical
     products per (set, productType).
 
     Returns (products_df, quality_report_rows).
     """
-    pools = promo_pools(groups, products_by_group)
+    pools = promo_pools(groups, products_by_group) if game == "Pokemon" else {}
     pack_overrides = intrinsic_mod.load_packcount_overrides(
         os.path.join(CONFIG_DIR, "packcount_overrides.json"))
     promo_overrides = intrinsic_mod.load_promo_overrides(
@@ -74,10 +89,11 @@ def build_product_dim(groups: list[dict], products_by_group: dict[int, list[dict
         set_row = sets_by_id.get(gid) or {"groupId": gid, "name": g.get("name"), "era": ERA_SPECIAL}
         classified = []
         for p in raw_products:
-            c = classify_product(p)
+            c = classify_product(p, game)
             row = {
                 "productId": int(p["productId"]),
                 "groupId": gid,
+                "game": game,
                 "name": p.get("name"),
                 "cleanName": p.get("cleanName"),
                 "imageUrl": p.get("imageUrl"),
@@ -131,6 +147,31 @@ def build_product_dim(groups: list[dict], products_by_group: dict[int, list[dict
     products_by_id = {r["productId"]: r for r in product_rows}
     report = intrinsic_mod.quality_report(resolutions, products_by_id, sets_by_id)
     return products_df, report
+
+
+def build_all_dims_live() -> tuple[pd.DataFrame, pd.DataFrame, list[dict]]:
+    """Fetch both games' groups+products live and build the combined set +
+    product dimensions (no history enrichment). Returns (set_dim, products_df,
+    report)."""
+    set_dims, product_dims, reports = [], [], []
+    for game, cat in GAMES:
+        groups = tcgcsv.fetch_groups(cat)
+        pbg = {int(g["groupId"]): tcgcsv.fetch_products(int(g["groupId"]), cat) for g in groups}
+        sd = build_set_dim(groups, game)
+        pdf, rep = build_product_dim(groups, pbg, sd, game)
+        set_dims.append(sd)
+        product_dims.append(pdf)
+        reports.extend(rep)
+    return (pd.concat(set_dims, ignore_index=True),
+            pd.concat(product_dims, ignore_index=True), reports)
+
+
+def keep_ids_from_products(products_df: pd.DataFrame) -> set[int]:
+    """Combined price-retention id set across games."""
+    keep: set[int] = set()
+    for game in products_df["game"].unique():
+        keep |= relevant_ids(products_df[products_df["game"] == game], game)
+    return keep
 
 
 def snapshot_rows(date: str, group_id: int, price_results: list[dict]) -> list[dict]:

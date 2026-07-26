@@ -56,10 +56,27 @@ _SEALED_KEYWORDS = [
 ]
 
 
-def match_product_type(name: str) -> str | None:
+# Magic: The Gathering. Scope is the box/display types + their matching
+# packs (for intrinsic decomposition). Most specific first: a "Collector
+# Booster Box" must beat the bare "Collector Booster Pack" pattern.
+MTG_PRODUCT_TYPE_PATTERNS: list[tuple[str, list[list[str]], list[str]]] = [
+    ("Collector Booster Box", [["collector booster"], ["box", "display"]], []),
+    ("Set Booster Box",       [["set booster"], ["box", "display"]], []),
+    ("Play Booster Box",      [["play booster"], ["box", "display"]], []),
+    ("Draft Booster Box",     [["draft booster"], ["box", "display"]], []),
+    ("Collector Booster Pack", [["collector booster"]], ["box", "display", "case"]),
+    ("Set Booster Pack",      [["set booster"]], ["box", "display", "case"]),
+    ("Play Booster Pack",     [["play booster"]], ["box", "display", "case"]),
+    ("Draft Booster Pack",    [["draft booster"]], ["box", "display", "case"]),
+]
+
+_PATTERNS_BY_GAME = {"Pokemon": PRODUCT_TYPE_PATTERNS, "Magic": MTG_PRODUCT_TYPE_PATTERNS}
+
+
+def match_product_type(name: str, game: str = "Pokemon") -> str | None:
     """Return the sealed productType for a product name, or None."""
     n = name.lower()
-    for product_type, keyword_groups, excludes in PRODUCT_TYPE_PATTERNS:
+    for product_type, keyword_groups, excludes in _PATTERNS_BY_GAME.get(game, PRODUCT_TYPE_PATTERNS):
         if any(term in n for term in excludes):
             continue
         if all(any(alt in n for alt in group) for group in keyword_groups):
@@ -80,9 +97,13 @@ def is_excluded_name(name: str) -> bool:
     return any(kw in n for kw in _EXCLUDE_KEYWORDS)
 
 
-def is_sealed_name(name: str) -> bool:
+def is_sealed_name(name: str, game: str = "Pokemon") -> bool:
     if is_excluded_name(name):
         return False
+    # For Magic we intentionally track ONLY the box/display/pack types we
+    # classify -- no broad keyword net (keeps bundles/decks/etc. out).
+    if game == "Magic":
+        return match_product_type(name, "Magic") is not None
     n = name.lower()
     if match_product_type(name) is not None:
         return True
@@ -96,12 +117,12 @@ def _extended(product: dict) -> dict:
     return out
 
 
-def classify_product(product: dict) -> dict:
+def classify_product(product: dict, game: str = "Pokemon") -> dict:
     """Classify a raw TCGCSV product row.
 
     Returns {'isSealed', 'productType', 'cardNumber', 'rarity', 'cardText'}.
     A card number in extendedData marks a single; otherwise the name is
-    checked against sealed patterns.
+    checked against sealed patterns for the given game.
     """
     ext = _extended(product)
     card_number = ext.get("Number")
@@ -124,15 +145,15 @@ def classify_product(product: dict) -> dict:
             "cardText": card_text,
         }
     return {
-        "isSealed": is_sealed_name(name),
-        "productType": match_product_type(name),
+        "isSealed": is_sealed_name(name, game),
+        "productType": match_product_type(name, game),
         "cardNumber": None,
         "rarity": rarity,
         "cardText": card_text,
     }
 
 
-def find_product_of_type(products: list[dict], product_type: str) -> dict | None:
+def find_product_of_type(products: list[dict], product_type: str, game: str = "Pokemon") -> dict | None:
     """Find a set's canonical product of the given type.
 
     All candidates matching the type, sorted by name length ascending;
@@ -140,7 +161,7 @@ def find_product_of_type(products: list[dict], product_type: str) -> dict | None
     """
     candidates = [
         p for p in products
-        if not _extended(p).get("Number") and match_product_type(p.get("name", "")) == product_type
+        if not _extended(p).get("Number") and match_product_type(p.get("name", ""), game) == product_type
     ]
     if not candidates:
         return None

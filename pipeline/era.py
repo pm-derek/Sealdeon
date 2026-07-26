@@ -49,10 +49,17 @@ def parse_date(value) -> dt.date | None:
     return dt.date.fromisoformat(str(value)[:10])
 
 
-def detect_era(name: str, abbreviation: str | None, release_date) -> str:
+ERA_MAGIC = "Magic"
+
+
+def detect_era(name: str, abbreviation: str | None, release_date, game: str = "Pokemon") -> str:
     name = name or ""
     abbr = (abbreviation or "").upper()
     date = parse_date(release_date)
+
+    # Magic has no Pokemon-style eras; bucket by release year for the filter.
+    if game == "Magic":
+        return f"{ERA_MAGIC} {date.year}" if date else ERA_MAGIC
 
     if _SPECIAL_RE.search(name):
         return ERA_SPECIAL
@@ -85,14 +92,15 @@ def archive_complete(release_date) -> bool:
     return date is not None and date >= floor
 
 
-def enrich_set(group: dict) -> dict:
-    """Attach era + archiveComplete to a raw TCGCSV group row."""
+def enrich_set(group: dict, game: str = "Pokemon") -> dict:
+    """Attach game + era + archiveComplete to a raw TCGCSV group row."""
     release = parse_date(group.get("publishedOn"))
     return {
         "groupId": group["groupId"],
         "name": group.get("name"),
         "abbreviation": group.get("abbreviation"),
         "releaseDate": release.isoformat() if release else None,
-        "era": detect_era(group.get("name", ""), group.get("abbreviation"), release),
+        "game": game,
+        "era": detect_era(group.get("name", ""), group.get("abbreviation"), release, game),
         "archiveComplete": archive_complete(release),
     }

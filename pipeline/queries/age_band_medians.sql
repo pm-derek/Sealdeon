@@ -5,7 +5,7 @@
 -- from the premium median (they still count for price).
 WITH banded AS (
     SELECT
-        s.era, s.isHype,
+        s.game, s.era, s.isHype,
         sd.seriesType,
         age_band(sd.ageDays) AS ageBand,
         sd.price,
@@ -16,18 +16,20 @@ WITH banded AS (
     WHERE sd.ageDays >= 0
 ),
 buckets AS (
-    SELECT era, seriesType, 'all'   AS hypeBucket, ageBand, price, premiumPct, groupId FROM banded
+    SELECT game, era, seriesType, 'all'   AS hypeBucket, ageBand, price, premiumPct, groupId FROM banded
     UNION ALL
-    SELECT era, seriesType, 'hype'  AS hypeBucket, ageBand, price, premiumPct, groupId FROM banded WHERE isHype
+    SELECT game, era, seriesType, 'hype'  AS hypeBucket, ageBand, price, premiumPct, groupId FROM banded WHERE isHype
     UNION ALL
-    SELECT era, seriesType, 'clean' AS hypeBucket, ageBand, price, premiumPct, groupId FROM banded WHERE NOT isHype
+    SELECT game, era, seriesType, 'clean' AS hypeBucket, ageBand, price, premiumPct, groupId FROM banded WHERE NOT isHype
 ),
 rollup AS (
-    SELECT era, seriesType, hypeBucket, ageBand, price, premiumPct, groupId FROM buckets
+    SELECT game, era, seriesType, hypeBucket, ageBand, price, premiumPct, groupId FROM buckets
     UNION ALL
-    SELECT 'All' AS era, seriesType, hypeBucket, ageBand, price, premiumPct, groupId FROM buckets
+    -- cross-era rollup stays WITHIN a game
+    SELECT game, 'All' AS era, seriesType, hypeBucket, ageBand, price, premiumPct, groupId FROM buckets
 )
 SELECT
+    game,
     era,
     seriesType,
     hypeBucket,
@@ -39,7 +41,7 @@ SELECT
     count(*)                          AS n,
     count(DISTINCT groupId)           AS nSets
 FROM rollup
-GROUP BY era, seriesType, hypeBucket, ageBand
+GROUP BY game, era, seriesType, hypeBucket, ageBand
 HAVING count(*) > 0
 ORDER BY era, seriesType, hypeBucket,
          CASE ageBand WHEN '0-1mo' THEN 0 WHEN '1-3mo' THEN 1 WHEN '3-6mo' THEN 2

@@ -85,7 +85,12 @@ def build_meta(con) -> dict:
         "latestDate": _clean(latest),
         "archiveFloor": "2024-02-08",
         "seriesTypes": ["Booster Box", "ETB", "PKC ETB", "Booster Bundle", "UPC", "Chase Singles"],
-        "ageBands": ["0-1mo", "1-3mo", "3-6mo", "6-12mo", "12mo+"],
+        "seriesTypesByGame": {
+            "Pokemon": ["Booster Box", "ETB", "PKC ETB", "Booster Bundle", "UPC", "Chase Singles"],
+            "Magic": ["Collector Booster Box", "Set Booster Box", "Play Booster Box", "Draft Booster Box"],
+        },
+        "games": sorted({s.get("game") or "Pokemon" for s in sets}),
+        "ageBands": ["0-1mo", "1-3mo", "3-6mo", "6-12mo", "12-18mo", "18-24mo", "24-36mo", "36mo+"],
         "aliases": _load_aliases(),
         "sets": sets,
     }

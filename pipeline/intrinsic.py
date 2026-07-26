@@ -86,6 +86,17 @@ PACK_COUNTS: dict[str, int] = {
     "UPC": 16,
 }
 
+# Magic: each box/display decomposes into its OWN pack type (a Collector
+# box is Collector packs, not draft packs). (packType, defaultPackCount).
+# Counts are the modern conventions; a parsed count from the description
+# wins over these.
+MTG_BOX_PACKS: dict[str, tuple[str, int]] = {
+    "Collector Booster Box": ("Collector Booster Pack", 12),
+    "Set Booster Box":       ("Set Booster Pack", 30),
+    "Play Booster Box":      ("Play Booster Pack", 36),
+    "Draft Booster Box":     ("Draft Booster Pack", 36),
+}
+
 _WORD_NUMBERS = {
     "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6,
     "seven": 7, "eight": 8, "nine": 9, "ten": 10, "eleven": 11,
@@ -293,6 +304,52 @@ def confidence(pack_source: str | None, promo: dict, ptype: str | None) -> str:
     return "medium"
 
 
+def _resolve_set_magic(sealed_products: list[dict], set_row: dict,
+                       set_products: list[dict], overrides: dict[int, int]) -> list[dict]:
+    """Magic: each box decomposes into its own pack type; no promo cards."""
+    from classify import find_product_of_type
+
+    pack_ids = {}
+    for box_type, (pack_type, _) in MTG_BOX_PACKS.items():
+        pk = find_product_of_type(set_products, pack_type, "Magic")
+        if pk:
+            pack_ids[box_type] = int(pk["productId"])
+
+    rows = []
+    for product in sealed_products:
+        ptype = product.get("productType")
+        pid = int(product["productId"])
+        spec = MTG_BOX_PACKS.get(ptype)
+        if not spec:
+            # a pack listing itself (or unknown): not decomposable
+            rows.append({
+                "productId": pid, "groupId": set_row["groupId"],
+                "packCount": None, "packCountSource": None, "packProductId": None,
+                "promoProductId": None, "promoSource": "none",
+                "intrinsicConfidence": None, "decomposable": False, "attemptedPromo": None,
+            })
+            continue
+        pack_type, default_count = spec
+        count = parse_pack_count(product.get("cardText"))
+        source = "parsed" if count is not None else "static"
+        if count is None:
+            count = overrides.get(pid, default_count)
+            if pid in overrides:
+                source = "override"
+        pack_id = pack_ids.get(ptype)
+        decomposable = pack_id is not None
+        conf = "high" if source in ("parsed", "override") else "medium"
+        rows.append({
+            "productId": pid, "groupId": set_row["groupId"],
+            "packCount": count, "packCountSource": source,
+            "packProductId": pack_id if decomposable else None,
+            "promoProductId": None, "promoSource": "none",
+            "intrinsicConfidence": conf if decomposable else "low",
+            "decomposable": decomposable, "attemptedPromo": None,
+        })
+    return rows
+
+
 def resolve_set(sealed_products: list[dict], set_row: dict, set_products: list[dict],
                 promo_products: list[dict],
                 packcount_overrides: dict[int, int],
@@ -305,6 +362,9 @@ def resolve_set(sealed_products: list[dict], set_row: dict, set_products: list[d
 
     Returns one resolution row per sealed product.
     """
+    if set_row.get("game") == "Magic":
+        return _resolve_set_magic(sealed_products, set_row, set_products, packcount_overrides)
+
     from classify import find_product_of_type
 
     pack = find_product_of_type(set_products, "Booster Pack") \

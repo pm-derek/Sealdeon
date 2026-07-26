@@ -90,16 +90,21 @@ def extract_category(archive_path: str, date: str,
             return out
 
 
-def load_date(date: str, workdir: str) -> pd.DataFrame:
-    """Download + extract one archive date; return snapshot rows."""
+def load_date(date: str, workdir: str, keep_ids: set[int] | None = None) -> pd.DataFrame:
+    """Download + extract one archive date (both games); return snapshot rows,
+    filtered to keep_ids (drops Magic single-card prices)."""
     archive_path = os.path.join(workdir, f"prices-{date}.7z")
     tcgcsv.download_archive(date, archive_path)
-    by_group = extract_category(archive_path, date)
-    os.remove(archive_path)
     rows: list[dict] = []
-    for gid, results in by_group.items():
-        rows.extend(common.snapshot_rows(date, gid, results))
-    return pd.DataFrame(rows)
+    for _, cat in common.GAMES:
+        by_group = extract_category(archive_path, date, cat)
+        for gid, results in by_group.items():
+            rows.extend(common.snapshot_rows(date, gid, results))
+    os.remove(archive_path)
+    df = pd.DataFrame(rows)
+    if keep_ids is not None and not df.empty:
+        df = df[df["productId"].astype("int64").isin(keep_ids)].reset_index(drop=True)
+    return df
 
 
 def validate_one(date: str = tcgcsv.ARCHIVE_FLOOR) -> None:
@@ -128,6 +133,13 @@ def run_backfill(start: str, end: str) -> None:
         print(f"resuming after checkpoint {resume}")
     end_d = dt.date.fromisoformat(end)
 
+    # Which product ids to retain: all Pokemon + Magic sealed only. Fetched
+    # once so archive loading can drop the flood of Magic single-card prices.
+    print("resolving relevant product ids (both games) ...")
+    _, products_df, _ = common.build_all_dims_live()
+    keep_ids = common.keep_ids_from_products(products_df)
+    print(f"  keeping {len(keep_ids)} product ids")
+
     workdir = tempfile.mkdtemp(prefix="sealdeon-backfill-")
     month_rows: list[pd.DataFrame] = []
     current_month = None
@@ -140,7 +152,7 @@ def run_backfill(start: str, end: str) -> None:
                 month_rows = []
             current_month = month
             try:
-                df = load_date(date, workdir)
+                df = load_date(date, workdir, keep_ids)
                 month_rows.append(df)
                 print(f"  {date}: {len(df)} rows")
             except Exception as e:
@@ -169,11 +181,8 @@ def _flush_month(frames: list[pd.DataFrame], month: str, state: dict) -> None:
 def finalize() -> None:
     """Steps 1,3-9: dims from live metadata, peaks/chase, hype, intrinsic,
     quality report, then views."""
-    print("fetching current metadata (groups/products) ...")
-    groups = tcgcsv.fetch_groups()
-    products_by_group = {int(g["groupId"]): tcgcsv.fetch_products(int(g["groupId"])) for g in groups}
-    set_dim = common.build_set_dim(groups)
-    products_df, report = common.build_product_dim(groups, products_by_group, set_dim)
+    print("fetching current metadata (groups/products, both games) ...")
+    set_dim, products_df, report = common.build_all_dims_live()
     products_df, set_dim = common.enrich_from_history(products_df, set_dim)
     common.write_dimensions(set_dim, products_df, report)
     print(f"  {len(report)} sealed products flagged medium/low -> data/data_quality_report.json")

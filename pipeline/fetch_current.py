@@ -36,15 +36,26 @@ def run_daily(snapshot_date: str | None = None) -> None:
     date = snapshot_date or dt.date.today().isoformat()
     print(f"daily snapshot for {date}")
 
-    groups, products_by_group, prices_by_group = fetch_all()
-    print(f"  {len(groups)} groups")
-
-    set_dim = common.build_set_dim(groups)
-    products_df, report = common.build_product_dim(groups, products_by_group, set_dim)
-
+    set_dims, product_dims, reports = [], [], []
     rows: list[dict] = []
-    for gid, results in prices_by_group.items():
-        rows.extend(common.snapshot_rows(date, gid, results))
+    keep_ids: set[int] = set()
+    for game, cat in common.GAMES:
+        groups, products_by_group, prices_by_group = fetch_all(cat)
+        print(f"  {game}: {len(groups)} groups")
+        set_dim = common.build_set_dim(groups, game)
+        products_df, report = common.build_product_dim(groups, products_by_group, set_dim, game)
+        set_dims.append(set_dim)
+        product_dims.append(products_df)
+        reports.extend(report)
+        keep_ids |= common.relevant_ids(products_df, game)
+        for gid, results in prices_by_group.items():
+            rows.extend(common.snapshot_rows(date, gid, results))
+
+    set_dim = pd.concat(set_dims, ignore_index=True)
+    products_df = pd.concat(product_dims, ignore_index=True)
+    report = reports
+    # keep all Pokemon prices (singles feed chase) but only Magic sealed prices
+    rows = [r for r in rows if int(r["productId"]) in keep_ids]
     written = build_parquet.append_prices(pd.DataFrame(rows))
     print(f"  {len(rows)} price rows -> {len(written)} partition(s)")
 
