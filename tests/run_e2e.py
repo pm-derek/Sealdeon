@@ -213,6 +213,14 @@ check("MTG collector pack classified",
 # a bundle is NOT tracked for Magic (box/display-only scope)
 check("MTG bundle not sealed",
       _clf.classify_product(_mtg(5, "Bloomburrow Bundle"), "Magic")["isSealed"] is False)
+# REGRESSION: a case holds 6-12 boxes -- priced 6-12x with a single box's pack
+# count, so misreading one as a box blew out prices and fabricated premiums.
+for _case_name in ("The Hobbit Collector Booster Display Case",
+                   "FINAL FANTASY Collector Booster Display Master Case",
+                   "Bloomburrow Play Booster Box Case"):
+    _c = _clf.classify_product(_mtg(7, _case_name), "Magic")
+    check(f"MTG case not a box: {_case_name[:34]}",
+          _c["productType"] is None and _c["isSealed"] is False, str(_c["productType"]))
 # a single (has a card number) is not sealed
 _mtg_single = {"productId": 6, "name": "Bloomburrow Mox", "extendedData": [{"name": "Number", "value": "42"}]}
 check("MTG single not sealed", _clf.classify_product(_mtg_single, "Magic")["isSealed"] is False)

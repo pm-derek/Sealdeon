@@ -60,10 +60,16 @@ _SEALED_KEYWORDS = [
 # packs (for intrinsic decomposition). Most specific first: a "Collector
 # Booster Box" must beat the bare "Collector Booster Pack" pattern.
 MTG_PRODUCT_TYPE_PATTERNS: list[tuple[str, list[list[str]], list[str]]] = [
-    ("Collector Booster Box", [["collector booster"], ["box", "display"]], []),
-    ("Set Booster Box",       [["set booster"], ["box", "display"]], []),
-    ("Play Booster Box",      [["play booster"], ["box", "display"]], []),
-    ("Draft Booster Box",     [["draft booster"], ["box", "display"]], []),
+    # NOTE: "case" is excluded from every box pattern. A "Collector Booster
+    # Display Case" / "Display Master Case" holds 6-12 boxes, so it is priced
+    # 6-12x a box while carrying a single box's pack count -- left in, it both
+    # blows out the price line and fabricates a huge premium (same failure mode
+    # as the Pokemon "Set of 2" multipacks). Cases are out of scope here, so
+    # they stay unclassified and therefore not sealed for Magic.
+    ("Collector Booster Box", [["collector booster"], ["box", "display"]], ["case"]),
+    ("Set Booster Box",       [["set booster"], ["box", "display"]], ["case"]),
+    ("Play Booster Box",      [["play booster"], ["box", "display"]], ["case"]),
+    ("Draft Booster Box",     [["draft booster"], ["box", "display"]], ["case"]),
     ("Collector Booster Pack", [["collector booster"]], ["box", "display", "case"]),
     ("Set Booster Pack",      [["set booster"]], ["box", "display", "case"]),
     ("Play Booster Pack",     [["play booster"]], ["box", "display", "case"]),

@@ -10,6 +10,10 @@ SELECT
     intrinsicConfidence AS conf
 FROM series_indexed
 WHERE ageDays >= 0
-  AND seriesType IN ('Booster Box', 'ETB', 'PKC ETB', 'Booster Bundle', 'UPC', 'Chase Singles')
+  AND seriesType IN (
+        -- Pokemon
+        'Booster Box', 'ETB', 'PKC ETB', 'Booster Bundle', 'UPC', 'Chase Singles',
+        -- Magic (box/display scope)
+        'Collector Booster Box', 'Set Booster Box', 'Play Booster Box', 'Draft Booster Box')
   AND (ageDays <= 120 OR ageDays % 7 = 0)
 ORDER BY groupId, seriesType, ageDays;
