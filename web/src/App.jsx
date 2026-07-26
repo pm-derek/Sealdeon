@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { loadMeta } from './lib/loadView.js'
 import { useThemeMode } from './lib/theme.js'
 import CohortCurves from './views/CohortCurves.jsx'
@@ -31,21 +31,25 @@ const NAV = [
 function ThemeToggle() {
   const { mode, toggle } = useThemeMode()
   return (
-    <button className="nav-link" onClick={toggle} title="Toggle light / dark"
+    <button className="nav-link shrink-0" onClick={toggle} title="Toggle light / dark"
       style={{ border: '1px solid var(--border-strong)' }}>
-      {mode === 'dark' ? '☾ Dark' : '☀ Light'}
+      <span className="sm:hidden">{mode === 'dark' ? '☾' : '☀'}</span>
+      <span className="hidden sm:inline">{mode === 'dark' ? '☾ Dark' : '☀ Light'}</span>
     </button>
   )
 }
 
-const GAME_META = { Pokemon: { icon: '📦', label: 'Pokémon' }, Magic: { icon: '🔮', label: 'Magic' } }
+const GAME_META = { Pokemon: { icon: '📦', label: 'Pokémon', short: 'Pkmn' }, Magic: { icon: '🔮', label: 'Magic', short: 'Magic' } }
 
+// Kept on ONE line on phones (wrapping cost ~50px of sticky header height).
 function GameToggle({ game, setGame, games }) {
   return (
-    <div className="seg" title="Switch game">
+    <div className="seg flex-nowrap shrink-0" title="Switch game">
       {games.map((g) => (
-        <button key={g} className="chip" data-on={String(game === g)} onClick={() => setGame(g)}>
-          {GAME_META[g]?.icon} {GAME_META[g]?.label || g}
+        <button key={g} className="chip whitespace-nowrap" data-on={String(game === g)} onClick={() => setGame(g)}>
+          {GAME_META[g]?.icon}
+          <span className="hidden sm:inline"> {GAME_META[g]?.label || g}</span>
+          <span className="sm:hidden"> {GAME_META[g]?.short || g}</span>
         </button>
       ))}
     </div>
@@ -91,6 +95,19 @@ export default function App() {
   const [error, setError] = useState(null)
   const [game, setGame] = useState('Pokemon')
   const { page, param } = useRoute()
+  const headerRef = useRef(null)
+
+  // Publish the sticky header's height so view-level control bars can stick
+  // directly beneath it (it wraps to two lines on narrow screens).
+  useEffect(() => {
+    const el = headerRef.current
+    if (!el) return
+    const set = () => document.documentElement.style.setProperty('--header-h', `${el.offsetHeight}px`)
+    set()
+    const ro = new ResizeObserver(set)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [meta])
 
   useEffect(() => { loadMeta().then(setMeta).catch((e) => setError(e.message)) }, [])
 
@@ -126,12 +143,12 @@ export default function App() {
   const navActive = (key) => page === key || (page === 'set' && key === 'sets')
   return (
     <div className="min-h-screen">
-      <header className="sticky top-0 z-20 backdrop-blur"
+      <header ref={headerRef} className="sticky top-0 z-20 backdrop-blur"
         style={{ background: 'color-mix(in oklab, var(--surface-0) 88%, transparent)', borderBottom: '1px solid var(--border)' }}>
-        <div className="max-w-[1600px] mx-auto px-3 sm:px-4 py-2.5 flex items-center gap-x-4 gap-y-2">
-          <div className="flex items-baseline gap-2 shrink-0">
-            <span className="text-xl">📦</span>
-            <h1 className="text-lg sm:text-xl font-bold tracking-tight">Sealdeon</h1>
+        <div className="max-w-[1600px] mx-auto px-3 sm:px-4 py-1.5 sm:py-2.5 flex items-center gap-x-2 sm:gap-x-4 flex-nowrap">
+          <div className="flex items-baseline gap-2 shrink-0 min-w-0">
+            <span className="text-xl hidden sm:inline">📦</span>
+            <h1 className="text-base sm:text-xl font-bold tracking-tight">Sealdeon</h1>
             <span className="subtle text-sm hidden md:inline">sealed-market intelligence</span>
           </div>
           {games.length > 1 && <GameToggle game={game} setGame={setGame} games={games} />}
@@ -145,8 +162,9 @@ export default function App() {
           <div className="ml-auto sm:hidden"><ThemeToggle /></div>
         </div>
       </header>
-      <main className="max-w-[1600px] mx-auto px-3 sm:px-4 py-4 pb-24 sm:pb-20">
-        <div className="flex justify-end pb-2">
+      <main className="max-w-[1600px] mx-auto px-3 sm:px-4 py-2 sm:py-4 pb-24 sm:pb-20">
+        {/* desktop only: on phones this cost a full row of vertical space */}
+        <div className="hidden sm:flex justify-end pb-2">
           <span className="muted text-xs">data through {meta.latestDate}</span>
         </div>
         {page === 'cohort' && <CohortCurves key={game} meta={gameMeta} game={game} />}

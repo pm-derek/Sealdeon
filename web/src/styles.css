@@ -125,6 +125,20 @@ body {
 }
 .field:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
 
+/* Compact field for the mobile sticky control strip: native selects keep the
+   strip short and open the OS picker, which beats custom popovers on phones. */
+.field-xs {
+  background: var(--surface-1);
+  border: 1px solid var(--border-strong);
+  border-radius: 9999px;
+  padding: 0.18rem 0.5rem;
+  font-size: 0.78rem;
+  line-height: 1.05rem;
+  color: var(--text-primary);
+  max-width: 8rem;
+}
+.field-xs:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+
 /* ---- Tables ----------------------------------------------------------- */
 .tbl { border-collapse: collapse; }
 .tbl th {

@@ -247,13 +247,19 @@ export default function PlotFigure({ build, deps = [], onPick, onView, labelData
     const onDbl = () => { if (onViewRef.current) onViewRef.current(null) }
 
     // ---------------- Touch ----------------
-    let tgest = null, tpinch = null, tmoved = false, lastTap = 0
+    // The container uses touch-action: pan-y, so the browser keeps vertical
+    // scrolling. We only claim a one-finger gesture once it proves to be
+    // horizontal (tdir==='h'); a vertical swipe scrolls the page as normal.
+    // Two fingers always mean the chart (pinch-zoom).
+    let tgest = null, tpinch = null, tmoved = false, lastTap = 0, tdir = null
     const onTouchStart = (e) => {
       if (!onViewRef.current || !figRef.current) return
       tmoved = false
+      tdir = null
       if (e.touches.length === 1) {
         tgest = startGesture(e.touches[0].clientX, e.touches[0].clientY)
         tpinch = null
+        return   // don't preventDefault yet -- direction is still unknown
       } else if (e.touches.length === 2) {
         tgest = null
         const fig = figRef.current, sx = fig.scale('x'), sy = fig.scale('y')
@@ -272,7 +278,20 @@ export default function PlotFigure({ build, deps = [], onPick, onView, labelData
     }
     const onTouchMove = (e) => {
       if (!onViewRef.current) return
-      e.preventDefault()
+      // One finger: decide the axis once, then either claim the gesture
+      // (horizontal -> chart) or bail out and let the page scroll (vertical).
+      if (e.touches.length === 1 && tgest) {
+        const t = e.touches[0]
+        const dx = t.clientX - tgest.startX, dy = t.clientY - tgest.startY
+        if (tdir === null) {
+          if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return       // still ambiguous
+          tdir = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v'
+          if (tdir === 'v') { tgest = null; return }             // page scrolls
+          applyTip(true)
+          tmoved = true
+        }
+      }
+      if (e.cancelable) e.preventDefault()
       if (e.touches.length >= 2 && tpinch) {
         const d = touchDist(e.touches[0], e.touches[1]); if (!d) return
         const factor = Math.max(0.1, Math.min(6, tpinch.d0 / d))
@@ -291,10 +310,8 @@ export default function PlotFigure({ build, deps = [], onPick, onView, labelData
         if (tpinch.yd && tpinch.cy != null) patch.y = zoomFrom(tpinch.yd, tpinch.yLog, tpinch.cy, factor)
         tmoved = true
         pushPatch(patch)
-      } else if (e.touches.length === 1 && tgest) {
+      } else if (e.touches.length === 1 && tgest && tdir === 'h') {
         const t = e.touches[0]
-        if (Math.abs(t.clientX - tgest.startX) > 4 || Math.abs(t.clientY - tgest.startY) > 4) tmoved = true
-        if (!tmoved) return
         pushPatch(gesturePatch(tgest, t.clientX, t.clientY))
       }
     }
@@ -311,6 +328,7 @@ export default function PlotFigure({ build, deps = [], onPick, onView, labelData
           }
         }
         tgest = null
+        tdir = null
         applyTip(false)   // back to device default (still off on coarse)
       }
     }
@@ -342,8 +360,11 @@ export default function PlotFigure({ build, deps = [], onPick, onView, labelData
   }, [doRender])
 
   return (
+    // touch-action: pan-y keeps native vertical page scrolling over the chart
+    // (a chart that swallows vertical swipes traps the page); horizontal
+    // gestures and pinches are still ours.
     <div ref={elRef} className="w-full overflow-hidden select-none"
-      style={{ position: 'relative', touchAction: onView ? 'none' : 'auto',
+      style={{ position: 'relative', touchAction: onView ? 'pan-y' : 'auto',
                cursor: onView ? 'grab' : onPick ? 'pointer' : 'default' }} />
   )
 }

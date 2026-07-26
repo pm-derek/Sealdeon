@@ -277,7 +277,12 @@ export default function CohortCurves({ meta }) {
     }
 
     return Plot.plot({
-      width, height: width < 640 ? 430 : 540,
+      width,
+      // phones: fill the viewport below the sticky chrome instead of leaving
+      // ~200px of dead space under the chart
+      height: width < 640
+        ? Math.min(620, Math.max(400, (typeof window !== 'undefined' ? window.innerHeight : 800) - 265))
+        : 540,
       marginRight: labels !== 'off' ? 70 : 24,
       marginLeft: 56,
       style: { background: 'transparent', color: palette.textSecondary, fontSize: '12px' },
@@ -334,13 +339,45 @@ export default function CohortCurves({ meta }) {
   return (
     <section>
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h2 className="text-lg font-semibold">Cohort curves</h2>
+        <h2 className="text-lg font-semibold hidden sm:block">Cohort curves</h2>
         <p className="muted text-xs hidden sm:block">scroll = zoom · shift-scroll = zoom Y · drag = pan · double-click = reset · click line/label = focus (again to clear)</p>
-        <button className="chip sm:hidden" onClick={() => setShowFilters((v) => !v)}>
-          {showFilters ? '✕ Hide filters' : '⚙ Filters'}
+      </div>
+
+      {/* Mobile: one compact strip pinned under the header, so the controls
+          you change most never require scrolling back up. Native selects keep
+          it to a single ~36px row and open the OS picker. */}
+      <div className="sm:hidden sticky z-10 -mx-3 px-3 py-1.5 flex items-center gap-1"
+        style={{ top: 'var(--header-h, 52px)', borderBottom: '1px solid var(--border)',
+                 background: 'color-mix(in oklab, var(--surface-0) 94%, transparent)',
+                 backdropFilter: 'blur(8px)' }}>
+        {/* selects scroll; the filters button stays pinned so it is never cut off */}
+        <div className="flex items-center gap-1 overflow-x-auto min-w-0 flex-1">
+        <select className="field-xs shrink-0" value={state.seriesType} onChange={(e) => setK('seriesType')(e.target.value)}>
+          {(meta.seriesTypes || []).map((t) => <option key={t} value={t}>{t}</option>)}
+        </select>
+        <select className="field-xs shrink-0" value={state.metric} onChange={(e) => setK('metric')(e.target.value)}>
+          {Object.entries(METRICS).map(([k, m]) => <option key={k} value={k}>{m.label}</option>)}
+        </select>
+        {isIndex && (
+          <select className="field-xs shrink-0" value={basis} onChange={(e) => setBasis(e.target.value)}>
+            {Object.entries(BASES).map(([k, l]) => <option key={k} value={k}>{l}</option>)}
+          </select>
+        )}
+        <select className="field-xs shrink-0" value={xMode} onChange={(e) => setXMode(e.target.value)}>
+          <option value="cohort">Age</option>
+          <option value="calendar">Date</option>
+        </select>
+        <select className="field-xs shrink-0" value={range} onChange={(e) => setRange(e.target.value)}>
+          {RANGES.map(([v, t]) => <option key={v} value={v}>{t}</option>)}
+        </select>
+        </div>
+        <button className="chip shrink-0" data-on={String(showFilters)} onClick={() => setShowFilters((v) => !v)}>
+          {showFilters ? '✕' : '⚙'}
         </button>
       </div>
-      <p className="muted text-xs sm:hidden pb-1">drag = pan · pinch = zoom · drag an axis = stretch it · tap = focus/unfocus line · double-tap = reset</p>
+      <p className="muted sm:hidden pt-1 pb-0.5 truncate" style={{ fontSize: '10px' }}>
+        ↕ scroll · ↔ pan · pinch zoom · tap focus · data to {meta.latestDate}
+      </p>
 
       <div className={`${showFilters ? 'block' : 'hidden'} sm:block`}>
         <FilterBar meta={meta} state={state} setState={setState} />
@@ -356,7 +393,7 @@ export default function CohortCurves({ meta }) {
       <div className="card p-3">
         {/* Top toolbar (near Y axis): what's plotted. The index-basis toggle
             only appears while Index is active, so the bar stays quiet. */}
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 pb-2">
+        <div className="hidden sm:flex flex-wrap items-center gap-x-3 gap-y-2 pb-2">
           <Seg value={state.metric} onChange={setK('metric')}
             options={Object.entries(METRICS).map(([k, m]) => [k, m.label])} />
           {isIndex && (
@@ -406,7 +443,7 @@ export default function CohortCurves({ meta }) {
         {/* Bottom toolbar (near X axis): the time axis. Range shortcuts mean
             "last N days" on a calendar axis and "first N days of life" on a
             cohort axis -- both useful, same control. */}
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 pt-2">
+        <div className="hidden sm:flex flex-wrap items-center gap-x-3 gap-y-2 pt-2">
           <Seg value={xMode} onChange={setXMode}
             options={[['cohort', 'Cohort (age)'], ['calendar', 'Daily (date)']]} />
           <Seg label={isCal ? 'Last' : 'First'} value={range} onChange={setRange} options={RANGES} />
