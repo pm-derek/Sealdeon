@@ -819,17 +819,17 @@
   {
    "productId": 518638,
    "productName": "Celebrations Ultra-Premium Collection Case",
-   "productType": "UPC",
+   "productType": null,
    "groupId": 2867,
    "setName": "Celebrations",
    "confidence": "low",
-   "attemptedPackCount": 16,
-   "packCountSource": "static",
+   "attemptedPackCount": null,
+   "packCountSource": null,
    "attemptedPromo": null,
-   "promoSource": "unresolved",
+   "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"518638\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2867:UPC\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"2867:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -3251,7 +3251,7 @@
   {
    "productId": 685215,
    "productName": "Phantasmal Flames 3-Pack Blister Case",
-   "productType": "3-Pack Blister",
+   "productType": null,
    "groupId": 24448,
    "setName": "ME02: Phantasmal Flames",
    "confidence": "low",
@@ -3261,7 +3261,7 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"685215\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24448:3-Pack Blister\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"24448:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -3395,7 +3395,7 @@
   {
    "productId": 706309,
    "productName": "Perfect Order 3 Pack Blister Case [Chikorita]",
-   "productType": "3-Pack Blister",
+   "productType": null,
    "groupId": 24587,
    "setName": "ME03: Perfect Order",
    "confidence": "low",
@@ -3405,7 +3405,7 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"706309\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24587:3-Pack Blister\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"24587:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -3699,7 +3699,7 @@
   {
    "productId": 693589,
    "productName": "Pitch Black 3-Pack Blister Case",
-   "productType": "3-Pack Blister",
+   "productType": null,
    "groupId": 24688,
    "setName": "ME05: Pitch Black",
    "confidence": "low",
@@ -3709,7 +3709,7 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"693589\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24688:3-Pack Blister\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"24688:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -4163,7 +4163,7 @@
   {
    "productId": 689031,
    "productName": "Ascended Heroes Mini Tin Display Case",
-   "productType": "Mini Tin Display",
+   "productType": null,
    "groupId": 24541,
    "setName": "ME: Ascended Heroes",
    "confidence": "low",
@@ -4173,7 +4173,7 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"689031\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24541:Mini Tin Display\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"24541:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -4739,33 +4739,33 @@
   {
    "productId": 523954,
    "productName": "Charizard ex Premium Collection Case",
-   "productType": "Premium Collection",
+   "productType": null,
    "groupId": 2374,
    "setName": "Miscellaneous Cards & Products",
    "confidence": "low",
    "attemptedPackCount": null,
    "packCountSource": null,
    "attemptedPromo": null,
-   "promoSource": "unresolved",
+   "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"523954\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Premium Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
    "productId": 639446,
    "productName": "Charizard ex Special Collection Case",
-   "productType": "Special Collection",
+   "productType": null,
    "groupId": 2374,
    "setName": "Miscellaneous Cards & Products",
    "confidence": "low",
    "attemptedPackCount": null,
    "packCountSource": null,
    "attemptedPromo": null,
-   "promoSource": "unresolved",
+   "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"639446\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Special Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -4851,17 +4851,17 @@
   {
    "productId": 532402,
    "productName": "Combined Powers Premium Collection Case",
-   "productType": "Premium Collection",
+   "productType": null,
    "groupId": 2374,
    "setName": "Miscellaneous Cards & Products",
    "confidence": "low",
    "attemptedPackCount": null,
    "packCountSource": null,
    "attemptedPromo": null,
-   "promoSource": "unresolved",
+   "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"532402\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Premium Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -5101,22 +5101,6 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"558746\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Special Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 558747,
-   "productName": "Dark Powers ex Special Collection Case",
-   "productType": "Special Collection",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "low",
-   "attemptedPackCount": 5,
-   "packCountSource": "parsed",
-   "attemptedPromo": "Gengar",
-   "promoSource": "unresolved",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"558747\": <count>",
     "promo": "add to config/promo_overrides.json as \"2374:Special Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -5523,17 +5507,17 @@
   {
    "productId": 604240,
    "productName": "Eevee Evolution VMAX Premium Collection Case",
-   "productType": "Premium Collection",
+   "productType": null,
    "groupId": 2374,
    "setName": "Miscellaneous Cards & Products",
    "confidence": "low",
    "attemptedPackCount": null,
    "packCountSource": null,
    "attemptedPromo": null,
-   "promoSource": "unresolved",
+   "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"604240\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Premium Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -5571,7 +5555,7 @@
   {
    "productId": 693199,
    "productName": "Eevee Evolutions Premium Collection Case",
-   "productType": "Premium Collection",
+   "productType": null,
    "groupId": 2374,
    "setName": "Miscellaneous Cards & Products",
    "confidence": "low",
@@ -5581,13 +5565,13 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"693199\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Premium Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
    "productId": 243573,
    "productName": "Eevee Evolutions Tin Case",
-   "productType": "Tin",
+   "productType": null,
    "groupId": 2374,
    "setName": "Miscellaneous Cards & Products",
    "confidence": "low",
@@ -5597,7 +5581,7 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"243573\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -7107,7 +7091,7 @@
   {
    "productId": 679554,
    "productName": "Mega Charizard Tin Case",
-   "productType": "Tin",
+   "productType": null,
    "groupId": 2374,
    "setName": "Miscellaneous Cards & Products",
    "confidence": "low",
@@ -7117,7 +7101,7 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"679554\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -7139,7 +7123,7 @@
   {
    "productId": 664895,
    "productName": "Mega Charizard X ex Ultra Premium Collection Case",
-   "productType": "UPC",
+   "productType": null,
    "groupId": 2374,
    "setName": "Miscellaneous Cards & Products",
    "confidence": "low",
@@ -7149,13 +7133,13 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"664895\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:UPC\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
    "productId": 702509,
    "productName": "Mega Forces Tin Case",
-   "productType": "Tin",
+   "productType": null,
    "groupId": 2374,
    "setName": "Miscellaneous Cards & Products",
    "confidence": "low",
@@ -7165,7 +7149,7 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"702509\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -7251,7 +7235,7 @@
   {
    "productId": 690661,
    "productName": "Mega Greninja ex Premium Collection Case",
-   "productType": "Premium Collection",
+   "productType": null,
    "groupId": 2374,
    "setName": "Miscellaneous Cards & Products",
    "confidence": "low",
@@ -7261,7 +7245,7 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"690661\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Premium Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -7331,7 +7315,7 @@
   {
    "productId": 686439,
    "productName": "Mega Moonlit Tin Case",
-   "productType": "Tin",
+   "productType": null,
    "groupId": 2374,
    "setName": "Miscellaneous Cards & Products",
    "confidence": "low",
@@ -7341,7 +7325,7 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"686439\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -7411,7 +7395,7 @@
   {
    "productId": 682940,
    "productName": "Mega Zygarde ex Premium Collection Case",
-   "productType": "Premium Collection",
+   "productType": null,
    "groupId": 2374,
    "setName": "Miscellaneous Cards & Products",
    "confidence": "low",
@@ -7421,7 +7405,7 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"682940\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Premium Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -7587,7 +7571,7 @@
   {
    "productId": 496020,
    "productName": "Paldea Friends Mini Tin Display Case",
-   "productType": "Mini Tin Display",
+   "productType": null,
    "groupId": 2374,
    "setName": "Miscellaneous Cards & Products",
    "confidence": "low",
@@ -7597,7 +7581,7 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"496020\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Mini Tin Display\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -7923,17 +7907,17 @@
   {
    "productId": 693200,
    "productName": "Pikachu & Zekrom GX Premium Collection Case",
-   "productType": "Premium Collection",
+   "productType": null,
    "groupId": 2374,
    "setName": "Miscellaneous Cards & Products",
    "confidence": "low",
    "attemptedPackCount": null,
    "packCountSource": null,
    "attemptedPromo": null,
-   "promoSource": "unresolved",
+   "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"693200\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Premium Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -8339,7 +8323,7 @@
   {
    "productId": 692923,
    "productName": "Team Rocket Tin Case",
-   "productType": "Tin",
+   "productType": null,
    "groupId": 2374,
    "setName": "Miscellaneous Cards & Products",
    "confidence": "low",
@@ -8349,7 +8333,7 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"692923\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -8513,22 +8497,6 @@
    }
   },
   {
-   "productId": 664898,
-   "productName": "Team Rocket\u2019s Moltres ex Ultra-Premium Collection Case",
-   "productType": "UPC",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "low",
-   "attemptedPackCount": 18,
-   "packCountSource": "parsed",
-   "attemptedPromo": "Team Rocket's Moltres",
-   "promoSource": "unresolved",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"664898\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:UPC\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 594539,
    "productName": "Tera Team Premium Collection",
    "productType": "Premium Collection",
@@ -8563,7 +8531,7 @@
   {
    "productId": 696827,
    "productName": "Terapagos ex Ultra-Premium Collection Case",
-   "productType": "UPC",
+   "productType": null,
    "groupId": 2374,
    "setName": "Miscellaneous Cards & Products",
    "confidence": "low",
@@ -8573,7 +8541,7 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"696827\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:UPC\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -14275,17 +14243,17 @@
   {
    "productId": 514071,
    "productName": "Paradox Rift Build & Battle Stadium Case",
-   "productType": "Build & Battle",
+   "productType": null,
    "groupId": 23286,
    "setName": "SV04: Paradox Rift",
    "confidence": "low",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "attemptedPackCount": null,
+   "packCountSource": null,
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"514071\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23286:Build & Battle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"23286:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -15393,6 +15361,22 @@
    }
   },
   {
+   "productId": 630429,
+   "productName": "Black Bolt  Binder Collection Case",
+   "productType": null,
+   "groupId": 24325,
+   "setName": "SV: Black Bolt",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"630429\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24325:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 630690,
    "productName": "Black Bolt Elite Trainer Box Case",
    "productType": "ETB Case",
@@ -15475,7 +15459,7 @@
   {
    "productId": 630447,
    "productName": "Unova Mini Tin Display Case",
-   "productType": "Mini Tin Display",
+   "productType": null,
    "groupId": 24325,
    "setName": "SV: Black Bolt",
    "confidence": "low",
@@ -15485,7 +15469,7 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"630447\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24325:Mini Tin Display\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"24325:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -15613,6 +15597,38 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"630441\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24325:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 630613,
+   "productName": "Unova Poster Collection Case",
+   "productType": null,
+   "groupId": 24325,
+   "setName": "SV: Black Bolt",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": "Snivy",
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"630613\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24325:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 649220,
+   "productName": "Unova Victini Illustration Collection Case",
+   "productType": null,
+   "groupId": 24325,
+   "setName": "SV: Black Bolt",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": "Victini - 208",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"649220\": <count>",
     "promo": "add to config/promo_overrides.json as \"24325:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -15747,7 +15763,7 @@
   {
    "productId": 693569,
    "productName": "Paldean Fates Premium Collection Case",
-   "productType": "Premium Collection",
+   "productType": null,
    "groupId": 23353,
    "setName": "SV: Paldean Fates",
    "confidence": "low",
@@ -15757,7 +15773,7 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"693569\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23353:Premium Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"23353:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -15907,7 +15923,7 @@
   {
    "productId": 688258,
    "productName": "Paldean Fates Tin Case",
-   "productType": "Tin",
+   "productType": null,
    "groupId": 23353,
    "setName": "SV: Paldean Fates",
    "confidence": "low",
@@ -15917,7 +15933,7 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"688258\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23353:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"23353:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -16003,17 +16019,17 @@
   {
    "productId": 629828,
    "productName": "Prismatic Evolutions Accessory Pouch Special Collection Case",
-   "productType": "Special Collection",
+   "productType": null,
    "groupId": 23821,
    "setName": "SV: Prismatic Evolutions",
    "confidence": "low",
    "attemptedPackCount": null,
    "packCountSource": null,
    "attemptedPromo": null,
-   "promoSource": "unresolved",
+   "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"629828\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23821:Special Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"23821:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -16035,7 +16051,7 @@
   {
    "productId": 614356,
    "productName": "Prismatic Evolutions Mini Tin Display Case",
-   "productType": "Mini Tin Display",
+   "productType": null,
    "groupId": 23821,
    "setName": "SV: Prismatic Evolutions",
    "confidence": "low",
@@ -16045,7 +16061,7 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"614356\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23821:Mini Tin Display\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"23821:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -16195,7 +16211,7 @@
   {
    "productId": 638058,
    "productName": "Prismatic Evolutions Super-Premium Collection Case",
-   "productType": "SPC",
+   "productType": null,
    "groupId": 23821,
    "setName": "SV: Prismatic Evolutions",
    "confidence": "low",
@@ -16205,7 +16221,7 @@
    "promoSource": "auto",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"638058\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23821:SPC\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"23821:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -16227,17 +16243,17 @@
   {
    "productId": 515970,
    "productName": "151 Ultra-Premium Collection Case",
-   "productType": "UPC",
+   "productType": null,
    "groupId": 23237,
    "setName": "SV: Scarlet & Violet 151",
    "confidence": "low",
-   "attemptedPackCount": 16,
-   "packCountSource": "static",
+   "attemptedPackCount": null,
+   "packCountSource": null,
    "attemptedPromo": null,
-   "promoSource": "unresolved",
+   "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"515970\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23237:UPC\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"23237:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -16430,6 +16446,22 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"553075\": <count>",
     "promo": "add to config/promo_overrides.json as \"23529:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 630694,
+   "productName": "White Flare  Binder Collection Case",
+   "productType": null,
+   "groupId": 24326,
+   "setName": "SV: White Flare",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"630694\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24326:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -19107,7 +19139,7 @@
   {
    "productId": 638064,
    "productName": "Fusion Strike 3-Pack Blister Case",
-   "productType": "3-Pack Blister",
+   "productType": null,
    "groupId": 2906,
    "setName": "SWSH08: Fusion Strike",
    "confidence": "low",
@@ -19117,7 +19149,7 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"638064\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2906:3-Pack Blister\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"2906:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -19763,7 +19795,7 @@
   {
    "productId": 679043,
    "productName": "Astral Radiance 3 Pack Blister Case",
-   "productType": "3-Pack Blister",
+   "productType": null,
    "groupId": 3040,
    "setName": "SWSH10: Astral Radiance",
    "confidence": "low",
@@ -19773,7 +19805,7 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"679043\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3040:3-Pack Blister\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"3040:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -20145,22 +20177,6 @@
    }
   },
   {
-   "productId": 693585,
-   "productName": "Arceus VSTAR Ultra-Premium Collection Case",
-   "productType": "UPC",
-   "groupId": 3118,
-   "setName": "SWSH11: Lost Origin",
-   "confidence": "low",
-   "attemptedPackCount": 15,
-   "packCountSource": "parsed",
-   "attemptedPromo": "Arceus V",
-   "promoSource": "unresolved",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"693585\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3118:UPC\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 282402,
    "productName": "Hisuian Zoroark VSTAR Premium Collection",
    "productType": "Premium Collection",
@@ -20307,17 +20323,17 @@
   {
    "productId": 648474,
    "productName": "Lost Origin Build & Battle Stadium Case",
-   "productType": "Build & Battle",
+   "productType": null,
    "groupId": 3118,
    "setName": "SWSH11: Lost Origin",
    "confidence": "low",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "attemptedPackCount": null,
+   "packCountSource": null,
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"648474\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3118:Build & Battle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"3118:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -20547,17 +20563,17 @@
   {
    "productId": 454377,
    "productName": "Sword & Shield Ultra-Premium Collection: Charizard Case",
-   "productType": "UPC",
+   "productType": null,
    "groupId": 3118,
    "setName": "SWSH11: Lost Origin",
    "confidence": "low",
-   "attemptedPackCount": 16,
-   "packCountSource": "static",
+   "attemptedPackCount": null,
+   "packCountSource": null,
    "attemptedPromo": null,
-   "promoSource": "unresolved",
+   "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"454377\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3118:UPC\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"3118:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -21091,7 +21107,7 @@
   {
    "productId": 616290,
    "productName": "Crown Zenith Tin Case",
-   "productType": "Tin",
+   "productType": null,
    "groupId": 17688,
    "setName": "SWSH: Crown Zenith",
    "confidence": "low",
@@ -21101,7 +21117,7 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"616290\": <count>",
-    "promo": "add to config/promo_overrides.json as \"17688:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"17688:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -21315,7 +21331,7 @@
   {
    "productId": 485423,
    "productName": "Pikachu VMAX Special Collection Case",
-   "productType": "Special Collection",
+   "productType": null,
    "groupId": 17688,
    "setName": "SWSH: Crown Zenith",
    "confidence": "low",
@@ -21325,7 +21341,7 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"485423\": <count>",
-    "promo": "add to config/promo_overrides.json as \"17688:Special Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"17688:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -21603,7 +21619,7 @@
   {
    "productId": 268482,
    "productName": "Shining Fates V Tin Case",
-   "productType": "Tin",
+   "productType": null,
    "groupId": 2754,
    "setName": "Shining Fates",
    "confidence": "low",
@@ -21613,7 +21629,7 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"268482\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2754:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"2754:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -27153,6 +27169,22 @@
    }
   },
   {
+   "productId": 685000,
+   "productName": "Premium Poster Collection Case",
+   "productType": null,
+   "groupId": 24541,
+   "setName": "ME: Ascended Heroes",
+   "confidence": "medium",
+   "attemptedPackCount": 10,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Mega Lucario ex - 012",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"685000\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24541:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 98584,
    "productName": "Majestic Dawn Booster Box",
    "productType": "Booster Box",
@@ -30577,22 +30609,6 @@
    }
   },
   {
-   "productId": 649220,
-   "productName": "Unova Victini Illustration Collection Case",
-   "productType": "Tin",
-   "groupId": 24325,
-   "setName": "SV: Black Bolt",
-   "confidence": "medium",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
-   "attemptedPromo": "Victini - 208",
-   "promoSource": "auto",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"649220\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24325:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 635609,
    "productName": "Paldean Fates Booster Bundle Display Case",
    "productType": "Booster Bundle Case",
@@ -30803,7 +30819,7 @@
   {
    "productId": 598470,
    "productName": "Prismatic Evolutions Surprise Box Case",
-   "productType": "Surprise Box",
+   "productType": null,
    "groupId": 23821,
    "setName": "SV: Prismatic Evolutions",
    "confidence": "medium",
@@ -30813,7 +30829,7 @@
    "promoSource": "auto",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"598470\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23821:Surprise Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"23821:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -30947,7 +30963,7 @@
   {
    "productId": 665643,
    "productName": "Shrouded Fable 3 Pack Blister Case",
-   "productType": "3-Pack Blister",
+   "productType": null,
    "groupId": 23529,
    "setName": "SV: Shrouded Fable",
    "confidence": "medium",
@@ -30957,7 +30973,7 @@
    "promoSource": "auto",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"665643\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23529:3-Pack Blister\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"23529:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -35233,5 +35249,5 @@
    }
   }
  ],
- "count": 2202
+ "count": 2203
 }
