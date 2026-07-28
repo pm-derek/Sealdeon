@@ -173,12 +173,13 @@ export default function CohortCurves({ meta }) {
     const chosen = labels === 'focus'
       ? model.lines.filter((l) => model.emph.has(l.groupId))
       : model.lines
+    const fmt = isPct ? fmtPct : isIndex ? ((v) => v.toFixed(1)) : fmtUsd
     return chosen.map((l, i) => ({
-      groupId: l.groupId, text: l.abbr,
+      groupId: l.groupId, text: l.abbr, fmt,
       color: model.emph.get(l.groupId) || model.colorOf(l.groupId, model.lines.indexOf(l)),
       points: l.points.map((p) => ({ x: xOf(l, p.age), value: p.value })),
     }))
-  }, [model, labels, isCal, div])
+  }, [model, labels, isCal, div, isPct, isIndex])
 
   // All lines in data coords, for touch tap-to-select hit-testing (works
   // regardless of the label setting).

@@ -93,10 +93,19 @@ export default function PlotFigure({ build, deps = [], onPick, onView, labelData
       for (const p of L.points) if (p.x >= xlo && p.x <= xhi) pt = p
       if (!pt) continue
       const px = applyScale(sx, pt.x)
-      const py = Math.max(pTop, Math.min(pBot, applyScale(sy, pt.value)))
+      const rawY = applyScale(sy, pt.value)
+      // A label pinned to the edge sits at a value it does NOT have, which
+      // reads as a wrong price. Keep it visible (so Y-zoom doesn't lose the
+      // line) but mark it off-scale with an arrow + its real value.
+      const off = rawY < pTop ? 'up' : rawY > pBot ? 'down' : null
+      const py = Math.max(pTop, Math.min(pBot, rawY))
       const btn = document.createElement('button')
       btn.className = 'linelabel'
-      btn.textContent = L.text
+      btn.textContent = off ? `${off === 'up' ? '↑' : '↓'} ${L.text}` : L.text
+      if (off) {
+        btn.dataset.offscale = 'true'
+        btn.title = `${L.text} is off-scale here (${L.fmt ? L.fmt(pt.value) : pt.value})`
+      }
       btn.style.left = `${px + 4}px`
       btn.style.top = `${py}px`
       btn.style.color = L.color

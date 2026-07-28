@@ -200,3 +200,8 @@ a { color: inherit; }
   z-index: 4;
 }
 .linelabel:hover { background: var(--surface-2); text-decoration: underline; z-index: 6; }
+
+/* Off-scale line label: the line's value is outside the current Y window, so
+   the label is pinned to the edge. Marked with an arrow + dimmed so it is
+   never read as the price at that position on the axis. */
+.linelabel[data-offscale="true"] { opacity: 0.62; font-style: italic; }

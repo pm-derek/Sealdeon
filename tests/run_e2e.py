@@ -273,6 +273,23 @@ try:
 finally:
     build_parquet.DATA_DIR = _prev_data_dir
 
+print("== e2e: canonical-product integrity (multipack/case regression) ==")
+import classify as _c2  # noqa: E402
+# The recurring bug class: a CASE or multipack standing in for the single unit.
+for _n, _g, _want in [
+    ("Shrouded Fable 3 Pack Blister Case", "Pokemon", "3-Pack Blister"),
+    ("Ascended Heroes Tin Case", "Pokemon", "Tin"),
+    ("Paldean Fates Premium Collection Case", "Pokemon", "Premium Collection"),
+    ("Temporal Forces Ultra Premium Collection Case", "Pokemon", "UPC"),
+]:
+    check(f"case is NOT typed as {_want}: {_n[:36]}",
+          _c2.match_product_type(_n, _g) != _want, str(_c2.match_product_type(_n, _g)))
+# set names containing "Double" must NOT be treated as multipacks
+for _n in ("Double Masters 2022 Draft Booster Box", "Innistrad Double Feature Draft Booster Box"):
+    import re as _re
+    _m = bool(_re.search(r"set of \d|\bhalf\b|lot of \d|pack of \d|double pack|\bcase\b", _n.lower()))
+    check(f"set name with 'Double' not flagged multipack: {_n[:34]}", not _m)
+
 print("== e2e: archive extraction (py7zr ppmd path) ==")
 import py7zr  # noqa: E402
 import backfill_archive  # noqa: E402

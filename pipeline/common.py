@@ -123,8 +123,12 @@ def build_product_dim(groups: list[dict], products_by_group: dict[int, list[dict
     # Box", "... Lot of 3") share a productType with the single unit but are
     # priced per bundle, so they must NOT represent the type. Their pack count
     # is also per-single, so decomposing them yields a wildly inflated premium.
+    # NB: "case" is included. Types with a dedicated "<type> Case" pattern are
+    # already separated by classify.py, but for the rest a case would otherwise
+    # become the canonical single unit (a 6-12x price with a single unit's pack
+    # count -> inflated line AND fabricated premium).
     is_multi = products_df["name"].fillna("").str.lower().str.contains(
-        r"set of \d|\bhalf\b|lot of \d|pack of \d|\bdouble\b", regex=True)
+        r"set of \d|\bhalf\b|lot of \d|pack of \d|double pack|\bcase\b", regex=True)
     products_df["_multi"] = is_multi
 
     # Canonical product per (groupId, productType): the single unit with the
@@ -134,8 +138,13 @@ def build_product_dim(groups: list[dict], products_by_group: dict[int, list[dict
     typed = products_df[products_df["productType"].notna()].copy()
     if not typed.empty:
         typed["_len"] = typed["name"].fillna("").str.len()
-        order = typed.sort_values(["_multi", "_len"])
-        first = order.groupby([order["groupId"], order["productType"]], sort=False).head(1)
+        # Multipacks are excluded outright (not merely de-prioritised): if the
+        # only candidate for a type is a multipack, leaving the type absent is
+        # better than plotting a 4x price as if it were one unit. Types that
+        # ARE cases by definition keep their own candidates.
+        singles = typed[~typed["_multi"] | typed["productType"].str.contains("Case", na=False)]
+        first = singles.sort_values("_len").groupby(
+            [singles["groupId"], singles["productType"]], sort=False).head(1)
         products_df.loc[first.index, "isCanonical"] = True
 
     # Keep multipacks/partials out of the intrinsic-premium views (they're
