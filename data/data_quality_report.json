@@ -3857,6 +3857,22 @@
    }
   },
   {
+   "productId": 709016,
+   "productName": "30th Celebration Battle Deck Case",
+   "productType": null,
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"709016\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 704187,
    "productName": "30th Celebration Battle Deck [Espeon ex]",
    "productType": null,
@@ -3918,6 +3934,22 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"704186\": <count>",
     "promo": "add to config/promo_overrides.json as \"24722:Mini Tin Display\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 709030,
+   "productName": "30th Celebration Mini Tin Display Case",
+   "productType": null,
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"709030\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -35249,5 +35281,5 @@
    }
   }
  ],
- "count": 2203
+ "count": 2205
 }
