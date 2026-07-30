@@ -4241,8 +4241,24 @@
    }
   },
   {
+   "productId": 709095,
+   "productName": "Mega Evolution: Ascended Heroes Collection - Erika (1-Tab)",
+   "productType": null,
+   "groupId": 24541,
+   "setName": "ME: Ascended Heroes",
+   "confidence": "low",
+   "attemptedPackCount": 2,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Erika",
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"709095\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24541:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 666906,
-   "productName": "Mega Evolution: Ascended Heroes Collection - Erika",
+   "productName": "Mega Evolution: Ascended Heroes Collection - Erika (3-Tab)",
    "productType": null,
    "groupId": 24541,
    "setName": "ME: Ascended Heroes",
@@ -4257,8 +4273,24 @@
    }
   },
   {
+   "productId": 709097,
+   "productName": "Mega Evolution: Ascended Heroes Collection - Larry (1-Tab)",
+   "productType": null,
+   "groupId": 24541,
+   "setName": "ME: Ascended Heroes",
+   "confidence": "low",
+   "attemptedPackCount": 2,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Larry",
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"709097\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24541:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 666907,
-   "productName": "Mega Evolution: Ascended Heroes Collection - Larry",
+   "productName": "Mega Evolution: Ascended Heroes Collection - Larry (3-Tab)",
    "productType": null,
    "groupId": 24541,
    "setName": "ME: Ascended Heroes",
@@ -35281,5 +35313,5 @@
    }
   }
  ],
- "count": 2205
+ "count": 2207
 }
