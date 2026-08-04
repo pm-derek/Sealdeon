@@ -13,15 +13,18 @@ function heatBg(v, max) {
   const pct = Math.min(Math.abs(v) / max, 1) * 58
   return `color-mix(in oklab, ${base} ${pct.toFixed(0)}%, transparent)`
 }
-function HeatCell({ v, max }) {
+function HeatCell({ v, max, fmt = fmtPct }) {
   if (v == null) return <td className="muted">—</td>
   return (
     <td style={{ background: heatBg(v, max), color: 'var(--text-primary)', fontWeight: Math.abs(v) > max * 0.5 ? 600 : 400 }}>
-      {fmtPct(v)}
+      {fmt(v)}
     </td>
   )
 }
-const HEAT_MAX = { chg1: 0.08, chg7: 0.18, chg30: 0.35, chg90: 0.7, premChg30: 0.3, premChg7: 0.2 }
+const HEAT_MAX = { chg1: 0.08, chg7: 0.18, chg30: 0.35, chg90: 0.7, premChg30: 0.3, premChg7: 0.2, askFloorChg30: 0.35 }
+// askFloor is a ratio (1.05 = cheapest ask 5% ABOVE market), not a percentage.
+const fmtRatio = (v) => (v == null ? '—' : v.toFixed(2))
+const fmtRatioDelta = (v) => (v == null ? '—' : `${v >= 0 ? '+' : ''}${v.toFixed(2)}`)
 
 // Sortable columns. `abs` sorts by magnitude (biggest move either way);
 // `dir` is the default direction on first click.
@@ -37,6 +40,10 @@ const COLS = [
   { key: 'chg90', label: '90d', num: true, dir: 'desc', abs: true, heat: 'chg90' },
   { key: 'premiumPct', label: 'Premium', num: true, dir: 'desc', fmt: (v) => (v != null ? fmtPct(v) : '—') },
   { key: 'premChg30', label: 'Δ30d prem', num: true, dir: 'desc', abs: true, heat: 'premChg30' },
+  { key: 'askFloor', label: 'Ask floor', num: true, dir: 'desc', fmt: fmtRatio,
+    title: 'Cheapest ask ÷ market price. Above 1.00 = nobody undercutting (thin supply); below 0.85 = sellers undercutting each other (glut). A proxy, not a listing count.' },
+  { key: 'askFloorChg30', label: 'Δ30d supply', num: true, dir: 'desc', abs: true, heat: 'askFloorChg30', heatFmt: fmtRatioDelta,
+    title: '30-day change in ask floor. Positive = supply tightening (undercutting drying up); negative = supply building.' },
 ]
 
 export default function Screener({ meta, game = 'Pokemon' }) {
@@ -108,7 +115,12 @@ export default function Screener({ meta, game = 'Pokemon' }) {
       <p className="subtle text-sm">
         A snapshot of every product's recent price &amp; premium change. <strong>Click any column header to sort</strong>
         {' '}(change columns sort by biggest move either direction). “Sitting on shelves” = aged 90d+ with flat/declining price.
-        Listing/sales volume is <span title={data.volumeMetrics.reason}>pending a data source</span>.
+      </p>
+      <p className="muted text-xs max-w-4xl pb-1">
+        <strong>Ask floor</strong> = cheapest listing ÷ market price — a <em>supply-tightness proxy</em>, not a listing
+        count. Above <strong>1.00</strong> nobody is undercutting (thin supply); below <strong>0.85</strong> sellers are
+        racing each other down (glut). <strong>Δ30d supply</strong> rising = undercutting drying up. True listed/sold
+        quantities need an external source — TCGplayer publishes none.
       </p>
       <div className="flex flex-wrap items-center gap-2 py-2">
         {[['movers', 'All movers'], ['shelf', 'Sitting on shelves']].map(([v, t]) => (
@@ -127,10 +139,8 @@ export default function Screener({ meta, game = 'Pokemon' }) {
             <tr>
               {COLS.map((c) => (
                 <th key={c.key} onClick={() => clickSort(c)} style={{ cursor: 'pointer', userSelect: 'none' }}
-                  title="click to sort">{c.label}{arrow(c.key)}</th>
+                  title={c.title ? `${c.title}\n\n(click to sort)` : 'click to sort'}>{c.label}{arrow(c.key)}</th>
               ))}
-              <th className="muted" title={data.volumeMetrics.reason}>Listed*</th>
-              <th className="muted" title={data.volumeMetrics.reason}>Sold*</th>
             </tr>
           </thead>
           <tbody>
@@ -150,14 +160,16 @@ export default function Screener({ meta, game = 'Pokemon' }) {
                 <HeatCell v={r.chg90} max={HEAT_MAX.chg90} />
                 <td>{r.premiumPct != null ? fmtPct(r.premiumPct) : <span className="muted">—</span>}</td>
                 <HeatCell v={r.premChg30} max={HEAT_MAX.premChg30} />
-                <td className="muted">—</td><td className="muted">—</td>
+                <td>{fmtRatio(r.askFloor)}</td>
+                <HeatCell v={r.askFloorChg30} max={HEAT_MAX.askFloorChg30} fmt={fmtRatioDelta} />
               </tr>
             ))}
           </tbody>
         </table>
         <p className="muted text-xs pt-2">
-          * qtyListed / qtySold are schema-ready but unpopulated: no free, ToS-compliant source exists.
-          They light up if a paid feed (TCGplayer API / TCGAPIs) is added.
+          Ask-floor values outside 0.2–2.5× market are suppressed: those mean the market price is stale
+          (common on illiquid vintage), not that supply is tight. qtyListed / qtySold remain schema-ready
+          but unpopulated — the planned source is the eBay Browse API.
         </p>
       </div>
     </section>

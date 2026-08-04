@@ -170,8 +170,22 @@ def build_movers(con) -> None:
     df = con.execute(_sql("movers.sql")).df()
     payload = {
         "rows": records(df),
-        # Explicit stub: these light up only if a paid listings/sales
-        # feed (TCGplayer API / TCGAPIs) is ever added.
+        # Supply-tightness proxies derived from price points we already store.
+        # These are NOT listing counts -- see supply_daily in _setup.sql.
+        "supplyMetrics": {
+            "available": True,
+            "kind": "proxy",
+            "note": "Derived from the cheapest ask vs market price -- not a listing count. "
+                    "TCGplayer publishes no quantity data.",
+            "columns": {
+                "askFloor": "cheapest ask / market price. >1.00 = nobody undercutting (thin "
+                            "supply); <0.85 = sellers undercutting each other (glut).",
+                "askSpread": "(mid - low) / market. Wide = disorderly/thin book.",
+                "askFloorChg30": "30-day change in askFloor. Positive = supply tightening.",
+            },
+        },
+        # True per-day quantities still need an external source (eBay Browse API
+        # is the planned route); the schema columns remain nullable placeholders.
         "volumeMetrics": {"available": False, "reason": "no free ToS-compliant source",
                           "columns": ["qtyListed", "qtySold"]},
     }

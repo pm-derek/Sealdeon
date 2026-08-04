@@ -273,6 +273,31 @@ try:
 finally:
     build_parquet.DATA_DIR = _prev_data_dir
 
+print("== e2e: supply-tightness proxy ==")
+_con = build_views.connect()
+try:
+    # px must still expose the load-bearing columns unchanged, plus the new ones
+    _cols = {r[0] for r in _con.execute("DESCRIBE px").fetchall()}
+    check("px keeps price + marketPrice", {"price", "marketPrice"} <= _cols, str(sorted(_cols)))
+    check("px carries lowPrice + midPrice", {"lowPrice", "midPrice"} <= _cols, str(sorted(_cols)))
+    # askFloor = lowPrice / marketPrice, and implausible ratios are suppressed
+    _r = _con.execute("""
+        SELECT count(*) AS n,
+               sum(CASE WHEN askFloor IS NOT NULL
+                         AND abs(askFloor - lowPrice/marketPrice) > 1e-9 THEN 1 ELSE 0 END) AS bad_math,
+               sum(CASE WHEN askFloor IS NOT NULL
+                         AND (askFloor > 2.5 OR askFloor < 0.2) THEN 1 ELSE 0 END) AS unsuppressed
+        FROM supply_daily""").fetchone()
+    check("askFloor math correct", _r[1] == 0, f"{_r[1]} wrong")
+    check("implausible askFloor suppressed (stale marketPrice)", _r[2] == 0, f"{_r[2]} leaked")
+    check("supply_daily has rows", _r[0] > 0, str(_r[0]))
+finally:
+    _con.close()
+with open(os.path.join(views, "movers.json")) as f:
+    _mv = json.load(f)
+check("movers exposes supplyMetrics as a proxy", _mv["supplyMetrics"]["kind"] == "proxy")
+check("movers rows carry askFloor field", any("askFloor" in r for r in _mv["rows"]))
+
 print("== e2e: canonical-product integrity (multipack/case regression) ==")
 import classify as _c2  # noqa: E402
 # The recurring bug class: a CASE or multipack standing in for the single unit.

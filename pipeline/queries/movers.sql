@@ -1,7 +1,8 @@
 -- Movers / notable changes: sealed products + chase singles only.
--- Price changes over 1d/7d/30d/90d and sealed-premium swings over
--- 7d/30d. qtyListed/qtySold are intentionally absent (no free source;
--- UI stubs them as "pending data source").
+-- Price changes over 1d/7d/30d/90d and sealed-premium swings over 7d/30d,
+-- plus supply-tightness PROXIES (askFloor / askSpread and the 30d trend in
+-- askFloor). True qtyListed/qtySold still have no free source -- see
+-- supply_daily in _setup.sql for what askFloor does and does not mean.
 WITH latest AS (
     SELECT max(date) AS d FROM px
 ),
@@ -31,6 +32,16 @@ prem AS (
         arg_max(intrinsicValue, date)                                AS intrinsicNow
     FROM sealed_daily, latest
     GROUP BY productId
+),
+-- Supply proxies now vs 30d ago. A RISING askFloor means the cheapest ask is
+-- climbing toward/through market -- undercutting is drying up.
+supply AS (
+    SELECT productId,
+        arg_max(askFloor, date)                              AS askFloorNow,
+        arg_max(askFloor, date) FILTER (WHERE date <= d - 30) AS askFloor30,
+        arg_max(askSpread, date)                             AS askSpreadNow
+    FROM supply_daily, latest
+    GROUP BY productId
 )
 SELECT
     u.productId,
@@ -53,11 +64,15 @@ SELECT
     round(p.premNow, 4)              AS premiumPct,
     round(p.premNow - p.prem7, 4)    AS premChg7,
     round(p.premNow - p.prem30, 4)   AS premChg30,
-    round(p.intrinsicNow, 2)         AS intrinsicValue
+    round(p.intrinsicNow, 2)         AS intrinsicValue,
+    round(sp.askFloorNow, 3)                       AS askFloor,
+    round(sp.askSpreadNow, 3)                      AS askSpread,
+    round(sp.askFloorNow - sp.askFloor30, 3)       AS askFloorChg30
 FROM universe u
 JOIN cur c USING (productId)
 LEFT JOIN ago a USING (productId)
 LEFT JOIN prem p USING (productId)
+LEFT JOIN supply sp USING (productId)
 JOIN sets s ON s.groupId = u.groupId
 CROSS JOIN latest
 WHERE c.price > 0

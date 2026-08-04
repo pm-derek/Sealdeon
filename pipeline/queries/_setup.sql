@@ -16,12 +16,40 @@ SELECT * FROM read_parquet('{products_path}');
 -- fallback, lowPrice last resort; highPrice is never stored (price
 -- parking). Sealed products have a single subtype; singles with several
 -- print subtypes take the max, matching the peak-based chase ranking.
+-- NOTE: `price` and `marketPrice` semantics are load-bearing (audit check 3
+-- asserts the cohort line equals the canonical product's price) -- do not
+-- change them. lowPrice/midPrice are carried through ADDITIVELY for the
+-- supply-tightness proxies below.
 CREATE OR REPLACE VIEW px AS
 SELECT date, groupId, productId,
        max(COALESCE(marketPrice, midPrice, lowPrice)) AS price,
-       max(marketPrice) AS marketPrice
+       max(marketPrice) AS marketPrice,
+       max(lowPrice)    AS lowPrice,
+       max(midPrice)    AS midPrice
 FROM prices
 GROUP BY date, groupId, productId;
+
+-- Supply-tightness PROXIES (not quantities -- TCGCSV publishes no listing
+-- counts). The cheapest ask relative to the blended market price says how
+-- hard sellers are undercutting each other:
+--   askFloor > 1.0  -> nobody is undercutting; the book is thin  (tight)
+--   askFloor < 0.85 -> sellers racing each other down            (glut)
+-- Verified to behave as theory predicts: newest era medians ~0.93 (fresh
+-- supply) vs vintage ~1.10 (thin supply).
+-- directLowPrice is deliberately NOT used: only ~0.9% of rows carry it.
+-- Plausibility guard: a cheapest ask above ~2.5x market (or below 0.2x) means
+-- marketPrice is STALE, not that supply is tight -- illiquid vintage throws
+-- these constantly (a $3.53 ratio on a 2014 tin is a dead listing, not signal).
+-- Null them rather than let them top the "tightening" sort.
+CREATE OR REPLACE VIEW supply_daily AS
+SELECT date, groupId, productId,
+       price, marketPrice, lowPrice, midPrice,
+       CASE WHEN lowPrice / marketPrice BETWEEN 0.2 AND 2.5
+            THEN lowPrice / marketPrice END              AS askFloor,
+       CASE WHEN lowPrice / marketPrice BETWEEN 0.2 AND 2.5
+            THEN (midPrice - lowPrice) / marketPrice END AS askSpread
+FROM px
+WHERE marketPrice > 0 AND lowPrice IS NOT NULL;
 
 -- Intrinsic value + sealed premium as a TIME SERIES: every sealed
 -- decomposable product, every day, decomposed against that day's pack
