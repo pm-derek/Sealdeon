@@ -14929,6 +14929,22 @@
    }
   },
   {
+   "productId": 711388,
+   "productName": "Surging Sparks 3 Pack Blisters Case",
+   "productType": null,
+   "groupId": 23651,
+   "setName": "SV08: Surging Sparks",
+   "confidence": "low",
+   "attemptedPackCount": 3,
+   "packCountSource": "parsed",
+   "attemptedPromo": null,
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"711388\": <count>",
+    "promo": "add to config/promo_overrides.json as \"23651:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 565635,
    "productName": "Surging Sparks 3 Pack Blisters [Quagsire]",
    "productType": "3-Pack Blister",
@@ -35313,5 +35329,5 @@
    }
   }
  ],
- "count": 2207
+ "count": 2208
 }
