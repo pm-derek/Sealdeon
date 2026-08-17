@@ -21009,6 +21009,22 @@
    }
   },
   {
+   "productId": 711447,
+   "productName": "Crown Zenith Pin Collection Case",
+   "productType": null,
+   "groupId": 17688,
+   "setName": "SWSH: Crown Zenith",
+   "confidence": "low",
+   "attemptedPackCount": 3,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Rillaboom",
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"711447\": <count>",
+    "promo": "add to config/promo_overrides.json as \"17688:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 475617,
    "productName": "Crown Zenith Pin Collection [Cinderace]",
    "productType": null,
@@ -35329,5 +35345,5 @@
    }
   }
  ],
- "count": 2208
+ "count": 2209
 }
