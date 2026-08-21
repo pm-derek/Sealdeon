@@ -3857,6 +3857,166 @@
    }
   },
   {
+   "productId": 712093,
+   "productName": "Delta Reign 3 Pack Blister [Seel]",
+   "productType": "3-Pack Blister",
+   "groupId": 24831,
+   "setName": "ME06: Delta Reign",
+   "confidence": "low",
+   "attemptedPackCount": 3,
+   "packCountSource": "parsed",
+   "attemptedPromo": null,
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"712093\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24831:3-Pack Blister\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 712100,
+   "productName": "Delta Reign Booster Pack Art Bundle [Set of 4]",
+   "productType": null,
+   "groupId": 24831,
+   "setName": "ME06: Delta Reign",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"712100\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24831:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 712101,
+   "productName": "Delta Reign Build & Battle Box",
+   "productType": "Build & Battle",
+   "groupId": 24831,
+   "setName": "ME06: Delta Reign",
+   "confidence": "low",
+   "attemptedPackCount": 4,
+   "packCountSource": "parsed",
+   "attemptedPromo": null,
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"712101\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24831:Build & Battle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 712102,
+   "productName": "Delta Reign Elite Trainer Box",
+   "productType": "ETB",
+   "groupId": 24831,
+   "setName": "ME06: Delta Reign",
+   "confidence": "low",
+   "attemptedPackCount": 9,
+   "packCountSource": "parsed",
+   "attemptedPromo": null,
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"712102\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24831:ETB\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 712103,
+   "productName": "Delta Reign Elite Trainer Box Case",
+   "productType": "ETB Case",
+   "groupId": 24831,
+   "setName": "ME06: Delta Reign",
+   "confidence": "low",
+   "attemptedPackCount": 90,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"712103\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24831:ETB Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 712104,
+   "productName": "Delta Reign Pokemon Center Elite Trainer Box (Exclusive)",
+   "productType": "PKC ETB",
+   "groupId": 24831,
+   "setName": "ME06: Delta Reign",
+   "confidence": "low",
+   "attemptedPackCount": 11,
+   "packCountSource": "parsed",
+   "attemptedPromo": null,
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"712104\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24831:PKC ETB\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 712105,
+   "productName": "Delta Reign Pokemon Center Elite Trainer Box Case (Exclusive)",
+   "productType": "PKC ETB Case",
+   "groupId": 24831,
+   "setName": "ME06: Delta Reign",
+   "confidence": "low",
+   "attemptedPackCount": 90,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"712105\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24831:PKC ETB Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 712109,
+   "productName": "Delta Reign Single Pack Blister (Target Exclusive) [Keldeo]",
+   "productType": null,
+   "groupId": 24831,
+   "setName": "ME06: Delta Reign",
+   "confidence": "low",
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
+   "attemptedPromo": null,
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"712109\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24831:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 712110,
+   "productName": "Delta Reign Single Pack Blister (Target Exclusive) [Xerneas]",
+   "productType": null,
+   "groupId": 24831,
+   "setName": "ME06: Delta Reign",
+   "confidence": "low",
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
+   "attemptedPromo": null,
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"712110\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24831:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 712108,
+   "productName": "Delta Reign Single Pack Blister [Spitzee]",
+   "productType": null,
+   "groupId": 24831,
+   "setName": "ME06: Delta Reign",
+   "confidence": "low",
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
+   "attemptedPromo": null,
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"712108\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24831:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 709016,
    "productName": "30th Celebration Battle Deck Case",
    "productType": null,
@@ -27201,6 +27361,70 @@
    }
   },
   {
+   "productId": 712096,
+   "productName": "Delta Reign Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 24831,
+   "setName": "ME06: Delta Reign",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"712096\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24831:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 712098,
+   "productName": "Delta Reign Booster Bundle Case",
+   "productType": "Booster Bundle Case",
+   "groupId": 24831,
+   "setName": "ME06: Delta Reign",
+   "confidence": "medium",
+   "attemptedPackCount": 60,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"712098\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24831:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 712112,
+   "productName": "Delta Reign Sleeved Booster Pack",
+   "productType": "Sleeved Booster Pack",
+   "groupId": 24831,
+   "setName": "ME06: Delta Reign",
+   "confidence": "medium",
+   "attemptedPackCount": 1,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"712112\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24831:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 712113,
+   "productName": "Delta Reign Sleeved Booster Pack Art Bundle [Set of 4]",
+   "productType": "Sleeved Booster Pack",
+   "groupId": 24831,
+   "setName": "ME06: Delta Reign",
+   "confidence": "medium",
+   "attemptedPackCount": 1,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"712113\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24831:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 681339,
    "productName": "Ascended Heroes Booster Bundle Case",
    "productType": "Booster Bundle Case",
@@ -35345,5 +35569,5 @@
    }
   }
  ],
- "count": 2209
+ "count": 2223
 }
