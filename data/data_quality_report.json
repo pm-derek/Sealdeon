@@ -17889,6 +17889,22 @@
    }
   },
   {
+   "productId": 712959,
+   "productName": "Eternatus VMAX Premium Collection [International]",
+   "productType": "Premium Collection",
+   "groupId": 2675,
+   "setName": "SWSH03: Darkness Ablaze",
+   "confidence": "low",
+   "attemptedPackCount": 6,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Eternatus V",
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"712959\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2675:Premium Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 668526,
    "productName": "Sword & Shield Single Blister Pack [Cufant & Copperajah]",
    "productType": null,
@@ -35569,5 +35585,5 @@
    }
   }
  ],
- "count": 2223
+ "count": 2224
 }
