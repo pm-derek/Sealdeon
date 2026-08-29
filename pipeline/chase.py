@@ -14,6 +14,14 @@ import pandas as pd
 
 CHASE_COUNT = 5
 RECENT_DAYS = 90
+# A "chase" must be in the same league as the set's best card. Sets vary wildly
+# in how concentrated their high end is: most modern sets have 5 cards within
+# 20% of the top, but ~1 in 5 has only 1-2 real chases and the rest of the
+# top-5 is cheap padding. Averaging that padding in understates the basket by
+# 3-4x (ME02 Phantasmal Flames: top card $703, flat mean of 5 = $210).
+# Members below this fraction of the top member are dropped, so the basket is
+# 1-5 cards and balanced sets are unaffected.
+CHASE_FLOOR_FRAC = 0.15
 
 # Real card subtypes eligible for chase ranking.
 CARD_SUBTYPES = {
@@ -89,5 +97,10 @@ def flag_chase(products: pd.DataFrame, prices: pd.DataFrame,
     ]
     for _, group in singles.groupby("groupId"):
         top = group.sort_values("_chaseRank", ascending=False).head(CHASE_COUNT)
-        out.loc[out["productId"].isin(top["productId"]), "isChase"] = True
+        if not top.empty:
+            floor = top["_chaseRank"].iloc[0] * CHASE_FLOOR_FRAC
+            keep = top[top["_chaseRank"] >= floor]
+            if keep.empty:                      # always keep at least the best card
+                keep = top.head(1)
+            out.loc[out["productId"].isin(keep["productId"]), "isChase"] = True
     return out.drop(columns=["_chaseRank", "recentValue"], errors="ignore")

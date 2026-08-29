@@ -312,6 +312,29 @@ _prods2 = pd.concat([_prods2, pd.DataFrame([
     {"productId": 8, "groupId": 900, "isSealed": False, "cardNumber": None}])])
 _rec2 = pd.concat([_recent, pd.DataFrame([{"productId": 8, "recentValue": 35000.0}])])
 _out2 = _chase.flag_chase(_prods2, _px2, _rec2)
+# Skew guard: a set whose value is concentrated in 1-2 cards must not have the
+# basket padded with cheap cards (ME02: top $703, but a flat top-5 mean = $210).
+_sk = pd.DataFrame([{"productId": i, "groupId": 901, "isSealed": False,
+                     "cardNumber": str(i)} for i in range(10, 16)])
+_skpx = pd.DataFrame([{"productId": i, "subTypeName": "Holofoil",
+                       "marketPrice": v, "date": "2025-06-01"}
+                      for i, v in zip(range(10, 16), [703, 275, 27, 21, 20, 19])])
+_skrec = pd.DataFrame([{"productId": i, "recentValue": v}
+                       for i, v in zip(range(10, 16), [703, 275, 27, 21, 20, 19])])
+_sko = _chase.flag_chase(_sk, _skpx, _skrec)
+_skf = set(_sko.loc[_sko["isChase"], "productId"])
+check("cheap padding dropped from a skewed basket", _skf == {10, 11}, str(sorted(_skf)))
+# A balanced set keeps all five.
+_bal = pd.DataFrame([{"productId": i, "groupId": 902, "isSealed": False,
+                      "cardNumber": str(i)} for i in range(20, 26)])
+_balv = [1496, 552, 343, 320, 296, 100]
+_balpx = pd.DataFrame([{"productId": i, "subTypeName": "Holofoil", "marketPrice": v,
+                        "date": "2025-06-01"} for i, v in zip(range(20, 26), _balv)])
+_balrec = pd.DataFrame([{"productId": i, "recentValue": v} for i, v in zip(range(20, 26), _balv)])
+_balo = _chase.flag_chase(_bal, _balpx, _balrec)
+check("balanced basket keeps all five",
+      set(_balo.loc[_balo["isChase"], "productId"]) == {20, 21, 22, 23, 24},
+      str(sorted(_balo.loc[_balo["isChase"], "productId"])))
 check("case-like product (no card number) never becomes chase",
       8 not in set(_out2.loc[_out2["isChase"], "productId"]),
       str(sorted(_out2.loc[_out2["isChase"], "productId"])))
