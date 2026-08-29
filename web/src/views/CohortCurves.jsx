@@ -89,6 +89,11 @@ export default function CohortCurves({ meta }) {
   const [view, setView] = useState(null)
   const { palette, themeTick } = useTheme()
 
+  // Nothing exists before the TCGCSV archive floor, so calendar views must
+  // never open earlier than that.
+  const archiveFloorEpoch = useMemo(
+    () => Math.floor(new Date(meta.archiveFloor || '2024-02-08').getTime() / EPOCH_DAY),
+    [meta.archiveFloor])
   const latestEpoch = useMemo(
     () => Math.floor(new Date(meta.latestDate || Date.now()).getTime() / EPOCH_DAY), [meta.latestDate])
 
@@ -111,11 +116,12 @@ export default function CohortCurves({ meta }) {
   useEffect(() => {
     const n = range === 'all' ? null : Number(range)
     if (xMode === 'calendar') {
-      setView({ x: n ? [latestEpoch - n, latestEpoch + 2] : [latestEpoch - 460, latestEpoch + 8] })
+      const lo = n ? latestEpoch - n : latestEpoch - 460
+      setView({ x: [Math.max(archiveFloorEpoch, lo), latestEpoch + (n ? 2 : 8)] })
     } else {
       setView(n ? { x: [0, n / X_DIV[state.xUnit]] } : null)
     }
-  }, [xMode, range, latestEpoch, state.xUnit])
+  }, [xMode, range, latestEpoch, archiveFloorEpoch, state.xUnit])
 
   const bySet = useMemo(() => new Map(meta.sets.map((s) => [s.groupId, s])), [meta])
   const metricDef = METRICS[state.metric]
@@ -168,6 +174,23 @@ export default function CohortCurves({ meta }) {
   }, [curves, meta, state, picked, focus, isIndex, basis, useLog, colorMode, isCal, themeTick])
 
   const xOf = (line, age) => (isCal ? line.releaseEpoch + age : age / div)
+
+  // Extent of real data in the current x units -- pan/zoom is clamped to it so
+  // the chart can never be scrolled into empty space before the first
+  // observation (or, for $ / index, below zero).
+  const bounds = useMemo(() => {
+    if (!model?.lines?.length) return null
+    let xlo = Infinity, xhi = -Infinity
+    for (const l of model.lines) {
+      for (const p of l.points) {
+        const x = xOf(l, p.age)
+        if (x < xlo) xlo = x
+        if (x > xhi) xhi = x
+      }
+    }
+    return Number.isFinite(xlo) && xhi > xlo ? { xlo, xhi } : null
+  }, [model, isCal, div])
+
 
   const labelData = useMemo(() => {
     if (!model || labels === 'off') return null
@@ -391,10 +414,39 @@ export default function CohortCurves({ meta }) {
   const onPick = (d) => { if (d?.groupId != null) toggleFocus(d.groupId) }
   // Manual pan/zoom invalidates the range chip, so it can't claim a window
   // the chart is no longer showing.
+  // Clamp a requested window to reality: never past the earliest observation
+  // on X, never below zero on a $ / index axis. Applied to every gesture
+  // (drag, wheel, pinch, axis-drag) because they all funnel through here.
+  const clampView = (patch) => {
+    const out = { ...patch }
+    if (out.x && bounds) {
+      let [a, b] = out.x
+      const span = Math.max(1e-9, b - a)
+      const pad = (bounds.xhi - bounds.xlo) * 0.02
+      const lo = bounds.xlo, hi = bounds.xhi + pad
+      if (span >= hi - lo) { a = lo; b = hi }        // zoomed out past everything
+      else if (a < lo) { a = lo; b = a + span }
+      else if (b > hi) { b = hi; a = b - span }
+      out.x = [a, b]
+    }
+    if (out.y && !isPct) {                           // $ and index cannot be negative
+      let [a, b] = out.y
+      const floor = useLog ? 0.01 : 0
+      if (a < floor) { const span = b - a; a = floor; b = floor + Math.max(span, 1e-9) }
+      out.y = [a, b]
+    }
+    return out
+  }
+
   const applyView = (patch) => {
-    if (patch === null) { setRange('all'); setView(isCal ? { x: [latestEpoch - 460, latestEpoch + 8] } : null); return }
+    if (patch === null) {
+      setRange('all')
+      setView(isCal ? { x: [Math.max(archiveFloorEpoch, latestEpoch - 460), latestEpoch + 8] } : null)
+      return
+    }
     if (patch.x && range !== 'all') setRange('all')
-    setView((v) => ({ ...(v || {}), ...patch }))
+    const c = clampView(patch)
+    setView((v) => ({ ...(v || {}), ...c }))
   }
   const setK = (k) => (v) => setState((s) => ({ ...s, [k]: v }))
   // Format an axis-slice value / x-position in the units currently on screen.

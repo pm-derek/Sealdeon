@@ -64,14 +64,21 @@ def detect_era(name: str, abbreviation: str | None, release_date, game: str = "P
     if _SPECIAL_RE.search(name):
         return ERA_SPECIAL
 
-    # Abbreviation/name signals first -- most reliable.
-    if abbr.startswith("SWSH"):
+    # Abbreviation/name signals win over dates -- but ONLY when the release
+    # date doesn't contradict them. Abbreviations are reused across decades:
+    # "Supreme Victors" (2009) is abbreviated SV and was being read as
+    # Scarlet & Violet, so a 2009 set showed up under a modern-era filter.
+    def plausible(start):
+        return date is None or date >= start - dt.timedelta(days=180)
+
+    if abbr.startswith("SWSH") and plausible(_SWSH_START):
         return ERA_SWSH
-    if abbr.startswith("SV") or name.strip().upper().startswith("SV"):
+    if (abbr.startswith("SV") or name.strip().upper().startswith("SV")) and plausible(_SV_START):
         return ERA_SV
-    if abbr.startswith("ME") or re.match(r"^ME\d*\b|^ME:", name.strip(), re.IGNORECASE):
+    if (abbr.startswith("ME") or re.match(r"^ME\d*\b|^ME:", name.strip(), re.IGNORECASE)) \
+            and plausible(_ME_START):
         return ERA_ME
-    if "mega evolution" in name.lower():
+    if "mega evolution" in name.lower() and plausible(_ME_START):
         return ERA_ME
 
     # Date windows as fallback.
