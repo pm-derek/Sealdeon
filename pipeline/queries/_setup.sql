@@ -78,8 +78,15 @@ FROM joined
 WHERE packPrice IS NOT NULL AND packPrice > 0;
 
 -- Cohort series: one line per (set, seriesType). Sealed lines use the
--- set's canonical product of each type; "Chase Singles" is the median of
--- the set's top-5 peak-ranked singles.
+-- set's canonical product of each type; "Chase Singles" pools the set's
+-- top-5 singles, ranked on trailing-90d median value (see chase.py).
+--
+-- A skewed basket has no single right summary, so all four are stored and the
+-- chart lets the user pick (ME02 Phantasmal Flames, top-5 = $703/$275/$27/
+-- $21/$21 -- sum $1048, mean $210, median $27, top $703; every one of those
+-- answers a different question). `price` stays the MEAN so that every
+-- existing consumer -- movers, age bands, benchmarks, signals -- keeps the
+-- units it has always had; the alternates are additive.
 CREATE OR REPLACE VIEW series_daily AS
 WITH sealed AS (
     SELECT
@@ -87,6 +94,9 @@ WITH sealed AS (
         pr.productType AS seriesType,
         x.date,
         x.price,
+        x.price AS priceSum,        -- a sealed line is one product; every
+        x.price AS priceMedian,     -- aggregate of a single value is itself
+        x.price AS priceTop,
         sd.sealedPremiumPct AS premiumPct,
         sd.intrinsicConfidence,
         date_diff('day', s.releaseDate, x.date) AS ageDays
@@ -96,24 +106,32 @@ WITH sealed AS (
     LEFT JOIN sealed_daily sd ON sd.productId = x.productId AND sd.date = x.date
     WHERE s.releaseDate IS NOT NULL AND x.price > 0
 ),
+-- Fixed basket size per set, so the sum below is a stable "all five" total.
+chase_size AS (
+    SELECT groupId, count(*) AS n FROM products WHERE isChase GROUP BY groupId
+),
 chase AS (
     SELECT
         x.groupId,
         'Chase Singles' AS seriesType,
         x.date,
-        -- MEAN, not median: the basket is the top-5 peak-ranked singles, and
-        -- a set often has only 1-2 genuinely expensive chases padded by
-        -- cheaper ones. The median then sits near the cheap padding (e.g.
-        -- Phantasmal Flames: $829/$340/$28/$24/$17 -> median $28) and reads
-        -- as broken. The mean ($248) reflects the chase value that's actually
-        -- there and isn't collapsed by a couple of crashed cards.
         avg(x.price) AS price,
+        -- Normalised sum = mean x full basket size, NOT sum(price). A card
+        -- with no listing on a given day would otherwise drop straight out of
+        -- a raw sum: basket size moves on ~1% of day-rows and the raw sum
+        -- steps 48% on average when it does, against 21% for the mean. This
+        -- form equals the true total whenever all five are priced and imputes
+        -- a missing one at the basket's own average otherwise.
+        avg(x.price) * any_value(cs.n) AS priceSum,
+        median(x.price) AS priceMedian,
+        max(x.price) AS priceTop,
         NULL::DOUBLE AS premiumPct,
         NULL::VARCHAR AS intrinsicConfidence,
         date_diff('day', s.releaseDate, x.date) AS ageDays
     FROM px x
     JOIN products pr ON pr.productId = x.productId AND pr.isChase
     JOIN sets s ON s.groupId = x.groupId
+    JOIN chase_size cs ON cs.groupId = x.groupId
     WHERE s.releaseDate IS NOT NULL AND x.price > 0
     GROUP BY x.groupId, x.date, s.releaseDate
 )

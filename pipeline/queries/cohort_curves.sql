@@ -7,6 +7,14 @@ SELECT
     round(idxPrice, 2)  AS idx,
     round(premiumPct, 4) AS prem,
     round(price, 2)     AS price,
+    -- Basket alternates: only ever differ from `price` on Chase Singles, so
+    -- build_views drops them from single-product series rather than write the
+    -- same number three times for every sealed point. priceSum is deliberately
+    -- NOT emitted per point -- it is mean x basket size, a per-series constant,
+    -- so build_views ships the size once and the frontend multiplies.
+    round(priceMedian, 2) AS priceMedian,
+    round(priceTop, 2)    AS priceTop,
+    priceSum / NULLIF(price, 0) AS basketSize,
     intrinsicConfidence AS conf
 FROM series_indexed
 WHERE ageDays >= 0

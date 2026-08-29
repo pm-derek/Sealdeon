@@ -22,6 +22,17 @@ const METRICS = {
 // curated approximation and is absent for e.g. Chase Singles).
 const BASES = { msrp: 'vs MSRP', release: 'vs release' }
 
+// How to summarise a pooled basket (Chase Singles = a set's top 5 singles).
+// A skewed set has no one right answer -- Phantasmal Flames' five are
+// $701/$275/$27/$21/$21 -- so the reader picks the question. `i` indexes the
+// point array; sum has none because it is mean x basketSize, derived below.
+const AGGS = {
+  sum:    { label: 'Sum', axis: 'top-5 total',         hint: 'Total value of the set’s top 5 singles — what the whole chase pull is worth. Always five cards, so sets compare like for like; a card with no listing that day is imputed at the basket average.' },
+  mean:   { label: 'Mean', i: 3, axis: 'top-5 mean',   hint: 'Average of the top 5. Dragged down by cheap padding when a set has only one or two real chases.' },
+  median: { label: 'Median', i: 4, axis: 'top-5 median', hint: 'The 3rd of the 5 cards — the typical chase. Sits down near the padding in a top-heavy set.' },
+  top:    { label: 'Top', i: 5, axis: 'top card',      hint: 'The single most valuable card in the set. Immune to whatever sits below it.' },
+}
+
 // Range shortcuts. In Daily mode these are the last N calendar days; in
 // Cohort mode they are the first N days of a set's life.
 const RANGES = [['7', '1W'], ['30', '1M'], ['90', '3M'], ['365', '1Y'], ['all', 'All']]
@@ -81,6 +92,7 @@ export default function CohortCurves({ meta }) {
   const [xMode, setXMode] = useState('cohort') // cohort (age) | calendar (date)
   const [yLog, setYLog] = useState(false)
   const [basis, setBasis] = useState('msrp')   // index baseline
+  const [agg, setAgg] = useState('sum')        // pooled-basket summary
   const [range, setRange] = useState('all')
   const [axisSlice, setAxisSlice] = useState(null)  // axis tap -> cross-section
   const [showFilters, setShowFilters] = useState(false) // mobile: collapsed by default
@@ -109,7 +121,7 @@ export default function CohortCurves({ meta }) {
   // keep the X window (and any active range shortcut) the user chose.
   useEffect(() => {
     setView((v) => (v && v.x ? { x: v.x } : null))
-  }, [state.metric, state.seriesType, basis])
+  }, [state.metric, state.seriesType, basis, agg])
   // Range shortcut -> x window. Daily mode = last N calendar days; cohort
   // mode = the first N days of a set's life. 'all' resets to the default view
   // (calendar opens on the last ~15 months).
@@ -129,15 +141,36 @@ export default function CohortCurves({ meta }) {
   const isIndex = !!metricDef.isIndex
   const useLog = (state.metric === 'raw' || isIndex) && yLog
   const isCal = xMode === 'calendar'
+  // Only a pooled series has anything to summarise, so the toggle is hidden
+  // (and inert) everywhere else.
+  const isBasket = state.seriesType === 'Chase Singles'
   const div = X_DIV[state.xUnit]
+  const aggDef = AGGS[agg]
+  // Raw price under the chosen basket summary. Single-product series carry
+  // only price, so every aggregation resolves to the same number for them.
+  const rawFor = (s) => {
+    const n = s?.basketSize
+    if (!n) return (pt) => pt[3]
+    if (agg === 'sum') return (pt) => (pt[3] == null ? null : pt[3] * n)
+    return (pt) => pt[aggDef.i] ?? pt[3]
+  }
   // Index is per-series (needs that series' MSRP), so valueAt is built per line.
   const valueFor = (s) => {
     if (state.metric === 'prem') return (pt) => pt[2]
-    if (!isIndex) return (pt) => pt[3]
+    const raw = rawFor(s)
+    if (!isIndex) return raw
     // MSRP basis when we have a curated MSRP for this series; otherwise fall
     // back to the release-day index so the line still renders.
-    if (basis === 'msrp' && s?.msrp) return (pt) => (pt[3] == null ? null : (pt[3] / s.msrp) * 100)
-    return (pt) => pt[1]
+    if (basis === 'msrp' && s?.msrp) return (pt) => (raw(pt) == null ? null : (raw(pt) / s.msrp) * 100)
+    // Sum is a fixed multiple of the mean, so it indexes identically -- only
+    // median and top need re-indexing off their own baseline.
+    if (!s?.basketSize || agg === 'mean' || agg === 'sum') return (pt) => pt[1]
+    // pt[1] is precomputed off the mean, so a basket shown under any other
+    // summary has to be re-indexed against its own first observation --
+    // otherwise the toggle would silently do nothing on this metric.
+    const first = s.points.find((pt) => raw(pt) > 0)
+    const base = first ? raw(first) : null
+    return (pt) => (base && raw(pt) != null ? (raw(pt) / base) * 100 : null)
   }
   const valueAt = valueFor(null)
 
@@ -152,6 +185,7 @@ export default function CohortCurves({ meta }) {
     const lines = series.map((s) => {
       const set = bySet.get(s.groupId)
       const vAt = valueFor(s)
+      const rawAt = rawFor(s)
       return {
         groupId: s.groupId, name: set?.name ?? String(s.groupId), abbr: shortLabel(set),
         partial: !set?.archiveComplete, releaseEpoch: rel(s.groupId),
@@ -159,7 +193,7 @@ export default function CohortCurves({ meta }) {
         // index falls back to release-basis when this series has no MSRP
         approxBase: isIndex && basis === 'msrp' && !s.msrp,
         points: s.points.filter((pt) => vAt(pt) != null && (!useLog || vAt(pt) > 0))
-          .map((pt) => ({ age: pt[0], value: vAt(pt), price: pt[3] })),
+          .map((pt) => ({ age: pt[0], value: vAt(pt), price: rawAt(pt) })),
       }
     }).filter((l) => l.points.length > 1 && (!isCal || l.releaseEpoch != null))
 
@@ -171,7 +205,7 @@ export default function CohortCurves({ meta }) {
       emph.get(gid) || (colorMode === 'multi' ? hueColor(i, lines.length) : palette.context)
     const band = isCal ? [] : cohortBand(series, valueAt)
     return { lines, band, emph, colorOf }
-  }, [curves, meta, state, picked, focus, isIndex, basis, useLog, colorMode, isCal, themeTick])
+  }, [curves, meta, state, picked, focus, isIndex, basis, agg, useLog, colorMode, isCal, themeTick])
 
   const xOf = (line, age) => (isCal ? line.releaseEpoch + age : age / div)
 
@@ -316,7 +350,8 @@ export default function CohortCurves({ meta }) {
         tickFormat: isCal ? fmtDate : undefined,
       },
       y: {
-        label: `↑ ${isIndex ? `index (${basis === 'msrp' ? 'MSRP' : 'release'} = 100)` : metricDef.axis}${useLog ? ' (log)' : ''}`,
+        label: `↑ ${isIndex ? `index (${basis === 'msrp' ? 'MSRP' : 'release'} = 100)`
+          : isBasket && !isPct ? aggDef.axis : metricDef.axis}${useLog ? ' (log)' : ''}`,
         grid: true, domain: yDomain,
         type: useLog ? 'log' : 'linear',
         tickFormat: isPct ? ((d) => `${(d * 100).toFixed(0)}%`)
@@ -484,6 +519,11 @@ export default function CohortCurves({ meta }) {
             {Object.entries(BASES).map(([k, l]) => <option key={k} value={k}>{l}</option>)}
           </select>
         )}
+        {isBasket && state.metric !== 'prem' && (
+          <select className="field-xs shrink-0" value={agg} onChange={(e) => setAgg(e.target.value)}>
+            {Object.entries(AGGS).map(([k, a]) => <option key={k} value={k}>{a.label}</option>)}
+          </select>
+        )}
         <select className="field-xs shrink-0" value={xMode} onChange={(e) => setXMode(e.target.value)}>
           <option value="cohort">Age</option>
           <option value="calendar">Date</option>
@@ -520,6 +560,10 @@ export default function CohortCurves({ meta }) {
           {isIndex && (
             <Seg value={basis} onChange={setBasis} options={Object.entries(BASES)} />
           )}
+          {isBasket && state.metric !== 'prem' && (
+            <Seg label="Top 5" value={agg} onChange={setAgg}
+              options={Object.entries(AGGS).map(([k, a]) => [k, a.label])} />
+          )}
           {(state.metric === 'raw' || isIndex) && (
             <Seg value={yLog ? 'log' : 'lin'} onChange={(v) => setYLog(v === 'log')}
               options={[['lin', 'Linear'], ['log', 'Log']]} />
@@ -539,6 +583,11 @@ export default function CohortCurves({ meta }) {
                   <code className="mx-1">config/msrp.json</code>, editable per type, set, or item.
                   {model.lines.some((l) => l.approxBase) && <strong> Series without an MSRP fall back to release = 100.</strong>}</>
               : <>100 = the set’s price on release day (or first observation for partial history).</>}
+          </p>
+        )}
+        {isBasket && state.metric !== 'prem' && (
+          <p className="muted text-xs pb-2">
+            <strong>{aggDef.label}</strong> — {aggDef.hint}
           </p>
         )}
         {/* Axis cross-section: tap an axis tick to slice every line there */}

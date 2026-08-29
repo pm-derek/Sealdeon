@@ -142,11 +142,15 @@ def build_cohort_curves(con) -> None:
     msrp = _msrp_map(con)
     series = []
     for (gid, stype), rows in df.groupby(["groupId", "seriesType"], sort=True):
+        # A pooled basket has several defensible summaries; a single product
+        # has one. Only the former pays for the extra three numbers a point.
+        basket = stype == "Chase Singles"
         points = [
             [int(r.ageDays),
              _clean(r.idx),
              _clean(r.prem),
              _clean(r.price)]
+            + ([_clean(r.priceMedian), _clean(r.priceTop)] if basket else [])
             for r in rows.itertuples()
         ]
         series.append({
@@ -156,7 +160,14 @@ def build_cohort_curves(con) -> None:
             # curated approximate MSRP for the Index (MSRP=100) baseline;
             # null -> frontend falls back to the release-day index
             "msrp": msrp.get(f"{int(gid)}:{stype}"),
-            "points": points,  # [ageDays, idxPrice, premiumPct, price]
+            # pooled series carry median/top after price for the basket
+            # toggle; single-product series stop at price and the frontend
+            # falls back to it for every aggregation. Sum is mean x basketSize
+            # -- one number per series instead of one per point.
+            "basketSize": (round(float(rows["basketSize"].max()), 4)
+                           if basket and rows["basketSize"].notna().any() else None),
+            # [ageDays, idxPrice, premiumPct, price(mean), median, top]
+            "points": points,
         })
     write_json("cohort_curves.json", {"series": series})
 

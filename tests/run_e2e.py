@@ -148,6 +148,28 @@ check("premium math sane", abs(prem0 - (110 / 132 - 1)) < 0.02, str(prem0))
 me_bb = next((s for s in curves if s["groupId"] == 24655 and s["seriesType"] == "Booster Box"), None)
 check("ME set present in cohort", me_bb is not None)
 
+# Basket aggregations. A pooled series ships mean/median/top per point plus a
+# per-series basket size (sum = mean x size, so it is never stored per point);
+# a single-product series ships neither and the frontend falls back to price.
+_chase_s = [s for s in curves if s["seriesType"] == "Chase Singles"]
+check("chase series present", len(_chase_s) > 0, str(len(_chase_s)))
+check("single-product series carries no basket size", bb.get("basketSize") is None)
+check("single-product points stay 4 wide", all(len(p) == 4 for p in bb["points"]))
+_cs = max(_chase_s, key=lambda s: s["basketSize"] or 0)
+check("pooled series carries a basket size", _cs["basketSize"] >= 1, str(_cs["basketSize"]))
+check("basket size is a whole card count", _cs["basketSize"] == int(_cs["basketSize"]))
+check("pooled points carry mean/median/top", all(len(p) == 6 for p in _cs["points"]))
+_p = _cs["points"][-1]
+check("basket ordering: top >= mean >= median", _p[5] >= _p[3] >= _p[4],
+      f"top={_p[5]} mean={_p[3]} median={_p[4]}")
+check("derived sum >= the top card", _p[3] * _cs["basketSize"] >= _p[5] - 0.01,
+      f"{_p[3] * _cs['basketSize']} vs {_p[5]}")
+# Sum must not step when a card misses a listing -- that is why it is
+# mean x fixed size rather than sum(price). Day-over-day it moves like a price.
+_j = max((abs(b[3] / a[3] - 1) for a, b in zip(_cs["points"], _cs["points"][1:])
+          if a[3] and b[3]), default=0)
+check("pooled basket has no >3x day-over-day step", _j < 2, f"max jump {_j:.2f}")
+
 with open(os.path.join(views, "age_band_medians.json")) as f:
     bands = json.load(f)["rows"]
 check("hype split present", any(r["hypeBucket"] == "clean" for r in bands) and any(r["hypeBucket"] == "hype" for r in bands))
@@ -312,29 +334,22 @@ _prods2 = pd.concat([_prods2, pd.DataFrame([
     {"productId": 8, "groupId": 900, "isSealed": False, "cardNumber": None}])])
 _rec2 = pd.concat([_recent, pd.DataFrame([{"productId": 8, "recentValue": 35000.0}])])
 _out2 = _chase.flag_chase(_prods2, _px2, _rec2)
-# Skew guard: a set whose value is concentrated in 1-2 cards must not have the
-# basket padded with cheap cards (ME02: top $703, but a flat top-5 mean = $210).
+# Membership is a FIXED five, even when the set is wildly top-heavy (ME02:
+# $703/$275/$27/$21/$21). Trimming the cheap tail would make the basket SUM
+# incomparable between sets, and comparing sets is the point of the chart --
+# skew is handled by the aggregation toggle instead.
 _sk = pd.DataFrame([{"productId": i, "groupId": 901, "isSealed": False,
                      "cardNumber": str(i)} for i in range(10, 16)])
+_skv = [703, 275, 27, 21, 20, 19]
 _skpx = pd.DataFrame([{"productId": i, "subTypeName": "Holofoil",
                        "marketPrice": v, "date": "2025-06-01"}
-                      for i, v in zip(range(10, 16), [703, 275, 27, 21, 20, 19])])
+                      for i, v in zip(range(10, 16), _skv)])
 _skrec = pd.DataFrame([{"productId": i, "recentValue": v}
-                       for i, v in zip(range(10, 16), [703, 275, 27, 21, 20, 19])])
+                       for i, v in zip(range(10, 16), _skv)])
 _sko = _chase.flag_chase(_sk, _skpx, _skrec)
 _skf = set(_sko.loc[_sko["isChase"], "productId"])
-check("cheap padding dropped from a skewed basket", _skf == {10, 11}, str(sorted(_skf)))
-# A balanced set keeps all five.
-_bal = pd.DataFrame([{"productId": i, "groupId": 902, "isSealed": False,
-                      "cardNumber": str(i)} for i in range(20, 26)])
-_balv = [1496, 552, 343, 320, 296, 100]
-_balpx = pd.DataFrame([{"productId": i, "subTypeName": "Holofoil", "marketPrice": v,
-                        "date": "2025-06-01"} for i, v in zip(range(20, 26), _balv)])
-_balrec = pd.DataFrame([{"productId": i, "recentValue": v} for i, v in zip(range(20, 26), _balv)])
-_balo = _chase.flag_chase(_bal, _balpx, _balrec)
-check("balanced basket keeps all five",
-      set(_balo.loc[_balo["isChase"], "productId"]) == {20, 21, 22, 23, 24},
-      str(sorted(_balo.loc[_balo["isChase"], "productId"])))
+check("skewed basket still keeps a full five", _skf == {10, 11, 12, 13, 14}, str(sorted(_skf)))
+check("cheapest card of a skewed set is excluded", 15 not in _skf, str(sorted(_skf)))
 check("case-like product (no card number) never becomes chase",
       8 not in set(_out2.loc[_out2["isChase"], "productId"]),
       str(sorted(_out2.loc[_out2["isChase"], "productId"])))
