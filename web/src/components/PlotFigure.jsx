@@ -52,11 +52,12 @@ function regionAt(px, py, sx, sy) {
 // clickable HTML overlays -- an exact click target (no snapping) -> onLabelClick(id).
 // `hitData` (optional): [{groupId, points:[{x,value}]}] in data coords, used for
 // touch tap selection.
-export default function PlotFigure({ build, deps = [], onPick, onView, labelData, onLabelClick, hitData }) {
+export default function PlotFigure({ build, deps = [], onPick, onView, labelData, onLabelClick, hitData, onAxisPick }) {
   const elRef = useRef(null)
   const figRef = useRef(null)
   const buildRef = useRef(build); buildRef.current = build
   const onPickRef = useRef(onPick); onPickRef.current = onPick
+  const onAxisPickRef = useRef(onAxisPick); onAxisPickRef.current = onAxisPick
   const onViewRef = useRef(onView); onViewRef.current = onView
   const labelRef = useRef(labelData); labelRef.current = labelData
   const onLabelClickRef = useRef(onLabelClick); onLabelClickRef.current = onLabelClick
@@ -214,6 +215,21 @@ export default function PlotFigure({ build, deps = [], onPick, onView, labelData
       raf = requestAnimationFrame(() => onViewRef.current(patch))
     }
 
+    // Stationary tap on an axis strip -> onAxisPick(axis, dataValue).
+    // Returns true when handled so callers skip their normal pick.
+    const axisTap = (clientX, clientY) => {
+      const fig = figRef.current
+      if (!fig || !onAxisPickRef.current) return false
+      const sx = fig.scale('x'), sy = fig.scale('y')
+      const { x: px, y: py } = rel(clientX, clientY)
+      const region = regionAt(px, py, sx, sy)
+      if (region === 'plot') return false
+      const v = region === 'yaxis' ? invertScale(sy, py) : invertScale(sx, px)
+      if (v == null || Number.isNaN(v)) return false
+      onAxisPickRef.current(region === 'yaxis' ? 'y' : 'x', v)
+      return true
+    }
+
     // ---------------- Mouse (desktop) ----------------
     const onWheel = (e) => {
       const fig = figRef.current
@@ -248,10 +264,14 @@ export default function PlotFigure({ build, deps = [], onPick, onView, labelData
       pushPatch(gesturePatch(pan, e.clientX, e.clientY))
     }
     const onUp = () => { pan = null; if (dragged) applyTip(false) }
-    const onClick = () => {
+    const onClick = (e) => {
       if (dragged) { dragged = false; return }
       const fig = figRef.current
-      if (onPickRef.current && fig && fig.value != null) onPickRef.current(fig.value)
+      if (!fig) return
+      // A stationary tap on an axis strip (a DRAG there still zooms) asks for
+      // a cross-section: "which lines were here?"
+      if (axisTap(e.clientX, e.clientY)) return
+      if (onPickRef.current && fig.value != null) onPickRef.current(fig.value)
     }
     const onDbl = () => { if (onViewRef.current) onViewRef.current(null) }
 
@@ -327,7 +347,9 @@ export default function PlotFigure({ build, deps = [], onPick, onView, labelData
     const onTouchEnd = (e) => {
       if (e.touches.length < 2) tpinch = null
       if (e.touches.length === 0) {
-        if (tgest && !tmoved && tgest.region === 'plot') {
+        if (tgest && !tmoved && tgest.region !== 'plot') {
+          axisTap(tgest.startX, tgest.startY)
+        } else if (tgest && !tmoved && tgest.region === 'plot') {
           const now = e.timeStamp || 0
           if (now - lastTap < 320) { onViewRef.current?.(null); lastTap = 0 }
           else {

@@ -123,7 +123,7 @@ check("case not high confidence without override", p.loc[2323708, "intrinsicConf
       str(p.loc[2323708, "intrinsicConfidence"]))
 
 chase_ids = set(products_df[(products_df["groupId"] == 23237) & products_df["isChase"]]["productId"])
-check("top-5 chase by peak", chase_ids == {2323710, 2323711, 2323712, 2323713, 2323714}, str(chase_ids))
+check("top-5 chase by recent value", chase_ids == {2323710, 2323711, 2323712, 2323713, 2323714}, str(chase_ids))
 check("peak recorded", abs(p.loc[2323710, "peakPrice"] - 400) < 25, str(p.loc[2323710, "peakPrice"]))
 
 check("quality report has flagged rows", len(report) > 0, str(len(report)))
@@ -272,6 +272,43 @@ try:
           len(_after2[_after2["date"].astype(str) == _day]) == 1)
 finally:
     build_parquet.DATA_DIR = _prev_data_dir
+
+print("== unit: chase ranking (spike-collapse regression) ==")
+import chase as _chase  # noqa: E402
+# Prismatic's real failure: a card that peaked $550 on launch day and now
+# trades at $82 must NOT displace a steady $303 card from the basket.
+_prods = pd.DataFrame([
+    {"productId": i, "groupId": 900, "isSealed": False} for i in range(1, 8)
+])
+_px = pd.DataFrame([
+    {"productId": 1, "subTypeName": "Holofoil", "marketPrice": 1600.0, "date": "2025-01-18"},
+    {"productId": 2, "subTypeName": "Holofoil", "marketPrice": 740.0,  "date": "2025-01-18"},
+    {"productId": 3, "subTypeName": "Holofoil", "marketPrice": 490.0,  "date": "2025-01-18"},
+    {"productId": 4, "subTypeName": "Holofoil", "marketPrice": 430.0,  "date": "2025-01-18"},
+    # the spike-and-collapse card: highest-but-one peak, now worthless
+    {"productId": 5, "subTypeName": "Holofoil", "marketPrice": 550.0,  "date": "2025-01-18"},
+    # the steady card it wrongly displaced
+    {"productId": 6, "subTypeName": "Holofoil", "marketPrice": 388.0,  "date": "2025-02-01"},
+    {"productId": 7, "subTypeName": "Holofoil", "marketPrice": 100.0,  "date": "2025-02-01"},
+])
+_recent = pd.DataFrame([
+    {"productId": 1, "recentValue": 1496.0}, {"productId": 2, "recentValue": 552.0},
+    {"productId": 3, "recentValue": 340.0},  {"productId": 4, "recentValue": 311.0},
+    {"productId": 5, "recentValue": 82.0},   # collapsed
+    {"productId": 6, "recentValue": 303.0},  # steady
+    {"productId": 7, "recentValue": 90.0},
+])
+_out = _chase.flag_chase(_prods, _px, _recent)
+_flagged = set(_out.loc[_out["isChase"], "productId"])
+check("collapsed spike excluded from chase", 5 not in _flagged, str(sorted(_flagged)))
+check("steady card included in chase", 6 in _flagged, str(sorted(_flagged)))
+check("chase ranks by recent value", _flagged == {1, 2, 3, 4, 6}, str(sorted(_flagged)))
+# fallback: with no recent frame, ranking degrades to peak (back-compat)
+_fb = _chase.flag_chase(_prods, _px)
+check("falls back to peak without recent frame",
+      5 in set(_fb.loc[_fb["isChase"], "productId"]))
+check("helper columns not leaked into product dim",
+      not {"_chaseRank", "recentValue"} & set(_out.columns), str(list(_out.columns)))
 
 print("== e2e: supply-tightness proxy ==")
 _con = build_views.connect()

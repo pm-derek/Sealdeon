@@ -256,7 +256,15 @@ def enrich_from_history(products_df: pd.DataFrame,
         WHERE marketPrice IS NOT NULL
         GROUP BY productId, subTypeName
     """).df()
-    products_df = chase_mod.flag_chase(products_df, peak_rows)
+    # Trailing-90d median per product: the chase ranking key. Robust to the
+    # single-day launch spikes that all-time peak rewards.
+    recent_rows = con.execute(f"""
+        SELECT productId, median(marketPrice) AS recentValue
+        FROM prices, (SELECT max(date) AS d FROM prices)
+        WHERE marketPrice IS NOT NULL AND date >= d - {chase_mod.RECENT_DAYS}
+        GROUP BY productId
+    """).df()
+    products_df = chase_mod.flag_chase(products_df, peak_rows, recent_rows)
     products_df["peakDate"] = pd.to_datetime(products_df["peakDate"]).dt.date
 
     # Early-window rows for the canonical hype products only.

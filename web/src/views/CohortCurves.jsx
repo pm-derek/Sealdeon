@@ -82,6 +82,7 @@ export default function CohortCurves({ meta }) {
   const [yLog, setYLog] = useState(false)
   const [basis, setBasis] = useState('msrp')   // index baseline
   const [range, setRange] = useState('all')
+  const [axisSlice, setAxisSlice] = useState(null)  // axis tap -> cross-section
   const [showFilters, setShowFilters] = useState(false) // mobile: collapsed by default
   const [focusDetail, setFocusDetail] = useState(null)
   const [sigEvents, setSigEvents] = useState(null)
@@ -325,6 +326,35 @@ export default function CohortCurves({ meta }) {
 
   if (!curves || !model) return <p className="muted p-6">Loading cohort curves…</p>
 
+  // Tapping an axis asks a cross-sectional question of every visible line:
+  //   Y axis -> "when did each set FIRST reach this price?"
+  //   X axis -> "what was every set worth at this age / date?"
+  const onAxisPick = (axis, value) => {
+    if (!model) return
+    const out = []
+    for (const l of model.lines) {
+      if (!l.points.length) continue
+      if (axis === 'y') {
+        let hit = null
+        for (let i = 1; i < l.points.length; i++) {
+          const a = l.points[i - 1], b = l.points[i]
+          if (a.value < value && b.value >= value) { hit = b; break }
+        }
+        if (hit) out.push({ groupId: l.groupId, name: l.name, at: xOf(l, hit.age), value: hit.value })
+      } else {
+        let best = null, gap = Infinity
+        for (const p of l.points) {
+          const g = Math.abs(xOf(l, p.age) - value)
+          if (g < gap) { gap = g; best = p }
+        }
+        const tol = isCal ? 10 : 20 / div
+        if (best && gap <= tol) out.push({ groupId: l.groupId, name: l.name, at: xOf(l, best.age), value: best.value })
+      }
+    }
+    out.sort((a, b) => (axis === 'y' ? a.at - b.at : b.value - a.value))
+    setAxisSlice({ axis, value, rows: out })
+  }
+
   // tap/click a line toggles it in and out of focus
   const toggleFocus = (gid) => setFocus((f) => (f === gid ? null : gid))
   const onPick = (d) => { if (d?.groupId != null) toggleFocus(d.groupId) }
@@ -336,12 +366,19 @@ export default function CohortCurves({ meta }) {
     setView((v) => ({ ...(v || {}), ...patch }))
   }
   const setK = (k) => (v) => setState((s) => ({ ...s, [k]: v }))
+  // Format an axis-slice value / x-position in the units currently on screen.
+  const fmtAxisVal = (v) =>
+    v == null ? '—' : isPct ? fmtPct(v) : isIndex ? v.toFixed(1) : fmtUsd(v)
+  const fmtAxisX = (x) =>
+    x == null ? '—'
+      : isCal ? new Date(x * EPOCH_DAY).toISOString().slice(0, 10)
+      : `${Math.round(x)} ${state.xUnit}`
 
   return (
     <section>
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-lg font-semibold hidden sm:block">Cohort curves</h2>
-        <p className="muted text-xs hidden sm:block">scroll = zoom · shift-scroll = zoom Y · drag = pan · double-click = reset · click line/label = focus (again to clear)</p>
+        <p className="muted text-xs hidden sm:block">scroll = zoom · shift-scroll = zoom Y · drag = pan · double-click = reset · click line/label = focus (again to clear) · <strong>click an axis = cross-section</strong></p>
       </div>
 
       {/* Mobile: one compact strip pinned under the header, so the controls
@@ -377,7 +414,7 @@ export default function CohortCurves({ meta }) {
         </button>
       </div>
       <p className="muted sm:hidden pt-1 pb-0.5 truncate" style={{ fontSize: '10px' }}>
-        ↕ scroll · ↔ pan · pinch zoom · tap focus · data to {meta.latestDate}
+        ↕ scroll · ↔ pan · pinch zoom · tap line = focus · tap axis = slice
       </p>
 
       <div className={`${showFilters ? 'block' : 'hidden'} sm:block`}>
@@ -421,6 +458,47 @@ export default function CohortCurves({ meta }) {
               : <>100 = the set’s price on release day (or first observation for partial history).</>}
           </p>
         )}
+        {/* Axis cross-section: tap an axis tick to slice every line there */}
+        {axisSlice && (
+          <div className="card p-2.5 mb-2" style={{ background: 'var(--surface-2)' }}>
+            <div className="flex flex-wrap items-baseline gap-x-2 pb-1.5">
+              <strong className="text-sm">
+                {axisSlice.axis === 'y'
+                  ? `First time each set reached ${fmtAxisVal(axisSlice.value)}`
+                  : `Every set at ${fmtAxisX(axisSlice.value)}`}
+              </strong>
+              <span className="muted text-xs">
+                {axisSlice.axis === 'y' ? 'earliest first' : 'highest first'} · {axisSlice.rows.length} of {model.lines.length} lines
+              </span>
+              <button className="chip ml-auto" onClick={() => setAxisSlice(null)}>✕</button>
+            </div>
+            {axisSlice.rows.length === 0
+              ? <p className="muted text-xs">No line reaches that {axisSlice.axis === 'y' ? 'value' : 'point'} in the current view.</p>
+              : (
+                <div className="overflow-x-auto" style={{ maxHeight: '11rem' }}>
+                  <table className="tbl text-sm w-full">
+                    <thead>
+                      <tr>
+                        <th>Set</th>
+                        <th>{axisSlice.axis === 'y' ? 'Reached at' : 'At'}</th>
+                        <th>{axisSlice.axis === 'y' ? 'Value there' : metricDef.label}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {axisSlice.rows.map((r) => (
+                        <tr key={r.groupId} style={{ cursor: 'pointer' }} onClick={() => toggleFocus(r.groupId)}>
+                          <td className="max-w-56 truncate"
+                            style={focus === r.groupId ? { color: 'var(--accent)', fontWeight: 600 } : undefined}>{r.name}</td>
+                          <td className="muted whitespace-nowrap">{fmtAxisX(r.at)}</td>
+                          <td className="whitespace-nowrap">{fmtAxisVal(r.value)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+          </div>
+        )}
         {/* Focus bar: shown when a line is focused — link out + clear */}
         {focus != null && (
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 pb-2 text-sm">
@@ -439,7 +517,7 @@ export default function CohortCurves({ meta }) {
           </div>
         )}
         <PlotFigure build={build} onPick={onPick} onView={applyView}
-          labelData={labelData} onLabelClick={toggleFocus} hitData={hitData}
+          labelData={labelData} onLabelClick={toggleFocus} hitData={hitData} onAxisPick={onAxisPick}
           deps={[model, state.xUnit, state.metric, labels, colorMode, useLog, isCal, focus, focusDetail, sigEvents, view, themeTick]} />
         {/* Bottom toolbar (near X axis): the time axis. Range shortcuts mean
             "last N days" on a calendar axis and "first N days of life" on a
