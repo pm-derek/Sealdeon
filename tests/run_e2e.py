@@ -303,6 +303,18 @@ _flagged = set(_out.loc[_out["isChase"], "productId"])
 check("collapsed spike excluded from chase", 5 not in _flagged, str(sorted(_flagged)))
 check("steady card included in chase", 6 in _flagged, str(sorted(_flagged)))
 check("chase ranks by recent value", _flagged == {1, 2, 3, 4, 6}, str(sorted(_flagged)))
+# A non-sealed product without a card number is NOT a single (e.g. a Magic
+# "Display Master Case", deliberately unclassified) -- it must never be chase.
+_prods2 = _prods.assign(cardNumber=["1", "2", "3", "4", "5", "6", None])
+_px2 = pd.concat([_px, pd.DataFrame([
+    {"productId": 8, "subTypeName": "Holofoil", "marketPrice": 35000.0, "date": "2025-02-01"}])])
+_prods2 = pd.concat([_prods2, pd.DataFrame([
+    {"productId": 8, "groupId": 900, "isSealed": False, "cardNumber": None}])])
+_rec2 = pd.concat([_recent, pd.DataFrame([{"productId": 8, "recentValue": 35000.0}])])
+_out2 = _chase.flag_chase(_prods2, _px2, _rec2)
+check("case-like product (no card number) never becomes chase",
+      8 not in set(_out2.loc[_out2["isChase"], "productId"]),
+      str(sorted(_out2.loc[_out2["isChase"], "productId"])))
 # fallback: with no recent frame, ranking degrades to peak (back-compat)
 _fb = _chase.flag_chase(_prods, _px)
 check("falls back to peak without recent frame",

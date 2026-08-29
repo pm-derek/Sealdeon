@@ -60,6 +60,16 @@ def run(con) -> list[tuple[str, str, str]]:
         FROM sd JOIN c ON c.groupId=sd.groupId AND c.productType=sd.seriesType""").fetchone()
     (ok if not d[1] else err)("cohort line == canonical product price", f"{d[1]}/{d[0]} mismatched")
 
+    # 3b. every chase product is an actual CARD. A product merely excluded from
+    # the sealed taxonomy (e.g. a Magic "Display Master Case") is not a single,
+    # and promoting one turns a $35k case into a set's "chase".
+    rows = con.execute("""SELECT s.game, p.cleanName, round(p.peakPrice,2) px
+        FROM products p JOIN sets s USING(groupId)
+        WHERE p.isChase AND p.cardNumber IS NULL
+        ORDER BY p.peakPrice DESC LIMIT 10""").df()
+    (ok if rows.empty else err)("every chase product is a real card",
+                                "; ".join(f"{r.cleanName}={r.px}" for r in rows.itertuples()) or "clean")
+
     # 4. single-unit price sanity (a case masquerading as a unit shows up here)
     cases = ",".join(f"('{k}',{v})" for k, v in MAX_SANE.items())
     rows = con.execute(f"""

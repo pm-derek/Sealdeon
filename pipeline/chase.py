@@ -71,9 +71,19 @@ def flag_chase(products: pd.DataFrame, prices: pd.DataFrame,
     else:
         out["_chaseRank"] = out["peakPrice"]
 
+    # A chase candidate must be an actual CARD -- i.e. carry a card number.
+    # "not sealed" is not the same thing: a product can be excluded from the
+    # sealed taxonomy yet still be a box. Magic "Collector Booster Display
+    # Master Case" listings are exactly that (deliberately unclassified, so
+    # isSealed=False) and they still have prices, so the old ~isSealed test
+    # promoted $35k cases into Magic's "Chase Singles" basket.
+    is_card = (out["cardNumber"].notna() if "cardNumber" in out.columns
+               else ~out["isSealed"])
+
     out["isChase"] = False
     singles = out[
-        (~out["isSealed"])
+        is_card
+        & (~out["isSealed"])
         & out["_chaseRank"].notna()
         & out["productId"].isin(eligible_ids)
     ]

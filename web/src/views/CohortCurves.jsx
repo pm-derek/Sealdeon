@@ -327,31 +327,62 @@ export default function CohortCurves({ meta }) {
   if (!curves || !model) return <p className="muted p-6">Loading cohort curves…</p>
 
   // Tapping an axis asks a cross-sectional question of every visible line:
-  //   Y axis -> "when did each set FIRST reach this price?"
+  //   Y axis -> "when did each set FIRST reach this price, and did it HOLD?"
   //   X axis -> "what was every set worth at this age / date?"
+  //
+  // "First reached" means the first observation AT OR ABOVE the value -- not
+  // the first upward crossing. Crossing logic wrongly excluded sets that were
+  // already above on day 0 (Ascended Heroes) and, for sets that started above,
+  // dipped and recovered (Prismatic), reported the recovery as if it were the
+  // first time. A set already above at its first point reports "from day 0".
   const onAxisPick = (axis, value) => {
     if (!model) return
     const out = []
     for (const l of model.lines) {
-      if (!l.points.length) continue
+      const pts = l.points
+      if (!pts.length) continue
       if (axis === 'y') {
-        let hit = null
-        for (let i = 1; i < l.points.length; i++) {
-          const a = l.points[i - 1], b = l.points[i]
-          if (a.value < value && b.value >= value) { hit = b; break }
+        let firstIdx = -1, daysAbove = 0, totalDays = 0
+        for (let i = 0; i < pts.length; i++) {
+          // age-weighted so the daily-then-weekly sampling doesn't skew the share
+          const span = i < pts.length - 1 ? Math.max(0, pts[i + 1].age - pts[i].age) : 0
+          totalDays += span
+          if (pts[i].value >= value) {
+            daysAbove += span
+            if (firstIdx < 0) firstIdx = i
+          }
         }
-        if (hit) out.push({ groupId: l.groupId, name: l.name, at: xOf(l, hit.age), value: hit.value })
+        if (firstIdx < 0) continue          // never reached it
+        const f = pts[firstIdx]
+        out.push({
+          groupId: l.groupId, name: l.name,
+          at: xOf(l, f.age), age: f.age, value: f.value,
+          fromStart: firstIdx === 0,        // already above at its first observation
+          partial: l.partial,               // ...and we may not have its true day 0
+          daysAbove, totalDays,
+          now: pts[pts.length - 1].value,
+        })
       } else {
         let best = null, gap = Infinity
-        for (const p of l.points) {
+        for (const p of pts) {
           const g = Math.abs(xOf(l, p.age) - value)
           if (g < gap) { gap = g; best = p }
         }
         const tol = isCal ? 10 : 20 / div
-        if (best && gap <= tol) out.push({ groupId: l.groupId, name: l.name, at: xOf(l, best.age), value: best.value })
+        if (best && gap <= tol) {
+          out.push({
+            groupId: l.groupId, name: l.name,
+            at: xOf(l, best.age), age: best.age, value: best.value,
+            now: pts[pts.length - 1].value,
+          })
+        }
       }
     }
-    out.sort((a, b) => (axis === 'y' ? a.at - b.at : b.value - a.value))
+    // Y: who got there first (ties at day 0 broken by who held it longest).
+    // X: biggest first.
+    out.sort((a, b) => (axis === 'y'
+      ? (a.age - b.age) || (b.daysAbove - a.daysAbove)
+      : b.value - a.value))
     setAxisSlice({ axis, value, rows: out })
   }
 
@@ -464,7 +495,7 @@ export default function CohortCurves({ meta }) {
             <div className="flex flex-wrap items-baseline gap-x-2 pb-1.5">
               <strong className="text-sm">
                 {axisSlice.axis === 'y'
-                  ? `First time each set reached ${fmtAxisVal(axisSlice.value)}`
+                  ? `Reached ${fmtAxisVal(axisSlice.value)} — who, when, and did it hold?`
                   : `Every set at ${fmtAxisX(axisSlice.value)}`}
               </strong>
               <span className="muted text-xs">
@@ -473,28 +504,61 @@ export default function CohortCurves({ meta }) {
               <button className="chip ml-auto" onClick={() => setAxisSlice(null)}>✕</button>
             </div>
             {axisSlice.rows.length === 0
-              ? <p className="muted text-xs">No line reaches that {axisSlice.axis === 'y' ? 'value' : 'point'} in the current view.</p>
+              ? <p className="muted text-xs">
+                  No line {axisSlice.axis === 'y' ? 'ever reaches that value' : 'has data at that point'} in the current view.
+                </p>
               : (
                 <div className="overflow-x-auto" style={{ maxHeight: '11rem' }}>
                   <table className="tbl text-sm w-full">
                     <thead>
                       <tr>
                         <th>Set</th>
-                        <th>{axisSlice.axis === 'y' ? 'Reached at' : 'At'}</th>
+                        <th title={axisSlice.axis === 'y'
+                          ? 'First observation at or above the value. “from day 0” = it was already above when its history starts.'
+                          : undefined}>{axisSlice.axis === 'y' ? 'First reached' : 'At'}</th>
+                        {axisSlice.axis === 'y' && (
+                          <th title="Share of its tracked life spent at or above this value — separates a set that merely touched the level from one that has lived above it.">Held above</th>
+                        )}
                         <th>{axisSlice.axis === 'y' ? 'Value there' : metricDef.label}</th>
+                        <th title="Latest value, so you can see whether it is still there.">Now</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {axisSlice.rows.map((r) => (
-                        <tr key={r.groupId} style={{ cursor: 'pointer' }} onClick={() => toggleFocus(r.groupId)}>
-                          <td className="max-w-56 truncate"
-                            style={focus === r.groupId ? { color: 'var(--accent)', fontWeight: 600 } : undefined}>{r.name}</td>
-                          <td className="muted whitespace-nowrap">{fmtAxisX(r.at)}</td>
-                          <td className="whitespace-nowrap">{fmtAxisVal(r.value)}</td>
-                        </tr>
-                      ))}
+                      {axisSlice.rows.map((r) => {
+                        const pct = r.totalDays > 0 ? Math.round((r.daysAbove / r.totalDays) * 100) : null
+                        return (
+                          <tr key={r.groupId} style={{ cursor: 'pointer' }} onClick={() => toggleFocus(r.groupId)}>
+                            <td className="max-w-56 truncate"
+                              style={focus === r.groupId ? { color: 'var(--accent)', fontWeight: 600 } : undefined}>{r.name}</td>
+                            <td className="muted whitespace-nowrap">
+                              {r.fromStart
+                                ? <span title={r.partial
+                                    ? 'Already above when our history for this set begins (archive does not cover its release).'
+                                    : 'Already above on release day.'}>
+                                    from day 0{r.partial ? ' *' : ''}
+                                  </span>
+                                : fmtAxisX(r.at)}
+                            </td>
+                            {axisSlice.axis === 'y' && (
+                              <td className="whitespace-nowrap muted">
+                                {pct == null ? '—' : `${Math.round(r.daysAbove)}d · ${pct}%`}
+                              </td>
+                            )}
+                            <td className="whitespace-nowrap">{fmtAxisVal(r.value)}</td>
+                            <td className="whitespace-nowrap"
+                              style={{ color: r.now >= axisSlice.value ? 'var(--pos)' : 'var(--text-muted)' }}>
+                              {fmtAxisVal(r.now)}
+                            </td>
+                          </tr>
+                        )
+                      })}
                     </tbody>
                   </table>
+                  {axisSlice.axis === 'y' && axisSlice.rows.some((r) => r.fromStart && r.partial) && (
+                    <p className="muted text-xs pt-1">
+                      * already above where our archive for that set begins — its true release day isn’t covered.
+                    </p>
+                  )}
                 </div>
               )}
           </div>
