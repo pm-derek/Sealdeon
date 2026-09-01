@@ -49,6 +49,38 @@
    }
   },
   {
+   "productId": 714416,
+   "productName": "Arceus Poster Box",
+   "productType": null,
+   "groupId": 1391,
+   "setName": "Arceus",
+   "confidence": "low",
+   "attemptedPackCount": 5,
+   "packCountSource": "parsed",
+   "attemptedPromo": null,
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"714416\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1391:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 714415,
+   "productName": "Arceus Poster Pack",
+   "productType": null,
+   "groupId": 1391,
+   "setName": "Arceus",
+   "confidence": "low",
+   "attemptedPackCount": 2,
+   "packCountSource": "parsed",
+   "attemptedPromo": null,
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"714415\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1391:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 678179,
    "productName": "Arceus Theme Deck - \"Flamemaster\"",
    "productType": null,
@@ -35585,5 +35617,5 @@
    }
   }
  ],
- "count": 2224
+ "count": 2226
 }
