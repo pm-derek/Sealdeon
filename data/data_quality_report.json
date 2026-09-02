@@ -2087,8 +2087,8 @@
    "groupId": 24584,
    "setName": "First Partner Collection 2026",
    "confidence": "low",
-   "attemptedPackCount": 2,
-   "packCountSource": "parsed",
+   "attemptedPackCount": 1,
+   "packCountSource": "static",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
