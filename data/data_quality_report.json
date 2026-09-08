@@ -3185,6 +3185,22 @@
    }
   },
   {
+   "productId": 715706,
+   "productName": "Mega Evolution Fun Pack",
+   "productType": null,
+   "groupId": 24380,
+   "setName": "ME01: Mega Evolution",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"715706\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24380:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 644359,
    "productName": "Mega Evolution Single Pack Blister [Drifblim",
    "productType": null,
@@ -3361,6 +3377,22 @@
    }
   },
   {
+   "productId": 715708,
+   "productName": "Phantasmal Flames Fun Pack",
+   "productType": null,
+   "groupId": 24448,
+   "setName": "ME02: Phantasmal Flames",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"715708\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24448:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 668931,
    "productName": "Phantasmal Flames Premium Checklane Blister [Arven's Greedent]",
    "productType": null,
@@ -3534,6 +3566,22 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"672402\": <count>",
     "promo": "add to config/promo_overrides.json as \"24587:ETB Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 715707,
+   "productName": "Perfect Order Fun Pack",
+   "productType": null,
+   "groupId": 24587,
+   "setName": "ME03: Perfect Order",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"715707\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24587:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -15550,22 +15598,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"634383\": <count>",
     "promo": "add to config/promo_overrides.json as \"24269:Build & Battle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 624676,
-   "productName": "Destined Rivals Elite Trainer Box",
-   "productType": "ETB",
-   "groupId": 24269,
-   "setName": "SV10: Destined Rivals",
-   "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "unresolved",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"624676\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24269:ETB\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -30865,6 +30897,22 @@
    }
   },
   {
+   "productId": 624676,
+   "productName": "Destined Rivals Elite Trainer Box",
+   "productType": "ETB",
+   "groupId": 24269,
+   "setName": "SV10: Destined Rivals",
+   "confidence": "medium",
+   "attemptedPackCount": 9,
+   "packCountSource": "static",
+   "attemptedPromo": "Team Rocket's Wobbuffet",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"624676\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24269:ETB\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 650765,
    "productName": "Destined Rivals Fun Pack",
    "productType": "Tin",
@@ -35617,5 +35665,5 @@
    }
   }
  ],
- "count": 2226
+ "count": 2229
 }
