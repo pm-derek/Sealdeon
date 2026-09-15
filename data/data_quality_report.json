@@ -4353,22 +4353,6 @@
    }
   },
   {
-   "productId": 696613,
-   "productName": "30th Celebration Pack",
-   "productType": null,
-   "groupId": 24722,
-   "setName": "ME: 30th Celebration",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"696613\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24722:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 668496,
    "productName": "Ascended Heroes Elite Trainer Box",
    "productType": "ETB",
@@ -27505,6 +27489,326 @@
    }
   },
   {
+   "productId": 709017,
+   "productName": "30th Celebration Booster Bundle Case",
+   "productType": "Booster Bundle Case",
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 60,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"709017\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 704143,
+   "productName": "30th Celebration Elite Trainer Box",
+   "productType": "ETB",
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 9,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Nidorina - 101 (30th Celebration)",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"704143\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:ETB\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 709036,
+   "productName": "30th Celebration Elite Trainer Box Case",
+   "productType": "ETB Case",
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 90,
+   "packCountSource": "static",
+   "attemptedPromo": "Nidorina - 101 (30th Celebration)",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"709036\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:ETB Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 709019,
+   "productName": "30th Celebration Figure Collection Case",
+   "productType": null,
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 5,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Mew - 105 (30th Celebration)",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"709019\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 704193,
+   "productName": "30th Celebration Figure Collection [Mew]",
+   "productType": null,
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 5,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Mew - 105 (30th Celebration)",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"704193\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 704168,
+   "productName": "30th Celebration Greninja ex Box",
+   "productType": null,
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 4,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Mega Greninja ex - 081",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"704168\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 704144,
+   "productName": "30th Celebration Pokemon Center Elite Trainer Box",
+   "productType": "PKC ETB",
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 11,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Nidorina - 101 (30th Celebration) (Pokemon Center Exclusive)",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"704144\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:PKC ETB\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 704155,
+   "productName": "30th Celebration Sylveon ex Box",
+   "productType": null,
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 4,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Sylveon GX - 92a/145",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"704155\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 709034,
+   "productName": "30th Celebration Tech Sticker Collection Case",
+   "productType": null,
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 3,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Alolan Exeggutor - 2a/131",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"709034\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 704145,
+   "productName": "30th Celebration Tech Sticker Collection [Alolan Exeggutor]",
+   "productType": null,
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 3,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Alolan Exeggutor - 2a/131",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"704145\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 704146,
+   "productName": "30th Celebration Tech Sticker Collection [Lucario]",
+   "productType": null,
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 3,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Mega Lucario ex - 012",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"704146\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 704147,
+   "productName": "30th Celebration Tech Sticker Collection [Set of 2]",
+   "productType": null,
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 3,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Alolan Exeggutor - 2a/131",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"704147\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 704150,
+   "productName": "30th Celebration Tin [Greninja ex]",
+   "productType": "Tin",
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 4,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Mega Greninja ex - 081",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"704150\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 709029,
+   "productName": "30th Celebration Ultra-Premium Collection Case",
+   "productType": null,
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 30,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Pikachu - 093",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"709029\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 704190,
+   "productName": "30th Celebration Ultra-Premium Collection [Day]",
+   "productType": "UPC",
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 30,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Pikachu - 093",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"704190\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:UPC\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 704191,
+   "productName": "30th Celebration Ultra-Premium Collection [Night]",
+   "productType": "UPC",
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 30,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Pikachu - 093",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"704191\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:UPC\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 709037,
+   "productName": "30th Celebration ex Box Case",
+   "productType": null,
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 4,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Sylveon GX - 92a/145",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"709037\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 709031,
+   "productName": "30th Celebration ex Tin Case",
+   "productType": null,
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 4,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Sylveon GX - 92a/145",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"709031\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 704151,
+   "productName": "30th Celebration ex Tin [Set of 2]",
+   "productType": "Tin",
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 4,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Sylveon GX - 92a/145",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"704151\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 704149,
+   "productName": "30th Celebration ex Tin [Sylveon ex]",
+   "productType": "Tin",
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 4,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Sylveon GX - 92a/145",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"704149\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 681339,
    "productName": "Ascended Heroes Booster Bundle Case",
    "productType": "Booster Bundle Case",
@@ -35665,5 +35969,5 @@
    }
   }
  ],
- "count": 2229
+ "count": 2248
 }
