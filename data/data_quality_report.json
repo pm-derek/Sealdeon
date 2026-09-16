@@ -27681,22 +27681,6 @@
    }
   },
   {
-   "productId": 704150,
-   "productName": "30th Celebration Tin [Greninja ex]",
-   "productType": "Tin",
-   "groupId": 24722,
-   "setName": "ME: 30th Celebration",
-   "confidence": "medium",
-   "attemptedPackCount": 4,
-   "packCountSource": "parsed",
-   "attemptedPromo": "Mega Greninja ex - 081",
-   "promoSource": "auto",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"704150\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24722:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 709029,
    "productName": "30th Celebration Ultra-Premium Collection Case",
    "productType": null,
@@ -27774,6 +27758,22 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"709031\": <count>",
     "promo": "add to config/promo_overrides.json as \"24722:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 704150,
+   "productName": "30th Celebration ex Tin [Greninja ex]",
+   "productType": "Tin",
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 4,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Mega Greninja ex - 081",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"704150\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
