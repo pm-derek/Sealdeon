@@ -6673,6 +6673,22 @@
    }
   },
   {
+   "productId": 718644,
+   "productName": "League Battle Deck Case [Mega Greninja ex]",
+   "productType": null,
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"718644\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 684107,
    "productName": "League Battle Deck Case [Mega Lucario ex]",
    "productType": null,
@@ -6781,6 +6797,22 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"236379\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 718643,
+   "productName": "League Battle Deck [Mega Greninja ex]",
+   "productType": null,
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"718643\": <count>",
     "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -27746,7 +27778,7 @@
   },
   {
    "productId": 709031,
-   "productName": "30th Celebration ex Tin Case",
+   "productName": "30th Celebration ex Tin Case (International Version)",
    "productType": null,
    "groupId": 24722,
    "setName": "ME: 30th Celebration",
@@ -27762,7 +27794,7 @@
   },
   {
    "productId": 704150,
-   "productName": "30th Celebration ex Tin [Greninja ex]",
+   "productName": "30th Celebration ex Tin [Greninja ex] (International Version)",
    "productType": "Tin",
    "groupId": 24722,
    "setName": "ME: 30th Celebration",
@@ -27778,7 +27810,7 @@
   },
   {
    "productId": 704151,
-   "productName": "30th Celebration ex Tin [Set of 2]",
+   "productName": "30th Celebration ex Tin [Set of 2] (International Version)",
    "productType": "Tin",
    "groupId": 24722,
    "setName": "ME: 30th Celebration",
@@ -27794,7 +27826,7 @@
   },
   {
    "productId": 704149,
-   "productName": "30th Celebration ex Tin [Sylveon ex]",
+   "productName": "30th Celebration ex Tin [Sylveon ex] (International Version)",
    "productType": "Tin",
    "groupId": 24722,
    "setName": "ME: 30th Celebration",
@@ -35969,5 +36001,5 @@
    }
   }
  ],
- "count": 2248
+ "count": 2250
 }
