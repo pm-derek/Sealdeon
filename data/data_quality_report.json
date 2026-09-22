@@ -5153,6 +5153,22 @@
    }
   },
   {
+   "productId": 719650,
+   "productName": "Costco Ascended Heroes Mini Tins 5-Pack",
+   "productType": null,
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "low",
+   "attemptedPackCount": 5,
+   "packCountSource": "parsed",
+   "attemptedPromo": null,
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"719650\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 702637,
    "productName": "Costco Exclusive 4-Tin Bundle: V Heroes Tin [Set of 3] + V Strikers [Empoleon]",
    "productType": "Tin",
@@ -36049,5 +36065,5 @@
    }
   }
  ],
- "count": 2253
+ "count": 2254
 }
