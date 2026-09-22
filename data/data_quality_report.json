@@ -27809,6 +27809,22 @@
    }
   },
   {
+   "productId": 718673,
+   "productName": "30th Celebration ex Tin [Greninja ex] (Retail Version)",
+   "productType": "Tin",
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 5,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Mega Greninja ex - 081",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"718673\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 704151,
    "productName": "30th Celebration ex Tin [Set of 2] (International Version)",
    "productType": "Tin",
@@ -27825,6 +27841,22 @@
    }
   },
   {
+   "productId": 718675,
+   "productName": "30th Celebration ex Tin [Set of 2] (Retail Version)",
+   "productType": "Tin",
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 5,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Sylveon GX - 92a/145",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"718675\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 704149,
    "productName": "30th Celebration ex Tin [Sylveon ex] (International Version)",
    "productType": "Tin",
@@ -27837,6 +27869,22 @@
    "promoSource": "auto",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"704149\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 718674,
+   "productName": "30th Celebration ex Tin [Sylveon ex] (Retail Version)",
+   "productType": "Tin",
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 5,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Sylveon GX - 92a/145",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"718674\": <count>",
     "promo": "add to config/promo_overrides.json as \"24722:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -36001,5 +36049,5 @@
    }
   }
  ],
- "count": 2250
+ "count": 2253
 }
