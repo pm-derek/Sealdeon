@@ -77,7 +77,66 @@ function priceAtDate(sparkline, targetIso) {
   }
   return best[1]
 }
-const fmtDate = (epochDay) => new Date(epochDay * EPOCH_DAY).toISOString().slice(0, 7)
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+// Calendar x is a plain epoch-day NUMBER, not a Date, so Plot picks round
+// numeric ticks -- arbitrary dates that used to collapse to a repeated
+// "2026-07" under a YYYY-MM format. Label them as "Sep 30" instead.
+const fmtDate = (epochDay) => {
+  const d = new Date(epochDay * EPOCH_DAY)
+  return `${MONTHS[d.getUTCMonth()]} ${d.getUTCDate()}`
+}
+
+// Year is carried by the first tick and by every tick that starts a new one,
+// so a multi-year window stays unambiguous without stamping '26 on all of
+// them. Keyed off the rendered tick list rather than the calendar, because a
+// wide window strides over January and would otherwise never show a year.
+const makeFmtDate = (ticks) => {
+  if (!ticks?.length) return fmtDate
+  const years = new Set(ticks.map((t) => new Date(t * EPOCH_DAY).getUTCFullYear()))
+  if (years.size < 2) return fmtDate
+  const showYear = new Set()
+  let prev = null
+  for (const t of ticks) {
+    const y = new Date(t * EPOCH_DAY).getUTCFullYear()
+    if (y !== prev) showYear.add(t)
+    prev = y
+  }
+  return (t) => {
+    const d = new Date(t * EPOCH_DAY)
+    const base = `${MONTHS[d.getUTCMonth()]} ${d.getUTCDate()}`
+    return showYear.has(t) ? `${base} '${String(d.getUTCFullYear()).slice(2)}` : base
+  }
+}
+
+// Ticks on real date boundaries rather than round numbers: week starts for
+// short windows, month starts (strided to a readable count) for long ones.
+const dateTicks = (domain, maxTicks = 11) => {
+  if (!domain) return undefined
+  const [lo, hi] = domain
+  if (!(hi > lo)) return undefined
+  const out = []
+  if (hi - lo <= 80) {
+    const d = new Date(Math.ceil(lo) * EPOCH_DAY)
+    d.setUTCDate(d.getUTCDate() + ((8 - d.getUTCDay()) % 7)) // next Monday
+    const stride = 7 * Math.max(1, Math.ceil((hi - lo) / 7 / maxTicks))
+    for (let t = Math.round(d.getTime() / EPOCH_DAY); t <= hi; t += stride) out.push(t)
+    return out
+  }
+  const start = new Date(Math.ceil(lo) * EPOCH_DAY)
+  let y = start.getUTCFullYear()
+  let m = start.getUTCMonth() + (start.getUTCDate() > 1 ? 1 : 0)
+  const months = []
+  for (;;) {
+    const t = Math.round(Date.UTC(y, m, 1) / EPOCH_DAY)
+    if (t > hi) break
+    if (t >= lo) months.push(t)
+    if (++m > 11) { m = 0; y += 1 }
+  }
+  const stride = Math.max(1, Math.ceil(months.length / maxTicks))
+  for (let i = 0; i < months.length; i += stride) out.push(months[i])
+  return out
+}
 
 export default function CohortCurves({ meta }) {
   const [curves, setCurves] = useState(null)
@@ -280,6 +339,11 @@ export default function CohortCurves({ meta }) {
         groupId: l.groupId, partial: l.partial, price: p.price,
       })))
 
+    // Tick domain only -- the scale keeps Plot's own auto-domain when unzoomed
+    // so edge markers/labels are not clipped; this just tells dateTicks which
+    // window to lay month/week boundaries across.
+    const tickSpan = view?.x || (bounds ? [bounds.xlo, bounds.xhi] : null)
+    const xTicks = isCal ? dateTicks(tickSpan) : undefined
     const lo = view?.x ? view.x[0] : -Infinity, hi = view?.x ? view.x[1] : Infinity
     const vis = flat.filter((d) => d.x >= lo && d.x <= hi).map((d) => d.value)
     let yDomain = view?.y || undefined
@@ -347,7 +411,8 @@ export default function CohortCurves({ meta }) {
       style: { background: 'transparent', color: palette.textSecondary, fontSize: '12px' },
       x: {
         label: isCal ? 'date →' : `${state.xUnit} since release →`, grid: false, domain: view?.x || undefined,
-        tickFormat: isCal ? fmtDate : undefined,
+        tickFormat: isCal ? makeFmtDate(xTicks) : undefined,
+        ticks: isCal ? xTicks : undefined,
       },
       y: {
         label: `↑ ${isIndex ? `index (${basis === 'msrp' ? 'MSRP' : 'release'} = 100)`
