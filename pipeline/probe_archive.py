@@ -36,6 +36,7 @@ def main() -> int:
     print(f"  user-agent: {tcgcsv.USER_AGENT}\n")
     sess = tcgcsv.session()
     worst = 0
+    bodies_shown = [0]
     for d in dates:
         url = tcgcsv.ARCHIVE_URL.format(date=d)
         try:
@@ -46,9 +47,34 @@ def main() -> int:
                   f"  type={r.headers.get('content-type','?')}")
             if r.status_code >= 400:
                 worst = max(worst, r.status_code)
+                # A small text/plain error body is the server telling us why.
+                # Print the first one; they have all been identical so far.
+                if bodies_shown[0] == 0 and r.status_code != 404:
+                    try:
+                        g = sess.get(url, timeout=60, stream=True)
+                        body = g.raw.read(4096, decode_content=True)
+                        g.close()
+                        print("\n  --- error body ---")
+                        print("  " + body.decode("utf-8", "replace").strip()
+                              .replace("\n", "\n  "))
+                        print("  --- end body ---\n")
+                        bodies_shown[0] = 1
+                    except Exception as be:
+                        print(f"  (could not read body: {be})")
         except Exception as e:
             print(f"  {d}  ERROR {type(e).__name__}: {e}")
             worst = max(worst, 599)
+
+    # Is it our User-Agent? Retry one URL with a plain browser UA.
+    try:
+        import requests as _rq
+        u = tcgcsv.ARCHIVE_URL.format(date=tcgcsv.ARCHIVE_FLOOR)
+        alt = _rq.head(u, timeout=60, allow_redirects=True, headers={
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+                          "(KHTML, like Gecko) Chrome/124.0 Safari/537.36"})
+        print(f"  UA test (browser UA, {tcgcsv.ARCHIVE_FLOOR}): HTTP {alt.status_code}")
+    except Exception as e:
+        print(f"  UA test failed: {e}")
 
     # Control: does the plain JSON API still work from here?
     try:
