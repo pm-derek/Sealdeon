@@ -17,7 +17,7 @@ on:
       mode:
         description: "snapshot = normal daily run; repair-only = fill gaps, leave today alone"
         type: choice
-        options: [snapshot, repair-only]
+        options: [snapshot, repair-only, probe-archive]
         default: snapshot
       snapshot_date:
         description: "Snapshot date override (YYYY-MM-DD). Blank = auto."
@@ -56,7 +56,11 @@ jobs:
           SEALDEON_REPAIR_LOOKBACK: ${{ inputs.repair_lookback }}
         run: |
           set -euo pipefail
-          if [ "${{ inputs.mode || 'snapshot' }}" = "repair-only" ]; then
+          if [ "${{ inputs.mode || 'snapshot' }}" = "probe-archive" ]; then
+            # Diagnostic only: reports raw HTTP status per archive URL and
+            # writes nothing.
+            python pipeline/probe_archive.py
+          elif [ "${{ inputs.mode || 'snapshot' }}" = "repair-only" ]; then
             # Fill holes without touching the current day's rows -- used to
             # recover days lost before the dating fix landed.
             python pipeline/backfill_archive.py --repair-gaps \

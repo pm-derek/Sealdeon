@@ -80,20 +80,45 @@ def fetch_prices(group_id: int, category_id: int = POKEMON_CATEGORY_ID) -> list[
     return get_results(f"/tcgplayer/{category_id}/{group_id}/prices")
 
 
+class ArchiveMissing(Exception):
+    """The archive genuinely has no file for this date (404)."""
+
+
+class ArchiveUnavailable(Exception):
+    """The archive exists or is unknown, but could not be fetched now.
+
+    Distinct from ArchiveMissing on purpose: a 403/429/5xx/timeout is a
+    condition that can clear, so callers must retry it later rather than
+    writing the date off permanently.
+    """
+
+
 def download_archive(date: str, dest_path: str, retries: int = 3) -> str:
-    """Download the daily price archive for YYYY-MM-DD to dest_path."""
+    """Download the daily price archive for YYYY-MM-DD to dest_path.
+
+    Raises ArchiveMissing on 404 and ArchiveUnavailable on anything else.
+    4xx other than 429 is not retried -- it will not become a 200 by asking
+    three more times, and the backoff just slows the caller down.
+    """
     url = ARCHIVE_URL.format(date=date)
     for attempt in range(retries + 1):
         _throttle()
         try:
             with session().get(url, timeout=600, stream=True) as resp:
+                if resp.status_code == 404:
+                    raise ArchiveMissing(f"no archive for {date} (404)")
+                if 400 <= resp.status_code < 500 and resp.status_code != 429:
+                    raise ArchiveUnavailable(
+                        f"{resp.status_code} for {date} ({url})")
                 resp.raise_for_status()
                 with open(dest_path, "wb") as f:
                     for chunk in resp.iter_content(chunk_size=1 << 20):
                         f.write(chunk)
             return dest_path
-        except requests.RequestException:
+        except (ArchiveMissing, ArchiveUnavailable):
+            raise
+        except requests.RequestException as e:
             if attempt == retries:
-                raise
+                raise ArchiveUnavailable(f"{type(e).__name__} for {date}: {e}") from e
             time.sleep(2 ** attempt)
     raise RuntimeError("unreachable")

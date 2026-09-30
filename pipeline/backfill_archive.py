@@ -242,6 +242,7 @@ def repair_gaps(lookback_days: int = 45, max_dates: int = 5,
 
     workdir = tempfile.mkdtemp(prefix="sealdeon-repair-")
     repaired: list[str] = []
+    transient: list[str] = []
     try:
         for date in todo:
             try:
@@ -252,14 +253,25 @@ def repair_gaps(lookback_days: int = 45, max_dates: int = 5,
                 build_parquet.append_prices(df, replace_dates=False)
                 repaired.append(date)
                 print(f"  {date}: repaired ({len(df)} rows)")
-            except Exception as e:
-                print(f"  {date}: UNAVAILABLE ({e})", file=sys.stderr)
+            except tcgcsv.ArchiveMissing as e:
+                # Definitive: upstream has no file for this day and never
+                # will. Safe to stop asking.
+                print(f"  {date}: MISSING UPSTREAM ({e})", file=sys.stderr)
                 unavailable.add(date)
+            except Exception as e:
+                # Anything else (403/429/5xx/timeout) can clear, so leave the
+                # date on the list and try again on a later run. Writing it
+                # off here is how a recoverable day becomes a permanent hole.
+                print(f"  {date}: DEFERRED, will retry ({e})", file=sys.stderr)
+                transient.append(date)
     finally:
         shutil.rmtree(workdir, ignore_errors=True)
 
     state["unavailableDates"] = sorted(unavailable)
     _save_state(state)
+    if transient:
+        print(f"gap repair: {len(transient)} date(s) deferred for retry: "
+              f"{', '.join(transient)}", file=sys.stderr)
     still = [d for d in build_parquet.missing_dates(lookback_days, today)]
     return repaired, still
 
