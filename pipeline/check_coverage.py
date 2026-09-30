@@ -21,12 +21,16 @@ import build_parquet
 STATE_PATH = os.path.join(build_parquet.DATA_DIR, "backfill_state.json")
 
 
-def _unavailable() -> set[str]:
+def _state() -> dict:
     try:
         with open(STATE_PATH) as fh:
-            return set(json.load(fh).get("unavailableDates", []))
+            return json.load(fh)
     except (OSError, ValueError):
-        return set()
+        return {}
+
+
+def _unavailable() -> set[str]:
+    return set(_state().get("unavailableDates", []))
 
 
 def main() -> int:
@@ -55,7 +59,13 @@ def main() -> int:
     print(f"- Latest stored date: **{latest}** ({stale_days}d old)")
     print(f"- Distinct dates stored: **{len(stored)}** ({stored[0]} → {latest})")
     print(f"- Window checked: last **{args.lookback}** days")
-    if repairable:
+    backoff = _state().get("archiveBackoffUntil")
+    if repairable and backoff:
+        print(f"- ⚠️ Missing, NOT currently recoverable: **{', '.join(repairable)}**")
+        print(f"  - The TCGCSV price archive is withdrawn upstream (403 on every "
+              f"date). Auto-retry paused until **{backoff}**; repair resumes by "
+              f"itself if the archive returns.")
+    elif repairable:
         print(f"- ⚠️ Missing (repairable): **{', '.join(repairable)}**")
     if upstream:
         print(f"- Missing (upstream archive has no data): {', '.join(upstream)}")

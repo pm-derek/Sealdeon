@@ -36,6 +36,10 @@ import tcgcsv
 
 STATE_PATH = os.path.join(build_parquet.DATA_DIR, "backfill_state.json")
 
+# How long to stop asking after the archive endpoint answers 403 across the
+# board. Long enough to be a good citizen, short enough to notice a restore.
+ARCHIVE_BACKOFF_DAYS = 7
+
 
 def _load_state() -> dict:
     if os.path.exists(STATE_PATH):
@@ -222,6 +226,20 @@ def repair_gaps(lookback_days: int = 45, max_dates: int = 5,
     if not missing:
         return [], []
     state = _load_state()
+
+    # The archive endpoint was withdrawn upstream in 2026-09 ("temporarily
+    # removed due to rising server costs", 403 on every date including ones
+    # we already hold). While that holds there is nothing to fetch, and the
+    # same notice asks callers to cut bandwidth -- so back off globally
+    # instead of burning N requests every single day. Re-checked weekly, so
+    # repair resumes on its own if the archive comes back.
+    backoff = state.get("archiveBackoffUntil")
+    today_d = dt.date.fromisoformat(today) if today else dt.date.today()
+    if backoff and today_d < dt.date.fromisoformat(backoff):
+        print(f"gap repair: archive unavailable upstream, not retrying until "
+              f"{backoff} ({len(missing)} date(s) still missing)")
+        return [], missing
+
     unavailable = set(state.get("unavailableDates", []))
     todo = [d for d in missing if d not in unavailable][:max_dates]
     if not todo:
@@ -268,6 +286,15 @@ def repair_gaps(lookback_days: int = 45, max_dates: int = 5,
         shutil.rmtree(workdir, ignore_errors=True)
 
     state["unavailableDates"] = sorted(unavailable)
+    # Every single attempt failed transiently => treat it as the endpoint
+    # being down rather than N independent bad days, and stop asking daily.
+    if transient and not repaired and len(transient) == len(todo):
+        until = (today_d + dt.timedelta(days=ARCHIVE_BACKOFF_DAYS)).isoformat()
+        state["archiveBackoffUntil"] = until
+        print(f"gap repair: every attempt failed -- archive looks unavailable; "
+              f"backing off until {until}", file=sys.stderr)
+    elif repaired:
+        state.pop("archiveBackoffUntil", None)
     _save_state(state)
     if transient:
         print(f"gap repair: {len(transient)} date(s) deferred for retry: "

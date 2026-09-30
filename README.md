@@ -6,8 +6,25 @@ compared on a normalized basis. The centerpiece is **cohort analysis**
 (compare sets by *age*, not calendar date), with **sealed premium / intrinsic
 value** as a first-class time-series metric alongside price.
 
-Data source: [TCGCSV.com](https://tcgcsv.com) (free, ~24h fresh, archive back
-to **2024-02-08** — a hard floor). Single user, zero-cost, GitHub-native.
+Data source: [TCGCSV.com](https://tcgcsv.com) (free, ~24h fresh). Single
+user, zero-cost, GitHub-native.
+
+> **The price archive is withdrawn upstream (since ~2026-09).** Every
+> `/archive/tcgplayer/prices-*.7z` URL now returns 403 — including dates the
+> lake was originally built from — with a notice citing server costs and
+> moderation burden, and stating there is no workaround or appeal. The live
+> JSON endpoints (categories/groups/prices) are unaffected and the daily
+> snapshot works normally.
+>
+> Two consequences. **`data/` is now the only copy of this price history** —
+> it cannot be rebuilt from upstream, so treat it as irreplaceable. And any
+> day missed by the daily job stays missed until the archive returns; the
+> gap repair in `fetch_current.py` is still wired up and will refill
+> automatically if it does (it re-checks weekly). Six days are currently
+> unrecoverable: 2026-08-06/26/31 and 2026-09-21/25/28.
+>
+> Upstream also asks callers not to request the same price file more than
+> once per 24h — the daily snapshot already complies.
 
 ## Architecture
 
