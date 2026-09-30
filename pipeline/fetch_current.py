@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import os
 import sys
 
 import pandas as pd
@@ -32,9 +33,33 @@ def fetch_all(category_id: int = tcgcsv.POKEMON_CATEGORY_ID):
     return groups, products_by_group, prices_by_group
 
 
-def run_daily(snapshot_date: str | None = None) -> None:
-    date = snapshot_date or dt.date.today().isoformat()
+# The scheduled run is late far more often than it is on time: GitHub queues
+# cron workflows behind everyone else's and has delayed this one by 1.5-8h.
+# Stamping rows with the wall-clock date therefore loses a day outright
+# whenever a run crosses UTC midnight -- it writes tomorrow's date, and
+# tomorrow's own run then replaces those rows. Any run landing before this
+# hour is a delayed run for the previous day. The cron fires at ~21:00 UTC,
+# so this absorbs a delay of up to ~15h and still dates the rows correctly.
+DELAYED_RUN_CUTOFF_UTC = 12
+
+
+def snapshot_date_for(now: dt.datetime) -> str:
+    """The date a run started at `now` (UTC) is a snapshot OF."""
+    day = now.date()
+    if now.hour < DELAYED_RUN_CUTOFF_UTC:
+        day -= dt.timedelta(days=1)
+    return day.isoformat()
+
+
+def run_daily(snapshot_date: str | None = None, repair: bool = True) -> None:
+    date = snapshot_date or snapshot_date_for(dt.datetime.now(dt.timezone.utc))
     print(f"daily snapshot for {date}")
+    # Let the workflow label its commit with the date actually written rather
+    # than its own wall clock, which is what drifted in the first place.
+    out = os.environ.get("GITHUB_OUTPUT")
+    if out:
+        with open(out, "a") as fh:
+            fh.write(f"snapshot_date={date}\n")
 
     set_dims, product_dims, reports = [], [], []
     rows: list[dict] = []
@@ -81,6 +106,21 @@ def run_daily(snapshot_date: str | None = None) -> None:
     print(f"  dimensions written ({len(products_df)} products, "
           f"{len(report)} flagged for data-quality review)")
 
+    # Self-heal before rebuilding views, so a repaired day is reflected in
+    # the JSON this same run rather than a day later.
+    if repair:
+        try:
+            import backfill_archive
+            repaired, still = backfill_archive.repair_gaps(
+                today=date, products_df=products_df)
+            if repaired:
+                print(f"  gap repair: filled {len(repaired)} date(s): {', '.join(repaired)}")
+            if still:
+                print(f"  gap repair: STILL MISSING {len(still)}: {', '.join(still)}", file=sys.stderr)
+        except Exception as e:
+            # Never let the repair path break the day's snapshot.
+            print(f"  gap repair FAILED ({e}) -- snapshot itself is unaffected", file=sys.stderr)
+
     import build_views
     build_views.build_all()
     print("  view JSON rebuilt")
@@ -106,8 +146,10 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--sample", action="store_true", help="print sample rows only")
     ap.add_argument("--date", help="snapshot date override (YYYY-MM-DD)")
+    ap.add_argument("--no-repair", action="store_true",
+                    help="skip the trailing-window gap repair")
     args = ap.parse_args()
     if args.sample:
         print_sample()
     else:
-        run_daily(args.date)
+        run_daily(args.date, repair=not args.no_repair)

@@ -3,8 +3,23 @@ name: daily-snapshot
 on:
   schedule:
     # TCGCSV refreshes ~daily around 20:00 UTC; run after that.
-    - cron: "30 21 * * *"
+    #
+    # Deliberately NOT on the hour or half hour. GitHub queues scheduled
+    # workflows behind every other repo's, and the :00/:30 slots are the
+    # busiest -- this job was routinely starting 1.5-8h late from "30 21",
+    # which is what pushed runs past UTC midnight. An odd minute measurably
+    # shortens that queue wait. Correctness no longer depends on it
+    # (fetch_current dates rows by the run's intended day, not its wall
+    # clock), so a late run is now merely late, not a lost day.
+    - cron: "7 21 * * *"
   workflow_dispatch:
+    inputs:
+      snapshot_date:
+        description: "Snapshot date override (YYYY-MM-DD). Blank = auto."
+        required: false
+      repair_lookback:
+        description: "Gap-repair window in days (default 45)."
+        required: false
 
 permissions:
   contents: write
@@ -16,6 +31,7 @@ concurrency:
 jobs:
   snapshot:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
 
@@ -26,8 +42,20 @@ jobs:
 
       - run: pip install -r pipeline/requirements.txt
 
-      - name: Fetch snapshot, update lake, rebuild views
-        run: python pipeline/fetch_current.py
+      - name: Fetch snapshot, repair gaps, rebuild views
+        id: snapshot
+        env:
+          SEALDEON_REPAIR_LOOKBACK: ${{ inputs.repair_lookback }}
+        run: |
+          if [ -n "${{ inputs.snapshot_date }}" ]; then
+            python pipeline/fetch_current.py --date "${{ inputs.snapshot_date }}"
+          else
+            python pipeline/fetch_current.py
+          fi
+
+      - name: Report lake coverage
+        if: always()
+        run: python pipeline/check_coverage.py --lookback 45 >> "$GITHUB_STEP_SUMMARY"
 
       - name: Commit lake + views
         run: |
@@ -35,5 +63,13 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add data web/public/views
           git diff --cached --quiet && echo "no changes" && exit 0
-          git commit -m "daily snapshot $(date -u +%F)"
-          git push
+          git commit -m "daily snapshot ${{ steps.snapshot.outputs.snapshot_date || '(date unknown)' }}"
+          # The repo may have moved on (another workflow, a manual push) during
+          # the ~7min run; rebase onto it rather than failing the whole day.
+          for i in 1 2 3 4; do
+            git push && exit 0
+            echo "push failed, rebasing and retrying ($i)"
+            git pull --rebase origin main || true
+            sleep $((2 ** i))
+          done
+          echo "::error::push failed after 4 attempts" && exit 1

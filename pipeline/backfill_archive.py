@@ -203,6 +203,67 @@ def _flush_month(frames: list[pd.DataFrame], month: str, state: dict,
     print(f"  checkpoint[{state_key}]: {month} written ({last})")
 
 
+def repair_gaps(lookback_days: int = 45, max_dates: int = 5,
+                today: str | None = None,
+                products_df: pd.DataFrame | None = None) -> tuple[list[str], list[str]]:
+    """Refill calendar dates the lake is missing, from the TCGCSV archive.
+
+    The daily snapshot can only ever write the day it runs, so any day lost
+    to a skipped, failed or midnight-straddling run stays lost forever
+    without this. Returns (repaired, still_missing).
+
+    Capped at `max_dates` per run so one bad week cannot turn the daily job
+    into a multi-hour backfill; the remainder is picked up on later runs.
+    Dates the archive genuinely does not serve are remembered in
+    backfill_state.json so they are not retried every single day.
+    """
+    lookback_days = int(os.environ.get("SEALDEON_REPAIR_LOOKBACK") or lookback_days)
+    missing = build_parquet.missing_dates(lookback_days, today)
+    if not missing:
+        return [], []
+    state = _load_state()
+    unavailable = set(state.get("unavailableDates", []))
+    todo = [d for d in missing if d not in unavailable][:max_dates]
+    if not todo:
+        return [], [d for d in missing if d in unavailable]
+
+    print(f"gap repair: {len(missing)} missing date(s), attempting {len(todo)}")
+    # The daily run has already built this; refetching the whole live catalog
+    # costs minutes and is the one step here that can fail before any date is
+    # attempted, so prefer the caller's frame and treat a failure as "no
+    # repair this run" rather than an error.
+    try:
+        if products_df is None:
+            _, products_df, _ = common.build_all_dims_live()
+        keep_ids = common.keep_ids_from_products(products_df)
+    except Exception as e:
+        print(f"gap repair: cannot resolve product ids ({e}) -- skipping", file=sys.stderr)
+        return [], missing
+
+    workdir = tempfile.mkdtemp(prefix="sealdeon-repair-")
+    repaired: list[str] = []
+    try:
+        for date in todo:
+            try:
+                df = load_date(date, workdir, keep_ids)
+                if df.empty:
+                    raise ValueError("archive held no rows for this date")
+                # Additive: never let a repair replace rows another run stored.
+                build_parquet.append_prices(df, replace_dates=False)
+                repaired.append(date)
+                print(f"  {date}: repaired ({len(df)} rows)")
+            except Exception as e:
+                print(f"  {date}: UNAVAILABLE ({e})", file=sys.stderr)
+                unavailable.add(date)
+    finally:
+        shutil.rmtree(workdir, ignore_errors=True)
+
+    state["unavailableDates"] = sorted(unavailable)
+    _save_state(state)
+    still = [d for d in build_parquet.missing_dates(lookback_days, today)]
+    return repaired, still
+
+
 def finalize() -> None:
     """Steps 1,3-9: dims from live metadata, peaks/chase, hype, intrinsic,
     quality report, then views."""
@@ -222,12 +283,23 @@ if __name__ == "__main__":
     ap.add_argument("--start", default=tcgcsv.ARCHIVE_FLOOR)
     ap.add_argument("--end", default=dt.date.today().isoformat())
     ap.add_argument("--finalize", action="store_true", help="build dims + flags + views after loading")
+    ap.add_argument("--repair-gaps", action="store_true",
+                    help="refill only the calendar dates missing from the lake")
+    ap.add_argument("--lookback", type=int, default=45,
+                    help="trailing window for --repair-gaps (days)")
+    ap.add_argument("--max-dates", type=int, default=5,
+                    help="max dates to repair in one --repair-gaps run")
     ap.add_argument("--games", default="all",
                     help="all | pokemon | magic. A single game loads ADDITIVELY "
                          "(never replaces a date), so other games' stored rows are preserved.")
     args = ap.parse_args()
     if args.validate:
         validate_one()
+    elif args.repair_gaps:
+        repaired, still = repair_gaps(args.lookback, args.max_dates)
+        print(f"repaired {len(repaired)}; still missing {len(still)}")
+        if repaired:
+            finalize()
     elif args.finalize:
         finalize()
     else:

@@ -422,4 +422,51 @@ extracted = backfill_archive.extract_category(archive_path, date)
 check("archive extract group present", 23237 in extracted, str(list(extracted)))
 check("archive extract row count", len(extracted[23237]) == len(sample["results"]))
 
+print("== e2e: snapshot dating + gap detection (missed-run regression) ==")
+import fetch_current  # noqa: E402
+
+# A scheduled run that GitHub delays past UTC midnight must still date its
+# rows as the day it was scheduled for. Stamping wall-clock time is what
+# silently deleted 2026-08-06/26/31 and 2026-09-21/25/28 from the lake: the
+# late run wrote the NEXT day, and that day's own run then replaced it.
+for _h, _want in [(0, "2026-09-21"), (1, "2026-09-21"), (5, "2026-09-21"),
+                  (11, "2026-09-21"), (12, "2026-09-22"), (21, "2026-09-22"),
+                  (23, "2026-09-22")]:
+    _got = fetch_current.snapshot_date_for(
+        dt.datetime(2026, 9, 22, _h, 12, tzinfo=dt.timezone.utc))
+    check(f"run at {_h:02d}:12 UTC dates as {_want}", _got == _want, _got)
+
+# The real incident: run 66 fired 2026-09-22T00:12 for the 09-21 cron.
+check("delayed run 66 no longer steals the next day's slot",
+      fetch_current.snapshot_date_for(
+          dt.datetime(2026, 9, 22, 0, 12, tzinfo=dt.timezone.utc)) == "2026-09-21")
+
+# Gap detection over a synthetic lake with a known hole.
+_gap_dir = os.path.join(WORK, "gaplake")
+_prev_data = os.environ["SEALDEON_DATA_DIR"]
+os.environ["SEALDEON_DATA_DIR"] = _gap_dir
+import importlib  # noqa: E402
+importlib.reload(build_parquet)
+_rows = []
+for _i in range(10):
+    _d = dt.date(2026, 6, 1) + dt.timedelta(days=_i)
+    if _d.day in (4, 7):      # drill two holes
+        continue
+    _rows.append({"date": _d.isoformat(), "groupId": 1, "productId": 1,
+                  "subTypeName": "Normal", "marketPrice": 1.0, "midPrice": 1.0,
+                  "lowPrice": 1.0, "directLowPrice": None,
+                  "qtyListed": None, "qtySold": None})
+build_parquet.append_prices(pd.DataFrame(_rows))
+_missing = build_parquet.missing_dates(60, "2026-06-11")
+check("missing_dates finds both holes",
+      _missing == ["2026-06-04", "2026-06-07"], str(_missing))
+check("missing_dates excludes the in-progress day", "2026-06-11" not in _missing)
+check("missing_dates does not report before the lake's first date",
+      all(d >= "2026-06-01" for d in _missing), str(_missing))
+_full = [r for r in _rows]
+check("stored_dates counts only real dates", len(build_parquet.stored_dates()) == 8,
+      str(len(build_parquet.stored_dates())))
+os.environ["SEALDEON_DATA_DIR"] = _prev_data
+importlib.reload(build_parquet)
+
 print(f"\nALL {PASS} CHECKS PASSED  (workdir: {WORK})")

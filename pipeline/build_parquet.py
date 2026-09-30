@@ -122,5 +122,44 @@ def price_glob() -> str:
     return os.path.join(_prices_dir(), "*", "*", "*.parquet")
 
 
+def stored_dates() -> list[str]:
+    """Every distinct price date currently in the lake, ascending.
+
+    DuckDB rather than pyarrow: the lake is ~39M rows and materialising the
+    date column of every partition takes minutes, while a pushed-down
+    DISTINCT over the same files takes about a second.
+    """
+    import duckdb
+    if not os.path.isdir(_prices_dir()):
+        return []
+    rows = duckdb.connect().execute(
+        f"SELECT DISTINCT date FROM read_parquet('{price_glob()}') ORDER BY date"
+    ).fetchall()
+    return [str(r[0]) for r in rows]
+
+
+def missing_dates(lookback_days: int = 45, today: str | None = None) -> list[str]:
+    """Calendar dates with no rows, within the trailing window.
+
+    The window is bounded by the lake's own earliest stored date so a fresh
+    or partially-backfilled lake does not report every day since the archive
+    floor as a gap. The upper bound is exclusive of `today`: the current day
+    is still being written by the caller.
+    """
+    import datetime as _dt
+    stored = stored_dates()
+    if not stored:
+        return []
+    end = _dt.date.fromisoformat(today) if today else _dt.date.today()
+    lo = max(_dt.date.fromisoformat(stored[0]), end - _dt.timedelta(days=lookback_days))
+    have = set(stored)
+    out, d = [], lo
+    while d < end:
+        if d.isoformat() not in have:
+            out.append(d.isoformat())
+        d += _dt.timedelta(days=1)
+    return out
+
+
 def lake_exists() -> bool:
     return os.path.exists(os.path.join(DATA_DIR, "sets.parquet")) and os.path.isdir(_prices_dir())
