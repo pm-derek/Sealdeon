@@ -14,11 +14,19 @@ on:
     - cron: "7 21 * * *"
   workflow_dispatch:
     inputs:
+      mode:
+        description: "snapshot = normal daily run; repair-only = fill gaps, leave today alone"
+        type: choice
+        options: [snapshot, repair-only]
+        default: snapshot
       snapshot_date:
         description: "Snapshot date override (YYYY-MM-DD). Blank = auto."
         required: false
       repair_lookback:
         description: "Gap-repair window in days (default 45)."
+        required: false
+      repair_max_dates:
+        description: "Max dates to repair in this run (default 5)."
         required: false
 
 permissions:
@@ -47,7 +55,14 @@ jobs:
         env:
           SEALDEON_REPAIR_LOOKBACK: ${{ inputs.repair_lookback }}
         run: |
-          if [ -n "${{ inputs.snapshot_date }}" ]; then
+          set -euo pipefail
+          if [ "${{ inputs.mode || 'snapshot' }}" = "repair-only" ]; then
+            # Fill holes without touching the current day's rows -- used to
+            # recover days lost before the dating fix landed.
+            python pipeline/backfill_archive.py --repair-gaps \
+              --lookback "${{ inputs.repair_lookback || '90' }}" \
+              --max-dates "${{ inputs.repair_max_dates || '10' }}"
+          elif [ -n "${{ inputs.snapshot_date }}" ]; then
             python pipeline/fetch_current.py --date "${{ inputs.snapshot_date }}"
           else
             python pipeline/fetch_current.py
@@ -63,7 +78,11 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add data web/public/views
           git diff --cached --quiet && echo "no changes" && exit 0
-          git commit -m "daily snapshot ${{ steps.snapshot.outputs.snapshot_date || '(date unknown)' }}"
+          MSG="daily snapshot ${{ steps.snapshot.outputs.snapshot_date || '(date unknown)' }}"
+          if [ "${{ inputs.mode || 'snapshot' }}" = "repair-only" ]; then
+            MSG="backfill: repair missing snapshot dates"
+          fi
+          git commit -m "$MSG"
           # The repo may have moved on (another workflow, a manual push) during
           # the ~7min run; rebase onto it rather than failing the whole day.
           for i in 1 2 3 4; do
