@@ -20033,6 +20033,22 @@
    }
   },
   {
+   "productId": 722192,
+   "productName": "Brilliant Stars Premium Checklane Blister [Raichu]",
+   "productType": null,
+   "groupId": 2948,
+   "setName": "SWSH09: Brilliant Stars",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"722192\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2948:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 256142,
    "productName": "Brilliant Stars Premium Checklane Blister [Salamence]",
    "productType": null,
@@ -36065,5 +36081,5 @@
    }
   }
  ],
- "count": 2254
+ "count": 2255
 }
