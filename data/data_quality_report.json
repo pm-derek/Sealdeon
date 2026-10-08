@@ -27809,6 +27809,22 @@
    }
   },
   {
+   "productId": 722832,
+   "productName": "30th Celebration ex Box [Set of 2]",
+   "productType": null,
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "medium",
+   "attemptedPackCount": 4,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Sylveon GX - 92a/145",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"722832\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 709031,
    "productName": "30th Celebration ex Tin Case (International Version)",
    "productType": null,
@@ -36081,5 +36097,5 @@
    }
   }
  ],
- "count": 2255
+ "count": 2256
 }
