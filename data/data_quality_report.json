@@ -4817,6 +4817,22 @@
    }
   },
   {
+   "productId": 723301,
+   "productName": "Ascended Heroes Elite Trainer Box and Pokeball (Sam's Club)",
+   "productType": "ETB",
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "low",
+   "attemptedPackCount": 3,
+   "packCountSource": "parsed",
+   "attemptedPromo": null,
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"723301\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:ETB\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 633083,
    "productName": "Azure Legends Tin [Xerneas ex] (International Version)",
    "productType": "Tin",
@@ -35201,6 +35217,22 @@
    }
   },
   {
+   "productId": 723266,
+   "productName": "Marvel: Darkhold Destiny - Collector Booster Display",
+   "productType": "Collector Booster Box",
+   "groupId": 24909,
+   "setName": "Marvel: Darkhold Destiny",
+   "confidence": "medium",
+   "attemptedPackCount": 12,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"723266\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24909:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 236348,
    "productName": "Modern Horizons 2 - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -36097,5 +36129,5 @@
    }
   }
  ],
- "count": 2256
+ "count": 2258
 }
