@@ -7,6 +7,7 @@ import SetDetail from './views/SetDetail.jsx'
 import Screener from './views/Screener.jsx'
 import PremiumVsMedian from './views/PremiumVsMedian.jsx'
 import Signals from './views/Signals.jsx'
+import Market from './views/Market.jsx'
 
 function useRoute() {
   const [hash, setHash] = useState(window.location.hash || '#/cohort')
@@ -20,6 +21,7 @@ function useRoute() {
 }
 
 const NAV = [
+  ['market', 'Market'],
   ['cohort', 'Cohort Curves'],
   ['signals', 'Signals'],
   ['screener', 'Screener'],
@@ -167,6 +169,7 @@ export default function App() {
         <div className="hidden sm:flex justify-end pb-2">
           <span className="muted text-xs">data through {meta.latestDate}</span>
         </div>
+        {page === 'market' && <Market key={game} game={game} />}
         {page === 'cohort' && <CohortCurves key={game} meta={gameMeta} game={game} />}
         {page === 'signals' && <Signals meta={meta} game={game} />}
         {page === 'bands' && <AgeBandMedians key={game} meta={gameMeta} game={game} />}
@@ -180,7 +183,7 @@ export default function App() {
         style={{ background: 'color-mix(in oklab, var(--surface-0) 94%, transparent)', borderTop: '1px solid var(--border)' }}>
         {NAV.map(([key, label]) => (
           <a key={key} href={`#/${key}`} className="mobile-tab" data-on={String(navActive(key))}>
-            {label.replace(' Curves', '').replace(' Medians', '').replace('Premium vs Median', 'Premium')}
+            {label.replace(' Curves', '').replace('Age-Band Medians', 'Bands').replace('Premium vs Median', 'Premium')}
           </a>
         ))}
       </nav>

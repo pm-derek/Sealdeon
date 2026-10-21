@@ -289,6 +289,11 @@ def build_set_details(con, meta: dict) -> None:
         })
 
 
+def build_market(con) -> None:
+    import market
+    write_json("market.json", market.build(con))
+
+
 def build_all() -> None:
     import signals
     con = connect()
@@ -300,6 +305,7 @@ def build_all() -> None:
         build_premium_vs_median(con)
         build_set_details(con, meta)
         signals.build_signals(con, VIEWS_DIR)
+        build_market(con)
     finally:
         con.close()
     print(f"views written to {VIEWS_DIR}")

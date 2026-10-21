@@ -12,6 +12,7 @@ from __future__ import annotations
 import sys
 
 import build_views
+import intrinsic
 
 # Words that mean "more than one unit". A canonical product for a type must
 # never match these -- its price would be a multiple of the real unit.
@@ -69,6 +70,23 @@ def run(con) -> list[tuple[str, str, str]]:
         ORDER BY p.peakPrice DESC LIMIT 10""").df()
     (ok if rows.empty else err)("every chase product is a real card",
                                 "; ".join(f"{r.cleanName}={r.px}" for r in rows.itertuples()) or "clean")
+
+    # 3c. pack counts are plausible for their type. A count far from the type's
+    # convention means the description parser grabbed the wrong number -- the
+    # 151 ETB read its own set name and was decomposed as 151 packs, which made
+    # it look 88% below pack value and fired false "value" signals.
+    conv = ",".join(f"('{t}',{n})" for t, n in intrinsic.PACK_COUNTS.items()
+                    if t not in intrinsic.CASE_TYPES)
+    rows = con.execute(f"""
+        WITH c(t, n) AS (VALUES {conv})
+        SELECT s.name, p.cleanName, p.productType, p.packCount, c.n conv
+        FROM products p JOIN sets s USING(groupId) JOIN c ON c.t = p.productType
+        WHERE p.isCanonical AND p.decomposable
+          AND (p.packCount > 3 * c.n OR p.packCount < c.n / 3.0)
+        ORDER BY p.packCount DESC LIMIT 20""").df()
+    (ok if rows.empty else err)("pack counts plausible for their type",
+                                "; ".join(f"{r.cleanName}={r.packCount:g} (type ~{r.conv})"
+                                          for r in rows.itertuples()) or "clean")
 
     # 4. single-unit price sanity (a case masquerading as a unit shows up here)
     cases = ",".join(f"('{k}',{v})" for k, v in MAX_SANE.items())

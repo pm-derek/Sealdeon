@@ -70,6 +70,29 @@ check("pack count 36", parse_pack_count("Contains 36 booster packs.") == 36)
 check("pack count 9 w/ set name", parse_pack_count("Contains 9 Scarlet & Violet booster packs and 1 promo card.") == 9)
 check("word number", parse_pack_count("Includes eight booster packs!") == 8)
 check("case decompose", parse_pack_count("Contains 6 booster boxes.") == 216)
+# TCGplayer separates the TCG name from the set with an em dash. Without dash
+# support the 151 ETB read its own set name as the count (151 packs).
+check("em-dash set name: 151 ETB",
+      parse_pack_count("• 9 Pokémon TCG: Scarlet & Violet—151 booster packs") == 9)
+check("em-dash set name: PKC ETB",
+      parse_pack_count("• 11 Pokémon TCG: Scarlet & Violet—Surging Sparks booster packs") == 11)
+check("ordinal in set name is not a count",
+      parse_pack_count("• 11 Pokémon TCG: 30th Celebration booster packs") == 11)
+check("filler does not step over another number",
+      parse_pack_count("an extra set of 65 card sleeves and a metallic coin—plus 10 booster packs") == 10)
+check("word-number pack count after a promo",
+      parse_pack_count("Each tin contains 1 promo card and four booster packs") == 4)
+from intrinsic import resolve_pack_count  # noqa: E402
+check("multi-set fragment falls back to convention",
+      resolve_pack_count({"productId": 1, "productType": "3-Pack Blister", "name": "Dragonite 3 Pack Blister",
+                          "cardText": "Each blister contains 2 XY—Roaring Skies booster packs, 1 XY—Primal Clash booster pack"},
+                         {}) == (3, "static"))
+check("half box keeps its real 18",
+      resolve_pack_count({"productId": 2, "productType": "Booster Box", "name": "Pitch Black Half Booster Box",
+                          "cardText": "Each half booster box contains 18 booster packs"}, {})[0] == 18)
+check("over-count is trusted (PKC ETB 11 > convention 9)",
+      resolve_pack_count({"productId": 3, "productType": "PKC ETB", "name": "X PKC ETB",
+                          "cardText": "• 11 Pokémon TCG: Scarlet & Violet—X booster packs"}, {}) == (11, "parsed"))
 check("no packs -> None", parse_pack_count("A 9-pocket binder.") is None)
 name, num = parse_featured_card("an etched promo card featuring Charizard (SVP 010).")
 check("featured name", name == "Charizard", repr(name))
@@ -169,6 +192,16 @@ check("derived sum >= the top card", _p[3] * _cs["basketSize"] >= _p[5] - 0.01,
 _j = max((abs(b[3] / a[3] - 1) for a, b in zip(_cs["points"], _cs["points"][1:])
           if a[3] and b[3]), default=0)
 check("pooled basket has no >3x day-over-day step", _j < 2, f"max jump {_j:.2f}")
+
+# Market pulse runs inside build_all on every daily snapshot, so it must build
+# on a small or partial lake without crashing the pipeline.
+with open(os.path.join(views, "market.json")) as f:
+    mkt = json.load(f)
+check("market view built", "Pokemon" in mkt["games"], str(list(mkt["games"])))
+_mp = mkt["games"]["Pokemon"]
+check("market pulse has a regime", isinstance(_mp["pulse"]["regime"], str), str(_mp["pulse"]))
+check("market factors carry both windows", set(_mp["factors"]["windows"]) == {"all", "recent"})
+check("market screens are lists", all(isinstance(s["rows"], list) for s in _mp["screens"]))
 
 with open(os.path.join(views, "age_band_medians.json")) as f:
     bands = json.load(f)["rows"]
@@ -401,6 +434,22 @@ for _n in ("Double Masters 2022 Draft Booster Box", "Innistrad Double Feature Dr
     import re as _re
     _m = bool(_re.search(r"set of \d|\bhalf\b|lot of \d|pack of \d|double pack|\bcase\b", _n.lower()))
     check(f"set name with 'Double' not flagged multipack: {_n[:34]}", not _m)
+# Short keywords match as whole words. As substrings, "tin" hid in DesTINed,
+# VicTINi and FighTINg Energy and typed 68 products (energy cards included) as Tins.
+for _n, _want in [("Destined Rivals Fun Pack", None), ("Victini Box", None),
+                  ("Paradox Rift Premium Checklane Blister Tinkaton", None),
+                  ("Paldea Evolved Tin", "Tin"), ("Scarlet & Violet Tins", "Tin")]:
+    check(f"word-matched type: {_n[:38]} -> {_want}", _c2.match_product_type(_n) == _want,
+          str(_c2.match_product_type(_n)))
+check("energy card is not sealed", not _c2.is_sealed_name("Fighting Energy (2019 Unnumbered)"))
+check("worlds deck card is not sealed ('kit' in Okita)", not _c2.is_sealed_name("Raging Bolt ex - 2025 (Yuya Okita)"))
+check("Trainer's Toolkit is still sealed", _c2.is_sealed_name("Pokemon TCG: Trainer's Toolkit (2024)"))
+check("V Showcase box is still sealed", _c2.is_sealed_name("Pikachu V Showcase"))
+check("exclusions stay substrings: MasterCase is not a box",
+      _c2.match_product_type("TMNT - Collector Booster Display MasterCase", "Magic") is None)
+check("a booster pack is one pack",
+      resolve_pack_count({"productId": 9, "productType": "Sleeved Booster Pack", "name": "X Sleeved Booster Pack",
+                          "cardText": "Each pack has 10 cards. 10 booster packs per display."}, {}) == (1, "static"))
 
 print("== e2e: archive extraction (py7zr ppmd path) ==")
 import py7zr  # noqa: E402

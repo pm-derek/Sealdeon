@@ -17,6 +17,8 @@ the plain product, not a display/case/art-variant.
 """
 from __future__ import annotations
 
+import re
+
 # Ordered most-specific-first. Each entry:
 #   (productType, [keywordGroup, ...], [excludeTerm, ...])
 # keywordGroup = list of alternative substrings (lowercase), any one matches.
@@ -53,6 +55,9 @@ _SEALED_KEYWORDS = [
     "booster", "elite trainer box", "collection", "box", "pack", "tin",
     "case", "bundle", "blister", "display", "deck", "kit", "pin",
     "bag", "crate", "chest", "stadium", "academy",
+    # caught only by accident while short words matched as substrings
+    # ("tool-KIT", "show-CASE"); named explicitly now that they match as words
+    "toolkit", "showcase",
 ]
 
 
@@ -79,13 +84,32 @@ MTG_PRODUCT_TYPE_PATTERNS: list[tuple[str, list[list[str]], list[str]]] = [
 _PATTERNS_BY_GAME = {"Pokemon": PRODUCT_TYPE_PATTERNS, "Magic": MTG_PRODUCT_TYPE_PATTERNS}
 
 
+# Short keywords must match as whole words. As substrings they hide inside
+# Pokemon and set names: "tin" is in DesTINed Rivals, VicTINi and FighTINg
+# Energy, which typed 68 products -- energy cards included -- as Tins. Longer
+# phrases ("elite trainer box") are safe as substrings and stay that way.
+_SHORT_WORD = 4
+_word_res: dict[str, re.Pattern] = {}
+
+
+def _has(term: str, n: str) -> bool:
+    if len(term) > _SHORT_WORD or not term.isalpha():
+        return term in n
+    rx = _word_res.get(term)
+    if rx is None:
+        rx = _word_res[term] = re.compile(rf"\b{re.escape(term)}(?:e?s)?\b")
+    return rx.search(n) is not None
+
+
 def match_product_type(name: str, game: str = "Pokemon") -> str | None:
     """Return the sealed productType for a product name, or None."""
     n = name.lower()
     for product_type, keyword_groups, excludes in _PATTERNS_BY_GAME.get(game, PRODUCT_TYPE_PATTERNS):
+        # exclusions stay plain substrings: over-excluding is the safe side, and
+        # "mastercase" / "showcase" must still read as cases
         if any(term in n for term in excludes):
             continue
-        if all(any(alt in n for alt in group) for group in keyword_groups):
+        if all(any(_has(alt, n) for alt in group) for group in keyword_groups):
             return product_type
     return None
 
@@ -113,7 +137,7 @@ def is_sealed_name(name: str, game: str = "Pokemon") -> bool:
     n = name.lower()
     if match_product_type(name) is not None:
         return True
-    return any(kw in n for kw in _SEALED_KEYWORDS)
+    return any(_has(kw, n) for kw in _SEALED_KEYWORDS)
 
 
 def _extended(product: dict) -> dict:

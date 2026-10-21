@@ -105,11 +105,22 @@ _WORD_NUMBERS = {
 }
 _NUM = r"(\d+|" + "|".join(_WORD_NUMBERS) + r")"
 
+# Filler allowed between the count and "booster packs" (the set name, mostly).
+# Must include en/em dashes: TCGplayer writes "9 Pokémon TCG: Scarlet &
+# Violet—151 booster packs", and without the dash the match cannot bridge from
+# the 9 and falls through to the set name's own number -- the 151 ETB parsed as
+# 151 packs, fabricating a -88% premium.
+# The filler must not step over a standalone number, or "65 card sleeves and a
+# coin--plus 10 booster packs" bridges from the 65. A number glued to a dash
+# ("Violet--151") is part of a set name and stays allowed.
+_FILL = (r"(?:(?!\s(?:\d+|" + "|".join(_WORD_NUMBERS) + r")\b(?!-))"
+         r"[\w\s:&'\.\-–—])")
 _PACK_RES = [
-    re.compile(_NUM + r"\s+(?:[\w\s:&'\.\-]{0,60}?\s)?booster\s+packs?\b", re.IGNORECASE),
+    re.compile(_NUM + r"\s+(?:" + _FILL + r"{0,60}?\s)?booster\s+packs?\b", re.IGNORECASE),
     re.compile(_NUM + r"\s+(?:additional\s+)?packs?\b", re.IGNORECASE),
 ]
-_BOX_RE = re.compile(_NUM + r"\s+(?:[\w\s:&'\.\-]{0,60}?\s)?booster\s+box(?:es)?\b", re.IGNORECASE)
+_SMALLER_UNIT_RE = re.compile(r"\bhalf\b|\bsingle\b|checklane|\bmini\b")
+_BOX_RE = re.compile(_NUM + r"\s+(?:" + _FILL + r"{0,60}?\s)?booster\s+box(?:es)?\b", re.IGNORECASE)
 
 # Capture a capitalized word sequence after "featuring" -- stops at
 # punctuation, parentheses, or lowercase filler ("promo", "ex", ...).
@@ -190,6 +201,11 @@ def resolve_pack_count(product: dict, overrides: dict[int, int]) -> tuple[int | 
     ptype = product.get("productType")
     if pid in overrides:
         return overrides[pid], "override"
+    # A pack is one pack. Its description talks about the cards inside
+    # ("10 cards") and the display it ships in, which the parser can misread
+    # (XY BREAKpoint Sleeved Booster Pack decomposed as 10).
+    if ptype in ("Booster Pack", "Sleeved Booster Pack"):
+        return 1, "static"
     parsed = parse_pack_count(product.get("cardText"))
     if parsed is not None:
         # Plausibility guard for Case types: a case must hold at least as
@@ -198,6 +214,17 @@ def resolve_pack_count(product: dict, overrides: dict[int, int]) -> tuple[int | 
         # the static floor instead and let confidence flag it.
         if ptype in CASE_TYPES and ptype in PACK_COUNTS and parsed < PACK_COUNTS[ptype]:
             return PACK_COUNTS[ptype], "static"
+        # Under-count guard for single units. Multi-set listings state packs
+        # one line per set ("2 Roaring Skies packs, 1 Primal Clash pack") and
+        # the parser takes the first line, so a count well BELOW the type's
+        # convention is usually a fragment. Over-counts are left alone -- they
+        # are real (PKC ETBs hold 11, the 30th Celebration UPC 30) -- and so are
+        # names that announce a smaller unit (half boxes, checklane blisters).
+        static = PACK_COUNTS.get(ptype)
+        name = (product.get("name") or product.get("cleanName") or "").lower()
+        if (ptype not in CASE_TYPES and static and parsed < 0.75 * static
+                and not _SMALLER_UNIT_RE.search(name)):
+            return static, "static"
         return parsed, "parsed"
     if ptype in PACK_COUNTS:
         return PACK_COUNTS[ptype], "static"
