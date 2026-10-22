@@ -483,7 +483,7 @@
   {
    "productId": 98613,
    "productName": "Victini Box",
-   "productType": "Tin",
+   "productType": null,
    "groupId": 1400,
    "setName": "Black and White",
    "confidence": "low",
@@ -493,7 +493,7 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"98613\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1400:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"1400:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -2103,8 +2103,8 @@
    "groupId": 24584,
    "setName": "First Partner Collection 2026",
    "confidence": "low",
-   "attemptedPackCount": 2,
-   "packCountSource": "parsed",
+   "attemptedPackCount": 1,
+   "packCountSource": "static",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -2573,6 +2573,22 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"120114\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1728:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 123433,
+   "productName": "Mythical Pokemon Collection Box [Victini]",
+   "productType": null,
+   "groupId": 1728,
+   "setName": "Generations",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"123433\": <count>",
     "promo": "add to config/promo_overrides.json as \"1728:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -3389,38 +3405,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"715708\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24448:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 668931,
-   "productName": "Phantasmal Flames Premium Checklane Blister [Arven's Greedent]",
-   "productType": null,
-   "groupId": 24448,
-   "setName": "ME02: Phantasmal Flames",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"668931\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24448:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 672588,
-   "productName": "Phantasmal Flames Premium Checklane Blister [Ethan's Magcargo]",
-   "productType": null,
-   "groupId": 24448,
-   "setName": "ME02: Phantasmal Flames",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"672588\": <count>",
     "promo": "add to config/promo_overrides.json as \"24448:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -4401,38 +4385,6 @@
    }
   },
   {
-   "productId": 679556,
-   "productName": "Ascended Heroes Mini Tin Display",
-   "productType": "Mini Tin Display",
-   "groupId": 24541,
-   "setName": "ME: Ascended Heroes",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"679556\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24541:Mini Tin Display\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 689031,
-   "productName": "Ascended Heroes Mini Tin Display Case",
-   "productType": null,
-   "groupId": 24541,
-   "setName": "ME: Ascended Heroes",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"689031\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24541:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 668530,
    "productName": "Ascended Heroes Mini Tins 5-Pack",
    "productType": null,
@@ -4823,8 +4775,8 @@
    "groupId": 2374,
    "setName": "Miscellaneous Cards & Products",
    "confidence": "low",
-   "attemptedPackCount": 3,
-   "packCountSource": "parsed",
+   "attemptedPackCount": 9,
+   "packCountSource": "static",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -5303,8 +5255,8 @@
    "groupId": 2374,
    "setName": "Miscellaneous Cards & Products",
    "confidence": "low",
-   "attemptedPackCount": 6,
-   "packCountSource": "static",
+   "attemptedPackCount": 9,
+   "packCountSource": "parsed",
    "attemptedPromo": "Magneton",
    "promoSource": "unresolved",
    "howToFix": {
@@ -6190,6 +6142,22 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"220291\": <count>",
     "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 239236,
+   "productName": "Gardevoir V/Victini V Battle Decks [Set of 2]",
+   "productType": null,
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"239236\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -7207,7 +7175,7 @@
    "groupId": 2374,
    "setName": "Miscellaneous Cards & Products",
    "confidence": "low",
-   "attemptedPackCount": 1,
+   "attemptedPackCount": 10,
    "packCountSource": "parsed",
    "attemptedPromo": "Lugia",
    "promoSource": "unresolved",
@@ -7815,7 +7783,7 @@
    "groupId": 2374,
    "setName": "Miscellaneous Cards & Products",
    "confidence": "low",
-   "attemptedPackCount": 1,
+   "attemptedPackCount": 10,
    "packCountSource": "parsed",
    "attemptedPromo": "Mimikyu",
    "promoSource": "unresolved",
@@ -8993,6 +8961,22 @@
    }
   },
   {
+   "productId": 233354,
+   "productName": "V Battle Deck Bundle [Victini V/Gardevoir V]",
+   "productType": null,
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"233354\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 230393,
    "productName": "V Battle Deck Display [Venusaur V/Blastoise V]",
    "productType": null,
@@ -9149,6 +9133,22 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"230397\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 233356,
+   "productName": "V Battle Deck [Victini V]",
+   "productType": null,
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"233356\": <count>",
     "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -9393,6 +9393,22 @@
    }
   },
   {
+   "productId": 616920,
+   "productName": "Victini ex/Miraidon ex Battle Decks [Set of 2]",
+   "productType": null,
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"616920\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 280847,
    "productName": "Virizion V Box",
    "productType": null,
@@ -9485,6 +9501,22 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"282003\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 497967,
+   "productName": "ex Battle Deck (Chien-Pao/Tinkaton] [Set of 2]",
+   "productType": null,
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"497967\": <count>",
     "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -9665,6 +9697,38 @@
    }
   },
   {
+   "productId": 497841,
+   "productName": "ex Battle Deck [Tinkaton ex]",
+   "productType": null,
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"497841\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 557326,
+   "productName": "ex Battle Deck [Victini ex]",
+   "productType": null,
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"557326\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 229177,
    "productName": "Mysterious Treasures Theme Deck - \"Armor Fortress\"",
    "productType": null,
@@ -9694,6 +9758,38 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"229176\": <count>",
     "promo": "add to config/promo_overrides.json as \"1368:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 232872,
+   "productName": "Neo Destiny Theme Deck - \"Dark\"",
+   "productType": null,
+   "groupId": 1444,
+   "setName": "Neo Destiny",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"232872\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1444:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 232869,
+   "productName": "Neo Destiny Theme Deck - \"Light\"",
+   "productType": null,
+   "groupId": 1444,
+   "setName": "Neo Destiny",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"232869\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1444:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -9789,6 +9885,38 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"98635\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1412:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 98633,
+   "productName": "Next Destinies Theme Deck - \"Explosive Edge\" [Reshiram]",
+   "productType": null,
+   "groupId": 1412,
+   "setName": "Next Destinies",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"98633\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1412:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 98634,
+   "productName": "Next Destinies Theme Deck - \"Voltage Vortex\" [Zekrom]",
+   "productType": null,
+   "groupId": 1412,
+   "setName": "Next Destinies",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"98634\": <count>",
     "promo": "add to config/promo_overrides.json as \"1412:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -10033,13 +10161,45 @@
    }
   },
   {
+   "productId": 229173,
+   "productName": "Platinum Theme Deck - \"Flourish\"",
+   "productType": null,
+   "groupId": 1406,
+   "setName": "Platinum",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"229173\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1406:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 229175,
+   "productName": "Platinum Theme Deck - \"Rebellion\"",
+   "productType": null,
+   "groupId": 1406,
+   "setName": "Platinum",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"229175\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1406:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 485825,
    "productName": "Spring 2009 Collector's Tin [Dialga LV.X]",
    "productType": "Tin",
    "groupId": 1406,
    "setName": "Platinum",
    "confidence": "low",
-   "attemptedPackCount": 1,
+   "attemptedPackCount": 4,
    "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
@@ -10055,7 +10215,7 @@
    "groupId": 1406,
    "setName": "Platinum",
    "confidence": "low",
-   "attemptedPackCount": 1,
+   "attemptedPackCount": 4,
    "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
@@ -10493,6 +10653,54 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"537917\": <count>",
+    "promo": "add to config/promo_overrides.json as \"22880:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 476143,
+   "productName": "Fighting Energy (Prize Pack Series 1)",
+   "productType": null,
+   "groupId": 22880,
+   "setName": "Prize Pack Series Cards",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"476143\": <count>",
+    "promo": "add to config/promo_overrides.json as \"22880:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 492717,
+   "productName": "Fighting Energy (Prize Pack Series 2)",
+   "productType": null,
+   "groupId": 22880,
+   "setName": "Prize Pack Series Cards",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"492717\": <count>",
+    "promo": "add to config/promo_overrides.json as \"22880:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 537931,
+   "productName": "Fighting Energy (Prize Pack Series 3) (Cosmos Holo)",
+   "productType": null,
+   "groupId": 22880,
+   "setName": "Prize Pack Series Cards",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"537931\": <count>",
     "promo": "add to config/promo_overrides.json as \"22880:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -11255,8 +11463,8 @@
    "groupId": 2278,
    "setName": "SM - Celestial Storm",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -11271,8 +11479,8 @@
    "groupId": 2278,
    "setName": "SM - Celestial Storm",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -11400,7 +11608,7 @@
    "setName": "SM - Cosmic Eclipse",
    "confidence": "low",
    "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -11416,7 +11624,7 @@
    "setName": "SM - Cosmic Eclipse",
    "confidence": "low",
    "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -11639,8 +11847,8 @@
    "groupId": 2071,
    "setName": "SM - Crimson Invasion",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -11655,8 +11863,8 @@
    "groupId": 2071,
    "setName": "SM - Crimson Invasion",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -12024,7 +12232,7 @@
    "setName": "SM - Guardians Rising",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -12040,7 +12248,7 @@
    "setName": "SM - Guardians Rising",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -12103,8 +12311,8 @@
    "groupId": 1919,
    "setName": "SM - Guardians Rising",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -12119,8 +12327,8 @@
    "groupId": 1919,
    "setName": "SM - Guardians Rising",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -12135,8 +12343,8 @@
    "groupId": 1919,
    "setName": "SM - Guardians Rising",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -12151,8 +12359,8 @@
    "groupId": 1919,
    "setName": "SM - Guardians Rising",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -12472,7 +12680,7 @@
    "setName": "SM - Lost Thunder",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -12488,7 +12696,7 @@
    "setName": "SM - Lost Thunder",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -12520,7 +12728,7 @@
    "setName": "SM - Lost Thunder",
    "confidence": "low",
    "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -12561,30 +12769,14 @@
    }
   },
   {
-   "productId": 229391,
-   "productName": "Lost Thunder Launch Kit",
-   "productType": null,
-   "groupId": 2328,
-   "setName": "SM - Lost Thunder",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"229391\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2328:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 177907,
    "productName": "Lost Thunder Single Pack Blister [Rowlett]",
    "productType": null,
    "groupId": 2328,
    "setName": "SM - Lost Thunder",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -12599,8 +12791,8 @@
    "groupId": 2328,
    "setName": "SM - Lost Thunder",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -12648,7 +12840,7 @@
    "setName": "SM - Team Up",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -12664,7 +12856,7 @@
    "setName": "SM - Team Up",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -12702,38 +12894,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"181704\": <count>",
     "promo": "add to config/promo_overrides.json as \"2377:ETB\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 624521,
-   "productName": "Team Up Premium Checklane Blister [Gyarados]",
-   "productType": null,
-   "groupId": 2377,
-   "setName": "SM - Team Up",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"624521\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2377:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 624522,
-   "productName": "Team Up Premium Checklane Blister [Raichu]",
-   "productType": null,
-   "groupId": 2377,
-   "setName": "SM - Team Up",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"624522\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2377:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -12775,8 +12935,8 @@
    "groupId": 2377,
    "setName": "SM - Team Up",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -12791,8 +12951,8 @@
    "groupId": 2377,
    "setName": "SM - Team Up",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -13096,7 +13256,7 @@
    "setName": "SM - Unbroken Bonds",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -13112,7 +13272,7 @@
    "setName": "SM - Unbroken Bonds",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -13207,8 +13367,8 @@
    "groupId": 2420,
    "setName": "SM - Unbroken Bonds",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -13223,8 +13383,8 @@
    "groupId": 2420,
    "setName": "SM - Unbroken Bonds",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -13239,8 +13399,8 @@
    "groupId": 2420,
    "setName": "SM - Unbroken Bonds",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -13255,8 +13415,8 @@
    "groupId": 2420,
    "setName": "SM - Unbroken Bonds",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -13336,7 +13496,7 @@
    "setName": "SM - Unified Minds",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -13352,7 +13512,7 @@
    "setName": "SM - Unified Minds",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -13383,8 +13543,8 @@
    "groupId": 2464,
    "setName": "SM - Unified Minds",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 8,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -13405,38 +13565,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"686509\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2464:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 229580,
-   "productName": "Unified Minds Premium Checklane Blister [Espeon]",
-   "productType": null,
-   "groupId": 2464,
-   "setName": "SM - Unified Minds",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"229580\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2464:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 229579,
-   "productName": "Unified Minds Premium Checklane Blister [Umbreon]",
-   "productType": null,
-   "groupId": 2464,
-   "setName": "SM - Unified Minds",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"229579\": <count>",
     "promo": "add to config/promo_overrides.json as \"2464:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -13463,8 +13591,8 @@
    "groupId": 2464,
    "setName": "SM - Unified Minds",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -13479,8 +13607,8 @@
    "groupId": 2464,
    "setName": "SM - Unified Minds",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -14328,7 +14456,7 @@
    "setName": "SV03: Obsidian Flames",
    "confidence": "low",
    "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -14343,8 +14471,8 @@
    "groupId": 23228,
    "setName": "SV03: Obsidian Flames",
    "confidence": "low",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "attemptedPackCount": 3,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -14552,7 +14680,7 @@
    "setName": "SV04: Paradox Rift",
    "confidence": "low",
    "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -14568,7 +14696,7 @@
    "setName": "SV04: Paradox Rift",
    "confidence": "low",
    "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -14583,8 +14711,8 @@
    "groupId": 23286,
    "setName": "SV04: Paradox Rift",
    "confidence": "low",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "attemptedPackCount": 3,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -14599,8 +14727,8 @@
    "groupId": 23286,
    "setName": "SV04: Paradox Rift",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 3,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -14621,22 +14749,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"607504\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23286:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 546605,
-   "productName": "Paradox Rift Premium Checklane Blister [Hydreigon]",
-   "productType": null,
-   "groupId": 23286,
-   "setName": "SV04: Paradox Rift",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"546605\": <count>",
     "promo": "add to config/promo_overrides.json as \"23286:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -14801,46 +14913,14 @@
    }
   },
   {
-   "productId": 544679,
-   "productName": "Temporal Forces Premium Checklane Blister [Baxcalibur]",
-   "productType": null,
-   "groupId": 23381,
-   "setName": "SV05: Temporal Forces",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"544679\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23381:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 544687,
-   "productName": "Temporal Forces Premium Checklane Blister [Togekiss]",
-   "productType": null,
-   "groupId": 23381,
-   "setName": "SV05: Temporal Forces",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"544687\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23381:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 536594,
    "productName": "Temporal Forces Single Pack Blister [Bellibolt]",
    "productType": null,
    "groupId": 23381,
    "setName": "SV05: Temporal Forces",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -14855,8 +14935,8 @@
    "groupId": 23381,
    "setName": "SV05: Temporal Forces",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -14871,8 +14951,8 @@
    "groupId": 23381,
    "setName": "SV05: Temporal Forces",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -14887,8 +14967,8 @@
    "groupId": 23381,
    "setName": "SV05: Temporal Forces",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -15288,7 +15368,7 @@
    "setName": "SV08: Surging Sparks",
    "confidence": "low",
    "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -15304,7 +15384,7 @@
    "setName": "SV08: Surging Sparks",
    "confidence": "low",
    "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -15617,6 +15697,22 @@
    }
   },
   {
+   "productId": 649711,
+   "productName": "Destined Rivals Booster Pack Art Bundle [Set of 4]",
+   "productType": null,
+   "groupId": 24269,
+   "setName": "SV10: Destined Rivals",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"649711\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24269:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 625677,
    "productName": "Destined Rivals Build & Battle Box",
    "productType": "Build & Battle",
@@ -15624,7 +15720,7 @@
    "setName": "SV10: Destined Rivals",
    "confidence": "low",
    "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -15640,7 +15736,7 @@
    "setName": "SV10: Destined Rivals",
    "confidence": "low",
    "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -15665,14 +15761,30 @@
    }
   },
   {
+   "productId": 650765,
+   "productName": "Destined Rivals Fun Pack",
+   "productType": null,
+   "groupId": 24269,
+   "setName": "SV10: Destined Rivals",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"650765\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24269:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 624675,
    "productName": "Destined Rivals Pokemon Center Elite Trainer Box (Exclusive)",
    "productType": "PKC ETB",
    "groupId": 24269,
    "setName": "SV10: Destined Rivals",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 11,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -15683,7 +15795,7 @@
   {
    "productId": 633105,
    "productName": "Destined Rivals Single Pack Blister [Eevee]",
-   "productType": "Tin",
+   "productType": null,
    "groupId": 24269,
    "setName": "SV10: Destined Rivals",
    "confidence": "low",
@@ -15693,13 +15805,13 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"633105\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24269:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"24269:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
    "productId": 633106,
    "productName": "Destined Rivals Single Pack Blister [Zarude]",
-   "productType": "Tin",
+   "productType": null,
    "groupId": 24269,
    "setName": "SV10: Destined Rivals",
    "confidence": "low",
@@ -15709,23 +15821,7 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"633106\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24269:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 630429,
-   "productName": "Black Bolt  Binder Collection Case",
-   "productType": null,
-   "groupId": 24325,
-   "setName": "SV: Black Bolt",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"630429\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24325:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"24269:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -15751,8 +15847,8 @@
    "groupId": 24325,
    "setName": "SV: Black Bolt",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 11,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -15774,22 +15870,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"630691\": <count>",
     "promo": "add to config/promo_overrides.json as \"24325:PKC ETB Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 630614,
-   "productName": "Black Bolt Tech Sticker Collection",
-   "productType": null,
-   "groupId": 24325,
-   "setName": "SV: Black Bolt",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": "Reuniclus - 212",
-   "promoSource": "auto",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"630614\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24325:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -15825,162 +15905,18 @@
    }
   },
   {
-   "productId": 630444,
-   "productName": "Unova Mini Tin [Alomomola & Axew]",
-   "productType": null,
-   "groupId": 24325,
-   "setName": "SV: Black Bolt",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"630444\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24325:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 630439,
-   "productName": "Unova Mini Tin [Chandelure & Zorua]",
-   "productType": null,
-   "groupId": 24325,
-   "setName": "SV: Black Bolt",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"630439\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24325:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 630445,
-   "productName": "Unova Mini Tin [Elektross & Galvantula]",
-   "productType": null,
-   "groupId": 24325,
-   "setName": "SV: Black Bolt",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"630445\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24325:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 630438,
-   "productName": "Unova Mini Tin [Garbodor & Amoonguss]",
-   "productType": null,
-   "groupId": 24325,
-   "setName": "SV: Black Bolt",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"630438\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24325:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 630440,
-   "productName": "Unova Mini Tin [Krookodile & Excadrill]",
-   "productType": null,
-   "groupId": 24325,
-   "setName": "SV: Black Bolt",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"630440\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24325:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 630442,
-   "productName": "Unova Mini Tin [Lilligant & Whimsicot]",
-   "productType": null,
-   "groupId": 24325,
-   "setName": "SV: Black Bolt",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"630442\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24325:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 630443,
-   "productName": "Unova Mini Tin [Mienshao & Klinklang]",
-   "productType": null,
-   "groupId": 24325,
-   "setName": "SV: Black Bolt",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"630443\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24325:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 630441,
-   "productName": "Unova Mini Tin [Volcarona & Emolga]",
-   "productType": null,
-   "groupId": 24325,
-   "setName": "SV: Black Bolt",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"630441\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24325:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 630613,
    "productName": "Unova Poster Collection Case",
    "productType": null,
    "groupId": 24325,
    "setName": "SV: Black Bolt",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 3,
+   "packCountSource": "parsed",
    "attemptedPromo": "Snivy",
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"630613\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24325:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 649220,
-   "productName": "Unova Victini Illustration Collection Case",
-   "productType": null,
-   "groupId": 24325,
-   "setName": "SV: Black Bolt",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": "Victini - 208",
-   "promoSource": "auto",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"649220\": <count>",
     "promo": "add to config/promo_overrides.json as \"24325:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -16008,7 +15944,7 @@
    "setName": "SV: Paldean Fates",
    "confidence": "low",
    "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": "Shiny Mimikyu",
    "promoSource": "unresolved",
    "howToFix": {
@@ -16103,8 +16039,8 @@
    "groupId": 23353,
    "setName": "SV: Paldean Fates",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 11,
+   "packCountSource": "parsed",
    "attemptedPromo": "Shiny Mimikyu",
    "promoSource": "unresolved",
    "howToFix": {
@@ -16359,29 +16295,13 @@
    "groupId": 23821,
    "setName": "SV: Prismatic Evolutions",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 5,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"606881\": <count>",
     "promo": "add to config/promo_overrides.json as \"23821:Special Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 629828,
-   "productName": "Prismatic Evolutions Accessory Pouch Special Collection Case",
-   "productType": null,
-   "groupId": 23821,
-   "setName": "SV: Prismatic Evolutions",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"629828\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23821:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -16417,173 +16337,13 @@
    }
   },
   {
-   "productId": 593458,
-   "productName": "Prismatic Evolutions Mini Tin [Espeon]",
-   "productType": null,
-   "groupId": 23821,
-   "setName": "SV: Prismatic Evolutions",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"593458\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23821:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 593457,
-   "productName": "Prismatic Evolutions Mini Tin [Flareon]",
-   "productType": null,
-   "groupId": 23821,
-   "setName": "SV: Prismatic Evolutions",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"593457\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23821:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 593461,
-   "productName": "Prismatic Evolutions Mini Tin [Glaceon]",
-   "productType": null,
-   "groupId": 23821,
-   "setName": "SV: Prismatic Evolutions",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"593461\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23821:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 593456,
-   "productName": "Prismatic Evolutions Mini Tin [Jolteon]",
-   "productType": null,
-   "groupId": 23821,
-   "setName": "SV: Prismatic Evolutions",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"593456\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23821:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 593460,
-   "productName": "Prismatic Evolutions Mini Tin [Leafeon]",
-   "productType": null,
-   "groupId": 23821,
-   "setName": "SV: Prismatic Evolutions",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"593460\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23821:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 593462,
-   "productName": "Prismatic Evolutions Mini Tin [Sylveon]",
-   "productType": null,
-   "groupId": 23821,
-   "setName": "SV: Prismatic Evolutions",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"593462\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23821:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 593459,
-   "productName": "Prismatic Evolutions Mini Tin [Umbreon]",
-   "productType": null,
-   "groupId": 23821,
-   "setName": "SV: Prismatic Evolutions",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"593459\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23821:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 593455,
-   "productName": "Prismatic Evolutions Mini Tin [Vaporeon]",
-   "productType": null,
-   "groupId": 23821,
-   "setName": "SV: Prismatic Evolutions",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"593455\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23821:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 622770,
-   "productName": "Prismatic Evolutions Super-Premium Collection",
-   "productType": "SPC",
-   "groupId": 23821,
-   "setName": "SV: Prismatic Evolutions",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": "Eevee - 043",
-   "promoSource": "auto",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"622770\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23821:SPC\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 638058,
-   "productName": "Prismatic Evolutions Super-Premium Collection Case",
-   "productType": null,
-   "groupId": 23821,
-   "setName": "SV: Prismatic Evolutions",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": "Eevee - 043",
-   "promoSource": "auto",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"638058\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23821:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 518782,
    "productName": "151 Collection Zapdos ex Case",
    "productType": null,
    "groupId": 23237,
    "setName": "SV: Scarlet & Violet 151",
    "confidence": "low",
-   "attemptedPackCount": 151,
+   "attemptedPackCount": 4,
    "packCountSource": "parsed",
    "attemptedPromo": "Electabuzz",
    "promoSource": "unresolved",
@@ -16615,29 +16375,13 @@
    "groupId": 23237,
    "setName": "SV: Scarlet & Violet 151",
    "confidence": "low",
-   "attemptedPackCount": 151,
+   "attemptedPackCount": 4,
    "packCountSource": "parsed",
    "attemptedPromo": "Electabuzz",
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"502007\": <count>",
     "promo": "add to config/promo_overrides.json as \"23237:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 553002,
-   "productName": "Greninja ex Special Illustration Collection",
-   "productType": null,
-   "groupId": 23529,
-   "setName": "SV: Shrouded Fable",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": "Kingdra ex - 131",
-   "promoSource": "auto",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"553002\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23529:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -16673,118 +16417,6 @@
    }
   },
   {
-   "productId": 553001,
-   "productName": "Kingdra ex Special Illustration Collection",
-   "productType": null,
-   "groupId": 23529,
-   "setName": "SV: Shrouded Fable",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": "Kingdra ex - 131",
-   "promoSource": "auto",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"553001\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23529:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 553023,
-   "productName": "Shrouded Fable Mini Tin (Dusknoir)",
-   "productType": null,
-   "groupId": 23529,
-   "setName": "SV: Shrouded Fable",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"553023\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23529:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 553018,
-   "productName": "Shrouded Fable Mini Tin (Fezandipiti)",
-   "productType": null,
-   "groupId": 23529,
-   "setName": "SV: Shrouded Fable",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"553018\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23529:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 553011,
-   "productName": "Shrouded Fable Mini Tin (Munkidori)",
-   "productType": null,
-   "groupId": 23529,
-   "setName": "SV: Shrouded Fable",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"553011\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23529:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 553012,
-   "productName": "Shrouded Fable Mini Tin (Okidogi)",
-   "productType": null,
-   "groupId": 23529,
-   "setName": "SV: Shrouded Fable",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"553012\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23529:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 553010,
-   "productName": "Shrouded Fable Mini Tin (Zoroark)",
-   "productType": null,
-   "groupId": 23529,
-   "setName": "SV: Shrouded Fable",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"553010\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23529:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 553009,
-   "productName": "Shrouded Fable Mini Tin [Set of 5]",
-   "productType": null,
-   "groupId": 23529,
-   "setName": "SV: Shrouded Fable",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"553009\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23529:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 553075,
    "productName": "Shrouded Fable Special Illustration Collection Case",
    "productType": null,
@@ -16801,22 +16433,6 @@
    }
   },
   {
-   "productId": 630694,
-   "productName": "White Flare  Binder Collection Case",
-   "productType": null,
-   "groupId": 24326,
-   "setName": "SV: White Flare",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"630694\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24326:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 630689,
    "productName": "White Flare Elite Trainer Box",
    "productType": "ETB",
@@ -16824,7 +16440,7 @@
    "setName": "SV: White Flare",
    "confidence": "low",
    "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -16855,8 +16471,8 @@
    "groupId": 24326,
    "setName": "SV: White Flare",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 11,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -16878,22 +16494,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"630692\": <count>",
     "promo": "add to config/promo_overrides.json as \"24326:PKC ETB Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 630700,
-   "productName": "White Flare Tech Sticker Collection",
-   "productType": null,
-   "groupId": 24326,
-   "setName": "SV: White Flare",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": "Reuniclus - 212",
-   "promoSource": "auto",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"630700\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24326:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -17617,41 +17217,9 @@
    }
   },
   {
-   "productId": 276576,
-   "productName": "Rebel Clash Premium Checklane Blister [Galarian Obstagoon]",
-   "productType": null,
-   "groupId": 2626,
-   "setName": "SWSH02: Rebel Clash",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"276576\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2626:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 276575,
-   "productName": "Rebel Clash Premium Checklane Blister [Gengar]",
-   "productType": null,
-   "groupId": 2626,
-   "setName": "SWSH02: Rebel Clash",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"276575\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2626:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 210564,
    "productName": "Rebel Clash Single Pack Blister [Mantine]",
-   "productType": "Tin",
+   "productType": null,
    "groupId": 2626,
    "setName": "SWSH02: Rebel Clash",
    "confidence": "low",
@@ -17661,7 +17229,7 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"210564\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2626:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"2626:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -17831,8 +17399,8 @@
    "groupId": 2675,
    "setName": "SWSH03: Darkness Ablaze",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 8,
+   "packCountSource": "parsed",
    "attemptedPromo": "Eternatus",
    "promoSource": "unresolved",
    "howToFix": {
@@ -17873,46 +17441,14 @@
    }
   },
   {
-   "productId": 220108,
-   "productName": "Darkness Ablaze Premium Checklane Blister [Dragapult]",
-   "productType": null,
-   "groupId": 2675,
-   "setName": "SWSH03: Darkness Ablaze",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"220108\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2675:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 220109,
-   "productName": "Darkness Ablaze Premium Checklane Blister [Grimmsnarl]",
-   "productType": null,
-   "groupId": 2675,
-   "setName": "SWSH03: Darkness Ablaze",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"220109\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2675:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 216859,
    "productName": "Darkness Ablaze Single Pack Blister [Hatenna]",
    "productType": null,
    "groupId": 2675,
    "setName": "SWSH03: Darkness Ablaze",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -17927,8 +17463,8 @@
    "groupId": 2675,
    "setName": "SWSH03: Darkness Ablaze",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -18055,7 +17591,7 @@
    "groupId": 2675,
    "setName": "SWSH03: Darkness Ablaze",
    "confidence": "low",
-   "attemptedPackCount": 1,
+   "attemptedPackCount": 6,
    "packCountSource": "parsed",
    "attemptedPromo": "Zacian",
    "promoSource": "unresolved",
@@ -18071,7 +17607,7 @@
    "groupId": 2675,
    "setName": "SWSH03: Darkness Ablaze",
    "confidence": "low",
-   "attemptedPackCount": 1,
+   "attemptedPackCount": 6,
    "packCountSource": "parsed",
    "attemptedPromo": "Zamazenta",
    "promoSource": "unresolved",
@@ -18279,8 +17815,8 @@
    "groupId": 2701,
    "setName": "SWSH04: Vivid Voltage",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 8,
+   "packCountSource": "parsed",
    "attemptedPromo": "Gigantamax Pikachu",
    "promoSource": "unresolved",
    "howToFix": {
@@ -18519,8 +18055,8 @@
    "groupId": 2765,
    "setName": "SWSH05: Battle Styles",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 8,
+   "packCountSource": "parsed",
    "attemptedPromo": "Gigantamax Rapid Strike Urshifu",
    "promoSource": "unresolved",
    "howToFix": {
@@ -18535,8 +18071,8 @@
    "groupId": 2765,
    "setName": "SWSH05: Battle Styles",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 8,
+   "packCountSource": "parsed",
    "attemptedPromo": "Gigantamax Single Strike Urshifu",
    "promoSource": "unresolved",
    "howToFix": {
@@ -18551,77 +18087,13 @@
    "groupId": 2765,
    "setName": "SWSH05: Battle Styles",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 8,
+   "packCountSource": "parsed",
    "attemptedPromo": "Gigantamax Single Strike Urshifu",
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"229284\": <count>",
     "promo": "add to config/promo_overrides.json as \"2765:ETB\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 230192,
-   "productName": "Battle Styles Premium Checklane Blister [Corviknight]",
-   "productType": null,
-   "groupId": 2765,
-   "setName": "SWSH05: Battle Styles",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"230192\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2765:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 236457,
-   "productName": "Battle Styles Premium Checklane Blister [Golisopod]",
-   "productType": null,
-   "groupId": 2765,
-   "setName": "SWSH05: Battle Styles",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"236457\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2765:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 236458,
-   "productName": "Battle Styles Premium Checklane Blister [Toxtricity]",
-   "productType": null,
-   "groupId": 2765,
-   "setName": "SWSH05: Battle Styles",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"236458\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2765:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 230191,
-   "productName": "Battle Styles Premium Checklane Blister [Tyranitar]",
-   "productType": null,
-   "groupId": 2765,
-   "setName": "SWSH05: Battle Styles",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"230191\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2765:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -18856,7 +18328,7 @@
    "setName": "SWSH06: Chilling Reign",
    "confidence": "low",
    "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -18887,8 +18359,8 @@
    "groupId": 2807,
    "setName": "SWSH06: Chilling Reign",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 8,
+   "packCountSource": "parsed",
    "attemptedPromo": "Ice Rider Calyrex",
    "promoSource": "unresolved",
    "howToFix": {
@@ -18903,8 +18375,8 @@
    "groupId": 2807,
    "setName": "SWSH06: Chilling Reign",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 8,
+   "packCountSource": "parsed",
    "attemptedPromo": "Ice Rider Calyrex",
    "promoSource": "unresolved",
    "howToFix": {
@@ -18919,8 +18391,8 @@
    "groupId": 2807,
    "setName": "SWSH06: Chilling Reign",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 8,
+   "packCountSource": "parsed",
    "attemptedPromo": "Shadow Rider Calyrex",
    "promoSource": "unresolved",
    "howToFix": {
@@ -18967,8 +18439,8 @@
    "groupId": 2807,
    "setName": "SWSH06: Chilling Reign",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 8,
+   "packCountSource": "parsed",
    "attemptedPromo": "Ice Rider Calyrex",
    "promoSource": "unresolved",
    "howToFix": {
@@ -18983,8 +18455,8 @@
    "groupId": 2807,
    "setName": "SWSH06: Chilling Reign",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 8,
+   "packCountSource": "parsed",
    "attemptedPromo": "Ice Rider Calyrex",
    "promoSource": "unresolved",
    "howToFix": {
@@ -19128,7 +18600,7 @@
    "setName": "SWSH07: Evolving Skies",
    "confidence": "low",
    "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -19144,7 +18616,7 @@
    "setName": "SWSH07: Evolving Skies",
    "confidence": "low",
    "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -19175,8 +18647,8 @@
    "groupId": 2848,
    "setName": "SWSH07: Evolving Skies",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 8,
+   "packCountSource": "parsed",
    "attemptedPromo": "Eevee",
    "promoSource": "unresolved",
    "howToFix": {
@@ -19191,8 +18663,8 @@
    "groupId": 2848,
    "setName": "SWSH07: Evolving Skies",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 8,
+   "packCountSource": "parsed",
    "attemptedPromo": "Eevee",
    "promoSource": "unresolved",
    "howToFix": {
@@ -19207,8 +18679,8 @@
    "groupId": 2848,
    "setName": "SWSH07: Evolving Skies",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 8,
+   "packCountSource": "parsed",
    "attemptedPromo": "Eevee",
    "promoSource": "unresolved",
    "howToFix": {
@@ -19255,8 +18727,8 @@
    "groupId": 2848,
    "setName": "SWSH07: Evolving Skies",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 10,
+   "packCountSource": "parsed",
    "attemptedPromo": "Eevee",
    "promoSource": "unresolved",
    "howToFix": {
@@ -19271,8 +18743,8 @@
    "groupId": 2848,
    "setName": "SWSH07: Evolving Skies",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 10,
+   "packCountSource": "parsed",
    "attemptedPromo": "Eevee",
    "promoSource": "unresolved",
    "howToFix": {
@@ -19287,29 +18759,13 @@
    "groupId": 2848,
    "setName": "SWSH07: Evolving Skies",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 10,
+   "packCountSource": "parsed",
    "attemptedPromo": "Eevee",
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"245855\": <count>",
     "promo": "add to config/promo_overrides.json as \"2848:PKC ETB\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 242445,
-   "productName": "Evolving Skies Premium Checklane Blister [Emboar]",
-   "productType": null,
-   "groupId": 2848,
-   "setName": "SWSH07: Evolving Skies",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"242445\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2848:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -19325,22 +18781,6 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"247603\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2848:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 242437,
-   "productName": "Evolving Skies Premium Checklane Blister [Luxray]",
-   "productType": null,
-   "groupId": 2848,
-   "setName": "SWSH07: Evolving Skies",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"242437\": <count>",
     "promo": "add to config/promo_overrides.json as \"2848:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -19544,7 +18984,7 @@
    "setName": "SWSH08: Fusion Strike",
    "confidence": "low",
    "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -19559,7 +18999,7 @@
    "groupId": 2906,
    "setName": "SWSH08: Fusion Strike",
    "confidence": "low",
-   "attemptedPackCount": 1,
+   "attemptedPackCount": 4,
    "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
@@ -19575,8 +19015,8 @@
    "groupId": 2906,
    "setName": "SWSH08: Fusion Strike",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 8,
+   "packCountSource": "parsed",
    "attemptedPromo": "Mew",
    "promoSource": "unresolved",
    "howToFix": {
@@ -19646,38 +19086,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"557076\": <count>",
     "promo": "add to config/promo_overrides.json as \"2906:PKC ETB Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 247675,
-   "productName": "Fusion Strike Premium Checklane Blister [Cinderace]",
-   "productType": null,
-   "groupId": 2906,
-   "setName": "SWSH08: Fusion Strike",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"247675\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2906:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 247676,
-   "productName": "Fusion Strike Premium Checklane Blister [Rillaboom]",
-   "productType": null,
-   "groupId": 2906,
-   "setName": "SWSH08: Fusion Strike",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"247676\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2906:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -19928,7 +19336,7 @@
    "setName": "SWSH09: Brilliant Stars",
    "confidence": "low",
    "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -19943,7 +19351,7 @@
    "groupId": 2948,
    "setName": "SWSH09: Brilliant Stars",
    "confidence": "low",
-   "attemptedPackCount": 1,
+   "attemptedPackCount": 4,
    "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
@@ -19959,8 +19367,8 @@
    "groupId": 2948,
    "setName": "SWSH09: Brilliant Stars",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 8,
+   "packCountSource": "parsed",
    "attemptedPromo": "Arceus",
    "promoSource": "unresolved",
    "howToFix": {
@@ -20033,22 +19441,6 @@
    }
   },
   {
-   "productId": 256143,
-   "productName": "Brilliant Stars Premium Checklane Blister [Hydreigon]",
-   "productType": null,
-   "groupId": 2948,
-   "setName": "SWSH09: Brilliant Stars",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"256143\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2948:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 722192,
    "productName": "Brilliant Stars Premium Checklane Blister [Raichu]",
    "productType": null,
@@ -20061,22 +19453,6 @@
    "promoSource": "unresolved",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"722192\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2948:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 256142,
-   "productName": "Brilliant Stars Premium Checklane Blister [Salamence]",
-   "productType": null,
-   "groupId": 2948,
-   "setName": "SWSH09: Brilliant Stars",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"256142\": <count>",
     "promo": "add to config/promo_overrides.json as \"2948:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -20264,7 +19640,7 @@
    "setName": "SWSH10: Astral Radiance",
    "confidence": "low",
    "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -20280,7 +19656,7 @@
    "setName": "SWSH10: Astral Radiance",
    "confidence": "low",
    "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -20296,7 +19672,7 @@
    "setName": "SWSH10: Astral Radiance",
    "confidence": "low",
    "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -20311,8 +19687,8 @@
    "groupId": 3040,
    "setName": "SWSH10: Astral Radiance",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 8,
+   "packCountSource": "parsed",
    "attemptedPromo": "Darkrai",
    "promoSource": "unresolved",
    "howToFix": {
@@ -20382,86 +19758,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"279424\": <count>",
     "promo": "add to config/promo_overrides.json as \"3040:PKC ETB Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 696160,
-   "productName": "Astral Radiance Premium Checklane Blister Case",
-   "productType": null,
-   "groupId": 3040,
-   "setName": "SWSH10: Astral Radiance",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"696160\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3040:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 489340,
-   "productName": "Astral Radiance Premium Checklane Blister [Feraligatr]",
-   "productType": null,
-   "groupId": 3040,
-   "setName": "SWSH10: Astral Radiance",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"489340\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3040:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 489342,
-   "productName": "Astral Radiance Premium Checklane Blister [Melmetal]",
-   "productType": null,
-   "groupId": 3040,
-   "setName": "SWSH10: Astral Radiance",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"489342\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3040:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 489341,
-   "productName": "Astral Radiance Premium Checklane Blister [Steelix]",
-   "productType": null,
-   "groupId": 3040,
-   "setName": "SWSH10: Astral Radiance",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"489341\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3040:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 489339,
-   "productName": "Astral Radiance Premium Checklane Blister [Swampert]",
-   "productType": null,
-   "groupId": 3040,
-   "setName": "SWSH10: Astral Radiance",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"489339\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3040:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -20664,7 +19960,7 @@
    "setName": "SWSH11: Lost Origin",
    "confidence": "low",
    "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -20680,7 +19976,7 @@
    "setName": "SWSH11: Lost Origin",
    "confidence": "low",
    "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -20696,7 +19992,7 @@
    "setName": "SWSH11: Lost Origin",
    "confidence": "low",
    "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -20711,8 +20007,8 @@
    "groupId": 3118,
    "setName": "SWSH11: Lost Origin",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 4,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -20727,8 +20023,8 @@
    "groupId": 3118,
    "setName": "SWSH11: Lost Origin",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 8,
+   "packCountSource": "parsed",
    "attemptedPromo": "Giratina",
    "promoSource": "unresolved",
    "howToFix": {
@@ -20785,22 +20081,6 @@
    }
   },
   {
-   "productId": 277331,
-   "productName": "Lost Origin Premium Checklane Blister [Infernape]",
-   "productType": null,
-   "groupId": 3118,
-   "setName": "SWSH11: Lost Origin",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"277331\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3118:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 278803,
    "productName": "Lost Origin Premium Checklane Blister [Set of 2]",
    "productType": null,
@@ -20813,22 +20093,6 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"278803\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3118:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 277334,
-   "productName": "Lost Origin Premium Checklane Blister [Torterra]",
-   "productType": null,
-   "groupId": 3118,
-   "setName": "SWSH11: Lost Origin",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"277334\": <count>",
     "promo": "add to config/promo_overrides.json as \"3118:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -21032,7 +20296,7 @@
    "setName": "SWSH12: Silver Tempest",
    "confidence": "low",
    "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -21048,7 +20312,7 @@
    "setName": "SWSH12: Silver Tempest",
    "confidence": "low",
    "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -21063,8 +20327,8 @@
    "groupId": 3170,
    "setName": "SWSH12: Silver Tempest",
    "confidence": "low",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 8,
+   "packCountSource": "parsed",
    "attemptedPromo": "Alolan Vulpix",
    "promoSource": "unresolved",
    "howToFix": {
@@ -21102,70 +20366,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"285860\": <count>",
     "promo": "add to config/promo_overrides.json as \"3170:PKC ETB\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 285784,
-   "productName": "Silver Tempest Premium Checklane Blister [Gallade]",
-   "productType": null,
-   "groupId": 3170,
-   "setName": "SWSH12: Silver Tempest",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"285784\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3170:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 486327,
-   "productName": "Silver Tempest Premium Checklane Blister [Hisuian Lilligant]",
-   "productType": null,
-   "groupId": 3170,
-   "setName": "SWSH12: Silver Tempest",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"486327\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3170:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 486325,
-   "productName": "Silver Tempest Premium Checklane Blister [Hisuian Sneasler]",
-   "productType": null,
-   "groupId": 3170,
-   "setName": "SWSH12: Silver Tempest",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"486325\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3170:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 285783,
-   "productName": "Silver Tempest Premium Checklane Blister [Magnezone]",
-   "productType": null,
-   "groupId": 3170,
-   "setName": "SWSH12: Silver Tempest",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"285783\": <count>",
-    "promo": "add to config/promo_overrides.json as \"3170:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -22881,390 +22081,6 @@
    }
   },
   {
-   "productId": 690469,
-   "productName": "Area Zero Underdepths - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690469\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 696748,
-   "productName": "Basic Grass Energy - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"696748\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 696751,
-   "productName": "Basic Lightning Energy - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"696751\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 690465,
-   "productName": "Boss's Orders - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690465\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 690466,
-   "productName": "Crispin - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690466\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 690462,
-   "productName": "Ditto - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690462\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 690476,
-   "productName": "Earthen Vessel - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690476\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 690478,
-   "productName": "Energy Switch - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690478\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 690285,
-   "productName": "Fan Rotom - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690285\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 690288,
-   "productName": "Fezandipiti ex - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690288\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 690284,
-   "productName": "Hoothoot - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690284\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 690467,
-   "productName": "Iono - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690467\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 690472,
-   "productName": "Jamming Tower - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690472\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 690286,
-   "productName": "Koraidon - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690286\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 690289,
-   "productName": "Latias ex - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690289\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 690474,
-   "productName": "Nest Ball - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690474\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 690477,
-   "productName": "Night Stretcher - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690477\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 690283,
-   "productName": "Noctowl - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690283\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 690479,
-   "productName": "Prime Catcher - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690479\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 690464,
-   "productName": "Professor Sada's Vitality - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690464\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 690468,
-   "productName": "Professor Turo's Scenario - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690468\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 690287,
-   "productName": "Raging Bolt - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690287\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 696841,
-   "productName": "Raging Bolt - 2025 (Yuya Okita) [Gold Stamped]",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"696841\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 690281,
-   "productName": "Raging Bolt ex - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690281\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 689112,
    "productName": "Secret Box - 2025 (Riley McKay)",
    "productType": null,
@@ -23281,54 +22097,6 @@
    }
   },
   {
-   "productId": 690463,
-   "productName": "Squawkabilly ex - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690463\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 690282,
-   "productName": "Teal Mask Ogerpon ex - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690282\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 690475,
-   "productName": "Ultra Ball - 2025 (Yuya Okita)",
-   "productType": null,
-   "groupId": 2282,
-   "setName": "World Championship Decks",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690475\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2282:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 100493,
    "productName": "Ancient Origins 3 Pack Blister [Malamar]",
    "productType": "3-Pack Blister",
@@ -23336,7 +22104,7 @@
    "setName": "XY - Ancient Origins",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -23352,7 +22120,7 @@
    "setName": "XY - Ancient Origins",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -23383,8 +22151,8 @@
    "groupId": 1576,
    "setName": "XY - Ancient Origins",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -23399,8 +22167,8 @@
    "groupId": 1576,
    "setName": "XY - Ancient Origins",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -23496,7 +22264,7 @@
    "setName": "XY - BREAKpoint",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -23512,7 +22280,7 @@
    "setName": "XY - BREAKpoint",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -23543,8 +22311,8 @@
    "groupId": 1701,
    "setName": "XY - BREAKpoint",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -23559,8 +22327,8 @@
    "groupId": 1701,
    "setName": "XY - BREAKpoint",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -23656,7 +22424,7 @@
    "setName": "XY - BREAKthrough",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -23672,7 +22440,7 @@
    "setName": "XY - BREAKthrough",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -23713,22 +22481,6 @@
    }
   },
   {
-   "productId": 107111,
-   "productName": "BREAKthrough Mega Evolution 3 Pin Blister",
-   "productType": null,
-   "groupId": 1661,
-   "setName": "XY - BREAKthrough",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"107111\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1661:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 107110,
    "productName": "BREAKthrough Pin Blisters [Mega Mewtwo] (Set of 2)",
    "productType": null,
@@ -23751,8 +22503,8 @@
    "groupId": 1661,
    "setName": "XY - BREAKthrough",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -23767,8 +22519,8 @@
    "groupId": 1661,
    "setName": "XY - BREAKthrough",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -24423,8 +23175,8 @@
    "groupId": 1842,
    "setName": "XY - Evolutions",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -24439,8 +23191,8 @@
    "groupId": 1842,
    "setName": "XY - Evolutions",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -24519,8 +23271,8 @@
    "groupId": 1780,
    "setName": "XY - Fates Collide",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -24824,7 +23576,7 @@
    "setName": "XY - Furious Fists",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -24840,7 +23592,7 @@
    "setName": "XY - Furious Fists",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -24871,8 +23623,8 @@
    "groupId": 1481,
    "setName": "XY - Furious Fists",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -24887,8 +23639,8 @@
    "groupId": 1481,
    "setName": "XY - Furious Fists",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -25144,7 +23896,7 @@
    "setName": "XY - Phantom Forces",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -25191,8 +23943,8 @@
    "groupId": 1494,
    "setName": "XY - Phantom Forces",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -25207,8 +23959,8 @@
    "groupId": 1494,
    "setName": "XY - Phantom Forces",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -25303,8 +24055,8 @@
    "groupId": 1509,
    "setName": "XY - Primal Clash",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -25319,8 +24071,8 @@
    "groupId": 1509,
    "setName": "XY - Primal Clash",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -25368,7 +24120,7 @@
    "setName": "XY - Primal Clash",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -25384,7 +24136,7 @@
    "setName": "XY - Primal Clash",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -25512,7 +24264,7 @@
    "setName": "XY - Roaring Skies",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -25528,7 +24280,7 @@
    "setName": "XY - Roaring Skies",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -25704,7 +24456,7 @@
    "setName": "XY - Steam Siege",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -25720,7 +24472,7 @@
    "setName": "XY - Steam Siege",
    "confidence": "low",
    "attemptedPackCount": 3,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -25783,8 +24535,8 @@
    "groupId": 1815,
    "setName": "XY - Steam Siege",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -25799,8 +24551,8 @@
    "groupId": 1815,
    "setName": "XY - Steam Siege",
    "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
    "attemptedPromo": null,
    "promoSource": "unresolved",
    "howToFix": {
@@ -26785,22 +25537,6 @@
    }
   },
   {
-   "productId": 123433,
-   "productName": "Mythical Pokemon Collection Box [Victini]",
-   "productType": "Tin",
-   "groupId": 1728,
-   "setName": "Generations",
-   "confidence": "medium",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"123433\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1728:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 147223,
    "productName": "Super-Premium Collection [Mew & Mewtwo]",
    "productType": "SPC",
@@ -27400,7 +26136,7 @@
    "setName": "ME04: Chaos Rising",
    "confidence": "medium",
    "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": "Fennekin - 080",
    "promoSource": "auto",
    "howToFix": {
@@ -27975,7 +26711,7 @@
    "groupId": 24541,
    "setName": "ME: Ascended Heroes",
    "confidence": "medium",
-   "attemptedPackCount": 3,
+   "attemptedPackCount": 5,
    "packCountSource": "parsed",
    "attemptedPromo": "Chikorita - 046",
    "promoSource": "auto",
@@ -27991,7 +26727,7 @@
    "groupId": 24541,
    "setName": "ME: Ascended Heroes",
    "confidence": "medium",
-   "attemptedPackCount": 3,
+   "attemptedPackCount": 5,
    "packCountSource": "parsed",
    "attemptedPromo": "Chikorita - 046",
    "promoSource": "auto",
@@ -28046,6 +26782,70 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"98584\": <count>",
     "promo": "add to config/promo_overrides.json as \"1390:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 625049,
+   "productName": "2 Booster Packs & Celebi Collector's Pin",
+   "productType": "Booster Pack",
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "medium",
+   "attemptedPackCount": 1,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"625049\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 625038,
+   "productName": "2 Booster Packs & Jirachi Collector's Pin",
+   "productType": "Booster Pack",
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "medium",
+   "attemptedPackCount": 1,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"625038\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 625050,
+   "productName": "2 Booster Packs & Latias Collector's Pin",
+   "productType": "Booster Pack",
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "medium",
+   "attemptedPackCount": 1,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"625050\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 625051,
+   "productName": "2 Booster Packs & Latios Collector's Pin",
+   "productType": "Booster Pack",
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "medium",
+   "attemptedPackCount": 1,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"625051\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -28167,8 +26967,8 @@
    "groupId": 2374,
    "setName": "Miscellaneous Cards & Products",
    "confidence": "medium",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 8,
+   "packCountSource": "parsed",
    "attemptedPromo": "Eevee",
    "promoSource": "auto",
    "howToFix": {
@@ -28225,38 +27025,6 @@
    }
   },
   {
-   "productId": 690199,
-   "productName": "Fusion Strike Elite Trainer Box & 6 Bonus Cards (Sam's Club)",
-   "productType": "ETB",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "medium",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
-   "attemptedPromo": "Mew - 040 (Trainer's Challenge Set)",
-   "promoSource": "auto",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"690199\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:ETB\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 239236,
-   "productName": "Gardevoir V/Victini V Battle Decks [Set of 2]",
-   "productType": "Tin",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "medium",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"239236\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 232770,
    "productName": "General Mills 25th Anniversary Booster Pack",
    "productType": "Booster Pack",
@@ -28270,6 +27038,22 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"232770\": <count>",
     "promo": "add to config/promo_overrides.json as \"2374:Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 575186,
+   "productName": "Greninja ex Battle Deck & 2 Booster Bundle",
+   "productType": "Booster Bundle",
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "medium",
+   "attemptedPackCount": 6,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"575186\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:Booster Bundle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -28417,13 +27201,29 @@
    }
   },
   {
+   "productId": 624518,
+   "productName": "Pokemon TCG: Twin Mini Portfolio & Booster Packs [Mega Mewtwo & Guzzlord]",
+   "productType": "Booster Pack",
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "medium",
+   "attemptedPackCount": 1,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"624518\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 644852,
    "productName": "Prismatic Evolutions Elite Trainer Box and Pokeball (Sam's Club)",
    "productType": "ETB",
    "groupId": 2374,
    "setName": "Miscellaneous Cards & Products",
    "confidence": "medium",
-   "attemptedPackCount": 3,
+   "attemptedPackCount": 9,
    "packCountSource": "parsed",
    "attemptedPromo": "Eevee",
    "promoSource": "auto",
@@ -28497,102 +27297,6 @@
    }
   },
   {
-   "productId": 233354,
-   "productName": "V Battle Deck Bundle [Victini V/Gardevoir V]",
-   "productType": "Tin",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "medium",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"233354\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 233356,
-   "productName": "V Battle Deck [Victini V]",
-   "productType": "Tin",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "medium",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"233356\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 616920,
-   "productName": "Victini ex/Miraidon ex Battle Decks [Set of 2]",
-   "productType": "Tin",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "medium",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"616920\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 497967,
-   "productName": "ex Battle Deck (Chien-Pao/Tinkaton] [Set of 2]",
-   "productType": "Tin",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "medium",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"497967\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 497841,
-   "productName": "ex Battle Deck [Tinkaton ex]",
-   "productType": "Tin",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "medium",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"497841\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 557326,
-   "productName": "ex Battle Deck [Victini ex]",
-   "productType": "Tin",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "medium",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"557326\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 98560,
    "productName": "Mysterious Treasures Booster Box",
    "productType": "Booster Box",
@@ -28622,38 +27326,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"138147\": <count>",
     "promo": "add to config/promo_overrides.json as \"1444:Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 232872,
-   "productName": "Neo Destiny Theme Deck - \"Dark\"",
-   "productType": "Tin",
-   "groupId": 1444,
-   "setName": "Neo Destiny",
-   "confidence": "medium",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"232872\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1444:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 232869,
-   "productName": "Neo Destiny Theme Deck - \"Light\"",
-   "productType": "Tin",
-   "groupId": 1444,
-   "setName": "Neo Destiny",
-   "confidence": "medium",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"232869\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1444:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -28766,38 +27438,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"98539\": <count>",
     "promo": "add to config/promo_overrides.json as \"1412:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 98633,
-   "productName": "Next Destinies Theme Deck - \"Explosive Edge\" [Reshiram]",
-   "productType": "Tin",
-   "groupId": 1412,
-   "setName": "Next Destinies",
-   "confidence": "medium",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"98633\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1412:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 98634,
-   "productName": "Next Destinies Theme Deck - \"Voltage Vortex\" [Zekrom]",
-   "productType": "Tin",
-   "groupId": 1412,
-   "setName": "Next Destinies",
-   "confidence": "medium",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"98634\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1412:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -29006,38 +27646,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"98592\": <count>",
     "promo": "add to config/promo_overrides.json as \"1406:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 229173,
-   "productName": "Platinum Theme Deck - \"Flourish\"",
-   "productType": "Tin",
-   "groupId": 1406,
-   "setName": "Platinum",
-   "confidence": "medium",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"229173\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1406:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 229175,
-   "productName": "Platinum Theme Deck - \"Rebellion\"",
-   "productType": "Tin",
-   "groupId": 1406,
-   "setName": "Platinum",
-   "confidence": "medium",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"229175\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1406:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -29527,8 +28135,8 @@
    "groupId": 1919,
    "setName": "SM - Guardians Rising",
    "confidence": "medium",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 8,
+   "packCountSource": "parsed",
    "attemptedPromo": "Tapu Koko - SM30",
    "promoSource": "auto",
    "howToFix": {
@@ -29617,22 +28225,6 @@
    }
   },
   {
-   "productId": 175509,
-   "productName": "Lost Thunder Booster Box",
-   "productType": "Booster Box",
-   "groupId": 2328,
-   "setName": "SM - Lost Thunder",
-   "confidence": "medium",
-   "attemptedPackCount": 36,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"175509\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2328:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 276583,
    "productName": "Lost Thunder Sleeved Booster Pack Art Bundle [Set of 4]",
    "productType": "Sleeved Booster Pack",
@@ -29646,22 +28238,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"276583\": <count>",
     "promo": "add to config/promo_overrides.json as \"2328:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 184428,
-   "productName": "Fighting Energy (2019 Unnumbered)",
-   "productType": "Tin",
-   "groupId": 2377,
-   "setName": "SM - Team Up",
-   "confidence": "medium",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"184428\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2377:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -29838,22 +28414,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"276586\": <count>",
     "promo": "add to config/promo_overrides.json as \"2464:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 127385,
-   "productName": "Fighting Energy (2017 Unnumbered)",
-   "productType": "Tin",
-   "groupId": 1863,
-   "setName": "SM Base Set",
-   "confidence": "medium",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"127385\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1863:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -30097,6 +28657,22 @@
    }
   },
   {
+   "productId": 478275,
+   "productName": "Scarlet & Violet Sleeved Booster Pack Bundle [Set of 8]",
+   "productType": "Sleeved Booster Pack",
+   "groupId": 22873,
+   "setName": "SV01: Scarlet & Violet Base Set",
+   "confidence": "medium",
+   "attemptedPackCount": 1,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"478275\": <count>",
+    "promo": "add to config/promo_overrides.json as \"22873:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 496905,
    "productName": "Paldea Evolved Booster Box Case",
    "productType": "Booster Box Case",
@@ -30167,8 +28743,8 @@
    "groupId": 23120,
    "setName": "SV02: Paldea Evolved",
    "confidence": "medium",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 11,
+   "packCountSource": "parsed",
    "attemptedPromo": "Pikachu - 027 (Pokemon Center Exclusive)",
    "promoSource": "auto",
    "howToFix": {
@@ -30264,7 +28840,7 @@
    "setName": "SV03: Obsidian Flames",
    "confidence": "medium",
    "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": "Charmander - 044",
    "promoSource": "auto",
    "howToFix": {
@@ -30337,22 +28913,6 @@
    }
   },
   {
-   "productId": 512820,
-   "productName": "Paradox Rift Booster Bundle",
-   "productType": "Booster Bundle",
-   "groupId": 23286,
-   "setName": "SV04: Paradox Rift",
-   "confidence": "medium",
-   "attemptedPackCount": 6,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"512820\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23286:Booster Bundle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 513511,
    "productName": "Paradox Rift Elite Trainer Box Case",
    "productType": "ETB Case",
@@ -30376,7 +28936,7 @@
    "setName": "SV04: Paradox Rift",
    "confidence": "medium",
    "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": "Scream Tail - 065",
    "promoSource": "auto",
    "howToFix": {
@@ -30392,7 +28952,7 @@
    "setName": "SV04: Paradox Rift",
    "confidence": "medium",
    "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": "Scream Tail - 065",
    "promoSource": "auto",
    "howToFix": {
@@ -30408,7 +28968,7 @@
    "setName": "SV04: Paradox Rift",
    "confidence": "medium",
    "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": "Scream Tail - 065",
    "promoSource": "auto",
    "howToFix": {
@@ -30439,8 +28999,8 @@
    "groupId": 23286,
    "setName": "SV04: Paradox Rift",
    "confidence": "medium",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 11,
+   "packCountSource": "parsed",
    "attemptedPromo": "Scream Tail - 065 (Pokemon Center Exclusive)",
    "promoSource": "auto",
    "howToFix": {
@@ -30455,8 +29015,8 @@
    "groupId": 23286,
    "setName": "SV04: Paradox Rift",
    "confidence": "medium",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 11,
+   "packCountSource": "parsed",
    "attemptedPromo": "Scream Tail - 065 (Pokemon Center Exclusive)",
    "promoSource": "auto",
    "howToFix": {
@@ -30471,29 +29031,13 @@
    "groupId": 23286,
    "setName": "SV04: Paradox Rift",
    "confidence": "medium",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 11,
+   "packCountSource": "parsed",
    "attemptedPromo": "Scream Tail - 065 (Pokemon Center Exclusive)",
    "promoSource": "auto",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"524394\": <count>",
     "promo": "add to config/promo_overrides.json as \"23286:PKC ETB\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 546606,
-   "productName": "Paradox Rift Premium Checklane Blister [Tinkaton]",
-   "productType": "Tin",
-   "groupId": 23286,
-   "setName": "SV04: Paradox Rift",
-   "confidence": "medium",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"546606\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23286:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -30545,22 +29089,6 @@
    }
   },
   {
-   "productId": 541017,
-   "productName": "Temporal Forces Booster Bundle",
-   "productType": "Booster Bundle",
-   "groupId": 23381,
-   "setName": "SV05: Temporal Forces",
-   "confidence": "medium",
-   "attemptedPackCount": 6,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"541017\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23381:Booster Bundle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 537409,
    "productName": "Temporal Forces Build & Battle Box Display",
    "productType": "Build & Battle",
@@ -30577,62 +29105,14 @@
    }
   },
   {
-   "productId": 532848,
-   "productName": "Temporal Forces Elite Trainer Box [Iron Leaves ex]",
-   "productType": "ETB",
-   "groupId": 23381,
-   "setName": "SV05: Temporal Forces",
-   "confidence": "medium",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
-   "attemptedPromo": "Iron Leaves ex - 128",
-   "promoSource": "auto",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"532848\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23381:ETB\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 532849,
-   "productName": "Temporal Forces Elite Trainer Box [Set of 2]",
-   "productType": "ETB",
-   "groupId": 23381,
-   "setName": "SV05: Temporal Forces",
-   "confidence": "medium",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
-   "attemptedPromo": "Walking Wake ex - 127",
-   "promoSource": "auto",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"532849\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23381:ETB\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 532845,
-   "productName": "Temporal Forces Elite Trainer Box [Walking Wake]",
-   "productType": "ETB",
-   "groupId": 23381,
-   "setName": "SV05: Temporal Forces",
-   "confidence": "medium",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
-   "attemptedPromo": "Walking Wake ex - 127",
-   "promoSource": "auto",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"532845\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23381:ETB\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 532853,
    "productName": "Temporal Forces Pokemon Center Elite Trainer Box (Exclusive) [Iron Leaves]",
    "productType": "PKC ETB",
    "groupId": 23381,
    "setName": "SV05: Temporal Forces",
    "confidence": "medium",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 11,
+   "packCountSource": "parsed",
    "attemptedPromo": "Iron Thorns - 098 (Pokemon Center)",
    "promoSource": "auto",
    "howToFix": {
@@ -30647,8 +29127,8 @@
    "groupId": 23381,
    "setName": "SV05: Temporal Forces",
    "confidence": "medium",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 11,
+   "packCountSource": "parsed",
    "attemptedPromo": "Iron Thorns - 098 (Pokemon Center)",
    "promoSource": "auto",
    "howToFix": {
@@ -30721,6 +29201,22 @@
    }
   },
   {
+   "productId": 538807,
+   "productName": "Temporal Forces Sleeved Booster Pack Bundle [Set of 8]",
+   "productType": "Sleeved Booster Pack",
+   "groupId": 23381,
+   "setName": "SV05: Temporal Forces",
+   "confidence": "medium",
+   "attemptedPackCount": 1,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"538807\": <count>",
+    "promo": "add to config/promo_overrides.json as \"23381:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 544384,
    "productName": "Twilight Masquerade Booster Box Case",
    "productType": "Booster Box Case",
@@ -30734,22 +29230,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"544384\": <count>",
     "promo": "add to config/promo_overrides.json as \"23473:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 543852,
-   "productName": "Twilight Masquerade Booster Bundle",
-   "productType": "Booster Bundle",
-   "groupId": 23473,
-   "setName": "SV06: Twilight Masquerade",
-   "confidence": "medium",
-   "attemptedPackCount": 6,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"543852\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23473:Booster Bundle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -30776,7 +29256,7 @@
    "setName": "SV06: Twilight Masquerade",
    "confidence": "medium",
    "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": "Teal Mask Ogerpon - 123",
    "promoSource": "auto",
    "howToFix": {
@@ -30791,8 +29271,8 @@
    "groupId": 23473,
    "setName": "SV06: Twilight Masquerade",
    "confidence": "medium",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 11,
+   "packCountSource": "parsed",
    "attemptedPromo": "Teal Mask Ogerpon - 123 (Pokemon Center Exclusive)",
    "promoSource": "auto",
    "howToFix": {
@@ -30865,22 +29345,6 @@
    }
   },
   {
-   "productId": 557345,
-   "productName": "Stellar Crown Booster Bundle",
-   "productType": "Booster Bundle",
-   "groupId": 23537,
-   "setName": "SV07: Stellar Crown",
-   "confidence": "medium",
-   "attemptedPackCount": 6,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"557345\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23537:Booster Bundle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 609235,
    "productName": "Stellar Crown Booster Bundle Case",
    "productType": "Booster Bundle Case",
@@ -30904,7 +29368,7 @@
    "setName": "SV07: Stellar Crown",
    "confidence": "medium",
    "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": "Noctowl - 141",
    "promoSource": "auto",
    "howToFix": {
@@ -30935,8 +29399,8 @@
    "groupId": 23537,
    "setName": "SV07: Stellar Crown",
    "confidence": "medium",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 11,
+   "packCountSource": "parsed",
    "attemptedPromo": "Noctowl - 141 (Pokemon Center Exclusive)",
    "promoSource": "auto",
    "howToFix": {
@@ -30958,6 +29422,22 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"557363\": <count>",
     "promo": "add to config/promo_overrides.json as \"23537:PKC ETB Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 559530,
+   "productName": "Stellar Crown Sleeved Booster Master Carton",
+   "productType": "Sleeved Booster Pack",
+   "groupId": 23537,
+   "setName": "SV07: Stellar Crown",
+   "confidence": "medium",
+   "attemptedPackCount": 1,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"559530\": <count>",
+    "promo": "add to config/promo_overrides.json as \"23537:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -31009,38 +29489,6 @@
    }
   },
   {
-   "productId": 565629,
-   "productName": "Surging Sparks Booster Bundle (LGS)",
-   "productType": "Booster Bundle",
-   "groupId": 23651,
-   "setName": "SV08: Surging Sparks",
-   "confidence": "medium",
-   "attemptedPackCount": 6,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"565629\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23651:Booster Bundle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 679564,
-   "productName": "Surging Sparks Booster Bundle (Retail)",
-   "productType": "Booster Bundle",
-   "groupId": 23651,
-   "setName": "SV08: Surging Sparks",
-   "confidence": "medium",
-   "attemptedPackCount": 6,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"679564\": <count>",
-    "promo": "add to config/promo_overrides.json as \"23651:Booster Bundle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 594269,
    "productName": "Surging Sparks Booster Bundle Case (LGS)",
    "productType": "Booster Bundle Case",
@@ -31064,7 +29512,7 @@
    "setName": "SV08: Surging Sparks",
    "confidence": "medium",
    "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": "Magneton - 153",
    "promoSource": "auto",
    "howToFix": {
@@ -31095,8 +29543,8 @@
    "groupId": 23651,
    "setName": "SV08: Surging Sparks",
    "confidence": "medium",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 11,
+   "packCountSource": "parsed",
    "attemptedPromo": "Magneton - 153",
    "promoSource": "auto",
    "howToFix": {
@@ -31208,7 +29656,7 @@
    "setName": "SV09: Journey Together",
    "confidence": "medium",
    "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": "Iono - 124",
    "promoSource": "auto",
    "howToFix": {
@@ -31255,8 +29703,8 @@
    "groupId": 24073,
    "setName": "SV09: Journey Together",
    "confidence": "medium",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 11,
+   "packCountSource": "parsed",
    "attemptedPromo": "Iron Thorns - 098 (Pokemon Center)",
    "promoSource": "auto",
    "howToFix": {
@@ -31329,22 +29777,6 @@
    }
   },
   {
-   "productId": 649711,
-   "productName": "Destined Rivals Booster Pack Art Bundle [Set of 4]",
-   "productType": "Tin",
-   "groupId": 24269,
-   "setName": "SV10: Destined Rivals",
-   "confidence": "medium",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"649711\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24269:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 624676,
    "productName": "Destined Rivals Elite Trainer Box",
    "productType": "ETB",
@@ -31352,28 +29784,12 @@
    "setName": "SV10: Destined Rivals",
    "confidence": "medium",
    "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": "Team Rocket's Wobbuffet",
    "promoSource": "auto",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"624676\": <count>",
     "promo": "add to config/promo_overrides.json as \"24269:ETB\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 650765,
-   "productName": "Destined Rivals Fun Pack",
-   "productType": "Tin",
-   "groupId": 24269,
-   "setName": "SV10: Destined Rivals",
-   "confidence": "medium",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"650765\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24269:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -31409,22 +29825,6 @@
    }
   },
   {
-   "productId": 630431,
-   "productName": "Black Bolt Booster Bundle",
-   "productType": "Booster Bundle",
-   "groupId": 24325,
-   "setName": "SV: Black Bolt",
-   "confidence": "medium",
-   "attemptedPackCount": 6,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"630431\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24325:Booster Bundle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 630432,
    "productName": "Black Bolt Booster Bundle Case",
    "productType": "Booster Bundle Case",
@@ -31448,7 +29848,7 @@
    "setName": "SV: Black Bolt",
    "confidence": "medium",
    "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": "Thundurus - 209",
    "promoSource": "auto",
    "howToFix": {
@@ -31459,17 +29859,33 @@
   {
    "productId": 630615,
    "productName": "Unova Victini Illustration Collection",
-   "productType": "Tin",
+   "productType": null,
    "groupId": 24325,
    "setName": "SV: Black Bolt",
    "confidence": "medium",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
+   "attemptedPackCount": 2,
+   "packCountSource": "parsed",
    "attemptedPromo": "Victini - 208",
    "promoSource": "auto",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"630615\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24325:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "promo": "add to config/promo_overrides.json as \"24325:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 649220,
+   "productName": "Unova Victini Illustration Collection Case",
+   "productType": null,
+   "groupId": 24325,
+   "setName": "SV: Black Bolt",
+   "confidence": "medium",
+   "attemptedPackCount": 2,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Victini - 208",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"649220\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24325:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -31528,7 +29944,7 @@
    "setName": "SV: Prismatic Evolutions",
    "confidence": "medium",
    "attemptedPackCount": 6,
-   "packCountSource": "parsed",
+   "packCountSource": "static",
    "attemptedPromo": "Eevee - 043",
    "promoSource": "auto",
    "howToFix": {
@@ -31560,7 +29976,7 @@
    "setName": "SV: Prismatic Evolutions",
    "confidence": "medium",
    "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": "Eevee - 043",
    "promoSource": "auto",
    "howToFix": {
@@ -31576,7 +29992,7 @@
    "setName": "SV: Prismatic Evolutions",
    "confidence": "medium",
    "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": "Eevee - 043",
    "promoSource": "auto",
    "howToFix": {
@@ -31623,8 +30039,8 @@
    "groupId": 23821,
    "setName": "SV: Prismatic Evolutions",
    "confidence": "medium",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 11,
+   "packCountSource": "parsed",
    "attemptedPromo": "Eevee - 173 (Pokemon Center Exclusive)",
    "promoSource": "auto",
    "howToFix": {
@@ -31662,6 +30078,38 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"617807\": <count>",
     "promo": "add to config/promo_overrides.json as \"23821:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 622770,
+   "productName": "Prismatic Evolutions Super-Premium Collection",
+   "productType": "SPC",
+   "groupId": 23821,
+   "setName": "SV: Prismatic Evolutions",
+   "confidence": "medium",
+   "attemptedPackCount": 15,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Eevee - 043",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"622770\": <count>",
+    "promo": "add to config/promo_overrides.json as \"23821:SPC\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 638058,
+   "productName": "Prismatic Evolutions Super-Premium Collection Case",
+   "productType": null,
+   "groupId": 23821,
+   "setName": "SV: Prismatic Evolutions",
+   "confidence": "medium",
+   "attemptedPackCount": 15,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Eevee - 043",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"638058\": <count>",
+    "promo": "add to config/promo_overrides.json as \"23821:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -31735,7 +30183,7 @@
    "groupId": 23237,
    "setName": "SV: Scarlet & Violet 151",
    "confidence": "medium",
-   "attemptedPackCount": 151,
+   "attemptedPackCount": 9,
    "packCountSource": "parsed",
    "attemptedPromo": "Snorlax - 051",
    "promoSource": "auto",
@@ -31751,8 +30199,8 @@
    "groupId": 23237,
    "setName": "SV: Scarlet & Violet 151",
    "confidence": "medium",
-   "attemptedPackCount": 151,
-   "packCountSource": "parsed",
+   "attemptedPackCount": 90,
+   "packCountSource": "static",
    "attemptedPromo": "Snorlax - 051",
    "promoSource": "auto",
    "howToFix": {
@@ -31767,7 +30215,7 @@
    "groupId": 23237,
    "setName": "SV: Scarlet & Violet 151",
    "confidence": "medium",
-   "attemptedPackCount": 151,
+   "attemptedPackCount": 11,
    "packCountSource": "parsed",
    "attemptedPromo": "Snorlax - 051 (Pokemon Center Exclusive)",
    "promoSource": "auto",
@@ -31783,8 +30231,8 @@
    "groupId": 23237,
    "setName": "SV: Scarlet & Violet 151",
    "confidence": "medium",
-   "attemptedPackCount": 151,
-   "packCountSource": "parsed",
+   "attemptedPackCount": 90,
+   "packCountSource": "static",
    "attemptedPromo": "Snorlax - 051 (Pokemon Center Exclusive)",
    "promoSource": "auto",
    "howToFix": {
@@ -31896,7 +30344,7 @@
    "setName": "SV: Shrouded Fable",
    "confidence": "medium",
    "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "packCountSource": "parsed",
    "attemptedPromo": "Pecharunt - 149",
    "promoSource": "auto",
    "howToFix": {
@@ -31927,8 +30375,8 @@
    "groupId": 23529,
    "setName": "SV: Shrouded Fable",
    "confidence": "medium",
-   "attemptedPackCount": 9,
-   "packCountSource": "static",
+   "attemptedPackCount": 11,
+   "packCountSource": "parsed",
    "attemptedPromo": "Pecharunt - 129 (Pokemon Center Exclusive)",
    "promoSource": "auto",
    "howToFix": {
@@ -31950,22 +30398,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"553102\": <count>",
     "promo": "add to config/promo_overrides.json as \"23529:PKC ETB Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 630696,
-   "productName": "White Flare Booster Bundle",
-   "productType": "Booster Bundle",
-   "groupId": 24326,
-   "setName": "SV: White Flare",
-   "confidence": "medium",
-   "attemptedPackCount": 6,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"630696\": <count>",
-    "promo": "add to config/promo_overrides.json as \"24326:Booster Bundle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -31998,22 +30430,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"630698\": <count>",
     "promo": "add to config/promo_overrides.json as \"24326:Booster Bundle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 208032,
-   "productName": "Fighting Energy",
-   "productType": "Tin",
-   "groupId": 2585,
-   "setName": "SWSH01: Sword & Shield Base Set",
-   "confidence": "medium",
-   "attemptedPackCount": 4,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"208032\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2585:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -32385,6 +30801,22 @@
    }
   },
   {
+   "productId": 256275,
+   "productName": "Chilling Reign Sleeved Booster Pack Bundle [Set of 10]",
+   "productType": "Sleeved Booster Pack",
+   "groupId": 2807,
+   "setName": "SWSH06: Chilling Reign",
+   "confidence": "medium",
+   "attemptedPackCount": 1,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"256275\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2807:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 248124,
    "productName": "Evolving Skies Booster Box Case",
    "productType": "Booster Box Case",
@@ -32445,6 +30877,22 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"247498\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2848:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 246274,
+   "productName": "Evolving Skies Sleeved Booster Pack Bundle [Set of 8]",
+   "productType": "Sleeved Booster Pack",
+   "groupId": 2848,
+   "setName": "SWSH07: Evolving Skies",
+   "confidence": "medium",
+   "attemptedPackCount": 1,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"246274\": <count>",
     "promo": "add to config/promo_overrides.json as \"2848:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -32513,6 +30961,22 @@
    }
   },
   {
+   "productId": 247658,
+   "productName": "Fusion Strike Sleeved Booster Pack Bundle [Set of 8]",
+   "productType": "Sleeved Booster Pack",
+   "groupId": 2906,
+   "setName": "SWSH08: Fusion Strike",
+   "confidence": "medium",
+   "attemptedPackCount": 1,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"247658\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2906:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 256145,
    "productName": "Brilliant Stars Booster Box Case",
    "productType": "Booster Box Case",
@@ -32577,19 +31041,19 @@
    }
   },
   {
-   "productId": 264252,
-   "productName": "Fighting Energy (2022 Unnumbered)",
-   "productType": "Tin",
+   "productId": 256136,
+   "productName": "Brilliant Stars Sleeved Booster Pack Bundle [Set of 8]",
+   "productType": "Sleeved Booster Pack",
    "groupId": 2948,
    "setName": "SWSH09: Brilliant Stars",
    "confidence": "medium",
-   "attemptedPackCount": 4,
+   "attemptedPackCount": 1,
    "packCountSource": "static",
    "attemptedPromo": null,
    "promoSource": "none",
    "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"264252\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2948:Tin\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+    "packCount": "add to config/packcount_overrides.json as \"256136\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2948:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -32637,6 +31101,22 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"265543\": <count>",
+    "promo": "add to config/promo_overrides.json as \"3040:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 265544,
+   "productName": "Astral Radiance Sleeved Booster Pack Bundle [Set of 8]",
+   "productType": "Sleeved Booster Pack",
+   "groupId": 3040,
+   "setName": "SWSH10: Astral Radiance",
+   "confidence": "medium",
+   "attemptedPackCount": 1,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"265544\": <count>",
     "promo": "add to config/promo_overrides.json as \"3040:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -32701,6 +31181,22 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"278801\": <count>",
+    "promo": "add to config/promo_overrides.json as \"3118:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 278804,
+   "productName": "Lost Origin Sleeved Booster Pack Bundle [Set of 8]",
+   "productType": "Sleeved Booster Pack",
+   "groupId": 3118,
+   "setName": "SWSH11: Lost Origin",
+   "confidence": "medium",
+   "attemptedPackCount": 1,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"278804\": <count>",
     "promo": "add to config/promo_overrides.json as \"3118:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -32781,6 +31277,22 @@
    "promoSource": "none",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"283400\": <count>",
+    "promo": "add to config/promo_overrides.json as \"3170:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 454484,
+   "productName": "Silver Tempest Sleeved Booster Pack Bundle [Set of 8]",
+   "productType": "Sleeved Booster Pack",
+   "groupId": 3170,
+   "setName": "SWSH12: Silver Tempest",
+   "confidence": "medium",
+   "attemptedPackCount": 1,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"454484\": <count>",
     "promo": "add to config/promo_overrides.json as \"3170:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
@@ -32945,38 +31457,6 @@
    }
   },
   {
-   "productId": 104381,
-   "productName": "Ancient Origins Collector Pin 3 Pack Blister [Mega Tyranitar Pin]",
-   "productType": "3-Pack Blister",
-   "groupId": 1576,
-   "setName": "XY - Ancient Origins",
-   "confidence": "medium",
-   "attemptedPackCount": 3,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"104381\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1576:3-Pack Blister\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 104380,
-   "productName": "Ancient Origins Collector Pin 3 Pack Blister [Shiny Mega Rayquaza Pin]",
-   "productType": "3-Pack Blister",
-   "groupId": 1576,
-   "setName": "XY - Ancient Origins",
-   "confidence": "medium",
-   "attemptedPackCount": 3,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"104380\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1576:3-Pack Blister\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 276595,
    "productName": "Ancient Origins Sleeved Booster Pack Art Bundle [Set of 4]",
    "productType": "Sleeved Booster Pack",
@@ -33057,38 +31537,6 @@
    }
   },
   {
-   "productId": 117269,
-   "productName": "BREAKpoint Collector Pin 3 Pack Blister [Mega Scizor]",
-   "productType": "3-Pack Blister",
-   "groupId": 1701,
-   "setName": "XY - BREAKpoint",
-   "confidence": "medium",
-   "attemptedPackCount": 3,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"117269\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1701:3-Pack Blister\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 117268,
-   "productName": "BREAKpoint Collector Pin 3 Pack Blister [Shiny Mega Gyarados]",
-   "productType": "3-Pack Blister",
-   "groupId": 1701,
-   "setName": "XY - BREAKpoint",
-   "confidence": "medium",
-   "attemptedPackCount": 3,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"117268\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1701:3-Pack Blister\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 276597,
    "productName": "BREAKpoint Sleeved Booster Pack Art Bundle [Set of 4]",
    "productType": "Sleeved Booster Pack",
@@ -33153,6 +31601,22 @@
    }
   },
   {
+   "productId": 542096,
+   "productName": "XY - BREAKpoint Sleeved Booster Pack",
+   "productType": "Sleeved Booster Pack",
+   "groupId": 1701,
+   "setName": "XY - BREAKpoint",
+   "confidence": "medium",
+   "attemptedPackCount": 1,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"542096\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1701:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 111278,
    "productName": "XY BREAKpoint Booster Box",
    "productType": "Booster Box",
@@ -33166,38 +31630,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"111278\": <count>",
     "promo": "add to config/promo_overrides.json as \"1701:Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 117275,
-   "productName": "BREAKthrough Collector Pin 3 Pack Blister [Mega Blaziken]",
-   "productType": "3-Pack Blister",
-   "groupId": 1661,
-   "setName": "XY - BREAKthrough",
-   "confidence": "medium",
-   "attemptedPackCount": 3,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"117275\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1661:3-Pack Blister\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 117276,
-   "productName": "BREAKthrough Collector Pin 3 Pack Blister [Mega Swampert]",
-   "productType": "3-Pack Blister",
-   "groupId": 1661,
-   "setName": "XY - BREAKthrough",
-   "confidence": "medium",
-   "attemptedPackCount": 3,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"117276\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1661:3-Pack Blister\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -33729,38 +32161,6 @@
    }
   },
   {
-   "productId": 97795,
-   "productName": "Phantom Forces Collector's Pin 3 Pack Blister [Mega Gengar]",
-   "productType": "3-Pack Blister",
-   "groupId": 1494,
-   "setName": "XY - Phantom Forces",
-   "confidence": "medium",
-   "attemptedPackCount": 3,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"97795\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1494:3-Pack Blister\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 97796,
-   "productName": "Phantom Forces Collector's Pin 3 Pack Blister [Mega Kangaskhan]",
-   "productType": "3-Pack Blister",
-   "groupId": 1494,
-   "setName": "XY - Phantom Forces",
-   "confidence": "medium",
-   "attemptedPackCount": 3,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"97796\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1494:3-Pack Blister\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 550676,
    "productName": "Phantom Forces Sleeved Booster Pack",
    "productType": "Sleeved Booster Pack",
@@ -34065,38 +32465,6 @@
    }
   },
   {
-   "productId": 120707,
-   "productName": "Steam Siege Collectible Pin 3 Pack Blister [Shiny Mega Gardevoir]",
-   "productType": "3-Pack Blister",
-   "groupId": 1815,
-   "setName": "XY - Steam Siege",
-   "confidence": "medium",
-   "attemptedPackCount": 3,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"120707\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1815:3-Pack Blister\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 120706,
-   "productName": "Steam Siege Collectible Pin 3 Pack Blister [Volcanion]",
-   "productType": "3-Pack Blister",
-   "groupId": 1815,
-   "setName": "XY - Steam Siege",
-   "confidence": "medium",
-   "attemptedPackCount": 3,
-   "packCountSource": "static",
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"120706\": <count>",
-    "promo": "add to config/promo_overrides.json as \"1815:3-Pack Blister\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 276599,
    "productName": "Steam Siege Sleeved Booster Pack Art Bundle [Set of 4]",
    "productType": "Sleeved Booster Pack",
@@ -34135,7 +32503,7 @@
    "groupId": 1387,
    "setName": "XY Base Set",
    "confidence": "medium",
-   "attemptedPackCount": 1,
+   "attemptedPackCount": 3,
    "packCountSource": "parsed",
    "attemptedPromo": "Chespin - XY01",
    "promoSource": "auto",
@@ -34151,7 +32519,7 @@
    "groupId": 1387,
    "setName": "XY Base Set",
    "confidence": "medium",
-   "attemptedPackCount": 2,
+   "attemptedPackCount": 3,
    "packCountSource": "parsed",
    "attemptedPromo": "Fennekin",
    "promoSource": "auto",
@@ -36129,5 +34497,5 @@
    }
   }
  ],
- "count": 2258
+ "count": 2156
 }
