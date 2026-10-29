@@ -4129,6 +4129,22 @@
    }
   },
   {
+   "productId": 726826,
+   "productName": "30th Celebration Battle Deck: Umbreon ex/Espeon ex [Set of two]",
+   "productType": null,
+   "groupId": 24722,
+   "setName": "ME: 30th Celebration",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"726826\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24722:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 704192,
    "productName": "30th Celebration Classic Collection Pack",
    "productType": null,
@@ -34497,5 +34513,5 @@
    }
   }
  ],
- "count": 2156
+ "count": 2157
 }
