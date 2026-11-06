@@ -4689,22 +4689,6 @@
    }
   },
   {
-   "productId": 668362,
-   "productName": "Alola Trio Pin Blister",
-   "productType": null,
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "low",
-   "attemptedPackCount": 2,
-   "packCountSource": "parsed",
-   "attemptedPromo": "Absol",
-   "promoSource": "unresolved",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"668362\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 264259,
    "productName": "Alolan Raichu Box",
    "productType": null,
@@ -6529,22 +6513,6 @@
    }
   },
   {
-   "productId": 583776,
-   "productName": "Jirachi V Box",
-   "productType": null,
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "low",
-   "attemptedPackCount": 4,
-   "packCountSource": "parsed",
-   "attemptedPromo": "Absol",
-   "promoSource": "unresolved",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"583776\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 249693,
    "productName": "Jolteon VMAX Premium Collection",
    "productType": "Premium Collection",
@@ -7793,38 +7761,6 @@
    }
   },
   {
-   "productId": 655747,
-   "productName": "Mimikyu ex & Alcremie ex Premium Collection",
-   "productType": "Premium Collection",
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "low",
-   "attemptedPackCount": 10,
-   "packCountSource": "parsed",
-   "attemptedPromo": "Mimikyu",
-   "promoSource": "unresolved",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"655747\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:Premium Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 475802,
-   "productName": "Mimikyu ex Box",
-   "productType": null,
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "low",
-   "attemptedPackCount": 4,
-   "packCountSource": "parsed",
-   "attemptedPromo": "Mimikyu",
-   "promoSource": "unresolved",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"475802\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 498043,
    "productName": "Mimikyu ex Showcase",
    "productType": null,
@@ -7886,22 +7822,6 @@
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"576482\": <count>",
     "promo": "add to config/promo_overrides.json as \"2374:Premium Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
-   "productId": 547129,
-   "productName": "Palafin ex Box",
-   "productType": null,
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "low",
-   "attemptedPackCount": 4,
-   "packCountSource": "parsed",
-   "attemptedPromo": "Palafin",
-   "promoSource": "unresolved",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"547129\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
    }
   },
   {
@@ -27249,6 +27169,22 @@
    }
   },
   {
+   "productId": 648365,
+   "productName": "Prismatic Evolutions Lucario ex & Tyranitar ex Premium Collection (Sam's Club)",
+   "productType": "Premium Collection",
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "medium",
+   "attemptedPackCount": 14,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Lucario",
+   "promoSource": "auto",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"648365\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:Premium Collection\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 653899,
    "productName": "Salamence ex & Reshiram ex Premium Collection",
    "productType": "Premium Collection",
@@ -27273,7 +27209,7 @@
    "confidence": "medium",
    "attemptedPackCount": 8,
    "packCountSource": "parsed",
-   "attemptedPromo": "Snorlax - 33/95 (Prerelease)",
+   "attemptedPromo": "Snorlax",
    "promoSource": "auto",
    "howToFix": {
     "packCount": "add to config/packcount_overrides.json as \"662770\": <count>",
@@ -34513,5 +34449,5 @@
    }
   }
  ],
- "count": 2157
+ "count": 2153
 }
