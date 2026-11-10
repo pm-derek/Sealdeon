@@ -94,3 +94,14 @@ export function Legend({ items }) {
   )
 }
 
+
+// Collapsible plain-language guide under a chart: what the marks mean and one
+// worked example, so nobody has to decode the chart from the axis alone.
+export function HowToRead({ children, label = 'How to read this' }) {
+  return (
+    <details className="text-xs mt-2" style={{ color: 'var(--text-secondary)' }}>
+      <summary className="cursor-pointer font-medium" style={{ color: 'var(--accent)' }}>{label}</summary>
+      <div className="mt-1 space-y-1 leading-relaxed">{children}</div>
+    </details>
+  )
+}

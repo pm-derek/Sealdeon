@@ -103,13 +103,13 @@ export default function Market({ game = 'Pokemon' }) {
       <MarketLaunch launch={g.launch} palette={palette} themeTick={themeTick} />
 
       <Section id="worked" title="What has worked"
-        kicker={`Average return over the next ${g.factors.horizonDays} days, by what an item looked like beforehand — measured against the market's own average, at the price a buyer actually pays.`}
+        kicker="Past purchases grouped by what the product looked like when bought — and how each group did over the next three months."
         right={<Seg value={factorWin} onChange={setFactorWin}
           options={[['recent', 'Latest 6 mo'], ['all', 'All history']]} />}>
-        <FactorBaseline w={g.factors.windows[factorWin]} />
+        <FactorBaseline w={g.factors.windows[factorWin]} days={g.factors.horizonDays} />
         <div className="grid sm:grid-cols-2 gap-2 mt-2">
           {g.factors.factors.map((f) => (
-            <FactorCard key={f.key} f={f} win={factorWin} palette={palette} themeTick={themeTick} />
+            <FactorCard key={f.key} f={f} win={factorWin} base={g.factors.windows[factorWin]} />
           ))}
         </div>
       </Section>
@@ -231,56 +231,90 @@ function SupplyChart({ g, palette, themeTick }) {
   )
 }
 
-function FactorBaseline({ w }) {
+// Plain-language framing for each factor: a question, and bucket labels a
+// non-trader can read. Keys and bucket names come from pipeline/market.py.
+const FACTOR_TEXT = {
+  prem_t: { q: 'Does paying over pack value hurt?', d: 'Sealed price compared with what the packs inside sell for one by one.',
+    b: { 'below −10%': 'Cheaper than its packs', '−10…+10%': 'About what its packs are worth', '+10…30%': '10–30% over pack value',
+         '+30…60%': '30–60% over pack value', 'above +60%': 'More than 60% over pack value' } },
+  age: { q: 'Does the set’s age matter?', d: 'How long the set had been out when bought.',
+    b: { 'under 6 mo': 'Under 6 months old', '6–12 mo': '6–12 months old', '1–2 yr': '1–2 years old', '2–3 yr': '2–3 years old', '3 yr+': 'Over 3 years old' } },
+  mom30: { q: 'Does last month’s trend keep going?', d: 'What the price did in the month before buying.',
+    b: { 'down >3%': 'Fell more than 3%', flat: 'Roughly flat', 'up 3–10%': 'Rose 3–10%', 'up >10%': 'Rose more than 10%' } },
+  dd: { q: 'Buy at the top, or after a dip?', d: 'How far below its all-time high the price was when bought.',
+    b: { '>30% below': 'More than 30% below its high', '5–30% below': '5–30% below its high', 'at its high': 'At or near its high' } },
+  ask_t: { q: 'Do cheap listings mean anything?', d: 'Cheapest listing compared with the market price when bought. Above market, you pay the listing.',
+    b: { 'under 0.90': 'Listings 10%+ under market', '0.90–0.97': 'Listings 3–10% under market', '0.97–1.03': 'Listings at market',
+         'over 1.03': 'Listings 3%+ above market' } },
+}
+const dollars = (r) => `$${Math.round(100 * (1 + r))}`
+
+function FactorBaseline({ w, days }) {
   return (
-    <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-      Market average over these windows: <b className="tabular-nums">{fmtPct(w.mean)}</b> per 90 days,
-      {' '}{fmtShare(w.hit)} of items gained. Bars show how much better or worse each group did than that.
-    </p>
+    <div className="card p-3 text-sm" style={{ color: 'var(--text-secondary)' }}>
+      <p>
+        Imagine putting <b>$100</b> into every product that fit a description, then checking {Math.round(days / 30)} months later.
+        Each card asks one question and shows what that $100 became for each answer.
+      </p>
+      <p className="mt-1">
+        The dashed line is the yardstick: $100 in the <b>average</b> product became <b className="tabular-nums" style={{ color: 'var(--text-primary)' }}>{dollars(w.mean)}</b>
+        {' '}({Math.round(w.hit * 10)} in 10 went up). <span style={{ color: 'var(--pos)' }}>Green</span> groups beat the average,
+        {' '}<span style={{ color: 'var(--neg)' }}>red</span> groups lagged it. Prices are what a buyer actually pays; fees not included.
+      </p>
+    </div>
   )
 }
 
-function FactorCard({ f, win, palette, themeTick }) {
-  const rows = f.buckets.filter((b) => b[win]).map((b) => ({ bucket: b.bucket, ...b[win] }))
-  const best = rows.length ? rows.reduce((a, b) => (b.excess > a.excess ? b : a)) : null
-  const worst = rows.length ? rows.reduce((a, b) => (b.excess < a.excess ? b : a)) : null
-  const maxAbs = Math.max(0.04, ...rows.map((r) => Math.abs(r.excess)))
-  const build = (width) => {
-    // padded so a value label beside the longest bar never runs into the
-    // axis; narrow cards need proportionally more room for the same label
-    const ext = maxAbs * (width < 420 ? 1.75 : 1.45)
-    return Plot.plot({
-    width, height: 26 * f.buckets.length + 28, marginLeft: 96, marginRight: 48,
-    style: { background: 'transparent', color: palette.textSecondary, fontSize: '11px' },
-    x: { domain: [-ext, ext], label: null, ticks: 4, tickFormat: (d) => `${d > 0 ? '+' : ''}${Math.round(d * 100)}` },
-    y: { domain: f.buckets.map((b) => b.bucket), label: null },
-    marks: [
-      Plot.ruleX([0], { stroke: palette.textSecondary, strokeOpacity: 0.6 }),
-      Plot.barX(rows, { y: 'bucket', x: 'excess', fill: (d) => (d.excess >= 0 ? palette.pos : palette.neg),
-        insetTop: 5, insetBottom: 5, rx: 3 }),
-      // dx/textAnchor must be constants in Plot, so positive and negative
-      // labels are two marks rather than one with per-datum options
-      Plot.text(rows.filter((d) => d.excess >= 0), { y: 'bucket', x: 'excess', text: (d) => fmtPp(d.excess).replace(' pts', ''),
-        textAnchor: 'start', dx: 4, fill: palette.text, fontSize: 10.5 }),
-      Plot.text(rows.filter((d) => d.excess < 0), { y: 'bucket', x: 'excess', text: (d) => fmtPp(d.excess).replace(' pts', ''),
-        textAnchor: 'end', dx: -4, fill: palette.text, fontSize: 10.5 }),
-      Plot.tip(rows, Plot.pointerY({ y: 'bucket', x: 'excess',
-        title: (d) => `${f.label}: ${d.bucket}\nNext 90d: ${fmtPct(d.mean)} on average (${fmtPp(d.excess)} vs market)\n${fmtShare(d.hit)} gained · ${fmtShare(d.loss)} lost 5%+ · ${d.n.toLocaleString()} observations` })),
-    ],
-    })
-  }
+function FactorCard({ f, win, base }) {
+  const t = FACTOR_TEXT[f.key] || { q: f.label, d: f.desc, b: {} }
+  const rows = f.buckets.filter((b) => b[win]).map((b) => ({ bucket: b.bucket, label: t.b[b.bucket] || b.bucket, ...b[win] }))
+  if (!rows.length) return null
+  const val = (r) => 100 * (1 + r)
+  const mkt = val(base.mean)
+  const lo = Math.min(100, mkt, ...rows.map((r) => val(r.mean))) - 2
+  const hi = Math.max(100, mkt, ...rows.map((r) => val(r.mean))) + 2
+  const x = (v) => `${((v - lo) / (hi - lo)) * 100}%`
+  const best = rows.reduce((a, b) => (b.excess > a.excess ? b : a))
+  const worst = rows.reduce((a, b) => (b.excess < a.excess ? b : a))
+  const spread = best.excess - worst.excess
+  const verdict = spread < 0.03
+    ? 'Not much difference between the groups — this doesn’t seem to matter much.'
+    : <>Best: <b style={{ color: 'var(--pos)' }}>{best.label.toLowerCase()}</b> ({dollars(best.mean)}).
+        {' '}Worst: <b style={{ color: 'var(--neg)' }}>{worst.label.toLowerCase()}</b> ({dollars(worst.mean)}).</>
   return (
     <div className="card p-3 min-w-0">
-      <div className="flex items-baseline justify-between gap-2">
-        <h3 className="text-sm font-semibold">{f.label}</h3>
+      <h3 className="text-sm font-semibold">{t.q}</h3>
+      <p className="muted text-[11px]">{t.d}</p>
+      <p className="text-xs mt-1" style={{ color: 'var(--text-secondary)' }}>{verdict}</p>
+      <div className="mt-2 space-y-2">
+        {rows.map((r) => {
+          const v = val(r.mean)
+          const beat = r.excess >= 0
+          const c = beat ? 'var(--pos)' : 'var(--neg)'
+          return (
+            <div key={r.bucket} title={`${r.n.toLocaleString()} purchases · ${fmtShare(r.loss)} lost 5% or more · ${fmtPp(r.excess)} vs average`}>
+              <div className="flex items-baseline justify-between gap-2 text-xs">
+                <span className="min-w-0">{r.label}</span>
+                <span className="tabular-nums shrink-0">
+                  <b style={{ color: c }}>{dollars(r.mean)}</b>
+                  <span className="muted"> · {Math.round(r.hit * 10)} in 10 rose</span>
+                </span>
+              </div>
+              <div className="relative h-3 mt-0.5 rounded" style={{ background: 'var(--surface-2, rgba(127,127,127,0.12))' }}>
+                <div className="absolute top-0 bottom-0 rounded" style={{
+                  left: x(Math.min(100, v)), width: `calc(${x(Math.max(100, v))} - ${x(Math.min(100, v))})`, background: c, opacity: 0.85,
+                }} />
+                {/* $100 start and the market yardstick */}
+                <div className="absolute -top-0.5 -bottom-0.5" style={{ left: x(100), borderLeft: '1.5px solid var(--text-primary)', opacity: 0.6 }} />
+                <div className="absolute -top-1 -bottom-1" style={{ left: x(mkt), borderLeft: '1.5px dashed var(--text-primary)' }} />
+              </div>
+            </div>
+          )
+        })}
       </div>
-      <p className="muted text-[11px]">{f.desc}</p>
-      {best && worst && best !== worst && (
-        <p className="text-xs mt-1" style={{ color: 'var(--text-secondary)' }}>
-          Best: <b style={{ color: 'var(--pos)' }}>{best.bucket}</b> · Worst: <b style={{ color: 'var(--neg)' }}>{worst.bucket}</b>
-        </p>
-      )}
-      <PlotFigure build={build} deps={[rows, win, themeTick]} />
+      <div className="flex justify-between muted text-[10px] mt-1.5">
+        <span>solid line = your $100</span><span>dashed = average product ({dollars(base.mean)})</span>
+      </div>
     </div>
   )
 }

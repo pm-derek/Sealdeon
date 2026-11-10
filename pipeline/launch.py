@@ -197,7 +197,10 @@ def build(con, game: str, d0) -> dict | None:
             k = [i for i in its if i["kind"] == kind]
             if not k:
                 continue
-            med = lambda f: float(np.median([i[f] for i in k]))
+            # equal-weight average in log terms: every product counts the same
+            # (a $40 bundle as much as a $400 box), and because it is an average
+            # of logs the four parts add up exactly to the total
+            med = lambda f: float(np.mean([i[f] for i in k]))
             row[kind] = {
                 "n": len(k), "total": pct(med("total")), "unwind": pct(med("unwind")),
                 "decay": pct(med("decay")), "market": pct(med("market")), "specific": pct(med("specific")),
@@ -217,10 +220,10 @@ def build(con, game: str, d0) -> dict | None:
     for kind in ("sealed", "single"):
         for y in sorted({yr[i["groupId"]] for i in items if i["kind"] == kind}):
             k = [i for i in items if i["kind"] == kind and yr[i["groupId"]] == y]
-            med = lambda f: float(np.median([i[f] for i in k]))
+            med = lambda f: float(np.mean([i[f] for i in k]))
             years.append({"kind": kind, "year": int(y), "n": len(k), "unwind": pct(med("unwind")),
                           "market": pct(med("market")),
-                          "afterSettle": pct(float(np.median([i["total"] - i["unwind"] for i in k]))),
+                          "afterSettle": pct(float(np.mean([i["total"] - i["unwind"] for i in k]))),
                           "total": pct(med("total"))})
 
     # ---- how good is each anchor? (miss rate at day 90, market removed) -------------
