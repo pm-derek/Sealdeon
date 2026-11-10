@@ -8,35 +8,42 @@ import Screener from './views/Screener.jsx'
 import PremiumVsMedian from './views/PremiumVsMedian.jsx'
 import Signals from './views/Signals.jsx'
 import Market from './views/Market.jsx'
+import Sets from './views/Sets.jsx'
 
 function useRoute() {
-  const [hash, setHash] = useState(window.location.hash || '#/cohort')
+  const [hash, setHash] = useState(window.location.hash || '#/market')
   useEffect(() => {
-    const onChange = () => setHash(window.location.hash || '#/cohort')
+    const onChange = () => {
+      setHash(window.location.hash || '#/market')
+      window.scrollTo(0, 0)   // a new page starts at its top, not mid-scroll
+    }
     window.addEventListener('hashchange', onChange)
     return () => window.removeEventListener('hashchange', onChange)
   }, [])
   const parts = hash.replace(/^#\//, '').split('/')
-  return { page: parts[0] || 'cohort', param: parts[1] }
+  return { page: parts[0] || 'market', param: parts[1] }
 }
 
+// Ordered summary -> explore -> find -> reference. Labels stay short so the
+// desktop header fits on one row; the hint says what each page answers.
 const NAV = [
-  ['market', 'Market'],
-  ['cohort', 'Cohort Curves'],
-  ['signals', 'Signals'],
-  ['screener', 'Screener'],
-  ['premium', 'Premium vs Median'],
-  ['bands', 'Age-Band Medians'],
-  ['sets', 'Sets'],
+  ['market', 'Market', 'How is the market doing, and what has worked?'],
+  ['cohort', 'Curves', 'Compare sets at the same age, or over the same dates'],
+  ['sets', 'Sets', 'Every set at a glance; open one for its detail page'],
+  ['screener', 'Screener', 'Sort every product by its recent moves'],
+  ['signals', 'Signals', 'Backtested buy rules, and what is firing now'],
+  ['premium', 'Premium', 'Which products are priced above or below their usual premium'],
+  ['bands', 'Age bands', 'Typical price and premium by age'],
 ]
 
 function ThemeToggle() {
   const { mode, toggle } = useThemeMode()
   return (
-    <button className="nav-link shrink-0" onClick={toggle} title="Toggle light / dark"
+    <button className="nav-link shrink-0" onClick={toggle}
+      title={mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+      aria-label={mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
       style={{ border: '1px solid var(--border-strong)' }}>
-      <span className="sm:hidden">{mode === 'dark' ? '☾' : '☀'}</span>
-      <span className="hidden sm:inline">{mode === 'dark' ? '☾ Dark' : '☀ Light'}</span>
+      {mode === 'dark' ? '☾' : '☀'}
     </button>
   )
 }
@@ -55,40 +62,6 @@ function GameToggle({ game, setGame, games }) {
         </button>
       ))}
     </div>
-  )
-}
-
-function SetList({ meta }) {
-  const [query, setQuery] = useState('')
-  const q = query.toLowerCase()
-  const rows = [...meta.sets]
-    .sort((a, b) => (b.releaseDate || '').localeCompare(a.releaseDate || ''))
-    .filter((s) => !q || s.name?.toLowerCase().includes(q) || s.abbreviation?.toLowerCase().includes(q))
-  return (
-    <section>
-      <h2 className="text-lg font-semibold pb-2">Sets</h2>
-      <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="filter sets…"
-        className="field w-64 mb-3" />
-      <div className="card p-3 overflow-x-auto">
-        <table className="tbl text-sm w-full">
-          <thead>
-            <tr><th>Set</th><th>Abbr</th><th>Released</th><th>Era</th><th>History</th><th>Hype</th></tr>
-          </thead>
-          <tbody>
-            {rows.map((s) => (
-              <tr key={s.groupId}>
-                <td><a href={`#/set/${s.groupId}`} className="hover:underline" style={{ color: 'var(--accent)' }}>{s.name}</a></td>
-                <td className="muted">{s.abbreviation}</td>
-                <td className="muted">{s.releaseDate ?? '—'}</td>
-                <td className="muted">{s.era}</td>
-                <td className="muted">{s.archiveComplete ? 'complete' : 'partial'}</td>
-                <td>{s.isHype ? `🔥 ${s.hypeSource}` : ''}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
   )
 }
 
@@ -151,39 +124,40 @@ export default function App() {
           <div className="flex items-baseline gap-2 shrink-0 min-w-0">
             <span className="text-xl hidden sm:inline">📦</span>
             <h1 className="text-base sm:text-xl font-bold tracking-tight">Sealdeon</h1>
-            <span className="subtle text-sm hidden md:inline">sealed-market intelligence</span>
+            <span className="subtle text-sm hidden 2xl:inline">sealed-market intelligence</span>
           </div>
           {games.length > 1 && <GameToggle game={game} setGame={setGame} games={games} />}
           {/* Desktop nav */}
-          <nav className="hidden sm:flex flex-wrap gap-1 ml-auto items-center">
-            {NAV.map(([key, label]) => (
-              <a key={key} href={`#/${key}`} className="nav-link" data-on={String(navActive(key))}>{label}</a>
+          <nav className="hidden sm:flex flex-nowrap gap-0.5 lg:gap-1 ml-auto items-center min-w-0">
+            {NAV.map(([key, label, hint]) => (
+              <a key={key} href={`#/${key}`} className="nav-link whitespace-nowrap" title={hint}
+                data-on={String(navActive(key))} aria-current={navActive(key) ? 'page' : undefined}>{label}</a>
             ))}
+            <span className="muted text-xs whitespace-nowrap hidden xl:inline px-2" title="Prices from TCGplayer via TCGCSV, refreshed daily">
+              data through {meta.latestDate}
+            </span>
             <ThemeToggle />
           </nav>
           <div className="ml-auto sm:hidden"><ThemeToggle /></div>
         </div>
       </header>
       <main className="max-w-[1600px] mx-auto px-3 sm:px-4 py-2 sm:py-4 pb-24 sm:pb-20">
-        {/* desktop only: on phones this cost a full row of vertical space */}
-        <div className="hidden sm:flex justify-end pb-2">
-          <span className="muted text-xs">data through {meta.latestDate}</span>
-        </div>
         {page === 'market' && <Market key={game} game={game} />}
         {page === 'cohort' && <CohortCurves key={game} meta={gameMeta} game={game} />}
         {page === 'signals' && <Signals meta={meta} game={game} />}
         {page === 'bands' && <AgeBandMedians key={game} meta={gameMeta} game={game} />}
         {page === 'screener' && <Screener key={game} meta={gameMeta} game={game} />}
         {page === 'premium' && <PremiumVsMedian key={game} meta={gameMeta} game={game} />}
-        {page === 'sets' && <SetList meta={gameMeta} />}
+        {page === 'sets' && <Sets key={game} meta={gameMeta} game={game} />}
         {page === 'set' && param && <SetDetail meta={meta} groupId={param} />}
       </main>
       {/* Mobile bottom tab bar */}
       <nav className="sm:hidden fixed bottom-0 inset-x-0 z-20 flex justify-around backdrop-blur"
         style={{ background: 'color-mix(in oklab, var(--surface-0) 94%, transparent)', borderTop: '1px solid var(--border)' }}>
         {NAV.map(([key, label]) => (
-          <a key={key} href={`#/${key}`} className="mobile-tab" data-on={String(navActive(key))}>
-            {label.replace(' Curves', '').replace('Age-Band Medians', 'Bands').replace('Premium vs Median', 'Premium')}
+          <a key={key} href={`#/${key}`} className="mobile-tab" data-on={String(navActive(key))}
+            aria-current={navActive(key) ? 'page' : undefined}>
+            {label === 'Age bands' ? 'Bands' : label}
           </a>
         ))}
       </nav>

@@ -4,7 +4,7 @@ import FilterBar, { Dropdown } from '../components/FilterBar.jsx'
 import SetPicker from '../components/SetPicker.jsx'
 import PlotFigure from '../components/PlotFigure.jsx'
 import { loadView, loadSetDetail } from '../lib/loadView.js'
-import { cohortBand, filterSeries, fmtPct, fmtUsd } from '../lib/slice.js'
+import { cohortBand, filterSeries, fmtPct, fmtUsd, settledOf } from '../lib/slice.js'
 import { useTheme } from '../lib/theme.js'
 
 const X_DIV = { days: 1, weeks: 7, months: 30.44 }
@@ -20,7 +20,10 @@ const METRICS = {
 // Index baselines. MSRP = 100 answers "what is it worth vs retail"; release
 // = 100 answers "how has it moved since launch" and always works (MSRP is a
 // curated approximation and is absent for e.g. Chase Singles).
-const BASES = { msrp: 'vs MSRP', release: 'vs release' }
+// settled = the median over days 30-59, after launch hype has mostly worn
+// off; it is the most reliable "where did this start" baseline we have
+// (pipeline/launch.py). Release-day prices are mostly preorder/prerelease hype.
+const BASES = { settled: 'vs settled', msrp: 'vs MSRP', release: 'vs release' }
 
 // How to summarise a pooled basket (Chase Singles = a set's top 5 singles).
 // A skewed set has no one right answer -- Phantasmal Flames' five are
@@ -91,7 +94,7 @@ export default function CohortCurves({ meta }) {
   const [colorMode, setColorMode] = useState('mono')
   const [xMode, setXMode] = useState('cohort') // cohort (age) | calendar (date)
   const [yLog, setYLog] = useState(false)
-  const [basis, setBasis] = useState('msrp')   // index baseline
+  const [basis, setBasis] = useState('settled')   // index baseline
   const [agg, setAgg] = useState('sum')        // pooled-basket summary
   const [range, setRange] = useState('all')
   const [axisSlice, setAxisSlice] = useState(null)  // axis tap -> cross-section
@@ -162,6 +165,11 @@ export default function CohortCurves({ meta }) {
     // MSRP basis when we have a curated MSRP for this series; otherwise fall
     // back to the release-day index so the line still renders.
     if (basis === 'msrp' && s?.msrp) return (pt) => (raw(pt) == null ? null : (raw(pt) / s.msrp) * 100)
+    if (basis === 'settled' && s) {
+      const st = settledOf(s.points, raw)
+      if (st) return (pt) => (raw(pt) == null ? null : (raw(pt) / st) * 100)
+      // no settled window in the archive (older sets): fall through to release
+    }
     // Sum is a fixed multiple of the mean, so it indexes identically -- only
     // median and top need re-indexing off their own baseline.
     if (!s?.basketSize || agg === 'mean' || agg === 'sum') return (pt) => pt[1]
@@ -172,7 +180,6 @@ export default function CohortCurves({ meta }) {
     const base = first ? raw(first) : null
     return (pt) => (base && raw(pt) != null ? (raw(pt) / base) * 100 : null)
   }
-  const valueAt = valueFor(null)
 
   const model = useMemo(() => {
     if (!curves) return null
@@ -190,8 +197,9 @@ export default function CohortCurves({ meta }) {
         groupId: s.groupId, name: set?.name ?? String(s.groupId), abbr: shortLabel(set),
         partial: !set?.archiveComplete, releaseEpoch: rel(s.groupId),
         lowConfidence: s.lowConfidence && state.metric === 'prem',
-        // index falls back to release-basis when this series has no MSRP
-        approxBase: isIndex && basis === 'msrp' && !s.msrp,
+        // index falls back to release-basis when this series has no MSRP /
+        // no settled window inside the archive
+        approxBase: isIndex && ((basis === 'msrp' && !s.msrp) || (basis === 'settled' && !settledOf(s.points, rawAt))),
         points: s.points.filter((pt) => vAt(pt) != null && (!useLog || vAt(pt) > 0))
           .map((pt) => ({ age: pt[0], value: vAt(pt), price: rawAt(pt) })),
       }
@@ -203,7 +211,10 @@ export default function CohortCurves({ meta }) {
     ids.forEach((gid, i) => emph.set(gid, palette.series[i % palette.series.length]))
     const colorOf = (gid, i) =>
       emph.get(gid) || (colorMode === 'multi' ? hueColor(i, lines.length) : palette.context)
-    const band = isCal ? [] : cohortBand(series, valueAt)
+    // Band from the plotted values themselves, so it is always in the same
+    // units as the lines (it used to be release-indexed whatever the basis).
+    const band = isCal ? [] : cohortBand(lines.map((l) => ({ points: l.points.map((p) => [p.age, p.value]) })),
+                                         (pt) => pt[1])
     return { lines, band, emph, colorOf }
   }, [curves, meta, state, picked, focus, isIndex, basis, agg, useLog, colorMode, isCal, themeTick])
 
@@ -350,7 +361,7 @@ export default function CohortCurves({ meta }) {
         tickFormat: isCal ? fmtDate : undefined,
       },
       y: {
-        label: `↑ ${isIndex ? `index (${basis === 'msrp' ? 'MSRP' : 'release'} = 100)`
+        label: `↑ ${isIndex ? `index (${{ msrp: 'MSRP', settled: 'settled price', release: 'release' }[basis]} = 100)`
           : isBasket && !isPct ? aggDef.axis : metricDef.axis}${useLog ? ' (log)' : ''}`,
         grid: true, domain: yDomain,
         type: useLog ? 'log' : 'linear',
@@ -494,9 +505,14 @@ export default function CohortCurves({ meta }) {
 
   return (
     <section>
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <h2 className="text-lg font-semibold hidden sm:block">Cohort curves</h2>
-        <p className="muted text-xs hidden sm:block">scroll = zoom · shift-scroll = zoom Y · drag = pan · double-click = reset · click line/label = focus (again to clear) · <strong>click an axis = cross-section</strong></p>
+      <div className="hidden sm:block pb-1">
+        <div className="flex flex-wrap items-baseline justify-between gap-2">
+          <h2 className="text-xl font-semibold">Curves</h2>
+          <p className="muted text-xs">scroll = zoom · shift-scroll = zoom Y · drag = pan · double-click = reset · click line/label = focus (again to clear) · <strong>click an axis = cross-section</strong></p>
+        </div>
+        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+          Compare sets at the same age (Cohort) or over the same dates (Daily). Index mode starts every line at its settled price, so launch hype doesn&apos;t skew the comparison.
+        </p>
       </div>
 
       {/* Mobile: one compact strip pinned under the header, so the controls
@@ -578,11 +594,15 @@ export default function CohortCurves({ meta }) {
         </div>
         {isIndex && (
           <p className="muted text-xs pb-2">
-            {basis === 'msrp'
+            {basis === 'settled'
+              ? <>100 = the set’s <b>settled price</b>: its median over days 30–59 after release, once launch hype has mostly
+                  worn off. Release-day prices are mostly preorder and prerelease hype, so this is the fairer starting point.
+                  {model.lines.some((l) => l.approxBase) && <strong> Sets released before the archive (Feb 2024) have no settled window and fall back to release = 100.</strong>}</>
+              : basis === 'msrp'
               ? <>100 = approximate US retail (MSRP). MSRP isn’t published by the data source — it’s a curated table in
                   <code className="mx-1">config/msrp.json</code>, editable per type, set, or item.
                   {model.lines.some((l) => l.approxBase) && <strong> Series without an MSRP fall back to release = 100.</strong>}</>
-              : <>100 = the set’s price on release day (or first observation for partial history).</>}
+              : <>100 = the set’s price on release day (or first observation for partial history). Includes the launch hype.</>}
           </p>
         )}
         {isBasket && state.metric !== 'prem' && (

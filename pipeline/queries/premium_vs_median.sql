@@ -14,6 +14,10 @@ clean_median AS (
         count(*) AS n
     FROM sealed_daily sd
     JOIN sets s ON s.groupId = sd.groupId
+    -- single-unit products only: a 10-box display or master carton carries
+    -- one box's pack count, so its "premium" is a multiple, not a premium
+    JOIN products pc ON pc.productId = sd.productId AND pc.isCanonical
+                    AND pc.productType NOT LIKE '%Case%'
     WHERE NOT s.isHype
       AND s.releaseDate IS NOT NULL
       AND date_diff('day', s.releaseDate, sd.date) >= 0
@@ -29,6 +33,9 @@ current_prem AS (
     FROM sealed_daily sd
     JOIN sets s ON s.groupId = sd.groupId
     CROSS JOIN latest
+    -- the products people buy: no cases (their own types, canonical per type)
+    JOIN products pc ON pc.productId = sd.productId AND pc.isCanonical
+                    AND pc.productType NOT LIKE '%Case%'
     WHERE sd.date = latest.d AND s.releaseDate IS NOT NULL
 )
 SELECT

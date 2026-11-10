@@ -202,6 +202,26 @@ _mp = mkt["games"]["Pokemon"]
 check("market pulse has a regime", isinstance(_mp["pulse"]["regime"], str), str(_mp["pulse"]))
 check("market factors carry both windows", set(_mp["factors"]["windows"]) == {"all", "recent"})
 check("market screens are lists", all(isinstance(s["rows"], list) for s in _mp["screens"]))
+# Launch anchoring must never break the daily build: on a small lake it may
+# have nothing old enough to decompose, which is a None, not a crash.
+check("market launch block present (may be empty)", "launch" in _mp)
+if _mp["launch"]:
+    _L = _mp["launch"]
+    check("launch anchor window is days 30-59", _L["anchorWindow"] == [30, 59])
+    for _s in _L["sets"]:
+        for _k in ("sealed", "single"):
+            if _k in _s:
+                import math as _math
+                _parts = sum(_math.log1p(_s[_k][p]) for p in ("unwind", "decay", "market", "specific"))
+                check(f"launch parts add up to the total ({_s['ab']} {_k})",
+                      abs(_parts - _math.log1p(_s[_k]["total"])) < 0.05, f"{_parts} vs {_math.log1p(_s[_k]['total'])}")
+                break
+        break
+
+# the frontend (lib/slice.js SETTLED_WINDOW) and the SQL views hard-code the
+# same window; this pins the pipeline side so they cannot drift apart silently
+import launch as _launch  # noqa: E402
+check("launch module uses the days 30-59 settled window", _launch.ANCHOR == (30, 59))
 
 with open(os.path.join(views, "age_band_medians.json")) as f:
     bands = json.load(f)["rows"]
@@ -218,6 +238,13 @@ with open(os.path.join(views, "set_detail", "23237.json")) as f:
     detail = json.load(f)
 check("set detail sealed grid", len(detail["sealed"]) >= 5, str(len(detail["sealed"])))
 check("set detail chase list = 5", len(detail["chase"]) == 5)
+check("set detail carries settled price, not first-seen 'launch' price",
+      "settledPrice" in detail["chase"][0] and "launchPrice" not in detail["chase"][0])
+with open(os.path.join(views, "premium_vs_median.json")) as f:
+    _pvm = json.load(f)["rows"]
+check("premium-vs-usual scores single units only (no cases/displays)",
+      not any(_w in (r["name"] or "").lower() for r in _pvm for _w in (" case", "display", "master carton")),
+      str([r["name"] for r in _pvm if any(_w in (r["name"] or "").lower() for _w in (" case", "display"))][:3]))
 check("set detail sparkline", len(detail["sealed"][0]["sparkline"]) > 2)
 check("set detail has no inlined eraBand", "eraBand" not in detail)
 with open(os.path.join(views, "era_bands.json")) as f:

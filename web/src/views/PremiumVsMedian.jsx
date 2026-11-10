@@ -5,10 +5,15 @@ import PlotFigure from '../components/PlotFigure.jsx'
 import { loadView } from '../lib/loadView.js'
 import { fmtPct, fmtUsd, eraMatch } from '../lib/slice.js'
 import { useTheme } from '../lib/theme.js'
+import PageHeader from '../components/PageHeader.jsx'
 
-export default function PremiumVsMedian({ meta }) {
+const MODERN = ['Mega Evolution', 'Scarlet & Violet', 'Sword & Shield']
+
+export default function PremiumVsMedian({ meta, game = 'Pokemon' }) {
   const [data, setData] = useState(null)
-  const [state, setState] = useState({ eras: [], seriesType: 'All', hype: 'all' })
+  // modern eras by default: vintage spans 10,000+ days and squeezes the rest
+  const [state, setState] = useState({ eras: game === 'Pokemon' ? MODERN : [], seriesType: 'All', hype: 'all' })
+  const [end, setEnd] = useState('rich')   // which end of the ranking the table shows
   const [showImages, setShowImages] = useState(true)
   const { palette, themeTick } = useTheme()
 
@@ -47,13 +52,13 @@ export default function PremiumVsMedian({ meta }) {
     const dotR = (d) => 7 + 28 * Math.sqrt((d.price || 0) / maxP)
     const title = (d) =>
       `${d.name}\n${d.setName} · ${d.productType} · ${fmtUsd(d.price)}\n` +
-      `premium ${fmtPct(d.premiumPct)} vs clean median ${fmtPct(d.cleanMedianPremium)}\n` +
-      `deviation ${fmtPct(d.deviation)}${d.conf === 'low' ? '\n⚠ low-confidence intrinsic' : ''}`
+      `premium ${fmtPct(d.premiumPct)} vs usual ${fmtPct(d.cleanMedianPremium)}\n` +
+      `gap ${fmtPct(d.deviation)}${d.conf === 'low' ? '\n⚠ low-confidence intrinsic' : ''}`
     return Plot.plot({
       width, height: width < 640 ? 380 : 460,
       style: { background: 'transparent', color: palette.textSecondary, fontSize: '12px' },
       x: { label: 'age (days since release)', grid: false },
-      y: { label: 'premium deviation vs clean median', grid: true, tickFormat: (d) => `${(d * 100).toFixed(0)}%` },
+      y: { label: 'premium gap vs usual', grid: true, tickFormat: (d) => `${(d * 100).toFixed(0)}%` },
       marks: [
         Plot.ruleY([0], { stroke: palette.textSecondary, strokeWidth: 1.5, strokeOpacity: 0.7 }),
         showImages
@@ -76,17 +81,20 @@ export default function PremiumVsMedian({ meta }) {
   }
 
   if (!data) return <p className="muted p-4">Loading premium vs median…</p>
+  const ranked = rows.filter((r) => r.deviation != null)
+    .sort((a, b) => (end === 'rich' ? b.deviation - a.deviation : a.deviation - b.deviation))
   const metaForFilter = { ...meta, seriesTypes: ['All', ...(meta.seriesTypes || []).filter((t) => t !== 'Chase Singles')] }
   return (
     <section>
-      <h2 className="text-lg font-semibold">Premium vs clean median</h2>
-      <p className="subtle text-sm">
-        Each sealed product's current premium against the historical clean-median premium
-        for its product type + age band. Above zero = pricier than the honest baseline.
-        Marker <strong>size = product $ value</strong> (bigger = more expensive). The scatter hides
-        low-confidence intrinsic values and &gt;300% deviations (usually pack-count errors); they remain
-        in the table below, dimmed.
-      </p>
+      <PageHeader title="Premium vs usual"
+        question="Is this product priced above or below the premium its type normally carries at this age?">
+        <p><b>Premium</b> = sealed price ÷ value of the packs inside − 1. <b>Usual</b> = the median premium for the same product
+          type and age band across non-hype sets, over all history. <b>Gap</b> = premium − usual: above zero is pricier than
+          normal, below is cheaper.</p>
+        <p>Only single-unit products are scored — a case or display carries one box&apos;s pack count, so its “premium” is
+          meaningless. Marker size = product price. The chart hides low-confidence pack values and gaps beyond ±300%
+          (almost always a pack-count error); they stay in the table, dimmed.</p>
+      </PageHeader>
       <div className="flex flex-wrap items-center gap-x-5 gap-y-2 py-1">
         <FilterBar meta={metaForFilter} state={state} setState={setState} show={{ completeness: false }} />
         <div className="seg">
@@ -98,14 +106,22 @@ export default function PremiumVsMedian({ meta }) {
       <div className="card p-3">
         <PlotFigure build={build} deps={[rows, showImages, themeTick]} />
       </div>
-      <div className="card p-3 mt-4 overflow-x-auto">
+      <div className="flex flex-wrap items-center justify-between gap-2 pt-4 pb-2">
+        <h3 className="font-semibold text-sm">{end === 'rich' ? 'Priced furthest above usual' : 'Priced furthest below usual'}</h3>
+        <div className="seg">
+          <button className="chip" data-on={String(end === 'rich')} onClick={() => setEnd('rich')}>Above usual</button>
+          <button className="chip" data-on={String(end === 'cheap')} onClick={() => setEnd('cheap')}>Below usual</button>
+        </div>
+      </div>
+      <div className="card p-3 overflow-x-auto">
         <table className="tbl text-sm w-full">
           <thead>
-            <tr><th>Product</th><th>Set</th><th>Type</th><th>Age band</th><th>Price</th>
-                <th>Intrinsic</th><th>Premium</th><th>Clean median</th><th>Deviation</th></tr>
+            <tr><th>Product</th><th>Set</th><th>Type</th><th>Age</th><th className="text-right">Price</th>
+                <th className="text-right">Pack value</th><th className="text-right">Premium</th>
+                <th className="text-right">Usual</th><th className="text-right">Gap</th></tr>
           </thead>
           <tbody>
-            {rows.slice(0, 80).map((r) => (
+            {ranked.slice(0, 40).map((r) => (
               <tr key={r.productId} style={r.conf === 'low' ? { opacity: 0.55 } : undefined}>
                 <td className="max-w-64 truncate" title={r.name}>
                   <a href={`#/set/${r.groupId}`} className="hover:underline">{r.name}</a>
@@ -114,11 +130,11 @@ export default function PremiumVsMedian({ meta }) {
                 <td className="muted max-w-40 truncate">{r.setName}{r.isHype ? ' 🔥' : ''}</td>
                 <td className="muted">{r.productType}</td>
                 <td className="muted">{r.ageBand}</td>
-                <td>{fmtUsd(r.price)}</td>
-                <td>{fmtUsd(r.intrinsicValue)}</td>
-                <td>{fmtPct(r.premiumPct)}</td>
-                <td>{fmtPct(r.cleanMedianPremium)}</td>
-                <td>{r.deviation != null
+                <td className="text-right tabular-nums">{fmtUsd(r.price)}</td>
+                <td className="text-right tabular-nums">{fmtUsd(r.intrinsicValue)}</td>
+                <td className="text-right tabular-nums">{fmtPct(r.premiumPct)}</td>
+                <td className="text-right tabular-nums muted">{fmtPct(r.cleanMedianPremium)}</td>
+                <td className="text-right tabular-nums">{r.deviation != null
                   ? <span style={{ color: r.deviation > 0 ? 'var(--neg)' : 'var(--pos)' }}>{fmtPct(r.deviation)}</span>
                   : '—'}</td>
               </tr>

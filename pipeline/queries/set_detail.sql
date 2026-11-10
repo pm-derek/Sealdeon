@@ -18,10 +18,19 @@ cur AS (
 extremes AS (
     SELECT productId,
            max(price) AS athPrice,
-           min(price) AS atlPrice,
-           arg_min(price, date) AS launchPrice
+           min(price) AS atlPrice
     FROM px
     GROUP BY productId
+),
+-- Settled price: median over days 30-59 after release. The first price ever
+-- seen is a poor "launch" figure -- for singles it is often a prerelease
+-- ASK with no sales behind it, and it can sit above the all-time high of
+-- actual trades. See pipeline/launch.py for why this window.
+settled AS (
+    SELECT x.productId, median(x.price) AS settledPrice
+    FROM px x JOIN products p USING (productId) JOIN sets s ON s.groupId = p.groupId
+    WHERE date_diff('day', s.releaseDate, x.date) BETWEEN 30 AND 59
+    GROUP BY 1 HAVING count(*) >= 8
 ),
 prem AS (
     SELECT productId,
@@ -50,7 +59,8 @@ SELECT
     round(c.price, 2)        AS price,
     round(e.athPrice, 2)     AS athPrice,
     round(e.atlPrice, 2)     AS atlPrice,
-    round(e.launchPrice, 2)  AS launchPrice,
+    round(st.settledPrice, 2) AS settledPrice,
+    round(c.price / NULLIF(st.settledPrice, 0) - 1, 4) AS pctVsSettled,
     round(u.peakPrice, 2)    AS peakPrice,
     u.peakDate,
     round(c.price / NULLIF(u.peakPrice, 0) - 1, 4) AS pctOffPeak,
@@ -61,6 +71,7 @@ SELECT
 FROM universe u
 JOIN cur c USING (productId)
 LEFT JOIN extremes e USING (productId)
+LEFT JOIN settled st USING (productId)
 LEFT JOIN prem p USING (productId)
 WHERE c.price > 0
 ORDER BY u.groupId, u.isChase, u.productType NULLS LAST, u.name;

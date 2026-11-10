@@ -76,3 +76,46 @@ export const fmtPct = (v, digits = 1) =>
   v == null ? '—' : `${v > 0 ? '+' : ''}${(v * 100).toFixed(digits)}%`
 export const fmtUsd = (v) =>
   v == null ? '—' : v >= 1000 ? `$${(v / 1000).toFixed(1)}k` : `$${v.toFixed(2)}`
+
+// ---- settled anchor ---------------------------------------------------------
+// The SETTLED price is the median over days 30-59 after release. Launch-day
+// prices are mostly hype -- sealed peaks in thin preorder trading, singles at
+// prerelease with half the listings unsold -- so they make a poor baseline.
+// Measured against what items did next (market removed), this window misses
+// by >30% about 1 time in 15 for sealed vs ~9 in 10 from the launch peak.
+// See pipeline/launch.py.
+export const SETTLED_WINDOW = [30, 59]
+export const MIN_SETTLED_OBS = 8
+
+export function settledOf(points, rawAt = (pt) => pt[3]) {
+  const vals = []
+  for (const pt of points) {
+    if (pt[0] >= SETTLED_WINDOW[0] && pt[0] <= SETTLED_WINDOW[1]) {
+      const v = rawAt(pt)
+      if (v != null && v > 0) vals.push(v)
+    }
+  }
+  if (vals.length < MIN_SETTLED_OBS) return null
+  vals.sort((a, b) => a - b)
+  return q(vals, 0.5)
+}
+
+// Headline numbers for one cohort series: latest price, 30/90-day change,
+// change vs its settled price, latest premium.
+export function seriesStats(s) {
+  const pts = s?.points
+  if (!pts?.length) return null
+  const raw = s.basketSize ? (pt) => (pt[3] == null ? null : pt[3] * s.basketSize) : (pt) => pt[3]
+  const last = pts[pts.length - 1]
+  const back = (days) => {
+    let best = null
+    for (const pt of pts) if (pt[0] <= last[0] - days) best = pt
+    return best && last[0] - best[0] <= days + 10 ? raw(best) : null
+  }
+  const now = raw(last)
+  const settled = settledOf(pts, raw)
+  const ch = (then) => (now != null && then ? now / then - 1 : null)
+  let prem = null
+  for (let i = pts.length - 1; i >= 0 && prem == null; i--) prem = pts[i][2]
+  return { now, age: last[0], chg30: ch(back(30)), chg90: ch(back(90)), settled, vsSettled: ch(settled), prem }
+}

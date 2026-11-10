@@ -27,6 +27,11 @@ rollup AS (
     UNION ALL
     -- cross-era rollup stays WITHIN a game
     SELECT game, 'All' AS era, seriesType, hypeBucket, ageBand, price, premiumPct, groupId FROM buckets
+    UNION ALL
+    -- modern Pokemon on its own: vintage boxes run to thousands of dollars
+    -- and swamp the all-era medians in the older age bands
+    SELECT game, 'Modern' AS era, seriesType, hypeBucket, ageBand, price, premiumPct, groupId FROM buckets
+    WHERE game = 'Pokemon' AND era IN ('Sword & Shield', 'Scarlet & Violet', 'Mega Evolution')
 )
 SELECT
     game,

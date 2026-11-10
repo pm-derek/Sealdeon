@@ -268,7 +268,7 @@ def _stats(s: pd.Series) -> dict:
             "hit": round(float((s > 0.02).mean()), 3), "loss": round(float((s < -0.05).mean()), 3)}
 
 
-def _rows(df: pd.DataFrame, cols=("item", "setName", "ab", "type", "url", "age", "p0",
+def _rows(df: pd.DataFrame, cols=("item", "setName", "ab", "groupId", "type", "url", "age", "p0",
                                   "r30", "r90", "r365", "prem", "ask", "offHigh")) -> list[dict]:
     out = []
     for r in df.to_dict("records"):
@@ -348,8 +348,13 @@ def build_game(con, game: str, d0) -> dict:
     panel = _panel(con, d0)
     factors = _factors(panel, d0)
     screens = _screens(snap, game, cfg)
-    return {"pulse": pulse, "index": index, "supply": _supply(con, d0),
-            "segments": segments, "movers": movers, "factors": factors, "screens": screens}
+    out = {"pulse": pulse, "index": index, "supply": _supply(con, d0),
+           "segments": segments, "movers": movers, "factors": factors, "screens": screens}
+    # launch anchoring runs on its own tables; the snapshot tables above are
+    # not needed past this point
+    import launch
+    out["launch"] = launch.build(con, game, d0)
+    return out
 
 
 def _r(v):

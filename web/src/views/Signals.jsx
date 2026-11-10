@@ -3,6 +3,7 @@ import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { loadView } from '../lib/loadView.js'
 import { fmtPct, fmtUsd } from '../lib/slice.js'
 import { useTheme } from '../lib/theme.js'
+import PageHeader from '../components/PageHeader.jsx'
 
 const H = [30, 60, 90]
 
@@ -88,62 +89,110 @@ const TYPE_ORDER = ['Booster Box', 'Elite Trainer Box', 'ETB', 'PKC ETB', 'Boost
 
 // Backtest leaderboard: each signal's win rate + median forward return vs
 // the unconditional baseline (the market drift to beat).
-function Leaderboard({ bt }) {
+// One row per rule, sorted by how far its 90-day result beat buying anything.
+// 90 days is the headline (a sealed position is a months-long hold); 30/60-day
+// edges stay visible as small print so the shape over time is not lost.
+function edgesOf(bt) {
   const base = Object.fromEntries((bt.baseline || []).map((b) => [b.horizon, b]))
   const bySig = {}
   for (const r of bt.rows) (bySig[r.signal] ||= {})[r.horizon] = r
   const labelOf = Object.fromEntries(bt.signals.map((s) => [s.key, s.label]))
-  const order = ['conviction', 'value_rebound', 'below_peers', 'cheap_premium', 'off_peak',
-                 'reprint_window', 'deep_oop', 'momentum_high']
+  return Object.entries(bySig).map(([k, hs]) => ({
+    key: k, label: labelOf[k] || k, hs,
+    edge: Object.fromEntries(H.map((h) => [h, hs[h] && base[h] ? hs[h].medianReturn - base[h].medianReturn : null])),
+  })).sort((a, b) => (b.edge[90] ?? -9) - (a.edge[90] ?? -9))
+}
+
+const fmtPpt = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${(v * 100).toFixed(1)} pts`)
+
+function Leaderboard({ bt }) {
+  const base = Object.fromEntries((bt.baseline || []).map((b) => [b.horizon, b]))
+  const rows = edgesOf(bt)
+  const ext = Math.max(0.02, ...rows.map((r) => Math.abs(r.edge[90] || 0)))
   return (
     <div className="card p-3 overflow-x-auto">
       <table className="tbl text-sm w-full">
         <thead>
           <tr>
-            <th>Signal</th>
-            {H.map((h) => <th key={h} colSpan={2} style={{ textAlign: 'center' }}>{h}-day forward</th>)}
-          </tr>
-          <tr>
-            <th></th>
-            {H.map((h) => [
-              <th key={`${h}w`}>win%</th>,
-              <th key={`${h}m`}>median · vs mkt</th>,
-            ])}
+            <th className="min-w-[14rem]">Rule</th>
+            <th className="text-right" title="Matured firings measured at 90 days">Times fired</th>
+            <th className="text-right" title="Share of firings that were up after 90 days">Won (90d)</th>
+            <th className="text-right" title="Median price change 90 days after firing">Median (90d)</th>
+            <th className="min-w-[11rem]" title="Median 90-day return minus the market's (buying any sealed at random)">vs market (90d)</th>
+            <th className="text-right muted" title="Same gap at 30 and 60 days">30d · 60d</th>
           </tr>
         </thead>
         <tbody>
-          {order.filter((k) => bySig[k]).map((k) => (
-            <tr key={k}>
-              <td className="max-w-72 whitespace-normal">{labelOf[k]}</td>
-              {H.map((h) => {
-                const r = bySig[k][h], b = base[h]
-                if (!r) return [<td key={h} className="muted">—</td>, <td key={h + 'x'} className="muted">—</td>]
-                const edge = b ? r.medianReturn - b.medianReturn : null
-                return [
-                  <td key={`${h}w`}>{(r.winRate * 100).toFixed(0)}%</td>,
-                  <td key={`${h}m`}>
-                    <span style={{ color: retColor(r.medianReturn) }}>{fmtPct(r.medianReturn)}</span>
-                    {edge != null && (
-                      <span className="muted"> · <span style={{ color: retColor(edge) }}>{fmtPct(edge)}</span></span>
-                    )}
-                    <span className="muted text-xs"> ({r.n})</span>
-                  </td>,
-                ]
-              })}
-            </tr>
-          ))}
+          {rows.map((r) => {
+            const h = r.hs[90]
+            const e = r.edge[90]
+            return (
+              <tr key={r.key}>
+                <td className="whitespace-normal leading-snug">{r.label}</td>
+                <td className="text-right tabular-nums muted">{h?.n ?? '—'}</td>
+                <td className="text-right tabular-nums">{h ? `${Math.round(h.winRate * 100)}%` : '—'}</td>
+                <td className="text-right tabular-nums" style={{ color: retColor(h?.medianReturn) }}>{h ? fmtPct(h.medianReturn) : '—'}</td>
+                <td>
+                  <div className="flex items-center gap-2">
+                    <div className="relative h-2 w-24 shrink-0 rounded-full" style={{ background: 'var(--surface-2)' }}>
+                      <div className="absolute top-0 h-2 rounded-full" style={{
+                        left: e >= 0 ? '50%' : `${50 - (Math.abs(e) / ext) * 50}%`,
+                        width: `${(Math.abs(e || 0) / ext) * 50}%`,
+                        background: e >= 0 ? 'var(--pos)' : 'var(--neg)' }} />
+                      <div className="absolute top-[-2px] h-3 w-px left-1/2" style={{ background: 'var(--text-muted)' }} />
+                    </div>
+                    <span className="tabular-nums font-medium" style={{ color: retColor(e) }}>{fmtPpt(e)}</span>
+                  </div>
+                </td>
+                <td className="text-right tabular-nums muted text-xs whitespace-nowrap">{fmtPpt(r.edge[30])} · {fmtPpt(r.edge[60])}</td>
+              </tr>
+            )
+          })}
           <tr style={{ borderTop: '2px solid var(--border-strong)' }}>
-            <td className="muted italic">Baseline — buy any sealed at random</td>
-            {H.map((h) => {
-              const b = base[h]
-              return b
-                ? [<td key={h} className="muted">{(b.winRate * 100).toFixed(0)}%</td>,
-                   <td key={h + 'm'} className="muted">{fmtPct(b.medianReturn)}</td>]
-                : [<td key={h} className="muted">—</td>, <td key={h + 'x'} className="muted">—</td>]
-            })}
+            <td className="muted italic">Market — buy any sealed at random</td>
+            <td className="text-right muted tabular-nums">{base[90]?.n ?? '—'}</td>
+            <td className="text-right muted tabular-nums">{base[90] ? `${Math.round(base[90].winRate * 100)}%` : '—'}</td>
+            <td className="text-right muted tabular-nums">{base[90] ? fmtPct(base[90].medianReturn) : '—'}</td>
+            <td className="muted text-xs">the bar to beat</td><td />
           </tr>
         </tbody>
       </table>
+    </div>
+  )
+}
+
+// The headline, computed from the backtest file -- never hard-coded, so it
+// cannot drift from the table under it.
+function Findings({ bt, recent }) {
+  const rows = edgesOf(bt).filter((r) => r.edge[90] != null)
+  if (!rows.length) return null
+  const conv = rows.find((r) => r.key === 'conviction')
+  // conviction gets its own card, so the middle card is the best of the rest
+  const best = rows.find((r) => r.key !== 'conviction') || rows[0], worst = rows[rows.length - 1]
+  const base = (bt.baseline || []).find((b) => b.horizon === 90)
+  const convSets = new Set((recent?.rows || []).filter((r) => r.signal === 'conviction').map((r) => r.groupId)).size
+  return (
+    <div className="grid sm:grid-cols-3 gap-2">
+      {conv && (
+        <div className="card p-3" style={{ borderColor: 'var(--accent)' }}>
+          <div className="muted text-[11px] uppercase tracking-wide">Sharpest rule · 🎯 conviction</div>
+          <div className="text-2xl font-semibold tabular-nums mt-0.5" style={{ color: retColor(conv.edge[90]) }}>{fmtPpt(conv.edge[90])}</div>
+          <div className="muted text-xs">vs market at 90 days · won {Math.round(conv.hs[90].winRate * 100)}% · median {fmtPct(conv.hs[90].medianReturn)}</div>
+          <p className="text-xs mt-1.5" style={{ color: 'var(--text-secondary)' }}>A box at or below the value of its packs, already rising over 30 and 60 days, 1–3 years old.
+            Fired on {convSets} {convSets === 1 ? 'set' : 'sets'} in the last 180 days.</p>
+        </div>
+      )}
+      <div className="card p-3">
+        <div className="muted text-[11px] uppercase tracking-wide">{conv ? 'Next-best rule' : 'Best rule'}</div>
+        <div className="text-2xl font-semibold tabular-nums mt-0.5" style={{ color: retColor(best.edge[90]) }}>{fmtPpt(best.edge[90])}</div>
+        <p className="text-xs mt-1" style={{ color: 'var(--text-secondary)' }}>{best.label}</p>
+      </div>
+      <div className="card p-3">
+        <div className="muted text-[11px] uppercase tracking-wide">Worst rule</div>
+        <div className="text-2xl font-semibold tabular-nums mt-0.5" style={{ color: retColor(worst.edge[90]) }}>{fmtPpt(worst.edge[90])}</div>
+        <p className="text-xs mt-1" style={{ color: 'var(--text-secondary)' }}>{worst.label}</p>
+        {base && <p className="muted text-[11px] mt-1">Market itself: {fmtPct(base.medianReturn)} median over 90 days, {Math.round(base.winRate * 100)}% won.</p>}
+      </div>
     </div>
   )
 }
@@ -212,57 +261,25 @@ export default function Signals({ meta, game = 'Pokemon' }) {
 
   return (
     <section>
-      <h2 className="text-lg font-semibold">Buy signals — backtested</h2>
+      <PageHeader title="Signals"
+        question="Rules that flag a sealed product as a buy, tested on every past date — and which are firing right now.">
+        <p>Each rule is checked on every historical date using only the data available that day, then scored on how the
+          price moved over the next 30, 60 and 90 days. <b>vs market</b> is the gap to buying any sealed product at random
+          over the same windows, which is the number that matters: in a rising market almost everything wins.</p>
+        <p>Firings only count once their window has fully passed. Results cover 2024 onward, mostly a rising market;
+          the Market tab&apos;s “What has worked” shows how the underlying patterns held up in the latest six months.</p>
+        <p><b>Reprint window</b> and <b>long out of print</b> may be understated: sets already old when the price archive
+          begins (Feb 2024) re-rated before we can see it.</p>
+      </PageHeader>
       {game === 'Magic' && (
         <p className="text-xs mb-2 p-2 rounded" style={{ background: 'var(--surface-1)', color: 'var(--warn)' }}>
-          ⚠ Signals currently cover <strong>Pokémon</strong> only — the backtest below is Pokémon sealed. Magic signals are a fast-follow.
+          ⚠ Signals cover <strong>Pokémon</strong> only — everything below is Pokémon sealed.
         </p>
       )}
-      <p className="subtle text-sm max-w-4xl">
-        Each rule is fired at every historical date (using only data available then), and the
-        forward <strong>price return</strong> at 30/60/90 days is measured. “vs mkt” is the edge over
-        the <em>baseline</em> — buying any sealed at random over the same period.
-      </p>
-      <div className="card p-3 mt-2 max-w-4xl" style={{ borderColor: 'var(--accent)' }}>
-        <p className="text-sm">
-          🎯 <strong>The conviction signal.</strong> I profiled what the biggest 90-day winners looked like
-          <em> before</em> they ran. The rare, repeatable pattern: a box priced <strong>at or below the pack value
-          inside it</strong> (absolute cheapness — stronger than cheap-vs-peers), whose price is <strong>already
-          turning up over both 30 and 60 days</strong> (not still falling), in the <strong>1–3 year</strong> window
-          where launch supply has cleared and printing is winding down. It fires rarely
-          (~{recent?.rows ? new Set(recent.rows.filter((r) => r.signal === 'conviction').map((r) => r.groupId)).size : 8} sets
-          in the last 180 days) and, in backtest, hit <strong>96% win / +25% median at 90 days — a +14pp edge</strong> over
-          buy-anything, with 23% turning into +44%+ winners.
-        </p>
-      </div>
+      <Findings bt={bt} recent={recent} />
 
-      <h3 className="font-semibold text-sm pt-3 pb-1">How the hypotheses held up</h3>
+      <h3 className="font-semibold text-sm pt-4 pb-1">How each rule held up</h3>
       <Leaderboard bt={bt} />
-      <div className="text-xs muted max-w-4xl pt-2 space-y-1.5">
-        <p>
-          ⚠ <strong>Read this honestly:</strong> 2024–2026 was a strong bull market for sealed, so the baseline itself
-          won ~77% at 90 days — nearly everything went up. What matters is the <em>edge over that baseline</em> (“vs mkt”).
-        </p>
-        <p>
-          • <strong>“Conviction”</strong> is the sharpest rule (box ≤ pack value + 30/60d momentum up + 1–3yr): 96% win,
-          +25% median at 90d, +14pp edge — and it fires rarely. <strong>“Value + turning up”</strong> is its looser cousin
-          (cheap-vs-peers instead of ≤ pack value — your Stellar Crown pattern): a smaller but consistent +1–2pp edge that
-          fires far more often.
-        </p>
-        <p>
-          • <strong>Cheap-vs-peers / cheap-premium</strong> roughly matched the market (≈0 edge); <strong>buying deep price
-          dips actively lost</strong> ~9pp at 90d — those corrections kept correcting. <strong>Buying new highs (momentum)</strong>
-          didn’t beat the market but, unlike dips, didn’t lose — strength ≥ weakness.
-        </p>
-        <p>
-          • <strong>The reprint-window hypothesis didn’t pay here.</strong> Buying a set purely because it crossed
-          ~18 months (<em>reprint window</em>) slightly <em>underperformed</em> buy-anything (−1 to −2pp); ~24-month
-          “long out of print” only matched it. Two honest reasons: the scarcity premium looks largely priced in already,
-          and this lake starts Feb 2024 — sets already old by then had their out-of-print re-rating <em>before</em> we can
-          observe it, so we may be catching them late. The reprint edge, if it exists, needs the run-up captured live.
-        </p>
-        <p className="pt-0.5">The true test of all of these is a flat/down market, which this data doesn’t yet contain.</p>
-      </div>
 
       <h3 className="font-semibold text-sm pt-5 pb-1">
         {collapse ? 'Flashing now — current watchlist' : 'Recent firings (last 180 days)'}
@@ -286,10 +303,8 @@ export default function Signals({ meta, game = 'Pokemon' }) {
         </div>
       )}
       <p className="muted text-xs max-w-4xl pb-2">
-        <strong>Before 30d</strong> = how the price had already moved in the 30 days <em>before</em> the signal (the
-        “turning up” check). <strong>After 30/60/90d</strong> = the outcome — how the price moved in the 30/60/90 days
-        <em> after</em> the signal fired (<span className="muted">*</span> = that window hasn’t fully elapsed yet, so it’s
-        the return “so far”). Hover any header for its definition.
+        <b>Before 30d</b> is how the price had moved before it fired; <b>After</b> columns are the outcome
+        (* = window still open). Tap a row for its price chart; hover a header for its definition.
       </p>
       <div className="card p-3 overflow-x-auto">
         <table className="tbl text-sm w-full">

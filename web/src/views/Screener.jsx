@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import PageHeader from '../components/PageHeader.jsx'
 import FilterBar from '../components/FilterBar.jsx'
 import { loadView } from '../lib/loadView.js'
 import { fmtPct, fmtUsd, eraMatch } from '../lib/slice.js'
@@ -111,17 +112,15 @@ export default function Screener({ meta, game = 'Pokemon' }) {
   if (!data) return <p className="muted p-4">Loading movers…</p>
   return (
     <section>
-      <h2 className="text-lg font-semibold">Screener — movers &amp; notable changes</h2>
-      <p className="subtle text-sm">
-        A snapshot of every product's recent price &amp; premium change. <strong>Click any column header to sort</strong>
-        {' '}(change columns sort by biggest move either direction). “Sitting on shelves” = aged 90d+ with flat/declining price.
-      </p>
-      <p className="muted text-xs max-w-4xl pb-1">
-        <strong>Ask floor</strong> = cheapest listing ÷ market price — a <em>supply-tightness proxy</em>, not a listing
-        count. Above <strong>1.00</strong> nobody is undercutting (thin supply); below <strong>0.85</strong> sellers are
-        racing each other down (glut). <strong>Δ30d supply</strong> rising = undercutting drying up. True listed/sold
-        quantities need an external source — TCGplayer publishes none.
-      </p>
+      <PageHeader title="Screener"
+        question="Every product's recent price and premium moves — click a column to sort; change columns sort by the biggest move either way.">
+        <p><b>Sitting on shelves</b> = 90+ days old with a flat or falling price.</p>
+        <p><b>Ask floor</b> = cheapest listing ÷ market price, a proxy for supply (TCGplayer publishes no listing counts).
+          Below <b>0.90</b>, sellers are undercutting and you can usually buy under the market price. Above <b>1.00</b>, nobody
+          is undercutting — but you pay that ask, and the market price tends to catch up to it rather than run past it,
+          so a high ask floor is not a buy signal by itself. <b>Δ30d supply</b> rising = undercutting drying up.</p>
+        <p>Ask floors outside 0.2–2.5× market are hidden: those mean the market price is stale (common on illiquid vintage).</p>
+      </PageHeader>
       <div className="flex flex-wrap items-center gap-2 py-2">
         {[['movers', 'All movers'], ['shelf', 'Sitting on shelves']].map(([v, t]) => (
           <button key={v} className="chip" data-on={String(mode === v)} onClick={() => setMode(v)}>{t}</button>
@@ -150,7 +149,9 @@ export default function Screener({ meta, game = 'Pokemon' }) {
                   <a href={`#/set/${r.groupId}`} className="hover:underline" style={{ color: 'var(--accent)' }}>{r.name}</a>
                   {r.conf === 'low' && <span title="low-confidence intrinsic value" style={{ color: 'var(--warn)' }}> *</span>}
                 </td>
-                <td className="muted max-w-40 truncate">{r.setName}{r.isHype ? ' 🔥' : ''}</td>
+                <td className="max-w-40 truncate">
+                  <a href={`#/set/${r.groupId}`} className="hover:underline muted">{r.setName}</a>{r.isHype ? ' 🔥' : ''}
+                </td>
                 <td className="muted">{r.isChase ? 'Chase' : r.productType}</td>
                 <td className="muted">{r.ageDays != null ? `${r.ageDays}d` : '—'}</td>
                 <td>{fmtUsd(r.price)}</td>
@@ -166,11 +167,6 @@ export default function Screener({ meta, game = 'Pokemon' }) {
             ))}
           </tbody>
         </table>
-        <p className="muted text-xs pt-2">
-          Ask-floor values outside 0.2–2.5× market are suppressed: those mean the market price is stale
-          (common on illiquid vintage), not that supply is tight. qtyListed / qtySold remain schema-ready
-          but unpopulated — the planned source is the eBay Browse API.
-        </p>
       </div>
     </section>
   )

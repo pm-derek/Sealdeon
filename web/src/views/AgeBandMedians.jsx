@@ -5,13 +5,16 @@ import PlotFigure from '../components/PlotFigure.jsx'
 import { loadView } from '../lib/loadView.js'
 import { fmtPct, fmtUsd } from '../lib/slice.js'
 import { useTheme } from '../lib/theme.js'
+import PageHeader from '../components/PageHeader.jsx'
+
+const MODERN = ['Mega Evolution', 'Scarlet & Violet', 'Sword & Shield']
 
 const BAND_ORDER = ['0-1mo', '1-3mo', '3-6mo', '6-12mo', '12-18mo', '18-24mo', '24-36mo', '36mo+']
 
 export default function AgeBandMedians({ meta, game = 'Pokemon' }) {
   const [data, setData] = useState(null)
   const [state, setState] = useState(() => ({
-    eras: [], seriesType: meta.seriesTypes?.[0] || 'Booster Box', hype: 'all', metric: 'price',
+    eras: game === 'Pokemon' ? MODERN : [], seriesType: meta.seriesTypes?.[0] || 'Booster Box', hype: 'all', metric: 'price',
   }))
   const { palette, themeTick } = useTheme()
 
@@ -20,7 +23,9 @@ export default function AgeBandMedians({ meta, game = 'Pokemon' }) {
   // Medians are pre-aggregated per era plus a cross-era "All" rollup;
   // arbitrary era subsets can't be re-combined client-side, so a single
   // era selection shows that era and 0-or-many falls back to "All".
-  const eraKey = (state.eras || []).length === 1 ? state.eras[0] : 'All'
+  const sel = state.eras || []
+  const eraKey = sel.length === 1 ? sel[0]
+    : sel.length === MODERN.length && MODERN.every((e) => sel.includes(e)) ? 'Modern' : 'All'
 
   const rows = useMemo(() => {
     if (!data) return []
@@ -29,7 +34,10 @@ export default function AgeBandMedians({ meta, game = 'Pokemon' }) {
       .sort((a, b) => BAND_ORDER.indexOf(a.ageBand) - BAND_ORDER.indexOf(b.ageBand))
   }, [data, eraKey, state.seriesType, game])
 
-  const buckets = state.hype === 'all' ? ['clean', 'hype'] : [state.hype]
+  // split clean vs hype only when this slice actually has hype sets in it;
+  // otherwise both buckets are the same rows and the table shows them twice
+  const hasHype = rows.some((r) => r.hypeBucket === 'hype')
+  const buckets = state.hype === 'all' ? (hasHype ? ['clean', 'hype'] : ['all']) : [state.hype]
   const bucketColor = { clean: palette.series[0], hype: palette.series[1], all: palette.series[0] }
   const isPrice = state.metric === 'price'
 
@@ -80,13 +88,16 @@ export default function AgeBandMedians({ meta, game = 'Pokemon' }) {
   if (!data) return <p className="muted p-4">Loading age-band medians…</p>
   return (
     <section>
-      <h2 className="text-lg font-semibold">Age-band median benchmarks</h2>
-      <p className="subtle text-sm">
-        Median price / sealed premium by age band. <strong>Clean median</strong> (hype sets
-        excluded) is the honest baseline; the hype split enables hype-vs-hype and
-        clean-vs-clean directly.
-        {(state.eras || []).length > 1 && <em> Showing cross-era “All” — pick a single era for its own medians.</em>}
-      </p>
+      <PageHeader title="Age bands"
+        question="What does a product typically cost, and carry as a premium, at each age?">
+        <p>Medians across every set of the chosen era at each age band. <b>Clean</b> leaves out hype sets, so it is the fair
+          baseline; when a slice has hype sets they are shown side by side.</p>
+        <p>Pick one era for that era alone, or all three modern eras together. Any other combination falls back to every era,
+          where vintage prices dominate the older bands.</p>
+      </PageHeader>
+      {eraKey === 'All' && sel.length > 0 && (
+        <p className="text-xs pb-1" style={{ color: 'var(--warn)' }}>Showing every era — pick one era, or the three modern ones, for its own medians.</p>
+      )}
       <FilterBar meta={meta} state={state} setState={setState}
         show={{ completeness: false }} />
       <div className="flex items-center gap-2 pb-2">
@@ -112,7 +123,7 @@ export default function AgeBandMedians({ meta, game = 'Pokemon' }) {
                 <th>Median premium</th><th>Sets</th><th>Obs</th></tr>
           </thead>
           <tbody>
-            {rows.map((r, i) => (
+            {rows.filter((r) => buckets.includes(r.hypeBucket)).map((r, i) => (
               <tr key={i}>
                 <td>{r.hypeBucket}</td><td>{r.ageBand}</td>
                 <td>{fmtUsd(r.medianPrice)}</td>

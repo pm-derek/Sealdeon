@@ -4,104 +4,34 @@ import PlotFigure from '../components/PlotFigure.jsx'
 import { loadView } from '../lib/loadView.js'
 import { fmtPct } from '../lib/slice.js'
 import { useTheme } from '../lib/theme.js'
+import MarketLaunch from './MarketLaunch.jsx'
+import { endLabels, fmtPp, fmtPx, fmtShare, Legend, LinkIcon, Section, Seg, Stat, toDate, toneOf } from '../components/ui.jsx'
 
 // Market pulse: the trend / winners-vs-losers analysis, rebuilt daily by
 // pipeline/market.py. Read top to bottom: state -> trend -> what has worked
 // -> what that implies today.
 
-const fmtPx = (v) => (v == null ? '—' : `$${v >= 1000 ? Math.round(v).toLocaleString() : v.toFixed(0)}`)
-const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${(v * 100).toFixed(1)} pts`)
-const fmtShare = (v) => (v == null ? '—' : `${Math.round(v * 100)}%`)
-// tolerate 'YYYY-MM-DD' or a full timestamp; one bad date must not blank the page
-const toDate = (s) => new Date(`${String(s).slice(0, 10)}T00:00:00`)
-const toneOf = (v) => (v == null ? 'muted' : v > 0.005 ? 'pos' : v < -0.005 ? 'neg' : 'muted')
-
-// End labels for line charts, pushed apart vertically so two lines ending at
-// nearly the same value never print on top of each other. Works in data
-// units: `px` is the label height in pixels, `plotPx` the plot's pixel height.
-function endLabels(rows, key, { lo, hi, plotPx, px = 14 }) {
-  const last = new Map()
-  for (const r of rows) {
-    const cur = last.get(r[key])
-    if (!cur || r.date > cur.date) last.set(r[key], r)
-  }
-  const pts = [...last.values()].map((r) => ({ ...r, ly: r.v })).sort((a, b) => a.v - b.v)
-  const gap = ((hi - lo) * px) / Math.max(1, plotPx)
-  for (let i = 1; i < pts.length; i++) {
-    if (pts[i].ly - pts[i - 1].ly < gap) pts[i].ly = pts[i - 1].ly + gap
-  }
-  // if the stack ran off the top, slide the whole stack back down
-  const over = pts.length ? pts[pts.length - 1].ly - hi : 0
-  if (over > 0) pts.forEach((p) => { p.ly -= over })
-  return pts
-}
-
 const SHORT = { 'Booster Box': 'Box', 'Bundle / UPC': 'Bundle', 'Chase singles': 'Chase', Collector: 'Coll.' }
-
 const REGIME_TONE = { Rising: 'pos', Cooling: 'warn', 'Drifting lower': 'neg', Stabilizing: 'warn', Flat: 'muted' }
 
-function LinkIcon() {
+// Two targets per row: the set opens its page here, the product opens on TCGplayer.
+function ItemLinks({ r }) {
   return (
-    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"
-      strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, opacity: 0.7 }} aria-hidden="true">
-      <path d="M14 3h7v7" /><path d="M10 14 21 3" />
-      <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" />
-    </svg>
+    <span className="min-w-0 flex-1 flex items-center gap-1 truncate">
+      {r.groupId != null
+        ? <a href={`#/set/${r.groupId}`} className="font-semibold hover:underline shrink-0" title={`${r.setName} — open set page`}>{r.ab || r.setName}</a>
+        : <b className="shrink-0">{r.ab || r.setName}</b>}
+      <a href={r.url} target="_blank" rel="noreferrer" className="muted hover:underline inline-flex items-center gap-1 min-w-0"
+        title="Open on TCGplayer">
+        <span className="truncate">{r.type}</span><LinkIcon />
+      </a>
+    </span>
   )
 }
 
-function Stat({ label, value, sub, tone, hint }) {
-  return (
-    <div className="card p-3 min-w-0" title={hint}>
-      <div className="muted text-[11px] uppercase tracking-wide truncate">{label}</div>
-      <div className="text-2xl font-semibold tabular-nums leading-tight mt-0.5"
-        style={{ color: tone && tone !== 'muted' ? `var(--${tone})` : 'var(--text-primary)' }}>{value}</div>
-      {sub && <div className="muted text-xs mt-0.5 truncate">{sub}</div>}
-    </div>
-  )
-}
-
-function Section({ title, kicker, children, right }) {
-  return (
-    <section className="mt-6">
-      {/* the control wraps under the text on phones instead of squeezing it */}
-      <div className="flex flex-wrap items-end justify-between gap-x-3 gap-y-2 mb-2">
-        <div className="min-w-0 flex-1 basis-72">
-          <h2 className="text-base font-semibold">{title}</h2>
-          {kicker && <p className="muted text-xs mt-0.5">{kicker}</p>}
-        </div>
-        {right}
-      </div>
-      {children}
-    </section>
-  )
-}
-
-function Seg({ value, onChange, options }) {
-  return (
-    <div className="seg flex-nowrap shrink-0">
-      {options.map(([v, t]) => (
-        <button key={v} className="chip" data-on={String(value === v)} onClick={() => onChange(v)}>{t}</button>
-      ))}
-    </div>
-  )
-}
-
-function Legend({ items }) {
-  return (
-    <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs" style={{ color: 'var(--text-secondary)' }}>
-      {items.map(([label, color, dashed]) => (
-        <span key={label} className="inline-flex items-center gap-1.5">
-          <svg width="16" height="8" aria-hidden="true">
-            <line x1="1" x2="15" y1="4" y2="4" stroke={color} strokeWidth="2.5" strokeLinecap="round"
-              strokeDasharray={dashed ? '3 3' : undefined} />
-          </svg>
-          {label}
-        </span>
-      ))}
-    </div>
-  )
-}
+// Jump links for a long page; each target section carries the matching id.
+const JUMPS = [['trend', 'Trend'], ['launch', 'Launch vs market'], ['worked', 'What has worked'],
+               ['now', 'Right now'], ['movers', 'Movers'], ['types', 'By type']]
 
 // One line that says what the numbers mean, so the page reads in five seconds.
 function headline(game, p) {
@@ -161,10 +91,18 @@ export default function Market({ game = 'Pokemon' }) {
               sub={`30d ${fmtPct(p.median30)}`} />}
       </div>
 
+      <nav className="flex flex-wrap gap-1.5 mt-3" aria-label="Jump to section">
+        {JUMPS.filter(([id]) => id !== 'launch' || g.launch).map(([id, label]) => (
+          <a key={id} href={`#/market`} className="chip" onClick={(e) => {
+            e.preventDefault(); document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }}>{label}</a>
+        ))}
+      </nav>
       <IndexChart g={g} palette={palette} themeTick={themeTick} />
       <SupplyChart g={g} palette={palette} themeTick={themeTick} />
+      <MarketLaunch launch={g.launch} palette={palette} themeTick={themeTick} />
 
-      <Section title="What has worked"
+      <Section id="worked" title="What has worked"
         kicker={`Average return over the next ${g.factors.horizonDays} days, by what an item looked like beforehand — measured against the market's own average, at the price a buyer actually pays.`}
         right={<Seg value={factorWin} onChange={setFactorWin}
           options={[['recent', 'Latest 6 mo'], ['all', 'All history']]} />}>
@@ -176,13 +114,13 @@ export default function Market({ game = 'Pokemon' }) {
         </div>
       </Section>
 
-      <Section title="Right now" kicker="Live lists built from the patterns that held up. Tap an item to open it on TCGplayer.">
+      <Section id="now" title="Right now" kicker="Live lists built from the patterns that held up. Tap a set to open its page, or the product to open it on TCGplayer.">
         <div className="grid lg:grid-cols-2 gap-2">
           {g.screens.map((s) => <ScreenCard key={s.key} s={s} />)}
         </div>
       </Section>
 
-      <Section title="Biggest movers" kicker="Single-unit sealed only."
+      <Section id="movers" title="Biggest movers" kicker="Single-unit sealed only."
         right={<Seg value={moverWin} onChange={setMoverWin} options={[['r30', '30d'], ['r90', '90d']]} />}>
         <div className="grid sm:grid-cols-2 gap-2">
           <MoverList title="Up" rows={g.movers[moverWin].up} k={moverWin} />
@@ -190,7 +128,7 @@ export default function Market({ game = 'Pokemon' }) {
         </div>
       </Section>
 
-      <Section title="By product type">
+      <Section id="types" title="By product type">
         <SegmentTable rows={g.segments} />
       </Section>
 
@@ -244,7 +182,7 @@ function IndexChart({ g, palette, themeTick }) {
     })
   }
   return (
-    <Section title="Prices by segment, last 12 months"
+    <Section id="trend" title="Prices by segment, last 12 months"
       kicker="Index, 100 = a year ago. Items under 120 days old are left out.">
       <div className="card p-3">
         <Legend items={segs.map((s) => [s, color[s]])} />
@@ -358,10 +296,7 @@ function ScreenCard({ s }) {
           <ul className="mt-2 divide-y" style={{ borderColor: 'var(--border)' }}>
             {s.rows.map((r, i) => (
               <li key={i} className="py-1.5 flex items-center gap-2 text-xs" style={{ borderColor: 'var(--border)' }}>
-                <a href={r.url} target="_blank" rel="noreferrer" className="min-w-0 flex-1 flex items-center gap-1 hover:underline">
-                  <span className="truncate"><b>{r.ab || r.setName}</b> <span className="muted">{r.type}</span></span>
-                  <LinkIcon />
-                </a>
+                <ItemLinks r={r} />
                 <span className="tabular-nums w-14 text-right">{fmtPx(r.p0)}</span>
                 <span className="tabular-nums w-14 text-right" title="vs pack value"
                   style={{ color: r.prem == null ? 'var(--text-muted)' : undefined }}>
@@ -392,10 +327,7 @@ function MoverList({ title, rows, k }) {
         {rows.map((r, i) => (
           <li key={i} className="py-1 text-xs">
             <div className="flex items-center gap-2">
-              <a href={r.url} target="_blank" rel="noreferrer" className="min-w-0 flex-1 flex items-center gap-1 hover:underline">
-                <span className="truncate"><b>{r.ab || r.setName}</b> <span className="muted">{r.type}</span></span>
-                <LinkIcon />
-              </a>
+                <ItemLinks r={r} />
               <span className="tabular-nums muted">{fmtPx(r.p0)}</span>
               <span className="tabular-nums w-14 text-right font-medium"
                 style={{ color: `var(--${toneOf(r[k]) === 'muted' ? 'text-muted' : toneOf(r[k])})` }}>{fmtPct(r[k], 1)}</span>

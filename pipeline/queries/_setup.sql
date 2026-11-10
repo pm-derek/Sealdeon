@@ -146,10 +146,22 @@ WITH base AS (
     FROM series_daily
     WHERE ageDays >= 0 AND price > 0
     GROUP BY groupId, seriesType
+),
+-- Settled anchor: median over days 30-59. Release-day prices are mostly
+-- launch hype; this window is where a line has settled (pipeline/launch.py).
+-- NULL for sets whose first 60 days predate the archive.
+settled AS (
+    SELECT groupId, seriesType, median(price) AS settledPrice
+    FROM series_daily
+    WHERE ageDays BETWEEN 30 AND 59 AND price > 0
+    GROUP BY groupId, seriesType
+    HAVING count(*) >= 8
 )
-SELECT sd.*, 100.0 * sd.price / b.basePrice AS idxPrice
+SELECT sd.*, 100.0 * sd.price / b.basePrice AS idxPrice,
+       100.0 * sd.price / st.settledPrice AS idxSettled
 FROM series_daily sd
 JOIN base b USING (groupId, seriesType)
+LEFT JOIN settled st USING (groupId, seriesType)
 WHERE b.basePrice > 0;
 
 -- Age banding used by benchmarks and premium-vs-median.

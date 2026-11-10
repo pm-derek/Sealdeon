@@ -235,7 +235,10 @@ def build_set_details(con, meta: dict) -> None:
                round(quantile_cont(si.idxPrice, 0.75), 2) AS p75,
                round(quantile_cont(si.premiumPct, 0.25), 4) AS premP25,
                round(quantile_cont(si.premiumPct, 0.50), 4) AS premP50,
-               round(quantile_cont(si.premiumPct, 0.75), 4) AS premP75
+               round(quantile_cont(si.premiumPct, 0.75), 4) AS premP75,
+               round(quantile_cont(si.idxSettled, 0.25), 2) AS sP25,
+               round(quantile_cont(si.idxSettled, 0.50), 2) AS sP50,
+               round(quantile_cont(si.idxSettled, 0.75), 2) AS sP75
         FROM series_indexed si JOIN sets s USING (groupId)
         WHERE si.ageDays >= 0 AND (si.ageDays <= 120 OR si.ageDays % 7 = 0)
           -- SetDetail renders only the Booster Box era band; scoping here
@@ -268,7 +271,9 @@ def build_set_details(con, meta: dict) -> None:
         for r in records(rows.drop(columns=["groupId"])):
             r["sparkline"] = spark_map.get(int(r["productId"]), [])
             (chase_rows if r.pop("isChase") else sealed_rows).append(r)
-        chase_rows.sort(key=lambda r: -(r.get("peakPrice") or 0))
+        # most valuable now first -- matches how the chase basket is chosen
+        # (trailing value, not the launch peak)
+        chase_rows.sort(key=lambda r: -(r.get("price") or 0))
 
         set_curves = []
         for stype, crows in curves[curves["groupId"] == gid].groupby("seriesType"):
