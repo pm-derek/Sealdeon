@@ -33681,6 +33681,22 @@
    }
   },
   {
+   "productId": 733554,
+   "productName": "Nauctis: The Sunken Realm - Collector Booster Display",
+   "productType": "Collector Booster Box",
+   "groupId": 24947,
+   "setName": "Nauctis: The Sunken Realm",
+   "confidence": "medium",
+   "attemptedPackCount": 12,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"733554\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24947:Collector Booster Box\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 541090,
    "productName": "Outlaws of Thunder Junction - Collector Booster Display",
    "productType": "Collector Booster Box",
@@ -34465,5 +34481,5 @@
    }
   }
  ],
- "count": 2154
+ "count": 2155
 }
