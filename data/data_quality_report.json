@@ -14433,6 +14433,22 @@
    }
   },
   {
+   "productId": 734558,
+   "productName": "Obsidian Flames Fun Pack",
+   "productType": null,
+   "groupId": 23228,
+   "setName": "SV03: Obsidian Flames",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"734558\": <count>",
+    "promo": "add to config/promo_overrides.json as \"23228:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 501266,
    "productName": "Obsidian Flames Pokemon Center Elite Trainer Box (Exclusive)",
    "productType": "PKC ETB",
@@ -34481,5 +34497,5 @@
    }
   }
  ],
- "count": 2155
+ "count": 2156
 }
