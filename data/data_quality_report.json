@@ -4081,6 +4081,150 @@
    }
   },
   {
+   "productId": 735059,
+   "productName": "Flowing Fists 3-Pack Blister Case",
+   "productType": null,
+   "groupId": 24955,
+   "setName": "ME07: Flowing Fists",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"735059\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24955:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 735058,
+   "productName": "Flowing Fists 3-Pack Blister [Wimpod]",
+   "productType": "3-Pack Blister",
+   "groupId": 24955,
+   "setName": "ME07: Flowing Fists",
+   "confidence": "low",
+   "attemptedPackCount": 3,
+   "packCountSource": "parsed",
+   "attemptedPromo": null,
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"735058\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24955:3-Pack Blister\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 735055,
+   "productName": "Flowing Fists Booster Pack Art Bundle [Set of 4]",
+   "productType": null,
+   "groupId": 24955,
+   "setName": "ME07: Flowing Fists",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"735055\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24955:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 735069,
+   "productName": "Flowing Fists Build & Battle Box",
+   "productType": "Build & Battle",
+   "groupId": 24955,
+   "setName": "ME07: Flowing Fists",
+   "confidence": "low",
+   "attemptedPackCount": 4,
+   "packCountSource": "parsed",
+   "attemptedPromo": null,
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"735069\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24955:Build & Battle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 735070,
+   "productName": "Flowing Fists Build & Battle Box Display",
+   "productType": "Build & Battle",
+   "groupId": 24955,
+   "setName": "ME07: Flowing Fists",
+   "confidence": "low",
+   "attemptedPackCount": 4,
+   "packCountSource": "parsed",
+   "attemptedPromo": null,
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"735070\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24955:Build & Battle\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 735050,
+   "productName": "Flowing Fists Elite Trainer Box",
+   "productType": "ETB",
+   "groupId": 24955,
+   "setName": "ME07: Flowing Fists",
+   "confidence": "low",
+   "attemptedPackCount": 9,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"735050\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24955:ETB\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 735052,
+   "productName": "Flowing Fists Elite Trainer Box Case",
+   "productType": "ETB Case",
+   "groupId": 24955,
+   "setName": "ME07: Flowing Fists",
+   "confidence": "low",
+   "attemptedPackCount": 90,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"735052\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24955:ETB Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 735049,
+   "productName": "Flowing Fists Pokemon Center Elite Trainer Box (Exclusive)",
+   "productType": "PKC ETB",
+   "groupId": 24955,
+   "setName": "ME07: Flowing Fists",
+   "confidence": "low",
+   "attemptedPackCount": 9,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"735049\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24955:PKC ETB\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 735060,
+   "productName": "Flowing Fists Single Pack Blister [Tynamo]",
+   "productType": null,
+   "groupId": 24955,
+   "setName": "ME07: Flowing Fists",
+   "confidence": "low",
+   "attemptedPackCount": 1,
+   "packCountSource": "parsed",
+   "attemptedPromo": null,
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"735060\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24955:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 709016,
    "productName": "30th Celebration Battle Deck Case",
    "productType": null,
@@ -26273,6 +26417,70 @@
    }
   },
   {
+   "productId": 735044,
+   "productName": "Flowing Fists Booster Box Case",
+   "productType": "Booster Box Case",
+   "groupId": 24955,
+   "setName": "ME07: Flowing Fists",
+   "confidence": "medium",
+   "attemptedPackCount": 216,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"735044\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24955:Booster Box Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 735067,
+   "productName": "Flowing Fists Booster Bundle Case",
+   "productType": "Booster Bundle Case",
+   "groupId": 24955,
+   "setName": "ME07: Flowing Fists",
+   "confidence": "medium",
+   "attemptedPackCount": 60,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"735067\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24955:Booster Bundle Case\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 735047,
+   "productName": "Flowing Fists Sleeved Booster Pack",
+   "productType": "Sleeved Booster Pack",
+   "groupId": 24955,
+   "setName": "ME07: Flowing Fists",
+   "confidence": "medium",
+   "attemptedPackCount": 1,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"735047\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24955:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 735056,
+   "productName": "Flowing Fists Sleeved Booster Pack Art Bundle [Set of 4]",
+   "productType": "Sleeved Booster Pack",
+   "groupId": 24955,
+   "setName": "ME07: Flowing Fists",
+   "confidence": "medium",
+   "attemptedPackCount": 1,
+   "packCountSource": "static",
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"735056\": <count>",
+    "promo": "add to config/promo_overrides.json as \"24955:Sleeved Booster Pack\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 709017,
    "productName": "30th Celebration Booster Bundle Case",
    "productType": "Booster Bundle Case",
@@ -34497,5 +34705,5 @@
    }
   }
  ],
- "count": 2156
+ "count": 2169
 }
