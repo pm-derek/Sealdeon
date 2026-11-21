@@ -5345,6 +5345,22 @@
    }
   },
   {
+   "productId": 735151,
+   "productName": "Costco Pokemon Perfect Order 2-Pack Elite Trainer Box and Booster Bundle",
+   "productType": "ETB",
+   "groupId": 2374,
+   "setName": "Miscellaneous Cards & Products",
+   "confidence": "low",
+   "attemptedPackCount": 15,
+   "packCountSource": "parsed",
+   "attemptedPromo": "Tyrunt",
+   "promoSource": "unresolved",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"735151\": <count>",
+    "promo": "add to config/promo_overrides.json as \"2374:ETB\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 587747,
    "productName": "Costco Pokemon Scarlet & Violet 151 Mini Tin 5-pack (Magneton)",
    "productType": null,
@@ -34705,5 +34721,5 @@
    }
   }
  ],
- "count": 2169
+ "count": 2170
 }
