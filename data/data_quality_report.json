@@ -9585,22 +9585,6 @@
    }
   },
   {
-   "productId": 530756,
-   "productName": "Yu Nagaba x Pokemon - Eevee's Special Promo Pack",
-   "productType": null,
-   "groupId": 2374,
-   "setName": "Miscellaneous Cards & Products",
-   "confidence": "low",
-   "attemptedPackCount": null,
-   "packCountSource": null,
-   "attemptedPromo": null,
-   "promoSource": "none",
-   "howToFix": {
-    "packCount": "add to config/packcount_overrides.json as \"530756\": <count>",
-    "promo": "add to config/promo_overrides.json as \"2374:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
-   }
-  },
-  {
    "productId": 282003,
    "productName": "Zeraora VMAX & VSTAR Battle Box",
    "productType": null,
@@ -34721,5 +34705,5 @@
    }
   }
  ],
- "count": 2170
+ "count": 2169
 }
