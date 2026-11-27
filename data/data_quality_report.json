@@ -2657,6 +2657,54 @@
    }
   },
   {
+   "productId": 735467,
+   "productName": "Great Encounters Theme Deck - Endless Night",
+   "productType": null,
+   "groupId": 1405,
+   "setName": "Great Encounters",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"735467\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1405:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 735463,
+   "productName": "Great Encounters Theme Deck - Eternal Time",
+   "productType": null,
+   "groupId": 1405,
+   "setName": "Great Encounters",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"735463\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1405:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 735464,
+   "productName": "Great Encounters Theme Deck - Infinite Space",
+   "productType": null,
+   "groupId": 1405,
+   "setName": "Great Encounters",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"735464\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1405:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 277112,
    "productName": "Gym Challenge Theme Deck - \"Blaine\"",
    "productType": null,
@@ -21073,6 +21121,38 @@
    }
   },
   {
+   "productId": 735466,
+   "productName": "Secret Wonders Theme Deck - Lavaflow",
+   "productType": null,
+   "groupId": 1380,
+   "setName": "Secret Wonders",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"735466\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1380:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
+   "productId": 735465,
+   "productName": "Secret Wonders Theme Deck - Powerhouse",
+   "productType": null,
+   "groupId": 1380,
+   "setName": "Secret Wonders",
+   "confidence": "low",
+   "attemptedPackCount": null,
+   "packCountSource": null,
+   "attemptedPromo": null,
+   "promoSource": "none",
+   "howToFix": {
+    "packCount": "add to config/packcount_overrides.json as \"735465\": <count>",
+    "promo": "add to config/promo_overrides.json as \"1380:None\": {\"productId\": <promoProductId>, \"cardName\": \"...\"}"
+   }
+  },
+  {
    "productId": 265320,
    "productName": "Shining Fates Booster Pack Art Bundle [Set of 4]",
    "productType": null,
@@ -34705,5 +34785,5 @@
    }
   }
  ],
- "count": 2169
+ "count": 2174
 }
